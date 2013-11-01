@@ -17,7 +17,7 @@ $smileys = array(
 //	smiley			image name						width	height	alt
 
 	':-)'			=>	array('grin.gif',			'19',	'19',	'grin'),
-	':lol:'			=>	array('lol.gif',			'19',	'19',	'LOL'),
+	':lol:'			=>	array('lol.gif',			'19',	'19',	'LOLling'),
 	':cheese:'		=>	array('cheese.gif',			'19',	'19',	'cheese'),
 	':)'			=>	array('smile.gif',			'19',	'19',	'smile'),
 	';-)'			=>	array('wink.gif',			'19',	'19',	'wink'),
