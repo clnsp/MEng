@@ -1,6 +1,6 @@
 
 # Can ignore specific files
-.DS_Store
+config.php
 
 # Use wildcards as well
 *~
