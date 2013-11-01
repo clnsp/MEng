@@ -14,7 +14,7 @@
 | path to your installation.
 |
 */
-$config['base_url']	= 'https://devweb2013.cis.strath.ac.uk/~xvb09137/changedMEng/';
+$config['base_url']	= 'https://devweb2013.cis.strath.ac.uk/~xvb09137/meng2013/';
 
 /*
 |--------------------------------------------------------------------------
