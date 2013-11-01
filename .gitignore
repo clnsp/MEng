@@ -1,1 +1,11 @@
-#new gitignore file
+#v2
+
+# Can ignore specific files
+config.php
+
+# Use wildcards as well
+*~
+
+
+# Can also ignore all directories and files in a directory.
+#tmp/**/* 
