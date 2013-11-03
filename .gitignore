@@ -9,7 +9,3 @@ config.php
 
 # Can also ignore all directories and files in a directory.
 #tmp/**/* 
-
-application/config/config.php
-
-application/config/config.php
