@@ -7,11 +7,9 @@
 
     <title>{page_title}</title>
 
-    <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
-
-    <!-- Custom styles for this template -->
     <link rel="stylesheet" href="<?php echo base_url();?>assets/css/bootstrap-theme.css">
+    <link rel="stylesheet" href="<?php echo base_url();?>assets/css/bootstrap-overides.css">
 
   
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -23,10 +21,13 @@
 </head>
 
   <body style="">
+  
+  <div id="booking">
 
     <div class="navbar navbar-inverse navbar-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
+        
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
@@ -80,23 +81,34 @@
 <div id="footer">
       <div class="container text-muted">
   
+  
+  <ul class="nav nav-pills pull-right">
+    <li><a href="#">Home</a></li>
+    <li><a href="#">Profile</a></li>
+    <li><a href="#">Messages</a></li>
+  </ul>
 
-		<ol class="breadcrumb">
-		  <li><a href="#">Home</a></li>
-		  <li><a href="#">Library</a></li>
-		  <li class="active">Data</li>
-		</ol>
-
+	
       </div>
     </div>
 
-
+</div>
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
 <!-- Latest compiled and minified JavaScript -->
 	<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
+	
+	<script type="text/javascript">
+	function get_record_id(record_id) {
+	     var p = {};
+	     p[record_id] = record_id
+	     $('#content').load(/controller/method,p,function(str){
+	
+	     });
+	}
+	</script>
   
 
 </body></html>

@@ -1,0 +1,43 @@
+/*
+ * Bootstrap Overrides
+ */
+ 
+#booking .navbar{
+ 	 border-radius: 0!important;
+ 	 border-bottom: 3px solid #41807B;
+	border-right-style: none;
+	border-left-style: none;
+}
+
+#footer, .footer{
+	margin-top: 2em;
+	padding: 1em;
+	background-color: #333333;
+}
+
+#booking #footer .nav-pills li a{
+	color: #2A6496;
+}
+
+#booking #footer .nav-pills li a:hover{
+	background-color: rgba(255, 255, 255, 0);
+	color: #428BCA;
+}
+
+
+
+#booking .nav .caret{
+	border-top-color: #41807B;
+	border-bottom-color: #41807B;
+}
+
+#booking .navbar .dropdown-menu::after {
+  position: absolute;
+  top: -6px;
+  right: 20px;
+  display: inline-block;
+  border-right: 6px solid transparent;
+  border-bottom: 6px solid white;
+  border-left: 6px solid transparent;
+  content: '';
+}
