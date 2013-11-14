@@ -45,10 +45,11 @@
           
 
 <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Bookings</a></li>
-            <li><a href="#attendance">Attendance</a></li>
-            <li><a href="#users">Users</a></li>
-	<li><a href="#users">Rooms</a></li>
+            <li class="active"><a class="ajax" href="home">Bookings</a></li>
+            <li><a class="ajax" href="about">Attendance</a></li>
+            <li><a class="ajax" href="users">Users</a></li>
+			<li><a class="ajax" href="rooms">Rooms</a></li>
+			<li><a href="nonajax">Non Ajax</a></li>
           </ul>
 
 <ul class="dropdown nav navbar-nav pull-right">
@@ -69,9 +70,9 @@
       </div>
     </div>
 
-    <div class="container">
+    <div id="page-body" class="container">
 
-      <div id="body_wrapper">
+      <div id="body-wrapper">
 		{page_body}
 	</div>
 
@@ -99,16 +100,50 @@
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
 <!-- Latest compiled and minified JavaScript -->
 	<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
-	
-	<script type="text/javascript">
-	function get_record_id(record_id) {
-	     var p = {};
-	     p[record_id] = record_id
-	     $('#content').load(/controller/method,p,function(str){
-	
-	     });
-	}
-	</script>
-  
+<script> 
+    // using JQUERY's ready method to know when all dom elements are rendered
+    $( document ).ready(function () {
+      // set an on click on the button
+      $("a.ajax").click(function (e) {
+       //prevent default
+      	e.preventDefault();
+      	
+      	var pagebody = $("#page-body");
+      	var title = $(this).attr("href");
+      	var href = "<?php echo site_url(); ?>/" + title;
+      	
+  		
+        // get the time if clicked via an ajax get queury
+        // see the code in the controller time.php
+       pagebody.load(href + " #body-wrapper", function(){
+       	window.history.pushState({title: title, content: pagebody.html()}, title, "<?php echo site_url(); ?>/" + title);
+       });
+          });
+    
+    // Revert to a previously saved state
+    window.addEventListener('popstate', function(event) {
+      console.log('popstate fired!' + event.state);
+    
+      updateContent(event.state);
+    });
+    
+    });
+    
+// Store the initial content so we can revisit it later
+   history.replaceState({
+     content: $("#page-body").html(),
+     title: document.title
+   }, document.title, document.location.href);
+ 
+
+    
+    function updateContent(data) {
+    	if(!data){
+    		return;
+    	}
+    	$("#page-body").html(data.content).addClass(data.title);
+    }
+
+  </script>
 
 </body></html>

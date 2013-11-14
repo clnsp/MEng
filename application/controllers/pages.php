@@ -2,9 +2,8 @@
 
 class Pages extends CI_Controller {
 
-	
-
 	public function view($page = 'home'){
+		
 		$this->load->library('parser');
 		$this->load->helper('url_helper');
 
@@ -17,12 +16,11 @@ class Pages extends CI_Controller {
 		$data['user-name'] = "A. Murray";
 
 		$data['page_body'] = $this->load->view('pages/'.$page, '', true);
-
-		
 	
 		$this->parser->parse('templates/allan_template/allan_template', $data);
 
-
 	}
+
+
 }
 
