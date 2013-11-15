@@ -12,10 +12,15 @@ class Pages extends CI_Controller {
 			show_404();
 		}
 		
+$data = array('user_type'=>'student');
+
 		$data['page_title'] = $page;
-		$data['user-name'] = "A. Murray";
+		$data['user_name'] = "A. Murray";
+
 
 		$data['page_body'] = $this->load->view('pages/'.$page, '', true);
+
+
 	
 		$this->parser->parse('templates/allan_template/allan_template', $data);
 
