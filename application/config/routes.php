@@ -42,6 +42,7 @@
 $route['404_override'] = '';*/
 
 $route['(:any)'] = 'pages/view/$1';
+$route['login'] = 'pages/login/$1';
 $route['default_controller'] = 'pages/view';
 $route['gettime'] = "time";
 

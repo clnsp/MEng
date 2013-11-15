@@ -1,9 +1,12 @@
 <?php
 
 class Pages extends CI_Controller {
+	public function __construct(){
+		parent::__construct();
+	 }
+
 
 	public function view($page = 'home'){
-		
 		$this->load->library('parser');
 		$this->load->helper('url_helper');
 
@@ -20,12 +23,16 @@ $data = array('user_type'=>'student');
 
 		$data['page_body'] = $this->load->view('pages/'.$page, '', true);
 
-
-	
 		$this->parser->parse('templates/allan_template/allan_template', $data);
 
 	}
 
 
+public function login(){
+	$this->load->helper(array('form'));
+	$this->view('login');
 }
+
+}
+
 
