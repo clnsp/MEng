@@ -458,6 +458,12 @@
 	color: #fff;
 }
 
+.div-center{
+	margin-left: auto;
+	margin-right: auto;
+	float: none!important;
+}
+
 
 
 

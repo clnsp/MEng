@@ -1,5 +1,8 @@
 <?php
 
+if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+session_start();
+
 class Pages extends CI_Controller {
 	public function __construct(){
 		parent::__construct();
@@ -15,8 +18,17 @@ class Pages extends CI_Controller {
 			show_404();
 		}
 		
-$data = array('user_type'=>'student');
-
+		if($this->session->userdata('logged_in'))
+		{
+		  $session_data = $this->session->userdata('logged_in');
+		  $data['user_type'] = $session_data['username'];		  
+		}
+		else{
+		  //If no session, redirect to login page
+		  $data['user_type'] = $session_data['guest'];
+		  redirect('login', 'refresh');
+		}
+		
 		$data['page_title'] = $page;
 		$data['user_name'] = "A. Murray";
 
@@ -33,6 +45,13 @@ public function login(){
 	$this->view('login');
 }
 
+
+ function logout(){
+   $this->session->unset_userdata('logged_in');
+   session_destroy();
+   redirect('login', 'refresh');
+ }
+
 }
 
-
+?>

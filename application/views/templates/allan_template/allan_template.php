@@ -12,3 +12,5 @@
 
 <?php $this->load->view('templates/allan_template/bricks/footer');?>
 
+
+
