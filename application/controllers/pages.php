@@ -43,6 +43,7 @@ $this->load->library('session');
 		$this->load->library('parser');
 		$this->load->helper('url_helper');
 	$this->load->helper(array('form'));
+	$data['user_type'] = 'guest';  
 	$data['page_body'] = $this->load->view('pages/login', '', true);
 	$this->parser->parse('templates/allan_template/allan_template', $data);
 }

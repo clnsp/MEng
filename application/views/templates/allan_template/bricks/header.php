@@ -51,6 +51,8 @@
 			<?php 
 if($user_type=='staff'){ $this->load->view('templates/allan_template/bricks/staff/staff_header_menu'); }
 else if($user_type=='student') { $this->load->view('templates/allan_template/bricks/student/student_header_menu'); }
+else {// LOAD GUEST VIEW
+}
 ?>
 
 </ul>
