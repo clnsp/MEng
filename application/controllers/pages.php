@@ -10,6 +10,7 @@ class Pages extends CI_Controller {
 
 
 	public function view($page = 'home'){
+		$this->load->library('session');
 		$this->load->library('parser');
 		$this->load->helper('url_helper');
 
@@ -20,12 +21,12 @@ class Pages extends CI_Controller {
 		
 		if($this->session->userdata('logged_in'))
 		{
-		  $session_data = $this->session->userdata('logged_in');
-		  $data['user_type'] = $session_data['username'];		  
+		  $session_data = $this->session->all_userdata();
+		  $data['user_type'] = $session_data['username'];  
 		}
 		else{
 		  //If no session, redirect to login page
-		  $data['user_type'] = $session_data['guest'];
+		  $data['user_type'] = 'guest';
 		  redirect('login', 'refresh');
 		}
 		
