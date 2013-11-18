@@ -29,7 +29,9 @@
 
         <div class="navbar navbar-default navbar-inverse navbar-top" role="navigation">
           <div class="container">
+            <a class="navbar-brand" href="#"><span class="glyphicon glyphicon-bold"></span> CSR</a>
 
+            <?php if($page_slug != 'login'):?>
             <div class="navbar-header">
 
               <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -38,72 +40,69 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-
-              <a class="navbar-brand" href="#"><span class="glyphicon glyphicon-bold"></span> CSR</a>
-
             </div>
-
 
             <div class="collapse navbar-collapse">
 
               <ul class="nav navbar-nav ">
 
                <?php
-                  if($logged_in){
-                    if($user_type=='staff'){ $this->load->view('templates/allan_template/bricks/staff/staff_header_menu'); }
-                    else if($user_type=='student') { $this->load->view('templates/allan_template/bricks/student/student_header_menu'); }
-                  }
-                  else{
+               if($logged_in){
+                if($user_type=='staff'){ $this->load->view('templates/allan_template/bricks/staff/staff_header_menu'); }
+                else if($user_type=='student') { $this->load->view('templates/allan_template/bricks/student/student_header_menu'); }
+              }
+              else{
                     //load guest view
-                  }
-                ?>
-              </ul>
-
-
-              <ul class="nav navbar-nav navbar-right">
-                <?php if($page_slug != 'login' && !$logged_in):?>
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Login<b class="caret"></b></a>
-
-                  <ul class="dropdown-menu">
-                    <li>
-                      <a href="#">
-                        <div class="input-group margin-bottom-sm">
-                          <span class="input-group-addon"><i class="fa fa-envelope-o fa-fw"></i></span>
-                          <input class="form-control" type="text" placeholder="Email address">
-                          </div>
-                      </a>
-                    </li>
-
-                    <li><a href="#"><div class="input-group">
-                      <span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>
-                      <input class="form-control" type="password" placeholder="Password">
-                    </div></a></li>
-                    <li><a href="#">Login</a></li>
-                  </ul>
-                </li>
-                <?php endif; ?>
-
-                <?php if($logged_in):?>
-                  echo
-                  <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">{user_name} <span class="glyphicon glyphicon-user"><span class="caret"></span></a>            
-
-                    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownUser">
-                    <li><a href="#">Account Settings</a></li>
-                    <li class="divider"></li>
-                    <li><a href="#">Logout</a></li>
-                    </ul>
-
-                  </li>
-                <?php endif; ?>
-
-                
-
+              }
+              ?>
             </ul>
 
 
-        </div><!--/.nav-collapse -->
-      </div>
-    </div>
+            <ul class="nav navbar-nav navbar-right">
+              <?php if(!$logged_in):?>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Login<b class="caret"></b></a>
+
+                <ul class="dropdown-menu">
+                  <li>
+                    <a href="#">
+                      <div class="input-group margin-bottom-sm">
+                        <span class="input-group-addon"><i class="fa fa-envelope-o fa-fw"></i></span>
+                        <input class="form-control" type="text" placeholder="Email address">
+                      </div>
+                    </a>
+                  </li>
+
+                  <li><a href="#"><div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>
+                    <input class="form-control" type="password" placeholder="Password">
+                  </div></a></li>
+                  <li><a href="#">Login</a></li>
+                </ul>
+              </li>
+            <?php endif; ?>
+
+            <?php if($logged_in):?>
+            echo
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">{user_name} <span class="glyphicon glyphicon-user"><span class="caret"></span></a>            
+
+              <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownUser">
+                <li><a href="#">Account Settings</a></li>
+                <li class="divider"></li>
+                <li><a href="#">Logout</a></li>
+              </ul>
+
+            </li>
+          <?php endif; ?>
+
+
+
+        </ul>
+
+
+      </div><!--/.nav-collapse -->
+    <?php endif; ?>
+  </div>
+</div>
 
