@@ -8,7 +8,6 @@ class Pages extends CI_Controller {
 		parent::__construct();
 	 }
 
-
 	public function view($page = 'home'){
 		$this->load->library('session');
 		$this->load->library('parser');
@@ -37,13 +36,15 @@ class Pages extends CI_Controller {
 		$data['page_body'] = $this->load->view('pages/'.$page, '', true);
 
 		$this->parser->parse('templates/allan_template/allan_template', $data);
-
 	}
 
-
-public function login(){
+public function login($page = 'login'){
+$this->load->library('session');
+		$this->load->library('parser');
+		$this->load->helper('url_helper');
 	$this->load->helper(array('form'));
-	$this->view('login');
+	$data['page_body'] = $this->load->view('pages/login', '', true);
+	$this->parser->parse('templates/allan_template/allan_template', $data);
 }
 
 
