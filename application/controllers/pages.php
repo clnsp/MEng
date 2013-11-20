@@ -9,19 +9,12 @@ class Pages extends CI_Controller {
 		parent::__construct();
 	}
 
-	/*
-	 * Get the template url
-	 */
-	public function template_url(){
-		return 'templates/allan_template/allan_template';
-	}
+
 
 	/**
 	 * Generic view for all pages within the /pages folder
 	 */
 	public function view($page = 'home'){
-
-		$this->load_page_libraries();
 
 		if ( ! file_exists('application/views/pages/'.$page.'.php')){
 			// Whoops, we don't have a page for that!
@@ -38,25 +31,17 @@ class Pages extends CI_Controller {
 			redirect('login', 'refresh');
 		}
 		
-		$data['page_title'] = $page; //difference between slug and title?
-		$data['page_slug'] = $page;
-		$data['user_name'] = "A. Murray";
-		$data['page_body'] = $this->load->view('pages/'.$page, '', true);
-
-		$this->parser->parse($this->template_url(), $data);
+		parse_temp($page, $this->load->view('pages/'.$page, '', true));
 	}
 
 	/**
 	 * Login to system
 	 */
 	public function login($page = 'login'){
-		$this->load_page_libraries();
 		$this->load->helper(array('form'));
-
-		$data['page_slug'] = "login";
-		$data['page_body'] = $this->load->view('pages/login', '', true);
 		
-		$this->parser->parse($this->template_url(), $data);
+		$this->load->helper('temp_helper');
+		parse_temp($page, $this->load->view('pages/'.$page, '', true));
 	}
 
 	/**
@@ -68,13 +53,6 @@ class Pages extends CI_Controller {
 		redirect('login', 'refresh');
 	}
 
-	/**
-	 * Helper function to load libraries needed for every page. ** MOVE TO config/AUTO LOADER ????
-	 */
-	public function load_page_libraries(){
-		$this->load->library('parser');
-		$this->load->helper('url_helper');
-	}
 
 }
 

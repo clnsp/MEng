@@ -4,13 +4,13 @@
 
 class VerifyLogin extends CI_Controller {
 
-public function __construct()
- {
+  public function __construct()
+  {
    parent::__construct();
    $this->load->model('user','',TRUE);
  }
 
-public function index()
+ public function index()
  {
    //This method will have the credentials validation
    $this->load->library('form_validation');
@@ -20,43 +20,44 @@ public function index()
 
    if($this->form_validation->run() == FALSE)
    {
+
      //Field validation failed.&nbsp; User redirected to login page
-	$this->load->view('login');
-   }
-   else
-   {
-     //Go to private area
-     redirect('home', 'refresh');
-   }
+    parse_temp('login', $this->load->view('pages/login', '', true));
   }
- 
+  else
+  {
+     //Go to private area
+   redirect('home', 'refresh');
+ }
+}
+
 public function check_database($password)
- {
+{
    //Field validation succeeded.&nbsp; Validate against database
-   $username = $this->input->post('username');
+ $username = $this->input->post('username');
 
    //query the database
-   $result = $this->user->login($username, $password);
+ $result = $this->user->login($username, $password);
 
-   if($result)
+ if($result)
+ {
+   $sess_array = array();
+   foreach($result as $row)
    {
-     $sess_array = array();
-     foreach($result as $row)
-     {
-       $sess_array = array(
-         'id' => $row->id,
-         'username' => $row->username,
-		 'member_type' => $row->member_type
+     $sess_array = array(
+       'id' => $row->id,
+       'username' => $row->username,
+       'member_type' => $row->member_type
        );
-       $this->session->set_userdata('logged_in', $sess_array);
-     }
-     return TRUE;
+     $this->session->set_userdata('logged_in', $sess_array);
    }
-   else
-   {
-     $this->form_validation->set_message('check_database', 'Invalid username or password');
-     return false;
-   }
+   return TRUE;
  }
+ else
+ {
+   $this->form_validation->set_message('check_database', 'Invalid username or password');
+   return false;
+ }
+}
 }
 ?>
