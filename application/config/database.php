@@ -50,9 +50,9 @@ $active_record = TRUE;
 
 $db['default']['hostname'] = 'devweb2013.cis.strath.ac.uk';
 $db['default']['username'] = 'MEng2013';
-$db['default']['password'] = 'tinsious';
-$db['default']['database'] = 'xe';
-$db['default']['dbdriver'] = 'oci8';
+$db['default']['password'] = 'onidingo';
+$db['default']['database'] = 'MEng2013';
+$db['default']['dbdriver'] = 'mysql';
 $db['default']['dbprefix'] = '';
 $db['default']['pconnect'] = TRUE;
 $db['default']['db_debug'] = TRUE;

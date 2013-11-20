@@ -45,8 +45,8 @@ public function check_database($password)
    foreach($result as $row)
    {
      $sess_array = array(
-       'id' => $row->id,
-       'username' => $row->username,
+       //'id' => $row->id, -- NEED TO IMPLEMENT
+       'email' => $row->email,
        'member_type' => $row->member_type
        );
      $this->session->set_userdata('logged_in', $sess_array);

@@ -23,7 +23,9 @@ class Pages extends CI_Controller {
 		
 		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->all_userdata();
-			$data['user_type'] = $session_data['username'];  
+			//print_r($session_data);
+			$data['email'] = $session_data['logged_in']['email'];  
+			$data['user_type'] = $session_data['logged_in']['member_type'];  
 		}
 		else{
 		  //If no session, redirect to login page

@@ -4,24 +4,20 @@
 
 Class User extends CI_Model
 {
- function login($username, $password)
+ function login($email, $password)
  {
 
-/*
-   $this -> db -> select('member_id, email, password');
-   $this -> db -> from('member_tbl');
-   $this -> db -> where('email', $username);
+   $this -> db -> select('email, password,member_type');
+   $this -> db -> from('colinTest');
+   $this -> db -> where('email', $email);
    $this -> db -> where('password', $password);
-*/
 
-   $this -> db -> select('member_id');
-   $this -> db -> from('member_tbl');
 
    //$where = array('email' => $username, 'password' => $password); // Use Line Below SHA512
    //$where = array('username' => $username, 'password' => hash('sha512', $password));
       
    //$this -> db -> where($where);
-   //$this -> db -> limit(1);
+   $this -> db -> limit(1);
    $query = $this -> db -> get();
    return $query->result();
 
