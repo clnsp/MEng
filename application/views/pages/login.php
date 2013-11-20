@@ -12,12 +12,12 @@
 
         <div class="input-group">
           <span class="input-group-addon"><i class="fa fa-envelope-o fa-fw"></i></span>
-          <input type="text" class="form-control" size="20" id="username" name="username" placeholder="Username"/>
+          <input type="text" class="form-control" size="20" id="username" name="username" value="<?php echo set_value('username'); ?>" placeholder="Username"/>
         </div>
         
         <div class="input-group">
            <span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>
-           <input type="password" class="form-control" size="20" id="passowrd" name="password" placeholder="Password"/>
+           <input type="password" class="form-control" size="20" id="passowrd" name="password" value="<?php echo set_value('password'); ?>" placeholder="Password"/>
          </div>
          
          <button type="submit" class="btn btn-primary btn-lg btn-block">Login</button>
