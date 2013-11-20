@@ -4,13 +4,13 @@
 
 class VerifyLogin extends CI_Controller {
 
- function __construct()
+public function __construct()
  {
    parent::__construct();
    $this->load->model('user','',TRUE);
  }
 
- function index()
+public function index()
  {
    //This method will have the credentials validation
    $this->load->library('form_validation');
@@ -21,16 +21,16 @@ class VerifyLogin extends CI_Controller {
    if($this->form_validation->run() == FALSE)
    {
      //Field validation failed.&nbsp; User redirected to login page
-     $this->load->view('login_view');
+	$this->load->view('login');
    }
    else
    {
      //Go to private area
      redirect('home', 'refresh');
    }
- }
+  }
  
- function check_database($password)
+public function check_database($password)
  {
    //Field validation succeeded.&nbsp; Validate against database
    $username = $this->input->post('username');

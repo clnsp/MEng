@@ -43,7 +43,7 @@ $route['404_override'] = '';*/
 
 $route['(:any)'] = 'pages/view/$1';
 $route['login'] = 'pages/login/$1';
-$route['verifylogin'] = 'pages/login/$1';
+$route['verifylogin'] = 'verifylogin/index';
 $route['default_controller'] = 'pages/view';
 
 /* End of file routes.php */

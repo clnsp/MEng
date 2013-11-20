@@ -69,10 +69,9 @@ class Pages extends CI_Controller {
 	}
 
 	/**
-	 * Helper function to load libraries needed for every page.
+	 * Helper function to load libraries needed for every page. ** MOVE TO config/AUTO LOADER ????
 	 */
 	public function load_page_libraries(){
-		$this->load->library('session');
 		$this->load->library('parser');
 		$this->load->helper('url_helper');
 	}
