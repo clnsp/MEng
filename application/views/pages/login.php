@@ -1,4 +1,8 @@
 
+<div class="page-header text-center">
+  <h1>Welcome to CSR Online Booking System <br><small>Make and manage your bookings online</small></h1>
+</div>
+
 <div class="row">
   <div class="col-md-6 div-center text-center">
     <div class="panel panel-default">
