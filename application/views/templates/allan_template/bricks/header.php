@@ -29,7 +29,7 @@
       <body>
 
         <div id="booking">
-
+          <div id="page-wrapper">
           <div class="navbar navbar-default navbar-inverse navbar-top" role="navigation">
             <div class="container">
               <a class="navbar-brand" href="#"><span class="glyphicon glyphicon-bold"></span> CSR</a>
