@@ -7,7 +7,7 @@
       </div>
       <div class="panel-body">
 
-        <?php echo validation_errors(); ?>
+        <?php echo validation_errors('<div class="error alert alert-danger">', '</div>'); ?> 
         <?php echo form_open('verifylogin'); ?>
 
         <div class="input-group">
@@ -20,11 +20,12 @@
            <input type="password" class="form-control" size="20" id="passowrd" name="password" value="<?php echo set_value('password'); ?>" placeholder="Password"/>
          </div>
          
-         <button type="submit" class="btn btn-primary btn-lg btn-block">Login</button>
-
+         <div>
+           <a class="pull-left" href="#">Forgotten Password?</a>
+           <button type="submit" class="btn btn-primary btn-lg pull-right">Login</button>
+          </div>
 
        </form>
-
 
      </div>
    </div>

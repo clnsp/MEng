@@ -9,7 +9,6 @@ if ( ! function_exists('parse_temp'))
     function parse_temp($page = 'home', $page_body) {
 
         $ci = get_instance();
-        $ci->load->helper('login_helper');
         $session_data = $ci->session->userdata('logged_in');
 
     	$data['page_title'] = $page; //title should be more descriptive eg. "Sports Hall Bookings"
