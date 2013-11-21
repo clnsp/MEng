@@ -43,6 +43,7 @@ $route['404_override'] = '';*/
 
 $route['(:any)'] = 'pages/view/$1';
 $route['login'] = 'pages/login';
+$route['logout'] = 'pages/logout';
 $route['verifylogin'] = 'verifylogin/index';
 $route['default_controller'] = 'pages/view';
 
