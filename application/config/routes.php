@@ -41,11 +41,12 @@
 /*$route['default_controller'] = "welcome";
 $route['404_override'] = '';*/
 
+$route['auth/(:any)'] = 'auth/$1';
 //$route['(:any)'] = 'pages/view/$1';
-$route['login'] = 'pages/login';
-$route['logout'] = 'pages/logout';
+$route['login'] = 'auth/login';
 $route['verifylogin'] = 'verifylogin/index';
 $route['default_controller'] = 'pages/view';
+
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

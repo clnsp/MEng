@@ -28,7 +28,7 @@ class Auth extends CI_Controller
 	 * @return void
 	 */
 	function login()
-	{
+	{	
 		if ($this->tank_auth->is_logged_in()) {									// logged in
 			redirect('');
 
@@ -92,7 +92,15 @@ class Auth extends CI_Controller
 					$data['captcha_html'] = $this->_create_captcha();
 				}
 			}
-			$this->load->view('auth/login_form', $data);
+
+			//$this->load->view('auth/login_form', $data);
+			/* 
+			 * There must be a way to easily call the login form from other controllers.
+			 * Below I'm just concatenating two page bodies together
+			 * Could move the code in pages/login to the top of auth/login though
+			 * Doesn't feel very modular. ~AW
+			 */
+    		parse_temp('login', $this->load->view('pages/login', $data, true) . $this->load->view('auth/login_form', $data, true));
 		}
 	}
 

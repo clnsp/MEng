@@ -1,10 +1,6 @@
   <!DOCTYPE html>
   <html lang="en">
   <head>
-
-    <?php   
-    $logged_in = (isset($user_type));
-    ?>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="">
@@ -97,7 +93,7 @@
                 <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownUser">
                   <li><a href="#">Account Settings</a></li>
                   <li class="divider"></li>
-                  <li><a href="logout">Logout</a></li>
+                  <li><a href="auth/logout">Logout</a></li>
                 </ul>
 
               </li>

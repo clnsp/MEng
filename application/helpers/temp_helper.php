@@ -14,14 +14,15 @@ if ( ! function_exists('parse_temp'))
     	$data['page_title'] = $page; //title should be more descriptive eg. "Sports Hall Bookings"
 		$data['page_slug'] = $page; //slug should uniquely id a page eg "sports_hall_bookings"
 		$data['page_body'] = $page_body;
+        
 
-        if(isset($session_data)){
-          //  print_r($session_data);
-            $data['email'] = $session_data['email'];  
-            $data['user_type'] = $session_data['member_type']; 
-            $data['user_name'] = $session_data['user_name'];
-        }
+        $data['logged_in'] = $ci->tank_auth->is_logged_in(); 
 
+
+        $data['email'] = $session_data['email'];  
+        $data['user_type'] = '1';//$session_data['member_type']; 
+        $data['user_name'] = 'A. Murray';//$session_data['user_name'];
+        
 		$ci->parser->parse(template_url(), $data);
     }
 

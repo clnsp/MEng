@@ -19,16 +19,15 @@
 				show_404();
 			}
 
-			if($this->session->userdata('logged_in')){
-				parse_temp($page, $this->load->view('pages/'.$page, '', true));
-			}
 
-			else{
+			if(!$this->tank_auth->is_logged_in()){
 			  //If no session, redirect to login page
 				$data['user_type'] = 'guest';
 				redirect('login', 'refresh');
 			}
-			
+
+			parse_temp($page, $this->load->view('pages/'.$page, '', true));
+
 		}
 
 		/**
@@ -36,8 +35,10 @@
 		 */
 		public function login($page = 'login'){
 			$this->load->helper(array('form'));
-			
+
+			$this->load->view('auth/login_form', $data);
 			parse_temp($page, $this->load->view('pages/'.$page, '', true));
+
 		}
 
 		/**
