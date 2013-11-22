@@ -93,7 +93,7 @@
                 <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownUser">
                   <li><a href="#">Account Settings</a></li>
                   <li class="divider"></li>
-                  <li><a href="auth/logout">Logout</a></li>
+                  <li><a href="logout">Logout</a></li>
                 </ul>
 
               </li>
