@@ -7,7 +7,7 @@ Class User extends CI_Model
  function login($email, $password)
  {
 
-   $this -> db -> select('email, password,member_type');
+   $this -> db -> select('email, password,member_type,fName,sName');
    $this -> db -> from('colinTest');
    $this -> db -> where('email', $email);
    $this -> db -> where('password', $password);
@@ -21,7 +21,7 @@ Class User extends CI_Model
    $query = $this -> db -> get();
    return $query->result();
 
-   //if($query -> num_rows() == 1){ return $query->result();}
+   //if($query -> num_rows() == 1){ return $query->\\\result();}
    //else { return false; }
  }
 }

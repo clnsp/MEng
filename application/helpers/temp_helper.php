@@ -19,7 +19,7 @@ if ( ! function_exists('parse_temp'))
           //  print_r($session_data);
             $data['email'] = $session_data['email'];  
             $data['user_type'] = $session_data['member_type']; 
-            $data['user_name'] = "A. Murray";
+            $data['user_name'] = $session_data['user_name'];
         }
 
 		$ci->parser->parse(template_url(), $data);

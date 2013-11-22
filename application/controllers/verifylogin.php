@@ -47,7 +47,8 @@ public function check_database($password)
      $sess_array = array(
        //'id' => $row->id, -- NEED TO IMPLEMENT
        'email' => $row->email,
-       'member_type' => $row->member_type
+       'member_type' => $row->member_type,
+       'user_name' => substr($row->fName, 0, 1) . '. ' . $row->sName // E.G A. Murray
        );
      $this->session->set_userdata('logged_in', $sess_array);
    }
