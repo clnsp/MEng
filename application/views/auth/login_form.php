@@ -32,11 +32,62 @@ $captcha = array(
 );
 ?>
 <?php echo form_open($this->uri->uri_string()); ?>
+
+<div class="row">
+  <div class="col-md-6 div-center text-center">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Please Login</h3>
+      </div>
+      <div class="panel-body">
+
+           
+       <?php echo form_error($login['name']); ?><?php echo isset($errors[$login['name']])?$errors[$login['name']]:''; ?>
+
+        <div class="input-group">
+          <span class="input-group-addon"><i class="fa fa-envelope-o fa-fw"></i></span>
+          <?php echo form_input($login,'', 'class="form-control" placeholder="Username"'); ?>
+        </div>
+
+        
+        <div class="input-group">
+           <span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>
+           <?php echo form_password($password,'', 'class="form-control" placeholder="Password"'); ?>
+
+       </div>
+
+       <div class="checkbox text-left">
+       	<label>
+       		
+			<?php echo form_checkbox($remember, 'type="checkbox"'); ?> Remember Me
+			
+       	</label>
+       </div>
+
+
+       <div>
+       	<?php echo anchor('/auth/forgot_password/', 'Forgot password', 'class="pull-left"'); ?>
+      
+       	<?php echo form_submit('submit', 'Login', 'class="btn btn-primary btn-lg pull-right"'); ?>
+       </div>
+
+   </form>
+
+     </div>
+   </div>
+ </div>
+</div>
+
+
+
+<?php
+
+?>
 <table>
 	<tr>
 		<td><?php echo form_label($login_label, $login['id']); ?></td>
-		<td><?php echo form_input($login); ?></td>
-		<td style="color: red;"><?php echo form_error($login['name']); ?><?php echo isset($errors[$login['name']])?$errors[$login['name']]:''; ?></td>
+		<td><?php echo form_input($login, 'class="form-control" placeholder="Username"'); ?></td>
+		<?php echo form_error($login['name']); ?><?php echo isset($errors[$login['name']])?$errors[$login['name']]:''; ?>
 	</tr>
 	<tr>
 		<td><?php echo form_label('Password', $password['id']); ?></td>
