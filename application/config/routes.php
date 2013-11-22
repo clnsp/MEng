@@ -41,7 +41,7 @@
 /*$route['default_controller'] = "welcome";
 $route['404_override'] = '';*/
 
-$route['(:any)'] = 'pages/view/$1';
+//$route['(:any)'] = 'pages/view/$1';
 $route['login'] = 'pages/login';
 $route['logout'] = 'pages/logout';
 $route['verifylogin'] = 'verifylogin/index';
