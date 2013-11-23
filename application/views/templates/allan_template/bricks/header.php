@@ -8,6 +8,7 @@
 
     <title>{page_title}</title>
 
+	<link rel="shortcut icon" href="<?php echo base_url();?>assets/img/favicon">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
     <link rel="stylesheet" href="<?php echo base_url();?>assets/css/bootstrap-theme.css">
@@ -26,10 +27,16 @@
 
         <div id="booking">
           <div id="page-wrapper">
-          <div class="navbar navbar-default navbar-inverse navbar-top" role="navigation">
-            <div class="container">
-              <a class="navbar-brand" href="#"><span class="glyphicon glyphicon-bold"></span> CSR</a>
+		  
+		  <div id="menu-wrapper>" class="row">
+				<div class="col-md-2 hidden-sm hidden-xs">
+				<img class="displayed" src="<?php echo base_url();?>assets/img/menu-logo.jpg" alt="Strathclyde University CSR">
+				</div>
+				<div class="col-md-10">
+				
 
+		  
+          <div class="navbar navbar-default navbar-inverse navbar-top" role="navigation">
               <?php if($page_slug != 'login'):?>
               <div class="navbar-header">
 
@@ -106,6 +113,7 @@
 
         </div><!--/.nav-collapse -->
       <?php endif; ?>
-    </div>
   </div>
+  				</div>		  
+		  </div>
 

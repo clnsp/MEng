@@ -12,16 +12,16 @@
 
   <div  class="center-block">
   <span class="fa-stack fa-lg">
-    <i class="fa fa-circle fa-stack-2x"></i>
-  <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+    <i class="fa fa-circle fa-stack-2x fa-inverse"></i>
+  <i class="fa fa-twitter fa-stack-1x"></i>
   </span>
   <span class="fa-stack fa-lg">
-    <i class="fa fa-circle fa-stack-2x"></i>
-  <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+    <i class="fa fa-circle fa-stack-2x fa-inverse"></i>
+  <i class="fa fa-facebook fa-stack-1x"></i>
   </span>
   <span class="fa-stack fa-lg">
-    <i class="fa fa-circle fa-stack-2x"></i>
-  <i class="fa fa-google-plus fa-stack-1x fa-inverse"></i>
+    <i class="fa fa-circle fa-stack-2x fa-inverse"></i>
+  <i class="fa fa-google-plus fa-stack-1x"></i>
   </span>
   </div>
 

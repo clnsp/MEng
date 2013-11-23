@@ -81,7 +81,7 @@ $captcha = array(
 
 
 <?php
-
+/*
 ?>
 <table>
 	<tr>
@@ -142,3 +142,4 @@ $captcha = array(
 </table>
 <?php echo form_submit('submit', 'Let me in'); ?>
 <?php echo form_close(); ?>
+*/
