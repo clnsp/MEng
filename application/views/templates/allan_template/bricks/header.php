@@ -28,17 +28,17 @@
         <div id="booking">
           <div id="page-wrapper">
 		  
-		  <div id="menu-wrapper>" class="row">
-				<div class="col-md-2 hidden-sm hidden-xs">
-				<img class="displayed" src="<?php echo base_url();?>assets/img/menu-logo.jpg" alt="Strathclyde University CSR">
-				</div>
-				<div class="col-md-10">
-				
-
+	
 		  
           <div class="navbar navbar-default navbar-inverse navbar-top" role="navigation">
+         <div class="container">
+          
+          <a class="navbar-brand" href="<?php echo base_url();?>"> <img class="displayed" src="<?php echo base_url();?>assets/img/menu-logo.jpg" alt="Strathclyde University CSR"></a>
+          
               <?php if($page_slug != 'login'):?>
               <div class="navbar-header">
+              
+              
 
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                   <span class="sr-only">Toggle navigation</span>
@@ -114,6 +114,6 @@
         </div><!--/.nav-collapse -->
       <?php endif; ?>
   </div>
-  				</div>		  
-		  </div>
+  </div>
+  				
 

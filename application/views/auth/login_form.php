@@ -56,21 +56,18 @@ $captcha = array(
 
        </div>
 
-       <div class="checkbox text-left">
-       	<label>
-       		
-			<?php echo form_checkbox($remember, 'type="checkbox"'); ?> Remember Me
-			
-       	</label>
-       </div>
+ 	<?php echo anchor('/auth/forgot_password/', 'Forgot password', 'class="pull-left"'); ?>
 
-
-       <div>
-       	<?php echo anchor('/auth/forgot_password/', 'Forgot password', 'class="pull-left"'); ?>
-      
+         
        	<?php echo form_submit('submit', 'Login', 'class="btn btn-primary btn-lg pull-right"'); ?>
-       </div>
-
+  
+<div class="checkbox text-left pull-right clearfix">
+	<label>
+		
+		<?php echo form_checkbox($remember, 'type="checkbox"'); ?>  Remember Me
+		
+	</label>
+</div>
    </form>
 
      </div>
