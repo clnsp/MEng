@@ -58,8 +58,6 @@ $form = array(
 	<p>Lorem ipsum dolor sit amet, feugiat apeirian contentiones ut ius, ius probatus rationibus repudiandae ad. Ad sed vero periculis. An posse delectus philosophia vel. Ne ius pertinax consectetuer, eam ex mundi aeterno dissentiunt. Saepe ancillae assueverit vis et, eam rebum delenit deterruisset cu.</p>
 	<div class="well well-lg  div-center">
 	<?php echo form_open($this->uri->uri_string(), $form); ?>
-
-
 			<?php if ($use_username) { ?>
 			<div class="form-group">
 				<?php echo form_label('Username', $username['id'], $label); ?>
