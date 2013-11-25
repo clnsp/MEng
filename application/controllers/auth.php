@@ -8,6 +8,7 @@ class Auth extends CI_Controller
 
 		$this->load->helper(array('form', 'url'));
 		$this->load->library('form_validation');
+		$this->form_validation->set_error_delimiters('<div class="alert alert-danger text-center">', '</div>');
 		$this->load->library('security');
 		$this->load->library('tank_auth');
 		$this->lang->load('tank_auth');
@@ -16,7 +17,9 @@ class Auth extends CI_Controller
 	function index()
 	{
 		if ($message = $this->session->flashdata('message')) {
-			$this->load->view('auth/general_message', array('message' => $message));
+			//$this->load->view('auth/general_message', array('message' => $message));
+			parse_temp('', $this->load->view('auth/general_message', array('message' => $message), true));
+
 		} else {
 			redirect('/auth/login/');
 		}
@@ -233,7 +236,8 @@ class Auth extends CI_Controller
 				foreach ($errors as $k => $v)	$data['errors'][$k] = $this->lang->line($v);
 			}
 		}
-		$this->load->view('auth/send_again_form', $data);
+		//$this->load->view('auth/send_again_form', $data);
+		parse_temp('Send Again', $this->load->view('auth/send_again_form', $data, true));
 	}
 }
 
@@ -341,7 +345,8 @@ class Auth extends CI_Controller
 				$this->_show_message($this->lang->line('auth_message_new_password_failed'));
 			}
 		}
-		$this->load->view('auth/reset_password_form', $data);
+		//$this->load->view('auth/reset_password_form', $data);
+		parse_temp('Reset Password', $this->load->view('auth/reset_password_form', $data, true));
 	}
 
 	/**
@@ -372,7 +377,8 @@ class Auth extends CI_Controller
 					foreach ($errors as $k => $v)	$data['errors'][$k] = $this->lang->line($v);
 				}
 			}
-			$this->load->view('auth/change_password_form', $data);
+			//$this->load->view('auth/change_password_form', $data);
+			parse_temp('Change Password', $this->load->view('auth/change_password_form', $data, true));
 		}
 	}
 
@@ -409,7 +415,8 @@ class Auth extends CI_Controller
 				foreach ($errors as $k => $v)	$data['errors'][$k] = $this->lang->line($v);
 			}
 		}
-		$this->load->view('auth/change_email_form', $data);
+		//$this->load->view('auth/change_email_form', $data);
+		parse_temp('Change Email', $this->load->view('auth/change_email_form', $data, true));
 	}
 }
 
@@ -460,7 +467,8 @@ class Auth extends CI_Controller
 					foreach ($errors as $k => $v)	$data['errors'][$k] = $this->lang->line($v);
 				}
 			}
-			$this->load->view('auth/unregister_form', $data);
+			//$this->load->view('auth/unregister_form', $data);
+			parse_temp('unregister', $this->load->view('auth/unregister_form', $data, true));
 		}
 	}
 

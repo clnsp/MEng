@@ -54,7 +54,7 @@ $form = array(
 
 	?>	
 
-	<h2>Registration</h2>
+	<h1>Registration</h1>
 	<p>Lorem ipsum dolor sit amet, feugiat apeirian contentiones ut ius, ius probatus rationibus repudiandae ad. Ad sed vero periculis. An posse delectus philosophia vel. Ne ius pertinax consectetuer, eam ex mundi aeterno dissentiunt. Saepe ancillae assueverit vis et, eam rebum delenit deterruisset cu.</p>
 	<div class="well well-lg  div-center">
 	<?php echo form_open($this->uri->uri_string(), $form); ?>
@@ -68,28 +68,31 @@ $form = array(
 			</div>
 			<?php } ?>
 
+				<?php echo form_error($email['name']); ?><?php echo isset($errors[$email['name']])?$errors[$email['name']]:''; ?>
+
 			<div class="form-group">
 				<?php echo form_label('Email', $email['id'], $label); ?>
 				<div class="col-sm-10">
 					<?php echo form_input($email); ?>
 				</div>
-				<?php echo form_error($email['name']); ?><?php echo isset($errors[$email['name']])?$errors[$email['name']]:''; ?>
 			</div>
 			
+							<?php echo form_error($password['name']); ?>
+
+
 			<div class="form-group">
 				<?php echo form_label('Password', $password['id'], $label); ?>
 				<div class="col-sm-10">
 					<?php echo form_password($password); ?>
 				</div>
-				<?php echo form_error($password['name']); ?>
 			</div>
+				<?php echo form_error($confirm_password['name']); ?>
 
 			<div class="form-group">
 				<?php echo form_label('Confirm Password', $confirm_password['id'], $label); ?>
 				<div class="col-sm-10">
 					<?php echo form_password($confirm_password); ?>
 				</div>
-				<?php echo form_error($confirm_password['name']); ?>
 			</div>
 
 			<?php if ($captcha_registration) {
