@@ -23,7 +23,8 @@ $remember = array(
 	'id'	=> 'remember',
 	'value'	=> 1,
 	'checked'	=> set_value('remember'),
-	'style' => 'margin:0;padding:0',
+	'type' => 'checkbox',
+
 );
 $captcha = array(
 	'name'	=> 'captcha',
@@ -31,7 +32,7 @@ $captcha = array(
 	'maxlength'	=> 8,
 );
 ?>
-<?php echo form_open($this->uri->uri_string()); ?>
+<?php echo form_open($this->uri->uri_string(), 'id="login-form"'); ?>
 
 <div class="row">
   <div class="col-md-6 div-center text-center">
@@ -55,19 +56,21 @@ $captcha = array(
            <?php echo form_password($password,'', 'class="form-control" placeholder="Password"'); ?>
 
        </div>
-
- 	<?php echo anchor('/auth/forgot_password/', 'Forgot password', 'class="pull-left"'); ?>
+<div class="form-group">
+ 	<?php echo anchor('/auth/forgot_password/', 'Forgot password?', 'class="pull-left"'); ?>
 
          
-       	<?php echo form_submit('submit', 'Login', 'class="btn btn-primary btn-lg pull-right"'); ?>
+       	<?php echo form_submit('submit', 'Login', 'class="btn btn-primary btn-default pull-right"'); ?>
   
-<div class="checkbox text-left pull-right clearfix">
+
+
+<div id ="remember-me" class="checkbox text-left pull-right clearfix">
 	<label>
-		
-		<?php echo form_checkbox($remember, 'type="checkbox"'); ?>  Remember Me
-		
+		<?php echo form_checkbox($remember); ?>  Remember Me		
 	</label>
 </div>
+</div>
+
    </form>
 
      </div>

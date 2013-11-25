@@ -8,7 +8,7 @@
 
     <title>{page_title}</title>
 
-	<link rel="shortcut icon" href="<?php echo base_url();?>assets/img/favicon">
+    <link rel="shortcut icon" href="<?php echo base_url();?>assets/img/favicon">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
     <link rel="stylesheet" href="<?php echo base_url();?>assets/css/bootstrap-theme.css">
@@ -27,18 +27,13 @@
 
         <div id="booking">
           <div id="page-wrapper">
-		  
-	
-		  
-          <div class="navbar navbar-default navbar-inverse navbar-top" role="navigation">
-         <div class="container">
-          
-          <a class="navbar-brand" href="<?php echo base_url();?>"> <img class="displayed" src="<?php echo base_url();?>assets/img/menu-logo.jpg" alt="Strathclyde University CSR"></a>
-          
-              <?php if($page_slug != 'login'):?>
+
+           <div class="navbar navbar-default navbar-inverse navbar-top" role="navigation">
+             <div class="container">
+
+              <a class="navbar-brand" href="<?php echo base_url();?>"> <img class="displayed" src="<?php echo base_url();?>assets/img/menu-logo-small.jpg" alt="Strathclyde University CSR"></a>
+
               <div class="navbar-header">
-              
-              
 
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                   <span class="sr-only">Toggle navigation</span>
@@ -69,7 +64,9 @@
 
 
               <ul class="nav navbar-nav navbar-right">
-                <?php if(!$logged_in):?>
+
+
+                <?php if(!$logged_in & !$page_slug == 'login'):?>
                 <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown">Login<b class="caret"></b></a>
 
@@ -104,16 +101,19 @@
                 </ul>
 
               </li>
-            <?php endif; ?>
-
-
+              
+            <? else: ?>
 
           </ul>
 
 
-        </div><!--/.nav-collapse -->
-      <?php endif; ?>
+<form class="navbar-form navbar-right" role="search">
+    <a href="auth/register" id="register-button" class="btn btn-primary">Register</a>
+</form>
+        <?php endif; ?>
+
+      </div><!--/.nav-collapse -->
+    </div>
   </div>
-  </div>
-  				
+
 
