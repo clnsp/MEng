@@ -56,9 +56,7 @@
 
                   }
                 }
-                else{
-                      //load guest view
-                }
+                
                 ?>
               </ul>
 
@@ -107,9 +105,9 @@
           </ul>
 
 
-<form class="navbar-form navbar-right" role="search">
-    <a href="auth/register" id="register-button" class="btn btn-primary">Register</a>
-</form>
+          <form class="navbar-form navbar-right" role="search">
+            <a href="register" id="register-button" class="btn btn-primary">Register</a>
+          </form>
         <?php endif; ?>
 
       </div><!--/.nav-collapse -->

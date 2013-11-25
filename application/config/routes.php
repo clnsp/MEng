@@ -45,6 +45,7 @@ $route['auth/(:any)'] = 'auth/$1';
 //$route['(:any)'] = 'pages/view/$1';
 $route['login'] = 'auth/login';
 $route['logout'] = 'auth/logout';
+$route['register'] = 'auth/register';
 $route['verifylogin'] = 'verifylogin/index';
 $route['default_controller'] = 'pages/view';
 
