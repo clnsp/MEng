@@ -21,7 +21,7 @@ if ( ! function_exists('parse_temp'))
 
         $data['email'] = $session_data['email'];  
         $data['user_type'] = '1';//$session_data['member_type']; 
-        $data['user_name'] = 'A. Murray';//$session_data['user_name'];
+        $data['user_name'] = $ci->tank_auth->get_username();
         
 		$ci->parser->parse(template_url(), $data);
     }

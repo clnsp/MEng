@@ -378,7 +378,7 @@ class Auth extends CI_Controller
 				}
 			}
 			//$this->load->view('auth/change_password_form', $data);
-			parse_temp('Change Password', $this->load->view('auth/change_password_form', $data, true));
+			parse_temp('Change Password', $this->load->view('auth/account_settings', '', true) . $this->load->view('auth/change_password_form', $data, true));
 		}
 	}
 
@@ -416,7 +416,7 @@ class Auth extends CI_Controller
 			}
 		}
 		//$this->load->view('auth/change_email_form', $data);
-		parse_temp('Change Email', $this->load->view('auth/change_email_form', $data, true));
+		parse_temp('Change Email', $this->load->view('auth/account_settings', '', true) . $this->load->view('auth/change_email_form', $data, true));
 	}
 }
 
@@ -468,7 +468,7 @@ class Auth extends CI_Controller
 				}
 			}
 			//$this->load->view('auth/unregister_form', $data);
-			parse_temp('unregister', $this->load->view('auth/unregister_form', $data, true));
+			parse_temp('unregister', $this->load->view('auth/account_settings', '', true) . $this->load->view('auth/unregister_form', $data, true));
 		}
 	}
 
@@ -599,7 +599,24 @@ class Auth extends CI_Controller
 		return TRUE;
 	}
 
+	/**
+	 * User profile page
+	 *
+	 * 
+	 */
+	function account_settings(){
+
+	if (!$this->tank_auth->is_logged_in()) {									// logged in
+			redirect('');
+
+		}	
+		parse_temp('login', $this->load->view('auth/account_settings', '', true));
+	}
+
+
+
 }
+
 
 /* End of file auth.php */
 /* Location: ./application/controllers/auth.php */

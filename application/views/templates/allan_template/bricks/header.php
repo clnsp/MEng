@@ -93,7 +93,7 @@
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">{user_name} <span class="glyphicon glyphicon-user"><span class="caret"></span></a>            
 
                 <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownUser">
-                  <li><a href="#">Account Settings</a></li>
+                  <li><a href="auth/account_settings">Account Settings</a></li>
                   <li class="divider"></li>
                   <li><a href="logout">Logout</a></li>
                 </ul>
