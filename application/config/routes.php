@@ -47,6 +47,8 @@ $route['login'] = 'auth/login';
 $route['logout'] = 'auth/logout';
 $route['register'] = 'auth/register';
 $route['verifylogin'] = 'verifylogin/index';
+$route['404_override'] = 'pages/view/page-not-found';
+
 $route['default_controller'] = 'pages/view';
 
 

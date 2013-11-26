@@ -49,8 +49,7 @@ $captcha = array(
 				<div class="panel-body">
 
 
-					<?php echo form_error($login['name']); ?>
-					<?php echo isset($errors[$login['name']])? 'hi' . $errors[$login['name']]:''; ?>
+					<?php echo form_error($login['name']); ?><?php echo isset($errors[$login['name']])?$errors[$login['name']]:''; ?>
 
 					<div class="input-group">
 						<span class="input-group-addon"><i class="fa fa-envelope-o fa-fw"></i></span>
