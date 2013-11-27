@@ -63,44 +63,46 @@ $captcha = array(
 
 					</div>
 					<?php if ($show_captcha) {?>
-						<tr>
-							<td colspan="2">
-								<div id="recaptcha_image"></div>
-							</td>
-							<td>
-								<a href="javascript:Recaptcha.reload()">Get another CAPTCHA</a>
-								<div class="recaptcha_only_if_image"><a href="javascript:Recaptcha.switch_type('audio')">Get an audio CAPTCHA</a></div>
-								<div class="recaptcha_only_if_audio"><a href="javascript:Recaptcha.switch_type('image')">Get an image CAPTCHA</a></div>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<div class="recaptcha_only_if_image">Enter the words above</div>
-								<div class="recaptcha_only_if_audio">Enter the numbers you hear</div>
-							</td>
-							<td><input type="text" id="recaptcha_response_field" name="recaptcha_response_field" /></td>
-							<td style="color: red;"><?php echo form_error('recaptcha_response_field'); ?></td>
-							<?php echo $recaptcha_html; ?>
-						</tr>
 
-<?php }?>
+					<div class="well text-center">
+						
 
-					<div class="form-group">
-						<?php echo anchor('/auth/forgot_password/', 'Forgot password?', 'class="pull-left"'); ?>
+						<div class="form-group">
 
-						<?php echo form_submit('submit', 'Login', 'class="btn btn-primary btn-default pull-right"'); ?>
+							<div class="pull-left" id="recaptcha_image"></div>
 
-						<div id ="remember-me" class="checkbox text-left pull-right clearfix">
-							<label>
-						<?php echo form_checkbox($remember); ?>  Remember Me		
-							</label>
+							<div class="btn-group-vertica pull-left">
+								<a class="btn btn-default" alt="Get another CAPTCHA" href="javascript:Recaptcha.reload()"><i class="glyphicon glyphicon-refresh"></i></a>
+								<div class="recaptcha_only_if_image"><a alt ="Get an audio CAPTCHA" class="btn btn-default" href="javascript:Recaptcha.switch_type('audio')"><i class="glyphicon glyphicon-volume-up"></i></a></div>
+								<div class="recaptcha_only_if_audio"><a alt="Get an image CAPTCHA" class="btn btn-default"href="javascript:Recaptcha.switch_type('image')"><i class="glyphicon glyphicon-picture"></i></a></div>
+							</div>
 						</div>
+						<?php echo form_error('recaptcha_response_field'); ?>
+
+						
+						<input type="text" class="form-control recaptcha_only_if_image" placeholder = "Enter the words above" id="recaptcha_response_field" name="recaptcha_response_field" />
+						<input type="text" class="form-control recaptcha_only_if_audio" placeholder = "Enter the numbers you hear" id="recaptcha_response_field" name="recaptcha_response_field" />
+						<?php echo $recaptcha_html; ?>
+					</tr>
+				</div>
+				<?php }?>
+
+				<div class="form-group">
+					<?php echo anchor('/auth/forgot_password/', 'Forgot password?', 'class="pull-left"'); ?>
+
+					<?php echo form_submit('submit', 'Login', 'class="btn btn-primary btn-default pull-right"'); ?>
+
+					<div id ="remember-me" class="checkbox text-left pull-right clearfix">
+						<label>
+							<?php echo form_checkbox($remember); ?>  Remember Me		
+						</label>
 					</div>
+				</div>
 
-				</form>
+			</form>
 
-			</div>
 		</div>
 	</div>
+</div>
 </div>
 
