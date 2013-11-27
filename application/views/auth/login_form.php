@@ -69,7 +69,7 @@ $captcha = array(
 
 						<div class="form-group">
 
-							<div class="div-center">
+							<div class="div-center clearfix">
 								<div class="pull-left" id="recaptcha_image"></div>
 
 								<div class="btn-group-vertica pull-left">
