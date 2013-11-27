@@ -62,6 +62,29 @@ $captcha = array(
 						<?php echo form_password($password); ?>
 
 					</div>
+					<?php if ($show_captcha) {?>
+						<tr>
+							<td colspan="2">
+								<div id="recaptcha_image"></div>
+							</td>
+							<td>
+								<a href="javascript:Recaptcha.reload()">Get another CAPTCHA</a>
+								<div class="recaptcha_only_if_image"><a href="javascript:Recaptcha.switch_type('audio')">Get an audio CAPTCHA</a></div>
+								<div class="recaptcha_only_if_audio"><a href="javascript:Recaptcha.switch_type('image')">Get an image CAPTCHA</a></div>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<div class="recaptcha_only_if_image">Enter the words above</div>
+								<div class="recaptcha_only_if_audio">Enter the numbers you hear</div>
+							</td>
+							<td><input type="text" id="recaptcha_response_field" name="recaptcha_response_field" /></td>
+							<td style="color: red;"><?php echo form_error('recaptcha_response_field'); ?></td>
+							<?php echo $recaptcha_html; ?>
+						</tr>
+
+<?php }?>
+
 					<div class="form-group">
 						<?php echo anchor('/auth/forgot_password/', 'Forgot password?', 'class="pull-left"'); ?>
 

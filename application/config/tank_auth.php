@@ -73,7 +73,7 @@ $config['login_by_email'] = TRUE;
 $config['login_record_ip'] = TRUE;
 $config['login_record_time'] = TRUE;
 $config['login_count_attempts'] = TRUE;
-$config['login_max_attempts'] = 50000;
+$config['login_max_attempts'] = 5;
 $config['login_attempt_expire'] = 60*60*24;
 
 /*
@@ -126,9 +126,9 @@ $config['captcha_case_sensitive'] = TRUE;
 | You can get reCAPTCHA keys by registering at http://recaptcha.net
 |--------------------------------------------------------------------------
 */
-$config['use_recaptcha'] = FALSE;
-$config['recaptcha_public_key'] = '';
-$config['recaptcha_private_key'] = '';
+$config['use_recaptcha'] = TRUE;
+$config['recaptcha_public_key'] = '6LdW2uoSAAAAAPMDeZJTD7NIsJ6gdKRKKmcbQ_0Z';
+$config['recaptcha_private_key'] = '6LdW2uoSAAAAAPLntPCigzxiN_x50GxZcldoZSyr';
 
 /*
 |--------------------------------------------------------------------------
