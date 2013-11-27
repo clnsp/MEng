@@ -78,17 +78,18 @@ $captcha = array(
 									<div class="recaptcha_only_if_audio"><a alt="Get an image CAPTCHA" class="btn btn-default"href="javascript:Recaptcha.switch_type('image')"><i class="glyphicon glyphicon-picture"></i></a></div>
 								</div>
 							</div>
-							<?php echo form_error('recaptcha_response_field'); ?>
-
+							
 							<div class="form-group">
-								<input type="text" class="form-control recaptcha_only_if_image" placeholder = "Enter the words above" id="recaptcha_response_field" name="recaptcha_response_field" />
-								<input type="text" class="form-control recaptcha_only_if_audio" placeholder = "Enter the numbers you hear" id="recaptcha_response_field" name="recaptcha_response_field" />
+								<div class="recaptcha_only_if_image">Enter the words above</div>
+								<div class="recaptcha_only_if_audio">Enter the numbers you hear</div>
+								<input type="text" class="form-control" id="recaptcha_response_field" name="recaptcha_response_field" />
+								<?php echo form_error('recaptcha_response_field'); ?>
 								<?php echo $recaptcha_html; ?>
 							</div>
 						</div>
 					</div>
 					<?php }?>
-
+					
 					<div class="form-group">
 						<?php echo anchor('/auth/forgot_password/', 'Forgot password?', 'class="pull-left"'); ?>
 
