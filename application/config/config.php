@@ -14,7 +14,7 @@
 | path to your installation.
 |
 */
-$config['base_url']	= 'https://devweb2013.cis.strath.ac.uk/~xvb09151/MEng/';
+$config['base_url']	= 'https://devweb2013.cis.strath.ac.uk/meng2013/';
 
 /*
 |--------------------------------------------------------------------------
@@ -224,7 +224,7 @@ $config['cache_path'] = '';
 | MUST set an encryption key.  See the user guide for info.
 |
 */
-$config['encryption_key'] = '450NFPrOlGuLatpA4RYytMWos5J9BPZP';
+$config['encryption_key'] = '';
 
 /*
 |--------------------------------------------------------------------------
