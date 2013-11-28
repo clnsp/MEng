@@ -41,6 +41,15 @@
 
 		}
 
+	/**
+		 * Admin calendar booking page
+		 */
+		public function admin_calendar($page = 'admin_calendar'){
+
+			parse_temp($page, $this->load->view('pages/'.$page, '', true));
+
+		}
+
 		/**
 		 * Logout of system
 		 */
