@@ -12,7 +12,15 @@
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
     <link rel="stylesheet" href="<?php echo base_url();?>assets/css/bootstrap-theme.php">
-     
+
+<link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/cal/fullcalendar.css">
+
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
+    <script src="<?php echo base_url();?>assets/js/jquery-ui.custom.min.js"></script>
+    <script src="<?php echo base_url();?>assets/cal/fullcalendar.min.js"></script>
+
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
       <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
