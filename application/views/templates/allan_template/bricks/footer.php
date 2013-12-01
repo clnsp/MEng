@@ -34,6 +34,10 @@
       <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
   <!-- Latest compiled and minified JavaScript -->
   	<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
+	<!-- COLIN TEST FIX-->
+	<script src="<?php echo base_url();?>assets/datatab/js/jquery.dataTables.js"></script>
+		<script src="<?php echo base_url();?>assets/datatab/js/DT_bootstrap.js"></script>
+	
 
 
   <script> 
@@ -65,6 +69,11 @@
         updateContent(event.state);
       });
       
+	  // COLIN TEST
+	  $('#member').dataTable( {
+	"sDom": "<'row'<'col-md-6'l><'col-md-6'f>r>t<'row'<'col-md-6'i><'col-md-6'p>>"
+    } );
+// END COLIN
       });
       
   // Store the initial content so we can revisit it later
