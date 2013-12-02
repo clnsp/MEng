@@ -523,7 +523,7 @@ html, body, #booking {
  * ******************************************
  */
 
-#booking .navbar{
+#booking .navbar-top{
  	border-radius: 0!important;
  	border-bottom: 3px solid <?php echo $brandSecondary;?>;
 	border-right-style: none;

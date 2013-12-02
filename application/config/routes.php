@@ -48,6 +48,11 @@ $route['register'] = 'auth/register';
 $route['verifylogin'] = 'verifylogin/index';
 $route['404_override'] = 'pages/view/page-not-found';
 
+$route['admin_calendar'] = 'pages/admin_calendar';
+$route['caljson'] = 'caljson';
+
+$route['welcome'] = 'welcome';
+
 //$route['(:any)'] = 'pages/view/$1';
 $route['default_controller'] = 'pages/view';
 

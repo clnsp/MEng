@@ -1,5 +1,5 @@
 
-<div>
+<div class="navbar">
 
 	<div class="col-xs-3 pull-right input-group input-group-sm">
 		<span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
@@ -14,31 +14,29 @@
 
 </div>
 
-<div id='calendar'></div>
+<div id='calendar' class="clearfix"></div>
 
 </div>
 <div class="tab-pane" id="sportshall">
-	sports halls
 </div>
 
 <div class="tab-pane" id="activitiesroom">
-	activities
 </div>
 
 <div class="tab-pane" id="royalcollegegym">
-	royals
 </div>
 </div>
 
+<div class="clearfix"></div>
 
 <script>
 
 $(document).ready(function() {
-
 	var date = new Date();
 	var d = date.getDate();
 	var m = date.getMonth();
 	var y = date.getFullYear();
+	//alert('' + new Date(y, m, 1));
 
 	$('#calendar').fullCalendar({
 		header: {
@@ -46,7 +44,32 @@ $(document).ready(function() {
 			center: 'title',
 			right: 'month,basicWeek,basicDay'
 		},
+
 		editable: true,
+		
+		eventClick: function() {
+			alert('an event has been clicked!');
+		},
+
+		eventSources: [
+
+        // your event source
+        {
+            url: 'https://devweb2013.cis.strath.ac.uk/~xvb09137/MEngBranchAW/index.php/caljson',
+            startParam: 'start',
+            endParam: 'end', // use the `url` property
+        }
+
+        // any other sources...
+
+        ],
+
+        viewDestroy: function() {
+
+        }
+
+
+		/*
 		events: [
 		{
 			title: 'All Day Event',
@@ -92,7 +115,7 @@ $(document).ready(function() {
 			end: new Date(y, m, 29),
 			url: 'http://google.com/'
 		}
-		]
+		]*/
 	});
 
 });

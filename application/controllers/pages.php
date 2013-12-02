@@ -45,7 +45,11 @@
 		 * Admin calendar booking page
 		 */
 		public function admin_calendar($page = 'admin_calendar'){
-
+			
+		//	$this->load->model('news_model');
+		//	$data['news'] = $this->news_model->get_news();
+	
+			//echo json_encode($return_arr);
 			parse_temp($page, $this->load->view('pages/'.$page, '', true));
 
 		}
