@@ -27,6 +27,81 @@
 </div>
 </div>
 
+
+<!-- Modal -->
+<div class="modal fade" id="eventModal" tabindex="-1" role="dialog" aria-labelledby="eventModal" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+
+				
+
+				<div class="pull-left col-xs-6">
+
+					<h4 class="modal-title" id="event-title">Class Title
+						<br>
+						<small id="event-date">30 September 2013 9pm - 10pm</small>
+					</div>
+
+
+				</h4>
+
+				<div class"pull-right text-right col-xs-6">
+					<i id="eventColor" class="pull-right glyphicon glyphicon-stop"></i>
+					<span class="clearfix"></span>	
+					<h5 class="clearfix pull-right modal-title">8/10 spaces filled</h5>
+				</div>
+					<span class="clearfix"></span>	
+
+			</div>
+			<div class="modal-body">
+
+				<div id="event-modal-left" class="col-xs-6">
+					<form class="form-inline">							
+						<input type="text" class="form-control inline input-sm cols-x2" placeholder="Search">
+					</form>
+
+					<div id="event-member-list">
+						<ul class="list-group">
+							<li class="list-group-item"> <input type="checkbox">Cras justo odio</li>
+							<li class="list-group-item"> <input type="checkbox">Dapibus ac facilisis in</li>
+							<li class="list-group-item"> <input type="checkbox">Morbi leo risus</li>
+							<li class="list-group-item"> <input type="checkbox">Porta ac consectetur ac</li>
+							<li class="list-group-item"> <input type="checkbox">Vestibulum at eros</li>
+						</ul>
+
+						<button class="btn btn-sm">Remove Member</button>
+					</div><!-- event-member-list -->
+				</div><!-- event-modal-left -->
+
+				<div id="event-modal-right" class="col-xs-6">
+
+
+					<h5>Add Member</h5>
+					<form class="form-inline" role="form">
+						<div class="form-group">
+
+							<label class="sr-only" for="event-add-memmber-text">Name</label>
+							<input type="text" class="form-control input-sm" id="event-add-memmber-text" placeholder="Enter name">
+						</div>
+
+
+						<button type="submit" class="btn btn-sm btn-default">Add</button>
+					</form>
+
+				</div>
+
+			</div>
+			<div class="clearfix modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-primary">Save changes</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
 <div class="clearfix"></div>
 
 <script>
@@ -48,15 +123,15 @@ $(document).ready(function() {
 		editable: true,
 		
 		eventClick: function() {
-			alert('an event has been clicked!');
+			$('#eventModal').modal('show')
 		},
 
 		eventSources: [
 
         // your event source
         {
-            url: 'https://devweb2013.cis.strath.ac.uk/~xvb09137/MEngBranchAW/index.php/caljson',
-            startParam: 'start',
+        	url: 'https://devweb2013.cis.strath.ac.uk/~xvb09137/MEngBranchAW/index.php/caljson',
+        	startParam: 'start',
             endParam: 'end', // use the `url` property
         }
 
@@ -68,55 +143,7 @@ $(document).ready(function() {
 
         }
 
-
-		/*
-		events: [
-		{
-			title: 'All Day Event',
-			start: new Date(y, m, 1)
-		},
-		{
-			title: 'Long Event',
-			start: new Date(y, m, d-5),
-			end: new Date(y, m, d-2)
-		},
-		{
-			id: 999,
-			title: 'Repeating Event',
-			start: new Date(y, m, d-3, 16, 0),
-			allDay: false
-		},
-		{
-			id: 999,
-			title: 'Repeating Event',
-			start: new Date(y, m, d+4, 16, 0),
-			allDay: false
-		},
-		{
-			title: 'Meeting',
-			start: new Date(y, m, d, 10, 30),
-			allDay: false
-		},
-		{
-			title: 'Lunch',
-			start: new Date(y, m, d, 12, 0),
-			end: new Date(y, m, d, 14, 0),
-			allDay: false
-		},
-		{
-			title: 'Birthday Party',
-			start: new Date(y, m, d+1, 19, 0),
-			end: new Date(y, m, d+1, 22, 30),
-			allDay: false
-		},
-		{
-			title: 'Click for Google',
-			start: new Date(y, m, 28),
-			end: new Date(y, m, 29),
-			url: 'http://google.com/'
-		}
-		]*/
-	});
+    });
 
 });
 

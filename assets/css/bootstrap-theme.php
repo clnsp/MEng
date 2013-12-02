@@ -569,10 +569,33 @@ html, body, #booking {
 	margin-bottom: 15px;
 }
 
+/* Calendar */
+
+#booking #eventModal #eventColor{
+  color: #bbb;
+  font-size: 35px;
+}
+
+#booking #eventModal button.close{
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  background-color: #B4B4B4;
+  border-radius: 20px;
+  padding-left: 5px;
+  padding-right: 5px;
+  opacity: 1;
+  border: 2px solid #000;
+}
+
 #booking .form-control:focus{
 	border: 1px solid <?php echo $brandSecondary;?>;
 	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),0 0 8px rgba(102, 175, 233, 0.6);
 	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),0 0 8px rgba(102, 175, 233, 0.6);	
+}
+
+#booking #eventModal .modal-body{
+  min-height: 350px;
 }
 
 img.displayed {
