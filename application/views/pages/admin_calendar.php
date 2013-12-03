@@ -15,19 +15,15 @@
 </div>
 
 <div id='calendar' class="clearfix"></div>
+
 <!-- Pasted here for convenience needs tidying up -->
 <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
 <div id="loading-indicator" class="hidden pull-right"><i class="fa fa-spin fa-refresh"></i></div>
 
 </div>
-<div class="tab-pane" id="sportshall">
-</div>
-
-<div class="tab-pane" id="activitiesroom">
-</div>
-
-<div class="tab-pane" id="royalcollegegym">
-</div>
+<div class="tab-pane" id="sportshall"></div>
+<div class="tab-pane" id="activitiesroom"></div>
+<div class="tab-pane" id="royalcollegegym"></div>
 </div>
 
 
@@ -40,23 +36,29 @@
 
 				
 
-				<div class="pull-left col-xs-6">
+				<div class="row">
+					<div class="col-xs-6">
+						<h3 class="modal-title" id="event-title">Class Title</h3>
+					</div>
 
-					<h4 class="modal-title" id="event-title">Class Title
-						<br>
-						<small id="event-date">30 September 2013 9pm - 10pm</small>
-
-					</h4>
+					<div class="col-xs-6">
+						<i id="eventColor" class="pull-right glyphicon glyphicon-stop"></i>
+					</div>
 				</div>
 
 
 
-				<div class"pull-right text-right col-xs-6">
-					<i id="eventColor" class="pull-right glyphicon glyphicon-stop"></i>
-					<span class="clearfix"></span>	
-					<h5 class="clearfix pull-right modal-title">8/10 spaces filled</h5>
+				<div class="row">
+
+					<div class="col-xs-6">
+						<h5 id="event-date" class="modal-title">30 September 2013 9pm - 10pm</h5>
+					</div>
+
+					<div class="col-xs-6">
+						<h5 class="clearfix pull-right modal-title">8/10 spaces filled</h5>		
+					</div>
+
 				</div>
-				<span class="clearfix"></span>	
 
 			</div>
 			<div class="modal-body">
@@ -80,9 +82,7 @@
 				</div><!-- event-modal-left -->
 
 				<div id="event-modal-right" class="col-xs-6">
-
-
-					<h5>Add Member</h5>
+					<h5 class="modal-title">Add Member</h5>
 					<form class="form-inline" role="form">
 						<div class="form-group">
 

@@ -21,20 +21,20 @@ $(document).ready(function() {
 			startParam: 'start',
 			endParam: 'end',
 
-data: function() { // a function that returns an object
-	return {
-		room: $('#bookingCalTabs .active a').attr('href'),	};
-	},
+		data: function() { // a function that returns an object
+			return {
+				room: $('#bookingCalTabs .active a').attr('href'),	};
+			},
 
 
-	error: function() {
-		if(!$('#calendar-error').length){
-			$('#calendar').prepend('<div id="calendar-error" class="alert alert-danger text-center">There was an error loading the calendar</div>');
+		error: function() {
+			if(!$('#calendar-error').length){
+				$('#calendar').prepend('<div id="calendar-error" class="alert alert-danger text-center">There was an error loading the calendar</div>');
 
-		}
-	},
-}
-],
+			}
+		},
+	}
+	],
 
 loading: function(b) {
 	if (b) 
