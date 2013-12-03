@@ -9,30 +9,22 @@ $(document).ready(function() {
 		},
 
 		allDayDefault: false,
-		selectHelper: true,
-		
-		select: function(start, end, allDay) {
-			var title = prompt('Event Title:');
-			if (title) {
-				calendar.fullCalendar('renderEvent',
-				{
-					title: title,
-					start: start,
-					end: end,
-					allDay: allDay
-				},
-						true // make the event "stick"
-						);
-			}
-			calendar.fullCalendar('unselect');
-		},
+		selectHelper: true, 
 		editable: true,
-
 		/*	lazyFetching: true, //caches data*/
 		editable: false,
 		
-		eventClick: function() {
-			$('#eventModal').modal('show')
+
+		eventClick: function(calEvent, jsEvent, view) {
+			var eventModal = $('#eventModal');
+
+			eventModal.find('#event-title').text(calEvent.title);
+			eventModal.find('#event-date').text(calEvent.start +' ' + calEvent.end);
+
+			//alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
+			//alert('View: ' + view.name);
+
+			eventModal.modal('show')
 		},
 
 		eventSources: [
