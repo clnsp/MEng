@@ -7,9 +7,11 @@
 	</div>
 	<ul id="bookingCalTabs" class="nav nav-tabs">
 		<li class="active"><a  href="allrooms">All Rooms</a></li>
-		<li><a  href="sportshall">Sports Hall</a></li>
-		<li><a href="activitiesroom" >Activities Room</a></li>
-		<li><a href="royalcollegegym">Royal College Gym</a></li>
+
+		<?php foreach($rooms as $room): ?>
+			<li><a href="<?php echo $room['room_id'] ?>"><?php echo $room['room'] ?></a></li>
+
+		<?php endforeach; ?>
 	</ul>
 
 </div>
