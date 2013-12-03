@@ -20,16 +20,21 @@ class Caljson extends CI_Controller {
 			$s = gmdate("Y-m-d H:i:s", $params['start']);
 			$e = gmdate("Y-m-d H:i:s", $params['end']);
 
-			echo json_encode(($this->Caljson_Model->fetchData($s, $e)));
-		} 
+			if(isset($params['room'])){
+				echo json_encode(($this->Caljson_Model->fetchRoomData($s, $e, $params['room'])));
+
+			}else{
+				echo json_encode(($this->Caljson_Model->fetchData($s, $e)));
+
+			}
+
+		}
 
 		else{
 			echo "not set";		
 			echo json_encode(($this->Caljson_Model->fetchAllData()));
 
 		}
-
-
 
 	}
 
@@ -43,11 +48,6 @@ function getQueryStringParams() {
 	parse_str($_SERVER['QUERY_STRING'], $params);
 	return $params;
 }
-
-
-
-
-
 
 ?>
 

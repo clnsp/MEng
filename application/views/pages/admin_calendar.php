@@ -6,15 +6,18 @@
 		<input type="text" class="form-control" placeholder="Search calendar...">
 	</div>
 	<ul id="bookingCalTabs" class="nav nav-tabs">
-		<li><a class="active" href="#allrooms" data-toggle="tab">All Rooms</a></li>
-		<li><a data-toggle="tab" href="#sportshall">Sports Hall</a></li>
-		<li><a href="#activitiesroom" data-toggle="tab">Activities Room</a></li>
-		<li><a href="#royalcollegegym" data-toggle="tab">Royal College Gym</a></li>
+		<li class="active"><a  href="allrooms">All Rooms</a></li>
+		<li><a  href="sportshall">Sports Hall</a></li>
+		<li><a href="activitiesroom" >Activities Room</a></li>
+		<li><a href="royalcollegegym">Royal College Gym</a></li>
 	</ul>
 
 </div>
 
 <div id='calendar' class="clearfix"></div>
+<!-- Pasted here for convenience needs tidying up -->
+<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+<div id="loading-indicator" class="hidden pull-right"><i class="fa fa-spin fa-refresh"></i></div>
 
 </div>
 <div class="tab-pane" id="sportshall">
@@ -42,17 +45,18 @@
 					<h4 class="modal-title" id="event-title">Class Title
 						<br>
 						<small id="event-date">30 September 2013 9pm - 10pm</small>
-					</div>
+
+					</h4>
+				</div>
 
 
-				</h4>
 
 				<div class"pull-right text-right col-xs-6">
 					<i id="eventColor" class="pull-right glyphicon glyphicon-stop"></i>
 					<span class="clearfix"></span>	
 					<h5 class="clearfix pull-right modal-title">8/10 spaces filled</h5>
 				</div>
-					<span class="clearfix"></span>	
+				<span class="clearfix"></span>	
 
 			</div>
 			<div class="modal-body">
@@ -104,47 +108,4 @@
 
 <div class="clearfix"></div>
 
-<script>
-
-$(document).ready(function() {
-	var date = new Date();
-	var d = date.getDate();
-	var m = date.getMonth();
-	var y = date.getFullYear();
-	//alert('' + new Date(y, m, 1));
-
-	$('#calendar').fullCalendar({
-		header: {
-			left: 'prev,next today',
-			center: 'title',
-			right: 'month,basicWeek,basicDay'
-		},
-
-		editable: true,
-		
-		eventClick: function() {
-			$('#eventModal').modal('show')
-		},
-
-		eventSources: [
-
-        // your event source
-        {
-        	url: 'https://devweb2013.cis.strath.ac.uk/~xvb09137/MEngBranchAW/index.php/caljson',
-        	startParam: 'start',
-            endParam: 'end', // use the `url` property
-        }
-
-        // any other sources...
-
-        ],
-
-        viewDestroy: function() {
-
-        }
-
-    });
-
-});
-
-</script>
+<script type="text/javascript" src="<?php echo base_url();?>assets/js/booking-calendar.js"></script>
