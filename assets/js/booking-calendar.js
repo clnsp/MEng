@@ -5,8 +5,28 @@ $(document).ready(function() {
 		header: {
 			left: 'prev,next today',
 			center: 'title',
-			right: 'month,basicWeek,basicDay'
+			right: 'month,agendaWeek,agendaDay'
 		},
+
+		allDayDefault: false,
+		selectHelper: true,
+		
+		select: function(start, end, allDay) {
+			var title = prompt('Event Title:');
+			if (title) {
+				calendar.fullCalendar('renderEvent',
+				{
+					title: title,
+					start: start,
+					end: end,
+					allDay: allDay
+				},
+						true // make the event "stick"
+						);
+			}
+			calendar.fullCalendar('unselect');
+		},
+		editable: true,
 
 		/*	lazyFetching: true, //caches data*/
 		editable: false,
@@ -27,23 +47,23 @@ $(document).ready(function() {
 			},
 
 
-		error: function() {
-			if(!$('#calendar-error').length){
-				$('#calendar').prepend('<div id="calendar-error" class="alert alert-danger text-center">There was an error loading the calendar</div>');
+			error: function() {
+				if(!$('#calendar-error').length){
+					$('#calendar').prepend('<div id="calendar-error" class="alert alert-danger text-center">There was an error loading the calendar</div>');
 
-			}
+				}
+			},
+		}
+		],
+
+		loading: function(b) {
+			if (b) 
+				$('#loading-indicator').toggleClass('hidden');
+			else 
+				$('#loading-indicator').toggleClass('hidden');
 		},
-	}
-	],
 
-loading: function(b) {
-	if (b) 
-		$('#loading-indicator').toggleClass('hidden');
-	else 
-		$('#loading-indicator').toggleClass('hidden');
-},
-
-});
+	});
 
 });
 
