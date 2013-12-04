@@ -1,7 +1,30 @@
+function exists(variable){
+	if(typeof(variable) == 'undefined'){
+		return false;
+	}
+	return true;
+}
 
 $(document).ready(function() {
+	var date = new Date();
+	var d = date.getDate();
+	var m = date.getMonth();
+	var y = date.getFullYear();
+
+	/* Find Modal Editable Areas */
+	var eventModal = $('#eventModal');
+	var eventTitle = eventModal.find('#event-title');
+	var eventdate = eventModal.find('#event-date');
+	var eventSpacesMax = eventModal.find('#event-spaces-max');
+	var eventSpacesTaken = eventModal.find('#event-spaces-taken');
+	var eventColor = eventModal.find('#eventColor');
+	var eventLocation = eventModal.find('#event-location');
+	var eventDescription =eventModal.find('#event-description');
+
+
 
 	$('#calendar').fullCalendar({
+
 		header: {
 			left: 'prev,next today',
 			center: 'title',
@@ -10,22 +33,140 @@ $(document).ready(function() {
 
 		allDayDefault: false,
 		selectHelper: true, 
-		editable: true,
 		/*	lazyFetching: true, //caches data*/
 		editable: false,
-		
+
+		events: [
+		{
+			title: 'All Day Event',
+			start: new Date(y, m, 1),
+			allDay: true
+		},
+		{
+			title: 'Long Event',
+			start: new Date(y, m, d-5),
+			end: new Date(y, m, d-2)
+		},
+		{
+			id: 999,
+			title: 'Repeating Event',
+			start: new Date(y, m, d-3, 16, 0),
+			allDay: false
+		},
+		{
+			id: 999,
+			title: 'Repeating Event',
+			start: new Date(y, m, d+4, 16, 0),
+			allDay: false
+		},
+		{
+			title: 'Meeting',
+			start: new Date(y, m, d, 10, 30),
+			allDay: false,
+			max_attendance: 10,
+			attending: 5,
+		},
+		{
+			title: 'Lunch',
+			start: new Date(y, m, d, 12, 0),
+			end: new Date(y, m, d, 14, 0),
+			allDay: false,
+			color: '#f00',
+			room: 'room',
+			room_id: '1',
+			description: 'A huge description of this event',
+		},
+		{
+			title: 'Birthday Party',
+			start: new Date(y, m, d+1, 19, 0),
+			end: new Date(y, m, d+1, 22, 30),
+			allDay: false,
+			max_attendance: 30,
+			attending: 15,
+			color:'#ff0'
+		},
+		{
+			title: 'Click for Google',
+			start: new Date(y, m, 28),
+			end: new Date(y, m, 29),
+			url: 'http://google.com/'
+		}
+		],
 
 		eventClick: function(calEvent, jsEvent, view) {
-			var eventModal = $('#eventModal');
 
-			eventModal.find('#event-title').text(calEvent.title);
-			eventModal.find('#event-date').text(calEvent.start +' ' + calEvent.end);
+			/*title*/
+			eventTitle.text(calEvent.title);
 
-			//alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
-			//alert('View: ' + view.name);
 
-			eventModal.modal('show')
+			/*date time*/
+			var date_string= "Missing Data and Time";		
+
+			var s_date, e_date, s_time, e_time;
+
+
+			if(exists(calEvent.start)){
+				s_date = calEvent.start.toString('dddd, d MMM yyyy');
+				s_time = calEvent.start.toString('HH:mm');
+			}
+
+			if(exists(calEvent.end)){
+				e_date = calEvent.end.toString('dddd, d MMM yyyy');
+				e_time = calEvent.end.toString('HH:mm');
+			}
+
+			/*all day no time*/
+			if(exists(calEvent.allDay)){
+				date_string = s_date;
+			}else{
+				/* within one dat*/
+				if(s_date == e_date){
+					date_string = s_date + ' <br> ' + s_time + ' to ' + e_time;
+				}
+				/*split over multiple days*/
+				else{
+					date_string = 'from ' + s_time + ' ' + s_date + ' <br> to ' + e_time + ' ' + e_date;
+				}
+			}
+
+			eventdate.html(date_string);
+
+			/*max_attendance*/
+			if(exists(calEvent.max_attendance)){
+				eventSpacesMax.text(calEvent.max_attendance);
+			}
+
+			/*attending*/
+			if(exists(calEvent.attending)){
+				eventSpacesTaken.text(calEvent.attending);
+			}
+
+			/*color*/
+			if(exists(calEvent.color)){
+				eventColor.css( "color", calEvent.color );
+			}
+
+			/*room*/
+			if(exists(calEvent.room)){
+				if(exists(calEvent.room_id)){
+					eventLocation.html('<a href="room/"' + calEvent.room_id + '/>' + calEvent.room + '</a>');
+				}else{
+					eventLocation.text(calEvent.room);
+				}
+
+			}
+
+			if(exists(calEvent.description)){
+				eventDescription.text(calEvent.description);
+			}
+
+
+			eventModal.modal('show');
 		},
+
+
+
+
 
 		eventSources: [
 		{
@@ -57,8 +198,17 @@ $(document).ready(function() {
 
 	});
 
-});
 
+$('#eventModal').on('hidden.bs.modal', function () {
+
+	eventTitle.text('[Title]');
+	eventdate.text('[Date]'); 
+	eventSpacesMax.text('[0]'); 
+	eventSpacesTaken.text('[0]'); 
+	eventColor.css('color', '#000'); 
+	eventLocation.text('[RoomName]'); 
+	eventDescription.text('[Descripttion]'); 
+})
 
 
 
@@ -73,4 +223,11 @@ $('#bookingCalTabs a').each(function(){
 	});
 
 });
+
+
+
+
+
+});
+
 

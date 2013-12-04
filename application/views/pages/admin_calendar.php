@@ -46,6 +46,8 @@
 					<div class="col-xs-6">
 						<i id="eventColor" class="pull-right glyphicon glyphicon-stop"></i>
 					</div>
+
+
 				</div>
 
 
@@ -58,13 +60,17 @@
 
 					<div class="col-xs-6">
 						<h5 class="clearfix pull-right modal-title">
-							<span id="event-spaces-taken">8</span>/<span id="event-spaces-max">10</span> spaces filled</h5>		
+							<span id="event-spaces-taken">0</span>/<span id="event-spaces-max">0</span> spaces filled</h5>		
 						</div>
-
 					</div>
 
 				</div>
 				<div class="modal-body">
+
+					<div>
+						Location: <span id="event-location"></span>
+						<span id="event-description"></span>
+					</div>
 
 					<div id="event-modal-left" class="col-xs-6">
 						<form class="form-inline">							
@@ -111,4 +117,5 @@
 
 	<div class="clearfix"></div>
 
+	<script type="text/javascript" src="<?php echo base_url();?>assets/js/date.js"></script>
 	<script type="text/javascript" src="<?php echo base_url();?>assets/js/booking-calendar.js"></script>
