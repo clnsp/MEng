@@ -9,10 +9,10 @@
 		<li class="active"><a  href="allrooms">All Rooms</a></li>
 
 		<?php foreach($rooms as $room): ?>
-			<li><a href="<?php echo $room['room_id'] ?>"><?php echo $room['room'] ?></a></li>
+		<li><a href="<?php echo $room['room_id'] ?>"><?php echo $room['room'] ?></a></li>
 
-		<?php endforeach; ?>
-	</ul>
+	<?php endforeach; ?>
+</ul>
 
 </div>
 
@@ -57,57 +57,58 @@
 					</div>
 
 					<div class="col-xs-6">
-						<h5 class="clearfix pull-right modal-title">8/10 spaces filled</h5>		
+						<h5 class="clearfix pull-right modal-title">
+							<span id="event-spaces-taken">8</span>/<span id="event-spaces-max">10</span> spaces filled</h5>		
+						</div>
+
 					</div>
 
 				</div>
+				<div class="modal-body">
 
-			</div>
-			<div class="modal-body">
+					<div id="event-modal-left" class="col-xs-6">
+						<form class="form-inline">							
+							<input type="text" class="form-control inline input-sm cols-x2" placeholder="Search">
+						</form>
 
-				<div id="event-modal-left" class="col-xs-6">
-					<form class="form-inline">							
-						<input type="text" class="form-control inline input-sm cols-x2" placeholder="Search">
-					</form>
+						<div id="event-member-list">
+							<ul class="list-group">
+								<li class="list-group-item"> <input type="checkbox">Cras justo odio</li>
+								<li class="list-group-item"> <input type="checkbox">Dapibus ac facilisis in</li>
+								<li class="list-group-item"> <input type="checkbox">Morbi leo risus</li>
+								<li class="list-group-item"> <input type="checkbox">Porta ac consectetur ac</li>
+								<li class="list-group-item"> <input type="checkbox">Vestibulum at eros</li>
+							</ul>
 
-					<div id="event-member-list">
-						<ul class="list-group">
-							<li class="list-group-item"> <input type="checkbox">Cras justo odio</li>
-							<li class="list-group-item"> <input type="checkbox">Dapibus ac facilisis in</li>
-							<li class="list-group-item"> <input type="checkbox">Morbi leo risus</li>
-							<li class="list-group-item"> <input type="checkbox">Porta ac consectetur ac</li>
-							<li class="list-group-item"> <input type="checkbox">Vestibulum at eros</li>
-						</ul>
+							<button class="btn btn-sm">Remove Member</button>
+						</div><!-- event-member-list -->
+					</div><!-- event-modal-left -->
 
-						<button class="btn btn-sm">Remove Member</button>
-					</div><!-- event-member-list -->
-				</div><!-- event-modal-left -->
+					<div id="event-modal-right" class="col-xs-6">
+						<h5 class="modal-title">Add Member</h5>
+						<form class="form-inline" role="form">
+							<div class="form-group">
 
-				<div id="event-modal-right" class="col-xs-6">
-					<h5 class="modal-title">Add Member</h5>
-					<form class="form-inline" role="form">
-						<div class="form-group">
-
-							<label class="sr-only" for="event-add-memmber-text">Name</label>
-							<input type="text" class="form-control input-sm" id="event-add-memmber-text" placeholder="Enter name">
-						</div>
+								<label class="sr-only" for="event-add-memmber-text">Name</label>
+								<input type="text" class="form-control input-sm" id="event-add-memmber-text" placeholder="Enter name">
+							</div>
 
 
-						<button type="submit" class="btn btn-sm btn-default">Add</button>
-					</form>
+							<button type="submit" class="btn btn-sm btn-default">Add</button>
+						</form>
+
+					</div>
 
 				</div>
-
-			</div>
-			<div class="clearfix modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				<button type="button" class="btn btn-primary">Save changes</button>
-			</div>
-		</div><!-- /.modal-content -->
-	</div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+				<div class="clearfix modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary">Save changes</button>
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
 
 
-<div class="clearfix"></div>
+	<div class="clearfix"></div>
 
-<script type="text/javascript" src="<?php echo base_url();?>assets/js/booking-calendar.js"></script>
+	<script type="text/javascript" src="<?php echo base_url();?>assets/js/booking-calendar.js"></script>
