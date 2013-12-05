@@ -1,10 +1,10 @@
-  <!DOCTYPE html>
+ <!DOCTYPE html>
   <html lang="en">
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="author" content="Patrick McCall CSM2009" >
 
     <title>{page_title}</title>
 
@@ -12,7 +12,15 @@
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
     <link rel="stylesheet" href="<?php echo base_url();?>assets/css/bootstrap-theme.php">
-     
+
+<link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/cal/fullcalendar.css">
+
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
+    <script src="<?php echo base_url();?>assets/js/jquery-ui.custom.min.js"></script>
+    <script src="<?php echo base_url();?>assets/cal/fullcalendar.min.js"></script>
+
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
       <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -56,13 +64,13 @@
                 }
                 
                 ?>
-              </ul>
+</ul>
 
 
-              <ul class="nav navbar-nav navbar-right">
+<ul class="nav navbar-nav navbar-right">
 
 
-                <?php if(!$logged_in & !$page_slug == 'login'):?>
+<?php if(!$logged_in & !$page_slug == 'login'):?>
                 <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown">Login<b class="caret"></b></a>
 
@@ -85,10 +93,10 @@
                 </li>
               <?php endif; ?>
 
-              <?php if($logged_in):?>
+<?php if($logged_in):?>
               
               <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">{user_name} <span class="glyphicon glyphicon-user"><span class="caret"></span></a>            
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">{user_name} <span class="glyphicon glyphicon-user"><span class="caret"></span></a>
 
                 <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownUser">
                   <li><a href="auth/account_settings">Account Settings</a></li>
@@ -100,16 +108,14 @@
               
             <? else: ?>
 
-          </ul>
+</ul>
 
 
-          <form class="navbar-form navbar-right" role="search">
-            <a href="register" id="register-button" class="btn btn-primary">Register</a>
-          </form>
-        <?php endif; ?>
+<form class="navbar-form navbar-right" role="search">
+<a href="register" id="register-button" class="btn btn-primary">Register</a>
+</form>
+<?php endif; ?>
 
-      </div><!--/.nav-collapse -->
-    </div>
-  </div>
-
-
+</div><!--/.nav-collapse -->
+</div>
+</div>
