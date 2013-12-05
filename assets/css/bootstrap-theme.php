@@ -597,6 +597,10 @@ html, body, #booking {
   font-size: 35px;
 }
 
+#booking #event-description{
+	display:block;
+}
+
 #booking #eventModal button.close{
   position: absolute;
   top: -10px;

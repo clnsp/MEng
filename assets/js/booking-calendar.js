@@ -1,5 +1,5 @@
 function exists(variable){
-	if(typeof(variable) == 'undefined'){
+	if(typeof variable == 'undefined'){
 		return false;
 	}
 	return true;
@@ -72,9 +72,9 @@ $(document).ready(function() {
 			end: new Date(y, m, d, 14, 0),
 			allDay: false,
 			color: '#f00',
-			room: 'room',
+			room: 'Sports hall',
 			room_id: '1',
-			description: 'A huge description of this event',
+			description: 'Lunch for two ',
 		},
 		{
 			title: 'Birthday Party',
@@ -106,17 +106,19 @@ $(document).ready(function() {
 
 
 			if(exists(calEvent.start)){
-				s_date = calEvent.start.toString('dddd, d MMM yyyy');
-				s_time = calEvent.start.toString('HH:mm');
+				//s_date = calEvent.start.toDateString('dddd, d MMM yyyy');
+				//s_time = calEvent.start.toTimeString('HH:mm');
+				s_date = $.fullCalendar.formatDate(calEvent.start, "dddd, d MMMM yyyy");
+				s_time = $.fullCalendar.formatDate(calEvent.start, "HH:mm");
 			}
 
 			if(exists(calEvent.end)){
-				e_date = calEvent.end.toString('dddd, d MMM yyyy');
-				e_time = calEvent.end.toString('HH:mm');
+				e_date = $.fullCalendar.formatDate(calEvent.end, "dddd, d MMMM yyyy");
+				e_time = $.fullCalendar.formatDate(calEvent.end, "HH:mm");
 			}
 
 			/*all day no time*/
-			if(exists(calEvent.allDay)){
+			if(exists(calEvent.allDay) && calEvent.allDay){
 				date_string = s_date;
 			}else{
 				/* within one dat*/
@@ -125,7 +127,7 @@ $(document).ready(function() {
 				}
 				/*split over multiple days*/
 				else{
-					date_string = 'from ' + s_time + ' ' + s_date + ' <br> to ' + e_time + ' ' + e_date;
+					date_string = s_time + ' ' + s_date + ' to<br>' + e_time + ' ' + e_date;
 				}
 			}
 

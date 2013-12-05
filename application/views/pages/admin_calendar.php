@@ -39,11 +39,11 @@
 				
 
 				<div class="row">
-					<div class="col-xs-6">
+					<div class="col-xs-8">
 						<h3 class="modal-title" id="event-title">Class Title</h3>
 					</div>
 
-					<div class="col-xs-6">
+					<div class="col-xs-4">
 						<i id="eventColor" class="pull-right glyphicon glyphicon-stop"></i>
 					</div>
 
@@ -54,22 +54,22 @@
 
 				<div class="row">
 
-					<div class="col-xs-6">
-						<h5 id="event-date" class="modal-title">30 September 2013 9pm - 10pm</h5>
+					<div class="col-xs-8">
+						<h5 id="event-date" class="modal-title"></h5>
 					</div>
 
-					<div class="col-xs-6">
+					<div class="col-xs-4">
 						<h5 class="clearfix pull-right modal-title">
-							<span id="event-spaces-taken">0</span>/<span id="event-spaces-max">0</span> spaces filled</h5>		
+							<span id="event-spaces-taken"></span>/<span id="event-spaces-max"></span> spaces filled</h5>		
 						</div>
 					</div>
 
 				</div>
 				<div class="modal-body">
 
-					<div>
+					<div><p>
 						Location: <span id="event-location"></span>
-						<span id="event-description"></span>
+						<span id="event-description"></span></p>
 					</div>
 
 					<div id="event-modal-left" class="col-xs-6">
