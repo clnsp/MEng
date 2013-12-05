@@ -226,7 +226,9 @@ $('#bookingCalTabs a').each(function(){
 
 });
 
-
+  $("#search-users").autocomplete({
+    source: "users_auto/get_users" // path to the get_birds method
+  });
 
 
 

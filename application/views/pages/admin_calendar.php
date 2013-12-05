@@ -68,15 +68,15 @@
 				<div class="modal-body">
 
 					<div><p>
-						Location: <span id="event-location"></span>
+						<span id="event-location"></span>
 						<span id="event-description"></span></p>
 					</div>
 
 					<div id="event-modal-left" class="col-xs-6">
-						<form class="form-inline">							
+				<!--		<form class="form-inline">							
 							<input type="text" class="form-control inline input-sm cols-x2" placeholder="Search">
 						</form>
-
+-->
 						<div id="event-member-list">
 							<ul class="list-group">
 								<li class="list-group-item"> <input type="checkbox">Cras justo odio</li>
@@ -91,16 +91,20 @@
 					</div><!-- event-modal-left -->
 
 					<div id="event-modal-right" class="col-xs-6">
-						<h5 class="modal-title">Add Member</h5>
+					
+					
+					
 						<form class="form-inline" role="form">
-							<div class="form-group">
-
-								<label class="sr-only" for="event-add-memmber-text">Name</label>
-								<input type="text" class="form-control input-sm" id="event-add-memmber-text" placeholder="Enter name">
-							</div>
-
-
-							<button type="submit" class="btn btn-sm btn-default">Add</button>
+						
+						<div class="input-group">
+						     <input id="search-users" type="text" class="form-control input-sm" id="event-add-memmber-text" placeholder="Enter name">
+						     <span class="input-group-btn">
+						       <button class="btn btn-sm btn-default" type="button">Add</button>
+						     </span>
+						   </div><!-- /input-group -->
+						   
+						
+						
 						</form>
 
 					</div>
@@ -118,3 +122,4 @@
 	<div class="clearfix"></div>
 
 	<script type="text/javascript" src="<?php echo base_url();?>assets/js/booking-calendar.js"></script>
+	
