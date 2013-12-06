@@ -37,8 +37,11 @@ class Caljson extends CI_Controller {
 		}
 
 	}
+	
+	
 
 }
+
 
 /*
  * Get paramters from the url

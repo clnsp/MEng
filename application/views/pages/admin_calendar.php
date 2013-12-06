@@ -23,9 +23,7 @@
 <div id="loading-indicator" class="hidden pull-right"><i class="fa fa-spin fa-refresh"></i></div>
 
 </div>
-<div class="tab-pane" id="sportshall"></div>
-<div class="tab-pane" id="activitiesroom"></div>
-<div class="tab-pane" id="royalcollegegym"></div>
+
 </div>
 
 
@@ -79,11 +77,7 @@
 -->
 						<div id="event-member-list">
 							<ul class="list-group">
-								<li class="list-group-item"> <input type="checkbox">Cras justo odio</li>
-								<li class="list-group-item"> <input type="checkbox">Dapibus ac facilisis in</li>
-								<li class="list-group-item"> <input type="checkbox">Morbi leo risus</li>
-								<li class="list-group-item"> <input type="checkbox">Porta ac consectetur ac</li>
-								<li class="list-group-item"> <input type="checkbox">Vestibulum at eros</li>
+								
 							</ul>
 
 							<button class="btn btn-sm">Remove Member</button>

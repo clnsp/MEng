@@ -41,17 +41,19 @@
 
 		}
 
-	/**
+		/**
 		 * Admin calendar booking page
 		 */
 		public function admin_calendar($page = 'admin_calendar'){
 			$this->load->Model('Rooms');
-
+			
 			$data['rooms'] = $this->Rooms->getRooms();
 
 			parse_temp($page, $this->load->view('pages/'.$page, $data, true));
 
 		}
+
+
 
 		/**
 		 * Logout of system

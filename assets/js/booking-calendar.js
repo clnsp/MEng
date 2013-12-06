@@ -19,7 +19,8 @@ $(document).ready(function() {
 	var eventSpacesTaken = eventModal.find('#event-spaces-taken');
 	var eventColor = eventModal.find('#eventColor');
 	var eventLocation = eventModal.find('#event-location');
-	var eventDescription =eventModal.find('#event-description');
+	var eventMembers = eventModal.find('#event-member-list .list-group');
+//	var eventDescription =eventModal.find('#event-description');
 
 
 
@@ -158,9 +159,20 @@ $(document).ready(function() {
 
 			}
 
-			if(exists(calEvent.description)){
+			/*if(exists(calEvent.description)){
 				eventDescription.text(calEvent.description);
-			}
+			}*/
+			
+			/*load members*/
+			$.getJSON('users_fetch/get_class_attendants/?class=' + calEvent.class_id, function(data) {
+			
+				eventSpacesTaken.text(data.length);
+				$.each( data, function( key, mem ) {
+				    eventModal.find('#event-member-list .list-group').append('<li class="list-group-item"> <input value="'+mem['member_id']+'" type="checkbox">'+mem['username']+'</li>');
+				    
+				    
+				  });
+			});
 
 
 			eventModal.modal('show');
@@ -209,7 +221,8 @@ $('#eventModal').on('hidden.bs.modal', function () {
 	eventSpacesTaken.text('[0]'); 
 	eventColor.css('color', '#000'); 
 	eventLocation.text('[RoomName]'); 
-	eventDescription.text('[Descripttion]'); 
+//	eventDescription.text('[Descripttion]');
+	eventMembers.html('');
 })
 
 
@@ -227,7 +240,7 @@ $('#bookingCalTabs a').each(function(){
 });
 
   $("#search-users").autocomplete({
-    source: "users_auto/get_users" // path to the get_birds method
+    source: "users_fetch/get_users" // path to the get_birds method
   });
 
 
