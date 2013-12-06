@@ -35,7 +35,7 @@ $(document).ready(function() {
 		selectHelper: true, 
 		/*	lazyFetching: true, //caches data*/
 		editable: false,
-
+/*
 		events: [
 		{
 			title: 'All Day Event',
@@ -91,7 +91,7 @@ $(document).ready(function() {
 			end: new Date(y, m, 29),
 			url: 'http://google.com/'
 		}
-		],
+		],*/
 
 		eventClick: function(calEvent, jsEvent, view) {
 
