@@ -71,3 +71,7 @@
           </tr>
         </tbody>
 </table>
+<?php 
+$this->load->view('templates/allan_template/bricks/staff/staff_member_model');
+?>
+

@@ -1622,8 +1622,9 @@
 			
 			/* 
 			 * All DataTables are wrapped in a div
+			 * Colin Modified: 02 Dec 2013 (Addition "table-responsive" - Below)
 			 */
-			oSettings.nTableWrapper = $('<div id="'+oSettings.sTableId+'_wrapper" class="'+oSettings.oClasses.sWrapper+'" role="grid"></div>')[0];
+			oSettings.nTableWrapper = $('<div id="'+oSettings.sTableId+'_wrapper" class="'+oSettings.oClasses.sWrapper+' table-responsive" role="grid"></div>')[0];
 			oSettings.nTableReinsertBefore = oSettings.nTable.nextSibling;
 		
 			/* Track where we want to insert the option */
@@ -12019,7 +12020,7 @@
 	 *  @param {object} o DataTables settings object {@link DataTable.models.oSettings}
 	 */
 
-	/**
+	/**Email
 	 * DataTables initialisation complete event, fired when the table is fully drawn,
 	 * including Ajax data loaded, if Ajax data is required.
 	 *  @name DataTable#init

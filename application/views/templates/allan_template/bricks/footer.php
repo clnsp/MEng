@@ -35,8 +35,8 @@
   <!-- Latest compiled and minified JavaScript -->
   	<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
 	<!-- COLIN TEST FIX-->
-	<script src="<?php echo base_url();?>assets/datatab/js/jquery.dataTables.js"></script>
-		<script src="<?php echo base_url();?>assets/datatab/js/DT_bootstrap.js"></script>
+	<script src="<?php echo base_url();?>assets/datatab/js/jquery.dataTables.min.js"></script>
+		<script src="<?php echo base_url();?>assets/datatab/js/DT_bootstrap.min.js"></script>
 	
 
 
