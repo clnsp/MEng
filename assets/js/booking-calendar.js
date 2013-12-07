@@ -14,7 +14,8 @@ $(document).ready(function() {
 	/* Find Modal Editable Areas */
 	var eventModal = $('#eventModal');
 	var eventTitle = eventModal.find('#event-title');
-	var eventdate = eventModal.find('#event-date');
+	var eventdate1 = eventModal.find('#event-date-1');
+	var eventdate2 = eventModal.find('#event-date-2');
 	var eventSpacesMax = eventModal.find('#event-spaces-max');
 	var eventSpacesTaken = eventModal.find('#event-spaces-taken');
 	var eventColor = eventModal.find('#eventColor');
@@ -101,10 +102,7 @@ $(document).ready(function() {
 
 
 			/*date time*/
-			var date_string= "Missing Data and Time";		
-
 			var s_date, e_date, s_time, e_time;
-
 
 			if(exists(calEvent.start)){
 				//s_date = calEvent.start.toDateString('dddd, d MMM yyyy');
@@ -120,19 +118,21 @@ $(document).ready(function() {
 
 			/*all day no time*/
 			if(exists(calEvent.allDay) && calEvent.allDay){
-				date_string = s_date;
+				eventdate1.text(s_date);
+				eventdate2.text("All Day Event");
 			}else{
 				/* within one dat*/
 				if(s_date == e_date){
-					date_string = s_date + ' <br> ' + s_time + ' to ' + e_time;
+					eventdate1.text(s_date);
+					eventdate2.text(s_time + ' to ' + e_time);
 				}
 				/*split over multiple days*/
 				else{
-					date_string = s_time + ' ' + s_date + ' to<br>' + e_time + ' ' + e_date;
+					eventdate1.text(s_time + ' ' + s_date + ' to');
+					eventdate2.text(e_time + ' ' + e_date);
 				}
 			}
 
-			eventdate.html(date_string);
 
 			/*max_attendance*/
 			if(exists(calEvent.max_attendance)){
@@ -152,7 +152,7 @@ $(document).ready(function() {
 			/*room*/
 			if(exists(calEvent.room)){
 				if(exists(calEvent.room_id)){
-					eventLocation.html('<a href="room/"' + calEvent.room_id + '/>' + calEvent.room + '</a>');
+					eventLocation.html('<a href="room/' + calEvent.room_id + '">' + calEvent.room + '</a>');
 				}else{
 					eventLocation.text(calEvent.room);
 				}
@@ -216,7 +216,8 @@ $(document).ready(function() {
 $('#eventModal').on('hidden.bs.modal', function () {
 
 	eventTitle.text('[Title]');
-	eventdate.text('[Date]'); 
+	eventdate1.text('[Date]'); 
+	eventdate2.text('[Date]'); 
 	eventSpacesMax.text('[0]'); 
 	eventSpacesTaken.text('[0]'); 
 	eventColor.css('color', '#000'); 
