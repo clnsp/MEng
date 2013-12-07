@@ -21,6 +21,7 @@ $(document).ready(function() {
 	var eventColor = eventModal.find('#eventColor');
 	var eventLocation = eventModal.find('#event-location');
 	var eventMembers = eventModal.find('#event-member-list .list-group');
+	var eventid = eventModal.find('#class-booking-id');
 //	var eventDescription =eventModal.find('#event-description');
 
 
@@ -100,7 +101,7 @@ $(document).ready(function() {
 			/*title*/
 			eventTitle.text(calEvent.title);
 
-
+			
 			/*date time*/
 			var s_date, e_date, s_time, e_time;
 
@@ -173,7 +174,9 @@ $(document).ready(function() {
 				    
 				  });
 			});
-
+			
+			/*setup form*/
+			eventid.val(calEvent.class_id);
 
 			eventModal.modal('show');
 		},
@@ -226,6 +229,18 @@ $('#eventModal').on('hidden.bs.modal', function () {
 	eventMembers.html('');
 })
 
+
+$('#event-add-member-form').submit(function(e){	
+	e.preventDefault();
+	var mid = $(this).find('input[name="member_name"]').val();
+	var bid = $(this).find('input[name="class_booking_id"]').val();
+	
+	$.post( "booking/add_member", { 'member_id': mid, 'class_booking_id':bid  } );
+	
+	
+	
+	
+});
 
 
 $('#bookingCalTabs a').each(function(){	

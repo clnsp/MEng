@@ -51,6 +51,7 @@ $route['404_override'] = 'pages/view/page-not-found';
 $route['admin_calendar'] = 'pages/admin_calendar';
 $route['caljson'] = 'caljson';
 $route['users_fetch'] = 'users_fetch';
+$route['booking'] = 'booking';
 
 $route['welcome'] = 'welcome';
 

@@ -70,11 +70,12 @@
 				</div>
 				<!-- event-modal-left -->
 				<div id="event-modal-right" class="col-xs-6">
-					<form class="form-inline" role="form">
+					<form class="form-inline" id="event-add-member-form" role="form">
 						<div class="input-group">
-							<input id="search-users" type="text" class="form-control input-sm" id="event-add-memmber-text" placeholder="Enter name">
+							<input type="hidden" id="class-booking-id" name="class_booking_id" value="" />
+							<input id="search-users" type="text" class="form-control input-sm" id="event-add-member-text" name="member_name" placeholder="Enter name">
 							<span class="input-group-btn">
-								<button class="btn btn-sm btn-default" type="button">Add</button>
+								<button class="btn btn-sm btn-default" id="btn-add-member" type="submit">Add</button>
 							</span>
 						</div>
 						<!-- /input-group -->
