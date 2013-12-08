@@ -16,5 +16,16 @@ Class Booking_Model extends CI_Model{
 				$this->db->insert('class_booking_tbl', $data); 	
 	}
 	
+	/*
+	 * Remove a user from a class booking
+	 */
+	function remove_member($class_booking_id, $member_id){
+				$data = array(
+				   'member_id' => $member_id,
+				   'class_id' => $class_booking_id,				   
+				   );
+				$this->db->delete('class_booking_tbl', $data); 	
+	}
+	
 
 }

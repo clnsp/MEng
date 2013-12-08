@@ -5,23 +5,39 @@ function exists(variable){
 	return true;
 }
 
+var eventModal,eventTitle,eventTitle, eventdate1, eventdate2, eventSpacesMax, eventSpacesTaken, eventColor, eventLocation, eventMembers, eventid;
+
+
+function load_event_attendants() {
+
+$.getJSON('users_fetch/get_class_attendants/?class=' + eventid, function(data) {
+	eventMembers.empty();
+	eventSpacesTaken.text(data.length);
+	$.each( data, function( key, mem ) {
+	    eventMembers.append('<li class="list-group-item"> <input name="member_id" value="'+mem['member_id']+'" type="checkbox">'+mem['username']+'</li>');
+	    
+	    
+	  });
+});
+}
+
 $(document).ready(function() {
-	var date = new Date();
+/*	var date = new Date();
 	var d = date.getDate();
 	var m = date.getMonth();
-	var y = date.getFullYear();
+	var y = date.getFullYear();*/
 
 	/* Find Modal Editable Areas */
-	var eventModal = $('#eventModal');
-	var eventTitle = eventModal.find('#event-title');
-	var eventdate1 = eventModal.find('#event-date-1');
-	var eventdate2 = eventModal.find('#event-date-2');
-	var eventSpacesMax = eventModal.find('#event-spaces-max');
-	var eventSpacesTaken = eventModal.find('#event-spaces-taken');
-	var eventColor = eventModal.find('#eventColor');
-	var eventLocation = eventModal.find('#event-location');
-	var eventMembers = eventModal.find('#event-member-list .list-group');
-	var eventid = eventModal.find('#class-booking-id');
+	
+	eventModal = $('#eventModal');
+	eventTitle = eventModal.find('#event-title');
+	eventdate1 = eventModal.find('#event-date-1');
+	eventdate2 = eventModal.find('#event-date-2');
+	eventSpacesMax = eventModal.find('#event-spaces-max');
+	eventSpacesTaken = eventModal.find('#event-spaces-taken');
+	eventColor = eventModal.find('#eventColor');
+	eventLocation = eventModal.find('#event-location');
+	eventMembers = eventModal.find('#event-member-list .list-group');
 //	var eventDescription =eventModal.find('#event-description');
 
 
@@ -97,6 +113,7 @@ $(document).ready(function() {
 		],*/
 
 		eventClick: function(calEvent, jsEvent, view) {
+			eventid = calEvent.class_id;
 
 			/*title*/
 			eventTitle.text(calEvent.title);
@@ -165,18 +182,9 @@ $(document).ready(function() {
 			}*/
 			
 			/*load members*/
-			$.getJSON('users_fetch/get_class_attendants/?class=' + calEvent.class_id, function(data) {
-			
-				eventSpacesTaken.text(data.length);
-				$.each( data, function( key, mem ) {
-				    eventModal.find('#event-member-list .list-group').append('<li class="list-group-item"> <input value="'+mem['member_id']+'" type="checkbox">'+mem['username']+'</li>');
-				    
-				    
-				  });
-			});
+			load_event_attendants();
 			
 			/*setup form*/
-			eventid.val(calEvent.class_id);
 
 			eventModal.modal('show');
 		},
@@ -216,6 +224,8 @@ $(document).ready(function() {
 	});
 
 
+
+
 $('#eventModal').on('hidden.bs.modal', function () {
 
 	eventTitle.text('[Title]');
@@ -225,22 +235,10 @@ $('#eventModal').on('hidden.bs.modal', function () {
 	eventSpacesTaken.text('[0]'); 
 	eventColor.css('color', '#000'); 
 	eventLocation.text('[RoomName]'); 
+	eventid = "";
 //	eventDescription.text('[Descripttion]');
 	eventMembers.html('');
 })
-
-
-$('#event-add-member-form').submit(function(e){	
-	e.preventDefault();
-	var mid = $(this).find('input[name="member_name"]').val();
-	var bid = $(this).find('input[name="class_booking_id"]').val();
-	
-	$.post( "booking/add_member", { 'member_id': mid, 'class_booking_id':bid  } );
-	
-	
-	
-	
-});
 
 
 $('#bookingCalTabs a').each(function(){	
@@ -255,10 +253,37 @@ $('#bookingCalTabs a').each(function(){
 
 });
 
+/* Autocomplete */
   $("#search-users").autocomplete({
     source: "users_fetch/get_users" // path to the get_birds method
   });
+  
+  /* Add member to event */
+  $('#event-add-member-form').submit(function(e){	
+  	e.preventDefault();
+  	var mid = $(this).find('input[name="member_name"]').val();
+  	
+  	$.post( "booking/add_member", { 'member_id': mid, 'class_booking_id':eventid  }, function() {
+  	  load_event_attendants();
+  	  
+  	  });
+  	
+  	
+  		
+  });
 
+/* Remove member from event */
+$('#event-remove-member-form').submit(function(e){	
+	e.preventDefault();
+	var mid = $(this).find('input[name="member_id"]:checked').val();
+	
+	$.post( "booking/remove_member", { 'member_id': mid, 'class_booking_id':eventid  },
+	function() {
+	  load_event_attendants();
+	  
+	  } );
+		
+});
 
 
 });

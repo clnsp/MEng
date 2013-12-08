@@ -26,9 +26,6 @@ class Users_Fetch extends CI_Controller{
 	}
 	
 	}
-	
-	
-	
 }
 
 ?>

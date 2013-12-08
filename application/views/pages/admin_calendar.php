@@ -61,11 +61,17 @@
 					<!-- <form class="form-inline">							
 							<input type="text" class="form-control inline input-sm cols-x2" placeholder="Search">
 						</form>
--->
+-->					
+
 					<div id="event-member-list">
+					<form id="event-remove-member-form" method="post" action="">
 						<ul class="list-group"></ul>
-						<button class="btn btn-sm">Remove Member</button>
+						<button type="submit" id="event-remove-member-button" class="btn btn-sm">Remove Member</button>
+						
+						</form>
 					</div>
+					
+					
 					<!-- event-member-list -->
 				</div>
 				<!-- event-modal-left -->
