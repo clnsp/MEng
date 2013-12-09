@@ -28,7 +28,7 @@
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<!--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>-->
 				<div class="row">
 					<div class="col-xs-8">
 						<h3 class="modal-title" id="event-title">Class Title</h3>

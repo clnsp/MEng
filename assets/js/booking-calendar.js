@@ -10,15 +10,15 @@ var eventModal,eventTitle,eventTitle, eventdate1, eventdate2, eventSpacesMax, ev
 
 function load_event_attendants() {
 
-$.getJSON('users_fetch/get_class_attendants/?class=' + eventid, function(data) {
-	eventMembers.empty();
-	eventSpacesTaken.text(data.length);
-	$.each( data, function( key, mem ) {
-	    eventMembers.append('<li class="list-group-item"> <input name="member_id" value="'+mem['member_id']+'" type="checkbox">'+mem['username']+'</li>');
-	    
-	    
-	  });
-});
+	$.getJSON('users_fetch/get_class_attendants/?class=' + eventid, function(data) {
+		eventMembers.empty();
+		eventSpacesTaken.text(data.length);
+		$.each( data, function( key, mem ) {
+			eventMembers.append('<li class="list-group-item"> <input name="member_id" value="'+mem['member_id']+'" type="checkbox">'+mem['username']+'</li>');
+
+
+		});
+	});
 }
 
 $(document).ready(function() {
@@ -42,18 +42,18 @@ $(document).ready(function() {
 
 
 
-	$('#calendar').fullCalendar({
+$('#calendar').fullCalendar({
 
-		header: {
-			left: 'prev,next today',
-			center: 'title',
-			right: 'month,agendaWeek,agendaDay'
-		},
+	header: {
+		left: 'prev,next today',
+		center: 'title',
+		right: 'month,agendaWeek,agendaDay'
+	},
 
-		allDayDefault: false,
-		selectHelper: true, 
-		/*	lazyFetching: true, //caches data*/
-		editable: false,
+	allDayDefault: false,
+	selectHelper: true, 
+	/*	lazyFetching: true, //caches data*/
+	editable: false,
 /*
 		events: [
 		{
@@ -237,7 +237,7 @@ $('#eventModal').on('hidden.bs.modal', function () {
 	eventLocation.text('[RoomName]'); 
 	eventid = "";
 //	eventDescription.text('[Descripttion]');
-	eventMembers.html('');
+eventMembers.html('');
 })
 
 
@@ -254,40 +254,58 @@ $('#bookingCalTabs a').each(function(){
 });
 
 /* Autocomplete */
-  $("#search-users").autocomplete({
+$("#search-users").autocomplete({
     source: "users_fetch/get_users", // path to the get_birds method
     select: function (event, ui) {
-            this.setAttribute("data-member-id",ui.item.user_id);
-        }
-  });
-  
-  /* Add member to event */
-  $('#event-add-member-form').submit(function(e){	
-  	e.preventDefault();
-  	var mid = $(this).find('input[name="member_name"]').attr('data-member-id');
-  	
-  	$.post( "booking/add_member", { 'member_id': mid, 'class_booking_id':eventid  }, function() {
-  	 	 $('input#search-users').attr('data-member-id', '').val('');
-  	 	 load_event_attendants();
-  	  });
-  	
-  	
-  		
-  });
+    	this.setAttribute("data-member-id",ui.item.user_id);
+    }
+});
+
+/* Add member to event */
+$('#event-add-member-form').submit(function(e){	
+	e.preventDefault();
+	var mid = $(this).find('input[name="member_name"]').attr('data-member-id');
+
+	$.ajax({
+		url: "booking/add_member",
+		type: "POST",
+		data: { 'member_id': mid, 'class_booking_id':eventid  },
+		success: function() {
+			$('input#search-users').attr('data-member-id', '').val('');
+			load_event_attendants();
+		},
+		error: function(){
+			eventModal.find('.modal-body').prepend('<div class="alert alert-warning fade in"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><strong>Holy guacamole!</strong> Best check yo self, youre not looking too good.</div>');
+		},
+	});
+
+});
 
 /* Remove member from event */
 $('#event-remove-member-form').submit(function(e){	
 	e.preventDefault();
-	var mid = $(this).find('input[name="member_id"]:checked').val();
+	var mids = $(this).find('input:checked').map(function(){
+		return $(this).val();
+	}).toArray();;
 	
-	$.post( "booking/remove_member", { 'member_id': mid, 'class_booking_id':eventid  },
-	function() {
-	  load_event_attendants();
-	  
-	  } );
-		
-});
+	if(mids.length > 0){
+		$.ajax({
+			url: "booking/remove_member",
+			type: "POST",
+			data: { 'member_id': mids, 'class_booking_id':eventid  },
+			success: function() {
+				load_event_attendants();
+			},
+			error: function(){
+				alert('an error occured');
+			},
+		});
 
+
+	};
+
+
+});
 
 });
 
