@@ -195,7 +195,7 @@ $(document).ready(function() {
 
 		eventSources: [
 		{
-			url: 'https://devweb2013.cis.strath.ac.uk/~xvb09137/MEngBranchAW/index.php/caljson',
+			url: 'caljson',
 			startParam: 'start',
 			endParam: 'end',
 
@@ -255,17 +255,20 @@ $('#bookingCalTabs a').each(function(){
 
 /* Autocomplete */
   $("#search-users").autocomplete({
-    source: "users_fetch/get_users" // path to the get_birds method
+    source: "users_fetch/get_users", // path to the get_birds method
+    select: function (event, ui) {
+            this.setAttribute("data-member-id",ui.item.user_id);
+        }
   });
   
   /* Add member to event */
   $('#event-add-member-form').submit(function(e){	
   	e.preventDefault();
-  	var mid = $(this).find('input[name="member_name"]').val();
+  	var mid = $(this).find('input[name="member_name"]').attr('data-member-id');
   	
   	$.post( "booking/add_member", { 'member_id': mid, 'class_booking_id':eventid  }, function() {
-  	  load_event_attendants();
-  	  
+  	 	 $('input#search-users').attr('data-member-id', '').val('');
+  	 	 load_event_attendants();
   	  });
   	
   	

@@ -44,12 +44,21 @@
 		/**
 		 * Admin calendar booking page
 		 */
-		public function admin_calendar($page = 'admin_calendar'){
-			$this->load->Model('Rooms');
-			
-			$data['rooms'] = $this->Rooms->getRooms();
+		public function admin_calendar($page = 'admin-calendar'){
 
-			parse_temp($page, $this->load->view('pages/'.$page, $data, true));
+			if(!$this->tank_auth->is_logged_in()){
+			  //If no session, redirect to login page
+				$data['user_type'] = 'guest';
+				redirect('login', 'refresh');
+			}
+			else{
+				$this->load->Model('Rooms');
+				
+				$data['rooms'] = $this->Rooms->getRooms();
+
+				parse_temp($page, $this->load->view('pages/'.$page, $data, true));
+			}
+
 
 		}
 

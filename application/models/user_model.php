@@ -1,6 +1,4 @@
 <?php
-// Source: http://www.codefactorycr.com/login-with-codeigniter-php.html
-// Date of Access: 15/11/2013
 
 Class User_Model extends CI_Model
 {
@@ -27,7 +25,7 @@ Class User_Model extends CI_Model
     if($query->num_rows > 0){
       foreach ($query->result_array() as $row){
         $new_row['label']=htmlentities(stripslashes($row['username']));
-        $new_row['value']=htmlentities(stripslashes($row['id']));
+        $new_row['user_id']=htmlentities(stripslashes($row['id']));
         $row_set[] = $new_row; //build an array
       }
       echo json_encode($row_set); //format the array into json data
