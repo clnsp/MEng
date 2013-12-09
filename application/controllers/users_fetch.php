@@ -19,12 +19,12 @@ class Users_Fetch extends CI_Controller{
 	 */
 	function get_class_attendants(){
 		$this->load->model('caljson_model');
-	
-	 if (isset($_GET['class'])){
-		$q = strtolower($_GET['class']);
-		echo json_encode($this->caljson_model->fetchClassAttendants($q));		
-	}
-	
+		
+		if (isset($_GET['class'])){
+			$q = strtolower($_GET['class']);
+			echo json_encode($this->caljson_model->fetchClassAttendants($q));		
+		}
+		
 	}
 }
 

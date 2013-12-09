@@ -43,8 +43,7 @@
 					</div>
 					<div class="col-xs-4">
 						<h5 class="clearfix pull-right modal-title">
-							<span id="event-spaces-taken"></span>/
-							<span id="event-spaces-max"></span> spaces filled</h5>
+							<span id="event-spaces-taken"></span>/<span id="event-spaces-max"></span> spaces filled</h5>
 					</div>
 				</div>
 				<div class="row">

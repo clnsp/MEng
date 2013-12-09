@@ -13,11 +13,15 @@ function load_event_attendants() {
 	$.getJSON('users_fetch/get_class_attendants/?class=' + eventid, function(data) {
 		eventMembers.empty();
 		eventSpacesTaken.text(data.length);
-		$.each( data, function( key, mem ) {
-			eventMembers.append('<li class="list-group-item"> <input name="member_id" value="'+mem['member_id']+'" type="checkbox">'+mem['username']+'</li>');
+		if(data.length>0){
+			$.each( data, function( key, mem ) {
+				eventMembers.append('<li class="list-group-item"> <input name="member_id" value="'+mem['member_id']+'" type="checkbox">'+mem['username']+'</li>');
+			});
+		}else{
+			eventMembers.append('No attendants');
 
-
-		});
+		}
+		
 	});
 }
 
@@ -254,12 +258,33 @@ $('#bookingCalTabs a').each(function(){
 });
 
 /* Autocomplete */
-$("#search-users").autocomplete({
+var autocomplete = $("#search-users").autocomplete({
     source: "users_fetch/get_users", // path to the get_birds method
     select: function (event, ui) {
     	this.setAttribute("data-member-id",ui.item.user_id);
-    }
+    },
 });
+
+/*override the autocomp dropdown results display*/
+$.ui.autocomplete.prototype._renderMenu = function( ul, items ) {
+	var that = this;
+	$(ul).addClass('list-group');
+
+	$.each( items, function( index, item ) {
+		that._renderItemData( ul, item );
+	});
+
+};
+
+/*override individual items in the list*/
+$.ui.autocomplete.prototype._renderItem = function(ul, item) {
+	return $( "<li>" )
+	.attr( "data-value", item.value )
+	.addClass('list-group-item')
+	.append( $( "<a>" ).text( item.label ) )
+	.appendTo( ul );
+};
+
 
 /* Add member to event */
 $('#event-add-member-form').submit(function(e){	
