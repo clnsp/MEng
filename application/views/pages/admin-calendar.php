@@ -9,11 +9,11 @@
 		<li class="active">
 			<a href="allrooms">All Rooms</a>
 		</li>
-	    <?php foreach($rooms as $room): ?>
-	                <li><a href="<?php echo $room['room_id'] ?>"><?php echo $room['room'] ?></a></li>
-	
-	        <?php endforeach; ?>
-	</ul>
+		<?php foreach($rooms as $room): ?>
+		<li><a href="<?php echo $room['room_id'] ?>"><?php echo $room['room'] ?></a></li>
+
+	<?php endforeach; ?>
+</ul>
 </div>
 <div id='calendar' class="clearfix"></div>
 <!-- Pasted here for convenience needs tidying up -->
@@ -44,29 +44,32 @@
 					<div class="col-xs-4">
 						<h5 class="clearfix pull-right modal-title">
 							<span id="event-spaces-taken"></span>/<span id="event-spaces-max"></span> spaces filled</h5>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-8">
+							<h5 id="event-date-2" class="modal-title"></h5>
+						</div>
+						<div id="event-location" class="col-xs-4 text-right">
+							<span id="" ></span>
+						</div>
 					</div>
 				</div>
-				<div class="row">
-					<div class="col-xs-8">
-						<h5 id="event-date-2" class="modal-title"></h5>
-					</div>
-					<div id="event-location" class="col-xs-4 text-right">
-						<span id="" ></span>
-					</div>
-				</div>
-			</div>
-			<div class="modal-body">
-				<div id="event-modal-left" class="col-xs-6">
+				<div class="modal-body">
+
+					<div id="event-warning" class="hidden alert alert-warning fade in"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">X</button></div>
+
+					<div id="event-modal-left" class="col-xs-6">
 					<!-- <form class="form-inline">							
 							<input type="text" class="form-control inline input-sm cols-x2" placeholder="Search">
 						</form>
--->					
+					-->					
 
 					<div id="event-member-list">
-					<form id="event-remove-member-form" method="post" action="">
-						<ul class="list-group"></ul>
-						<button type="submit" id="event-remove-member-button" class="btn btn-sm">Remove Member</button>
-						
+						<form id="event-remove-member-form" method="post" action="">
+							<ul class="list-group"></ul>
+							<button type="submit" id="event-remove-member-button" class="btn btn-sm">Remove</button>
+
 						</form>
 					</div>
 					
@@ -76,11 +79,11 @@
 				<!-- event-modal-left -->
 				<div id="event-modal-right" class="col-xs-6">
 					<form class="form-inline" id="event-add-member-form" role="form">
-						<div class="input-group">
+						<div class="input-group input-xl">
 							<input type="hidden" id="class-booking-id" name="class_booking_id" value="" />
-							<input id="search-users" type="text" class="form-control input-sm" name="member_name" data-member-id="" placeholder="Enter name">
+							<input id="search-users" type="text" class="form-control" name="member_name" data-member-id="" placeholder="Enter name">
 							<span class="input-group-btn">
-								<button class="btn btn-sm btn-default" id="btn-add-member" type="submit">Add</button>
+								<button class="btn btn-default" id="btn-add-member" type="submit">Add</button>
 							</span>
 						</div>
 						<!-- /input-group -->
@@ -89,7 +92,7 @@
 			</div>
 			<div class="clearfix modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				<button type="button" class="btn btn-primary">Save changes</button>
+				<button type="button" class="btn btn-primary">Cancel Class</button>
 			</div>
 		</div>
 		<!-- /.modal-content -->

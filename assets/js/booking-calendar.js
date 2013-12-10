@@ -7,25 +7,30 @@ function exists(variable){
 
 var eventModal,eventTitle,eventTitle, eventdate1, eventdate2, eventSpacesMax, eventSpacesTaken, eventColor, eventLocation, eventMembers, eventid;
 
+/*
+ * Load the attendants of this event
+ */
+ function load_event_attendants() {
 
-function load_event_attendants() {
+ 	$.getJSON('users_fetch/get_class_attendants/?class=' + eventid, function(data) {
+ 		eventMembers.empty();
+ 		eventSpacesTaken.text(data.length);
+ 		if(data.length>0){
+ 			eventModal.find('#event-remove-member-button').prop('disabled', false);;
+ 			$.each( data, function( key, mem ) {
+ 				eventMembers.append('<a href="#" class="list-group-item"> <input name="member_id" value="'+mem['member_id']+'" type="checkbox">'+mem['username']+'</a>');
+ 			});
+ 		}else{
+ 			eventMembers.append('No attendants');
+ 			eventModal.find('#event-remove-member-button').prop('disabled', true);;
 
-	$.getJSON('users_fetch/get_class_attendants/?class=' + eventid, function(data) {
-		eventMembers.empty();
-		eventSpacesTaken.text(data.length);
-		if(data.length>0){
-			$.each( data, function( key, mem ) {
-				eventMembers.append('<li class="list-group-item"> <input name="member_id" value="'+mem['member_id']+'" type="checkbox">'+mem['username']+'</li>');
-			});
-		}else{
-			eventMembers.append('No attendants');
+ 		}
 
-		}
-		
-	});
-}
+ 	});
+ }
 
-$(document).ready(function() {
+
+ $(document).ready(function() {
 /*	var date = new Date();
 	var d = date.getDate();
 	var m = date.getMonth();
@@ -42,6 +47,7 @@ $(document).ready(function() {
 	eventColor = eventModal.find('#eventColor');
 	eventLocation = eventModal.find('#event-location');
 	eventMembers = eventModal.find('#event-member-list .list-group');
+	eventError = eventModal.find('#event-warning');
 //	var eventDescription =eventModal.find('#event-description');
 
 
@@ -58,75 +64,17 @@ $('#calendar').fullCalendar({
 	selectHelper: true, 
 	/*	lazyFetching: true, //caches data*/
 	editable: false,
-/*
-		events: [
-		{
-			title: 'All Day Event',
-			start: new Date(y, m, 1),
-			allDay: true
-		},
-		{
-			title: 'Long Event',
-			start: new Date(y, m, d-5),
-			end: new Date(y, m, d-2)
-		},
-		{
-			id: 999,
-			title: 'Repeating Event',
-			start: new Date(y, m, d-3, 16, 0),
-			allDay: false
-		},
-		{
-			id: 999,
-			title: 'Repeating Event',
-			start: new Date(y, m, d+4, 16, 0),
-			allDay: false
-		},
-		{
-			title: 'Meeting',
-			start: new Date(y, m, d, 10, 30),
-			allDay: false,
-			max_attendance: 10,
-			attending: 5,
-		},
-		{
-			title: 'Lunch',
-			start: new Date(y, m, d, 12, 0),
-			end: new Date(y, m, d, 14, 0),
-			allDay: false,
-			color: '#f00',
-			room: 'Sports hall',
-			room_id: '1',
-			description: 'Lunch for two ',
-		},
-		{
-			title: 'Birthday Party',
-			start: new Date(y, m, d+1, 19, 0),
-			end: new Date(y, m, d+1, 22, 30),
-			allDay: false,
-			max_attendance: 30,
-			attending: 15,
-			color:'#ff0'
-		},
-		{
-			title: 'Click for Google',
-			start: new Date(y, m, 28),
-			end: new Date(y, m, 29),
-			url: 'http://google.com/'
-		}
-		],*/
 
-		eventClick: function(calEvent, jsEvent, view) {
-			eventid = calEvent.class_id;
+	eventClick: function(calEvent, jsEvent, view) {
+		eventid = calEvent.class_id;
 
-			/*title*/
-			eventTitle.text(calEvent.title);
+		/*title*/
+		eventTitle.text(calEvent.title);
 
-			
-			/*date time*/
-			var s_date, e_date, s_time, e_time;
+		/*date time*/
+		var s_date, e_date, s_time, e_time;
 
-			if(exists(calEvent.start)){
+		if(exists(calEvent.start)){
 				//s_date = calEvent.start.toDateString('dddd, d MMM yyyy');
 				//s_time = calEvent.start.toTimeString('HH:mm');
 				s_date = $.fullCalendar.formatDate(calEvent.start, "dddd, d MMMM yyyy");
@@ -154,7 +102,6 @@ $('#calendar').fullCalendar({
 					eventdate2.text(e_time + ' ' + e_date);
 				}
 			}
-
 
 			/*max_attendance*/
 			if(exists(calEvent.max_attendance)){
@@ -192,10 +139,6 @@ $('#calendar').fullCalendar({
 
 			eventModal.modal('show');
 		},
-
-
-
-
 
 		eventSources: [
 		{
@@ -242,9 +185,10 @@ $('#eventModal').on('hidden.bs.modal', function () {
 	eventid = "";
 //	eventDescription.text('[Descripttion]');
 eventMembers.html('');
-})
+});
 
 
+/*Fetch room associated calendar view */
 $('#bookingCalTabs a').each(function(){	
 
 	var $this = $(this);
@@ -259,16 +203,19 @@ $('#bookingCalTabs a').each(function(){
 
 /* Autocomplete */
 var autocomplete = $("#search-users").autocomplete({
-    source: "users_fetch/get_users", // path to the get_birds method
-    select: function (event, ui) {
-    	this.setAttribute("data-member-id",ui.item.user_id);
-    },
+	source: "users_fetch/get_users",
+	minLength: 3, 
+	select: function (event, ui) {
+		this.setAttribute("data-member-id",ui.item.user_id);
+	},
 });
 
 /*override the autocomp dropdown results display*/
 $.ui.autocomplete.prototype._renderMenu = function( ul, items ) {
 	var that = this;
-	$(ul).addClass('list-group');
+	$(ul).addClass('list-group popover bottom')
+	.append(' <div class="arrow"></div>');    
+
 
 	$.each( items, function( index, item ) {
 		that._renderItemData( ul, item );
@@ -290,21 +237,32 @@ $.ui.autocomplete.prototype._renderItem = function(ul, item) {
 $('#event-add-member-form').submit(function(e){	
 	e.preventDefault();
 	var mid = $(this).find('input[name="member_name"]').attr('data-member-id');
-
-	$.ajax({
-		url: "booking/add_member",
-		type: "POST",
-		data: { 'member_id': mid, 'class_booking_id':eventid  },
-		success: function() {
-			$('input#search-users').attr('data-member-id', '').val('');
-			load_event_attendants();
-		},
-		error: function(){
-			eventModal.find('.modal-body').prepend('<div class="alert alert-warning fade in"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><strong>Holy guacamole!</strong> Best check yo self, youre not looking too good.</div>');
-		},
-	});
+	if(mid != ''){
+		$.ajax({
+			url: "booking/add_member",
+			type: "POST",
+			data: { 'member_id': mid, 'class_booking_id':eventid  },
+			success: function() {
+				$('input#search-users').attr('data-member-id', '').val('');
+				load_event_attendants();
+			},
+			error: function(){
+				eventError.toggleClass('hidden').append('Please enter text and select the correct user from the dropdown');
+			},
+		});
+	}else{
+		eventError.toggleClass('hidden').append('No user selected');
+	}
 
 });
+
+/* Select anywhere along the member list row */
+eventMembers.on('click', 'a', function() {
+	$(this).find('input[type=checkbox]').trigger('click');
+});
+
+
+
 
 /* Remove member from event */
 $('#event-remove-member-form').submit(function(e){	
@@ -322,7 +280,7 @@ $('#event-remove-member-form').submit(function(e){
 				load_event_attendants();
 			},
 			error: function(){
-				alert('an error occured');
+				eventError('Error', 'an error occured');
 			},
 		});
 

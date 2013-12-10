@@ -514,17 +514,17 @@ html, body, #booking {
  * Loading Indicator 
  */
 
-#loading-indicator{
- 
+ #loading-indicator{
+
    font-size: 40px;
 
-}
+ }
 
 
 
 
-/* Login Page */
-#login-form #remember-me{
+ /* Login Page */
+ #login-form #remember-me{
   margin: 0px 15px 15px;
 }
 
@@ -597,10 +597,11 @@ html, body, #booking {
   font-size: 35px;
 }
 
-#booking #event-description{
+/*
+#booking #eventModal #event-description{
 	display:block;
 }
-/*
+
 #booking #eventModal button.close{
   position: absolute;
   top: -10px;
@@ -613,6 +614,7 @@ html, body, #booking {
   border: 2px solid #000;
 }
 */
+
 #booking .form-control:focus{
 	border: 1px solid <?php echo $brandSecondary;?>;
 	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),0 0 8px rgba(102, 175, 233, 0.6);
@@ -621,5 +623,27 @@ html, body, #booking {
 
 #booking #eventModal .modal-body{
   min-height: 350px;
+}
+
+#booking #eventModal #event-member-list a.list-group-item input{
+  margin-right: 5px;
+}
+
+
+#booking #eventModal #event-member-list a.list-group-item{
+  text-transform: capitalize;
+}
+
+
+/*autocomplete results*/
+ul.ui-menu .ui-menu-item:hover {
+  background-color: <?php echo $brandSecondary?>;
+  cursor: pointer;
+  color: #0ff!important;
+}
+
+
+ul.ui-menu .ui-menu-item {
+  padding: 5px 0 5px 0;
 }
 
