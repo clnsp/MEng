@@ -592,6 +592,12 @@ html, body, #booking {
 
 /* Calendar */
 
+#booking #calendar .fc-day:hover,
+#booking #calendar .fc-agenda-slots tr:hover
+ {
+  background-color: rgba(255, 255, 255, 0.49);
+}
+
 #booking #eventModal #eventColor{
   color: #bbb;
   font-size: 35px;
@@ -641,7 +647,6 @@ ul.ui-menu .ui-menu-item:hover {
   cursor: pointer;
   color: #0ff!important;
 }
-
 
 ul.ui-menu .ui-menu-item {
   padding: 5px 0 5px 0;

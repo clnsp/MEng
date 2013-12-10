@@ -167,6 +167,16 @@ $('#calendar').fullCalendar({
 			else 
 				$('#loading-indicator').toggleClass('hidden');
 		},
+		dayClick: function(date, allDay, jsEvent, view) {
+
+			view.calendar.gotoDate(date);
+			if(view.name == 'month'){	
+				view.calendar.changeView('agendaWeek');
+			}else if(view.name == 'agendaWeek'){
+				view.calendar.changeView('agendaDay');
+			}
+
+		}
 
 	});
 
@@ -262,8 +272,6 @@ eventMembers.on('click', 'a', function() {
 });
 
 
-
-
 /* Remove member from event */
 $('#event-remove-member-form').submit(function(e){	
 	e.preventDefault();
@@ -283,12 +291,10 @@ $('#event-remove-member-form').submit(function(e){
 				eventError('Error', 'an error occured');
 			},
 		});
-
-
 	};
-
-
 });
+
+
 
 });
 
