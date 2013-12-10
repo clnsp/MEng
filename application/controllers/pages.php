@@ -40,6 +40,22 @@
 			parse_temp($page, $this->load->view('pages/'.$page, '', true));
 
 		}
+		
+		                /**
+                 * Admin User Mangement
+                 */
+                public function users($page = 'users'){
+                        if(!$this->tank_auth->is_logged_in()){
+                          //If no session, redirect to login page
+                                $data['user_type'] = 'guest';
+                                redirect('login', 'refresh');
+                        }
+                        else{
+                                $this->load->Model('C_User_Model');
+                                $data['users'] = $this->C_User_Model->get_all_user();
+                                parse_temp($page, $this->load->view('pages/'.$page, $data, true));
+                        }
+                }
 
 		/**
 		 * Logout of system
