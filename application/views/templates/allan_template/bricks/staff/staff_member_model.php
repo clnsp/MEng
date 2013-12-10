@@ -5,14 +5,19 @@
 				<button type="button" id="member" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 				<h4 class="modal-title">Modal title</h4>
 			</div>
+			<!--BODY-->
 			<div class="modal-body">
-			Name: <label>Colin Espie</label>
-			
-			
-			
-			
-			<button type="button" class="btn btn-info" id="views">Edit View</button>
 			</div>
+			<form class="form-horizontal" role="form">
+  <div class="form-group">
+    <label class="col-sm-2 control-label">Name</label>
+     <label class="editable" id="fname">email@example.com</label> <label class="editable" id="sname">email@example.com</label>
+  </div>
+</form>
+			<button type="button" class="btn btn-info" id="views">Edit View</button>	
+			
+			
+			<!-- FOOTER-->
 			<div class="modal-footer">
 				<div class="alert alert-warning alert-dismissable fade in">
 					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>

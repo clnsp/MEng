@@ -1,18 +1,17 @@
 <?php
 //birds.php
-class Users_Access extends CI_Controller{
-
-
-        function get_users(){
-                $this->load->model('user_model');
+class User_Access extends CI_Controller{
+        /*
+         * Get user details for editing
+         */
+        function get_user_details(){
+                $this->load->model('c_user_model');
                 
-                if (isset($_GET['term'])){
-                        $q = strtolower($_GET['term']);
-                        $this->user_model->get_user($q);
-                }
-                
-                
+                if (isset($_GET['id'])){
+                        $q = strtolower($_GET['id']);
+                        echo json_encode($this->c_user_model->fetchUser($q));                
+                }                
         }
-}
+	}
 
 ?>

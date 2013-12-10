@@ -6,7 +6,9 @@ Class C_User_Model extends CI_Model
     {
         parent::__construct();
     }
-/* Get name and id return array */
+	/* 
+	* Get name and id return array 	
+	*/
   function get_all_user(){
     $this->db->select('id,first_name,second_name,email,activated,banned');
     $query = $this->db->get('Colinusers');
@@ -19,6 +21,16 @@ Class C_User_Model extends CI_Model
     {
      return false;
     }
-	}
+	}	
+	        /*
+         * Fetch users details
+         */
+        function fetchUser($id){
+                $this -> db -> select('first_name,second_name,email,home_number,mobile_number,twitter');
+                $this -> db -> from('Colinusers');
+                $this -> db -> where('id', $id);
+                $query = $this -> db -> get();
+                return $query->result();
+        }
    }
  ?>	

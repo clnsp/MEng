@@ -37,6 +37,7 @@
 	<!-- COLIN TEST FIX-->
 	<script src="<?php echo base_url();?>assets/datatab/js/jquery.dataTables.min.js"></script>
 		<script src="<?php echo base_url();?>assets/datatab/js/DT_bootstrap.min.js"></script>
+		<script src="<?php echo base_url();?>assets/datatab/js/user_custom.js"></script>
 	
 
 
