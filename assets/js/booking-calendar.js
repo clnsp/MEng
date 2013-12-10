@@ -60,6 +60,7 @@ $('#calendar').fullCalendar({
 		right: 'month,agendaWeek,agendaDay'
 	},
 
+
 	allDayDefault: false,
 	selectHelper: true, 
 	/*	lazyFetching: true, //caches data*/
@@ -278,7 +279,7 @@ $('#event-remove-member-form').submit(function(e){
 	var mids = $(this).find('input:checked').map(function(){
 		return $(this).val();
 	}).toArray();;
-	
+
 	if(mids.length > 0){
 		$.ajax({
 			url: "booking/remove_member",
