@@ -59,3 +59,17 @@ img.displayed {
     margin-left: auto;
     margin-right: auto 
 }
+
+.form-control.editable{
+width: auto !important;
+display:inline-block !important;
+
+}
+
+label.editable{
+padding-top: 7px
+}
+
+
+
+

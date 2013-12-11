@@ -1,4 +1,6 @@
 <link rel="stylesheet" href="<?php echo base_url();?>assets/datatab/css/DT_bootstrap.css"/>
+<link rel="stylesheet" href="<?php echo base_url();?>assets/css/bootstrap-overides.css"/>
+
 <table cellpadding="0" cellspacing="0" border="0" class="table table-hover table-bordered dataTable display" id="member">
 	<thead>
 	  <tr>

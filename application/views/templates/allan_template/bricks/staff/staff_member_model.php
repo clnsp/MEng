@@ -10,8 +10,20 @@
 			</div>
 			<form class="form-horizontal" role="form">
   <div class="form-group">
-    <label class="col-sm-2 control-label">Name</label>
-     <label class="editable" id="fname">email@example.com</label> <label class="editable" id="sname">email@example.com</label>
+    <label class="col-sm-3 control-label">Name:</label>
+     <label class="editable" id="fname">First Name</label> <label class="editable" id="sname">Second Name</label>
+  </div>
+    <div class="form-group">
+    <label class="col-sm-3 control-label">Home Number:</label>
+     <label class="editable" id="hnumber">00000000000</label>
+  </div>
+    <div class="form-group">
+    <label class="col-sm-3 control-label">Mobile Number:</label>
+     <label class="editable" id="mnumber">00000000000</label>
+  </div>
+    <div class="form-group">
+    <label class="col-sm-3 control-label">Twitter:</label>
+     <label class="editable" id="twitter">temptwitter</label>
   </div>
 </form>
 			<button type="button" class="btn btn-info" id="views">Edit View</button>	
