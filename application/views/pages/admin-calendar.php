@@ -57,7 +57,7 @@
 				</div>
 				<div class="modal-body">
 
-					<div id="event-warning" class="hidden alert alert-warning fade in"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">X</button></div>
+					<div id="event-warning" class="hidden alert alert-warning fade in"><span id="msg-body"></span><button type="button" class="close" data-dismiss="alert" aria-hidden="true">X</button></div>
 
 					<div id="event-modal-left" class="col-xs-6">
 					<!-- <form class="form-inline">							
@@ -89,6 +89,8 @@
 						<!-- /input-group -->
 					</form>
 				</div>
+
+				<div class="clearfix"></div><!-- Fix body of modal running over the footer-->
 			</div>
 			<div class="clearfix modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

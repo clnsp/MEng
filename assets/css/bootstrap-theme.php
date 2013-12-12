@@ -628,7 +628,8 @@ html, body, #booking {
 }
 
 #booking #eventModal .modal-body{
-  min-height: 350px;
+  max-height: 400px;
+  min-height: 100px;
 }
 
 #booking #eventModal #event-member-list a.list-group-item input{

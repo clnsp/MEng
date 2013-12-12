@@ -30,27 +30,37 @@ var eventModal,eventTitle,eventTitle, eventdate1, eventdate2, eventSpacesMax, ev
  }
 
 
- $(document).ready(function() {
-/*	var date = new Date();
-	var d = date.getDate();
-	var m = date.getMonth();
-	var y = date.getFullYear();*/
+ /*
+  * Show an error message for dialog
+  */
+  function show_error(msg){
+  	eventError.removeClass('hidden');
+  	eventError.find('#msg-body').text(msg);
+  }
 
-	/* Find Modal Editable Areas */
-	
-	eventModal = $('#eventModal');
-	eventTitle = eventModal.find('#event-title');
-	eventdate1 = eventModal.find('#event-date-1');
-	eventdate2 = eventModal.find('#event-date-2');
-	eventSpacesMax = eventModal.find('#event-spaces-max');
-	eventSpacesTaken = eventModal.find('#event-spaces-taken');
-	eventColor = eventModal.find('#eventColor');
-	eventLocation = eventModal.find('#event-location');
-	eventMembers = eventModal.find('#event-member-list .list-group');
-	eventError = eventModal.find('#event-warning');
+
+  $(document).ready(function() {
+
+  	/* Find Modal Editable Areas */
+  	eventModal = $('#eventModal');
+  	eventTitle = eventModal.find('#event-title');
+  	eventdate1 = eventModal.find('#event-date-1');
+  	eventdate2 = eventModal.find('#event-date-2');
+  	eventSpacesMax = eventModal.find('#event-spaces-max');
+  	eventSpacesTaken = eventModal.find('#event-spaces-taken');
+  	eventColor = eventModal.find('#eventColor');
+  	eventLocation = eventModal.find('#event-location');
+  	eventMembers = eventModal.find('#event-member-list .list-group');
+  	eventError = eventModal.find('#event-warning');
 //	var eventDescription =eventModal.find('#event-description');
 
 
+/* Handler for the event button */
+eventError.find('button.close').click(function(e){
+	e.preventDefault();
+	e.stopImmediatePropagation();
+	this.parentElement.className = 'hidden alert alert-warning fade in';
+});
 
 $('#calendar').fullCalendar({
 
@@ -247,22 +257,27 @@ $.ui.autocomplete.prototype._renderItem = function(ul, item) {
 /* Add member to event */
 $('#event-add-member-form').submit(function(e){	
 	e.preventDefault();
-	var mid = $(this).find('input[name="member_name"]').attr('data-member-id');
+	var memberinputbox = $(this).find('input#search-users');
+	var mid = memberinputbox.attr('data-member-id');
 	if(mid != ''){
 		$.ajax({
 			url: "booking/add_member",
 			type: "POST",
 			data: { 'member_id': mid, 'class_booking_id':eventid  },
 			success: function() {
-				$('input#search-users').attr('data-member-id', '').val('');
+				memberinputbox.attr('data-member-id', '').val('');
 				load_event_attendants();
+
 			},
 			error: function(){
-				eventError.toggleClass('hidden').append('Please enter text and select the correct user from the dropdown');
+				show_error('User already exists');
+				memberinputbox.attr('data-member-id', '').val('');
+
+				
 			},
 		});
 	}else{
-		eventError.toggleClass('hidden').append('No user selected');
+		show_error('No user selected');
 	}
 
 });
@@ -289,7 +304,7 @@ $('#event-remove-member-form').submit(function(e){
 				load_event_attendants();
 			},
 			error: function(){
-				eventError('Error', 'an error occured');
+				show_error('an error occured');
 			},
 		});
 	};
