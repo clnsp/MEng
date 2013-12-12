@@ -209,106 +209,132 @@ eventMembers.html('');
 });
 
 
-/*Fetch room associated calendar view */
-$('#bookingCalTabs a').each(function(){	
+/* 
+  Fetch room associated calendar view
+  */
+  $('#bookingCalTabs a').each(function(){	
 
-	var $this = $(this);
-	$this.click(function (e) {
-		e.preventDefault();
-		$this.tab('show');
-		$('#calendar').fullCalendar( 'refetchEvents' );
+  	var $this = $(this);
+  	$this.click(function (e) {
+  		e.preventDefault();
+  		$this.tab('show');
+  		$('#calendar').fullCalendar( 'refetchEvents' );
 
-	});
+  	});
 
-});
-
-/* Autocomplete */
-var autocomplete = $("#search-users").autocomplete({
-	source: "users_fetch/get_users",
-	minLength: 3, 
-	select: function (event, ui) {
-		this.setAttribute("data-member-id",ui.item.user_id);
-	},
-});
-
-/*override the autocomp dropdown results display*/
-$.ui.autocomplete.prototype._renderMenu = function( ul, items ) {
-	var that = this;
-	$(ul).addClass('list-group popover bottom')
-	.append(' <div class="arrow"></div>');    
+  });
 
 
-	$.each( items, function( index, item ) {
-		that._renderItemData( ul, item );
-	});
+/* 
+ * Add member to event 
+ */
+ $('#event-add-member-form').submit(function(e){	
+ 	e.preventDefault();
+ 	var memberinputbox = $(this).find('input#search-users');
+ 	var mid = memberinputbox.attr('data-member-id');
+ 	if(mid != ''){
+ 		$.ajax({
+ 			url: "booking/add_member",
+ 			type: "POST",
+ 			data: { 'member_id': mid, 'class_booking_id':eventid  },
+ 			success: function() {
+ 				memberinputbox.attr('data-member-id', '').val('');
+ 				load_event_attendants();
 
-};
-
-/*override individual items in the list*/
-$.ui.autocomplete.prototype._renderItem = function(ul, item) {
-	return $( "<li>" )
-	.attr( "data-value", item.value )
-	.addClass('list-group-item')
-	.append( $( "<a>" ).text( item.label ) )
-	.appendTo( ul );
-};
-
-
-/* Add member to event */
-$('#event-add-member-form').submit(function(e){	
-	e.preventDefault();
-	var memberinputbox = $(this).find('input#search-users');
-	var mid = memberinputbox.attr('data-member-id');
-	if(mid != ''){
-		$.ajax({
-			url: "booking/add_member",
-			type: "POST",
-			data: { 'member_id': mid, 'class_booking_id':eventid  },
-			success: function() {
-				memberinputbox.attr('data-member-id', '').val('');
-				load_event_attendants();
-
-			},
-			error: function(){
-				show_error('User already exists');
-				memberinputbox.attr('data-member-id', '').val('');
-
-				
-			},
-		});
-	}else{
-		show_error('No user selected');
-	}
-
-});
-
-/* Select anywhere along the member list row */
-eventMembers.on('click', 'a', function() {
-	$(this).find('input[type=checkbox]').trigger('click');
-});
+ 			},
+ 			error: function(){
+ 				show_error('User already exists');
+ 				memberinputbox.attr('data-member-id', '').val('');
 
 
-/* Remove member from event */
-$('#event-remove-member-form').submit(function(e){	
-	e.preventDefault();
-	var mids = $(this).find('input:checked').map(function(){
-		return $(this).val();
-	}).toArray();;
+ 			},
+ 		});
+ 	}else{
+ 		show_error('No user selected');
+ 	}
 
-	if(mids.length > 0){
-		$.ajax({
-			url: "booking/remove_member",
-			type: "POST",
-			data: { 'member_id': mids, 'class_booking_id':eventid  },
-			success: function() {
-				load_event_attendants();
-			},
-			error: function(){
-				show_error('an error occured');
-			},
-		});
-	};
-});
+ });
+
+/*
+ * Select anywhere along the member list row 
+ */
+ eventMembers.on('click', 'a', function() {
+ 	$(this).find('input[type=checkbox]').trigger('click');
+ });
+
+
+/*
+ * Remove member from event
+ */
+ $('#event-remove-member-form').submit(function(e){	
+ 	e.preventDefault();
+ 	var mids = $(this).find('input:checked').map(function(){
+ 		return $(this).val();
+ 	}).toArray();;
+
+ 	if(mids.length > 0){
+ 		$.ajax({
+ 			url: "booking/remove_member",
+ 			type: "POST",
+ 			data: { 'member_id': mids, 'class_booking_id':eventid  },
+ 			success: function() {
+ 				load_event_attendants();
+ 			},
+ 			error: function(){
+ 				show_error('an error occured');
+ 			},
+ 		});
+ 	};
+ });
+
+/* 
+ * Autocomplete  
+ **************************************************************
+ */
+ var noResultsLabel = "No members found";
+
+ var autocomplete = $("#search-users").autocomplete({
+ 	source: "users_fetch/get_users",
+ 	minLength: 3, 
+ 	select: function (event, ui) {
+ 		if(ui.item.label == noResultsLabel){
+ 			event.preventDefault();
+ 		}else{
+ 			this.setAttribute("data-member-id",ui.item.user_id);
+
+ 		}
+ 	},
+
+ 	response: function(event, ui) {
+ 		if (!ui.content.length) {
+ 			var noResult = { value:"",label:noResultsLabel };
+ 			ui.content.push(noResult);
+ 		}
+ 	}
+ });
+
+ /*override the autocomp dropdown results display*/
+ $.ui.autocomplete.prototype._renderMenu = function( ul, items ) {
+ 	var that = this;
+ 	$(ul).addClass('list-group popover bottom')
+ 	.append(' <div class="arrow"></div>');    
+
+
+ 	$.each( items, function( index, item ) {
+ 		that._renderItemData( ul, item );
+ 	});
+
+ };
+
+ /*override individual items in the list*/
+ $.ui.autocomplete.prototype._renderItem = function(ul, item) {
+ 	return $( "<li>" )
+ 	.attr( "data-value", item.value )
+ 	.addClass('list-group-item')
+ 	.append( $( "<a>" ).text( item.label ) )
+ 	.appendTo( ul );
+ };
+
 
 
 
