@@ -21,7 +21,7 @@ var eventModal,eventTitle,eventTitle, eventdate1, eventdate2, eventSpacesMax, ev
  				eventMembers.append('<a href="#" class="list-group-item"> <input name="member_id" value="'+mem['member_id']+'" type="checkbox">'+mem['username']+'</a>');
  			});
  		}else{
- 			eventMembers.append('No attendants');
+ 			eventMembers.append('<li class="list-group-item"> No attendants</li>');
  			eventModal.find('#event-remove-member-button').prop('disabled', true);;
 
  		}
@@ -193,24 +193,26 @@ $('#calendar').fullCalendar({
 
 
 
+ /*
+  *Tear down the modal properties
+  */
+  $('#eventModal').on('hidden.bs.modal', function () {
 
-$('#eventModal').on('hidden.bs.modal', function () {
-
-	eventTitle.text('[Title]');
-	eventdate1.text('[Date]'); 
-	eventdate2.text('[Date]'); 
-	eventSpacesMax.text('[0]'); 
-	eventSpacesTaken.text('[0]'); 
-	eventColor.css('color', '#000'); 
-	eventLocation.text('[RoomName]'); 
-	eventid = "";
+  	eventTitle.text('[Title]');
+  	eventdate1.text('[Date]'); 
+  	eventdate2.text('[Date]'); 
+  	eventSpacesMax.text('[0]'); 
+  	eventSpacesTaken.text('[0]'); 
+  	eventColor.css('color', '#000'); 
+  	eventLocation.text('[RoomName]'); 
+  	eventid = "";
 //	eventDescription.text('[Descripttion]');
-eventMembers.html('');
+	eventMembers.html('');
 });
 
 
-/* 
-  Fetch room associated calendar view
+ /* 
+  *Fetch room associated calendar view
   */
   $('#bookingCalTabs a').each(function(){	
 
