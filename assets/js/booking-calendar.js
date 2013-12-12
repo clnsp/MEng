@@ -147,7 +147,6 @@ $('#calendar').fullCalendar({
 			load_event_attendants();
 			
 			/*setup form*/
-
 			eventModal.modal('show');
 		},
 
@@ -194,7 +193,7 @@ $('#calendar').fullCalendar({
 
 
  /*
-  *Tear down the modal properties
+  * Tear down the modal properties
   */
   $('#eventModal').on('hidden.bs.modal', function () {
 
@@ -332,10 +331,10 @@ eventMembers.html('');
  $.ui.autocomplete.prototype._renderItem = function(ul, item) {
  	if(item.label == noResultsLabel){
  		return 	$( "<li>" )
- 	.attr( "data-value", item.value )
- 	.addClass('list-group-item')
- 	.append( $( "<a data-toggle='modal' data-target='#addGuestModal' class='btn btn-default'>" ).text( item.label ) )
- 	.appendTo( ul );
+ 		.attr( "data-value", item.value )
+ 		.addClass('list-group-item')
+ 		.append( $( "<a data-toggle='modal' data-target='#addGuestModal' class='btn btn-default'>" ).text( item.label ) )
+ 		.appendTo( ul );
  	}
  	return $( "<li>" )
  	.attr( "data-value", item.value )

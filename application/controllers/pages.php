@@ -53,8 +53,10 @@
 			}
 			else{
 				$this->load->Model('Rooms');
+				$this->load->Model('Categories');
 				
 				$data['rooms'] = $this->Rooms->getRooms();
+				$data['categories'] = $this->Categories->getCategories();
 
 				parse_temp($page, $this->load->view('pages/'.$page, $data, true));
 			}

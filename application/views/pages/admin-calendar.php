@@ -1,18 +1,36 @@
 <div class="navbar">
+
+	<!--
 	<div class="col-xs-3 pull-right input-group input-group-sm">
 		<span class="input-group-addon">
 			<span class="glyphicon glyphicon-search"></span>
 		</span>
 		<input type="text" class="form-control" placeholder="Search calendar...">
 	</div>
-	<ul id="bookingCalTabs" class="nav nav-tabs">
-		<li class="active">
-			<a href="allrooms">All Rooms</a>
-		</li>
-		<?php foreach($rooms as $room): ?>
-		<li><a href="<?php echo $room['room_id'] ?>"><?php echo $room['room'] ?></a></li>
+-->
+
+
+<div class="dropdown pull-right">
+	<button class="btn dropdown-toggle" type="button" id="category-dropdown-btn" data-toggle="dropdown">Categories
+		<span class="caret"></span>
+	</button>
+
+	<ul class=" dropdown-menu" role="menu">
+		<?php foreach($categories as $cat): ?>
+		<li role="presentation"><a style="color:<?php echo $cat['color'] ?>" href="<?php echo $cat['category_id'] ?>"><?php echo $cat['category'] ?></a></li>
 
 	<?php endforeach; ?>
+</ul>
+</div>
+
+<ul id="bookingCalTabs" class="nav nav-tabs">
+	<li class="active">
+		<a href="allrooms">All Rooms</a>
+	</li>
+	<?php foreach($rooms as $room): ?>
+	<li><a href="<?php echo $room['room_id'] ?>"><?php echo $room['room'] ?></a></li>
+
+<?php endforeach; ?>
 </ul>
 </div>
 
@@ -110,15 +128,14 @@
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header ">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
 				<h4 class="modal-title">Add Guest</h4>
 			</div>
 			<div class="modal-body">
-
+				<form></form>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				<button type="button" class="btn btn-primary">Save changes</button>
+				<button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-primary">Add New Member</button>
 			</div>
 		</div><!-- /.modal-content -->
 	</div><!-- /.modal-dialog -->
