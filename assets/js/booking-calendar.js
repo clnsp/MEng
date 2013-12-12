@@ -207,7 +207,7 @@ $('#calendar').fullCalendar({
   	eventLocation.text('[RoomName]'); 
   	eventid = "";
 //	eventDescription.text('[Descripttion]');
-	eventMembers.html('');
+eventMembers.html('');
 });
 
 
@@ -293,14 +293,14 @@ $('#calendar').fullCalendar({
  * Autocomplete  
  **************************************************************
  */
- var noResultsLabel = "No members found";
+ var noResultsLabel = "No members found Add guest?";
 
  var autocomplete = $("#search-users").autocomplete({
  	source: "users_fetch/get_users",
  	minLength: 3, 
  	select: function (event, ui) {
  		if(ui.item.label == noResultsLabel){
- 			event.preventDefault();
+ 			//$('#addGuestModal').modal('show');
  		}else{
  			this.setAttribute("data-member-id",ui.item.user_id);
 
@@ -330,6 +330,13 @@ $('#calendar').fullCalendar({
 
  /*override individual items in the list*/
  $.ui.autocomplete.prototype._renderItem = function(ul, item) {
+ 	if(item.label == noResultsLabel){
+ 		return 	$( "<li>" )
+ 	.attr( "data-value", item.value )
+ 	.addClass('list-group-item')
+ 	.append( $( "<a data-toggle='modal' data-target='#addGuestModal' class='btn btn-default'>" ).text( item.label ) )
+ 	.appendTo( ul );
+ 	}
  	return $( "<li>" )
  	.attr( "data-value", item.value )
  	.addClass('list-group-item')

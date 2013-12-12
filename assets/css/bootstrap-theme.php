@@ -509,6 +509,25 @@ html, body, #booking {
   padding: 1px 10px;
 }
 
+/* sub modal */
+.modal.submodal{
+  width: 50%!important;
+  margin-left: auto;
+  margin-right: auto;
+  overflow: hidden;
+  outline-color: transparent!important;
+}
+
+.modal.submodal .modal-dialog{
+  width: 100%
+}
+
+.modal.submodal .modal-content{
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+
+}
+
 
 /*
  * Loading Indicator 
@@ -594,7 +613,7 @@ html, body, #booking {
 
 #booking #calendar .fc-day:hover,
 #booking #calendar .fc-agenda-slots tr:hover
- {
+{
   background-color: rgba(255, 255, 255, 0.49);
 }
 

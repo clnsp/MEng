@@ -15,16 +15,18 @@
 	<?php endforeach; ?>
 </ul>
 </div>
+
+
+
 <div id='calendar' class="clearfix"></div>
 <!-- Pasted here for convenience needs tidying up -->
 <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
 <div id="loading-indicator" class="hidden pull-right">
 	<i class="fa fa-spin fa-refresh"></i>
 </div>
-</div>
-</div>
+
 <!-- Modal -->
-<div class="modal fade" id="eventModal" tabindex="-1" role="dialog" aria-labelledby="eventModal" aria-hidden="true">
+<div class="modal fade" id="eventModal" tabindex="-1" role="dialog" aria-labelledby="eventModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -91,16 +93,38 @@
 				</div>
 
 				<div class="clearfix"></div><!-- Fix body of modal running over the footer-->
+
+
+
+
 			</div>
-			<div class="clearfix modal-footer">
+			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 				<button type="button" class="btn btn-primary">Cancel Class</button>
 			</div>
-		</div>
-		<!-- /.modal-content -->
-	</div>
-	<!-- /.modal-dialog -->
-</div>
-<!-- /.modal -->
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal fade submodal" id="addGuestModal" tabindex="-1" role="dialog" aria-labelledby="addGuestModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header ">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
+				<h4 class="modal-title">Add Guest</h4>
+			</div>
+			<div class="modal-body">
+
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-primary">Save changes</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
 <div class="clearfix"></div>
 <script type="text/javascript" src="<?php echo base_url();?>assets/js/booking-calendar.js"></script>
