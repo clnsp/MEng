@@ -38,7 +38,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                 top: subModalHeight*-1
             }).animate({
                 top: 0
-            }, 200, function(){
+            }, 500, function(){
                 subModal.trigger('show');
             }).trigger('beforeShow');
             backdrop.add(subModal);
@@ -47,7 +47,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             var subModalHeight = subModal.height();
             subModal.animate({
                 top: subModalHeight*-1
-            }, 200, function(){
+            }, 500, function(){
                 subModal.css({
                     opacity: '',
                     display: ''
