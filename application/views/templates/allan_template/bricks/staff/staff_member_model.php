@@ -20,7 +20,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label" for="inputEmail">Confirm Your Password: </label>
-                                    <textarea class="form-control" type="text"></textarea>
+                                    <p id="ban_reason"></p>
                                 </div>
                             </form>
                             <div class="modal-footer">
@@ -42,7 +42,7 @@
                                     <label class="control-label">First:</label>
                                     <label class="editable" id="first_name">First Name</label>
                                 </div>
-								<div class="form-group">
+                                <div class="form-group">
                                     <label class="control-label">Status:</label>
                                     <label id="home_number">Active</label>
                                 </div>
@@ -53,12 +53,12 @@
                                     <label class="control-label">Last:</label>
                                     <label class="editable" id="second_name">Second Name</label>
                                 </div>
-								<div class="form-group">
+                                <div class="form-group">
                                     <label class="control-label">Membership:</label>
                                     <label id="member">13 - 14</label>
                                 </div>
                             </div>
-							<textarea class="form-control" rows="3"></textarea>
+                            <p id="reason">REASONS</p>
                         </div>
                     </div>
                     <div class="panel panel-info">
@@ -72,7 +72,7 @@
                                     <label class="control-label">Home:</label>
                                     <label class="editable" id="home_number">00000000000</label>
                                 </div>
-								 <div class="form-group">
+                                <div class="form-group">
                                     <label class="control-label">Email:</label>
                                     <label class="editable" id="home_number">00000000000</label>
                                 </div>
@@ -83,8 +83,8 @@
                                     <label class="control-label">Mobile:</label>
                                     <label class="editable" id="mobile_number">00000000000</label>
                                 </div>
-								<div class="form-group">
-                                    <label class="control-label">Twiter:</label>
+                                <div class="form-group">
+                                    <label class="control-label">Twitter:</label>
                                     <label class="editable" id="twitter">temptwitter</label>
                                 </div>
                             </div>
@@ -93,54 +93,55 @@
                 </div>
                 <button type="button" class="btn btn-success btn-sm" id="views"><i class="fa fa-pencil fa-fw"></i>  Edit</i></button>
             </div>
-        <!-- FOOTER-->
-        <div class="modal-footer">
-            <div class="row">
-                <div class="col-md-8" style="text-align: left;">
-                    <!-- LEFT-->
-                    <!-- Single button -->
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown">
-                            <i class="fa fa-user fa-fw"></i> Contact <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="#"><i class="fa fa-envelope fa-fw"></i>  Email</a></li>
-                            <li><a href="#"><i class="fa fa-twitter fa-fw"></i>  Tweet</a></li>
-                            <li class="divider"></li>
-                            <li><a href="#"><i class="fa fa-mobile fa-fw"></i>  SMS</a></li>
-                        </ul>
+            <!-- FOOTER-->
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-md-8" style="text-align: left;">
+                        <!-- LEFT-->
+                        <!-- Single button -->
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-user fa-fw"></i> Contact <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="#"><i class="fa fa-envelope fa-fw"></i>  Email</a></li>
+								<li class="divider"></li>
+                                <li><a href="#"><i class="fa fa-twitter fa-fw"></i>  Tweet</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#"><i class="fa fa-mobile fa-fw"></i>  SMS</a></li>
+                            </ul>
+                        </div>
+                        <!-- Single button -->
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-warning btn-sm dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-search"></i> View <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="#"><i class="fa fa-calendar-o fa-fw"></i>  Bookings</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#"><i class="fa fa-check-square-o"></i>  Attendance</a></li>
+                            </ul>
+                        </div>
+                        <!-- Single button -->
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-danger btn-sm dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-cogs"></i>  Options <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="#mySubModal" data-toggle="submodal"><i class="fa fa-users"></i>  Update Membership</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#mySubModal" data-toggle="submodal"><i class="fa fa-ban fa-fw"></i>  Block</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#mySubModal" data-toggle="submodal"><i class="fa fa-trash-o fa-fw"></i>  Delete</a></li>
+                            </ul>
+                        </div>
                     </div>
-                    <!-- Single button -->
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-warning btn-sm dropdown-toggle" data-toggle="dropdown">
-                            <i class="fa fa-search"></i> View <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="#"><i class="fa fa-calendar-o fa-fw"></i>  Bookings</a></li>
-                            <li class="divider"></li>
-                            <li><a href="#"><i class="fa fa-check-square-o"></i>  Attendance</a></li>
-                        </ul>
+                    <div class="col-md-4">
+                        <!-- RIGHT-->
+                        <button type="button" class="btn btn-primary btn-sm" id="save_changes">Save changes</button>
                     </div>
-                    <!-- Single button -->
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-danger btn-sm dropdown-toggle" data-toggle="dropdown">
-                            Options <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu" role="menu">
-							<li><a href="#mySubModal" data-toggle="submodal"><i class="fa fa-plus-square-o"></i>  Update Membership</a></li>
-							<li class="divider"></li>
-                            <li><a href="#mySubModal" data-toggle="submodal"><i class="fa fa-ban fa-fw"></i>  Block</a></li>
-                            <li class="divider"></li>
-                            <li><a href="#mySubModal" data-toggle="submodal"><i class="fa fa-trash-o fa-fw"></i>  Delete</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <!-- RIGHT-->
-                    <button type="button" class="btn btn-primary btn-sm" id="save_changes">Save changes</button>
                 </div>
             </div>
-        </div>
-    </div> <!-- /.modal-content -->
-</div> <!-- /.modal-dialog -->
+        </div> <!-- /.modal-content -->
+    </div> <!-- /.modal-dialog -->
 </div><!-- /.modal -->
