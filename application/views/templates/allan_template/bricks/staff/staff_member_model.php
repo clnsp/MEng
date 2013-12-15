@@ -62,10 +62,10 @@
 							Contact <span class="caret"></span>
 						</button>
 						<ul class="dropdown-menu" role="menu">
-							<li><a href="#">Email<i class="fa fa-envelope"></i></a></li>
-							<li><a href="#">Tweet<i class="fa fa-twitter"></i></a></li>
+							<li><a href="#">Email<i class="fa fa-envelope pull-right"></i></a></li>
+							<li><a href="#">Tweet<i class="fa fa-twitter pull-right"></i></a></li>
 							<li class="divider"></li>
-							<li><a href="#">SMS<i class="fa fa-mobile"></i></a></li>
+							<li><a href="#">SMS<i class="fa fa-mobile pull-right"></i></a></li>
 						</ul>
 					</div>
 					<!-- Single button -->
@@ -74,9 +74,9 @@
 							Restrict <span class="caret"></span>
 						</button>
 						<ul class="dropdown-menu" role="menu">
-							<li><a href="#mySubModal">Block</a></li>
+							<li><a href="#mySubModal" data-toggle="submodal">Block</a></li>
 							<li class="divider"></li>
-							<li><a href="#mySubModal">Delete</a></li>
+							<li><a href="#mySubModal" data-toggle="submodal">Delete</a></li>
 						</ul>
 					</div>
 					</div>
