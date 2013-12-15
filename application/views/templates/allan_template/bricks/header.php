@@ -12,6 +12,9 @@
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
     <link rel="stylesheet" href="<?php echo base_url();?>assets/css/bootstrap-theme.php">
+    <link rel="stylesheet" href="<?php echo base_url();?>assets/css/bootstrap-theme.php">
+    <link rel="stylesheet" href="<?php echo base_url();?>assets/css/bootstrap.submodal.css">
+
      
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
       <!--[if lt IE 9]>
