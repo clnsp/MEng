@@ -30,14 +30,14 @@ $('#save_changes').on("click", function(){
 
 // Change View - Summary or Edit
 $("#views").on( "click", function() {
-	if($(this).html() == "Edit View"){
+	if($(this).html() != "Overview"){
 		$("label.editable").replaceWith( function() {
-        return "<input class=\"form-control editable\" id=\""+$(this).attr('id')+"\" type=\"text\" value=\"" + $( this ).html() + "\" />";});
+        return "<input class=\"form-control input-sm editable\" id=\""+$(this).attr('id')+"\" type=\"text\" value=\"" + $( this ).html() + "\" />";});
 		$(this).html("Overview");
 	}else{
 		$("input[type=text].editable").replaceWith( function() {
         return "<label class=\"editable\" id=\""+$(this).attr('id')+"\">" + $( this ).val() + "</label>";});
-		$(this).html("Edit View");
+		$(this).html("<i class=\"fa fa-pencil fa-fw\"></i> Edit</i>");
 	}
 });
 
