@@ -8,9 +8,18 @@ class Calendar extends CI_Controller{
 
         if (isset($_GET['term'])){
             $q = strtolower($_GET['term']);
-            $this->members->getUserByNameLike($q);
-        }
+            $query = $this->members->getUserByNameLike($q);
+
+            if($query->num_rows > 0){
+                foreach ($query->result_array() as $row){
+                    $new_row['label']=htmlentities(stripslashes($row['username']));
+                    $new_row['user_id']=htmlentities(stripslashes($row['id']));
+        $row_set[] = $new_row; //build an array
     }
+      echo json_encode($row_set); //format the array into json data
+  }
+}
+}
 
     /*
      * Get users from associated with a class booking
@@ -60,7 +69,7 @@ class Calendar extends CI_Controller{
      Expects two  parameters in the url start and end
      Both of form unix timestamp
      */
-    function index(){
+     function index(){
         $params = getQueryStringParams();
         $this->load->model('classes');
 

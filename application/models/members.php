@@ -58,15 +58,9 @@ class Members extends CI_Model
   	$this->db->select('username, id');
   	$this->db->like('username', $q);
   	$query = $this->db->get('users');
-  	if($query->num_rows > 0){
-  		foreach ($query->result_array() as $row){
-  			$new_row['label']=htmlentities(stripslashes($row['username']));
-  			$new_row['user_id']=htmlentities(stripslashes($row['id']));
-        $row_set[] = $new_row; //build an array
-    }
-      echo json_encode($row_set); //format the array into json data
+  	
+  	return $query;
   }
-}
 
 
 
