@@ -1,6 +1,6 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-class Users extends CI_Model
+class Members extends CI_Model
 {
 	private $table_name			    = 'users';			// user accounts
 	private $profile_table_name	= 'user_profiles';	// user profiles
@@ -45,7 +45,7 @@ class Users extends CI_Model
    */
   function getUserName($q) // was get_user_name
   {
-    $this -> db -> select('CONCAT(first_name, ' ', second_name, ' ', "(", email, ")"), id');
+    $this -> db -> select('CONCAT(first_name, " ", second_name, " ", "(", email, ")"), id');
     $this -> db -> like('first_name', $q);
     $this -> db -> or_like('second_name', $q);
     

@@ -53,8 +53,8 @@
 		         		redirect('login', 'refresh');
 		         	}
 		         	else{
-		         		$this->load->Model('C_User_Model');
-		         		$data['users'] = $this->C_User_Model->get_all_user();
+		         		$this->load->Model('members');
+		         		$data['users'] = $this->members->getAllUsers();
 		         		parse_temp($page, $this->load->view('pages/'.$page, $data, true));
 		         	}
 		         }

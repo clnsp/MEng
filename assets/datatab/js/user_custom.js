@@ -6,7 +6,7 @@ $.member.utils.CFirst = function(s){return s.substr(0,1).toUpperCase()+s.substr(
 
 // Get User and Load Modal
 $("#member tbody").on( "click", "tr", function() {
-  $.getJSON('user_access/get_user_details/?id=' + $(this).attr('id'), function(data) {
+  $.getJSON('member/getUserDetails/?id=' + $(this).attr('id'), function(data) {
   if(data.length>0){
     $('.modal-title').html($.member.utils.CFirst(data[0].first_name) + " " + $.member.utils.CFirst(data[0].second_name));
     $.each( data[0], function( key, mem ) { $('#'+key).html($.member.utils.CFirst(mem)); });   
@@ -20,7 +20,7 @@ $("#member tbody").on( "click", "tr", function() {
 $('#save_changes').on("click", function(){
 	if($.member.changes)
 	{
-		$.post('user_access/get_user_details/?', function(data) {
+		$.post('member/getUserDetails/?', function(data) {
 			$( ".result" ).html( data );
 			$.member.changes = false;
 		});

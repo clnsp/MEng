@@ -48,7 +48,7 @@ $route['register'] = 'auth/register';
 $route['404_override'] = 'pages/view/page-not-found';
 $route['users'] = 'pages/users';
 
-$route['user_access'] = 'user_access';
+$route['member'] = 'member';
 
 $route['admin-calendar'] = 'pages/admin_calendar';
 $route['caljson'] = 'caljson';
