@@ -140,8 +140,4 @@
 		</div><!-- /.modal-content -->
 	</div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-
-
-
 <div class="clearfix"></div>
-<script type="text/javascript" src="<?php echo base_url();?>assets/js/booking-calendar.js"></script>
