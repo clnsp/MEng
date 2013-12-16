@@ -12,10 +12,11 @@
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
     <link rel="stylesheet" href="<?php echo base_url();?>assets/css/bootstrap-theme.php">
-    <link rel="stylesheet" href="<?php echo base_url();?>assets/css/bootstrap-theme.php">
     <link rel="stylesheet" href="<?php echo base_url();?>assets/css/bootstrap.submodal.css">
+    <link rel="stylesheet" href="<?php echo base_url();?>assets/css/jquery-ui-autocomplete.custom.min.css">
 
-     
+<link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/cal/fullcalendar.css">
+
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
       <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -32,7 +33,7 @@
            <div class="navbar navbar-default navbar-inverse navbar-top" role="navigation">
              <div class="container">
 
-              <a class="navbar-brand" href="<?php echo base_url();?>"> <img class="displayed" src="<?php echo base_url();?>assets/img/menu-logo-small.jpg" alt="Strathclyde University CSR"></a>
+              <a class="navbar-brand" href="<?php echo base_url();?>"> <img class="displayed" src="http://www.strath.ac.uk/media/system/homepage/img/logotab[2].jpg" alt="Strathclyde University CSR"></a>
 
               <div class="navbar-header">
 

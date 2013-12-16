@@ -1,9 +1,9 @@
 <?php
-    header("Content-type: text/css; charset: UTF-8");
-    
-    $brandPrimary = "#002b5c";
-    $brandSecondary = "#002045";
-    $linkColor = "#555555";
+header("Content-type: text/css; charset: UTF-8");
+
+$brandPrimary = "#002b5c";
+$brandSecondary = "#002045";
+$linkColor = "#555555";
 ?>
 
 /*!
@@ -14,15 +14,15 @@
  * Designed and built with all the love in the world by @mdo and @fat.
  */
 
-.btn-default,
-.btn-primary,
-.btn-success,
-.btn-info,
-.btn-warning,
-.btn-danger {
+ .btn-default,
+ .btn-primary,
+ .btn-success,
+ .btn-info,
+ .btn-warning,
+ .btn-danger {
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.2);
   -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 1px rgba(0, 0, 0, 0.075);
-          box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 1px rgba(0, 0, 0, 0.075);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 1px rgba(0, 0, 0, 0.075);
 }
 
 .btn-default:active,
@@ -38,7 +38,7 @@
 .btn-warning.active,
 .btn-danger.active {
   -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-          box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
 }
 
 .btn:active,
@@ -189,7 +189,7 @@
 .thumbnail,
 .img-thumbnail {
   -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.075);
-          box-shadow: 0 1px 2px rgba(0, 0, 0, 0.075);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.075);
 }
 
 .dropdown-menu > li > a:hover,
@@ -225,7 +225,7 @@
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#fff8f8f8', GradientType=0);
   filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
   -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 5px rgba(0, 0, 0, 0.075);
-          box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 5px rgba(0, 0, 0, 0.075);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 5px rgba(0, 0, 0, 0.075);
 }
 
 .navbar-default .navbar-nav > .active > a {
@@ -236,7 +236,7 @@
   background-repeat: repeat-x;
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffebebeb', endColorstr='#fff3f3f3', GradientType=0);
   -webkit-box-shadow: inset 0 3px 9px rgba(0, 0, 0, 0.075);
-          box-shadow: inset 0 3px 9px rgba(0, 0, 0, 0.075);
+  box-shadow: inset 0 3px 9px rgba(0, 0, 0, 0.075);
 }
 
 .navbar-brand,
@@ -246,7 +246,7 @@
 
 .navbar-inverse {
   background-image: none;
- }
+}
 
 .navbar-inverse .navbar-nav > .active > a {
   background-image: -webkit-gradient(linear, left 0%, left 100%, from(#222222), to(<?php echo $brandSecondary;?>));
@@ -256,7 +256,7 @@
   background-repeat: repeat-x;
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff222222', endColorstr='<?php echo $brandSecondary;?>', GradientType=0);
   -webkit-box-shadow: inset 0 3px 9px <?php echo $brandSecondary;?>;
-          box-shadow: inset 0 3px 9px rgba(0, 0, 0, 0.25);
+  box-shadow: inset 0 3px 9px rgba(0, 0, 0, 0.25);
 }
 
 .navbar-inverse .navbar-brand,
@@ -273,7 +273,7 @@
 .alert {
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.2);
   -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25), 0 1px 2px rgba(0, 0, 0, 0.05);
-          box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25), 0 1px 2px rgba(0, 0, 0, 0.05);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25), 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
 .alert-success {
@@ -373,7 +373,7 @@
 .list-group {
   border-radius: 4px;
   -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.075);
-          box-shadow: 0 1px 2px rgba(0, 0, 0, 0.075);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.075);
 }
 
 .list-group-item.active,
@@ -391,7 +391,7 @@
 
 .panel {
   -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-          box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
 .panel-default > .panel-heading {
@@ -457,16 +457,19 @@
   border-color: #dcdcdc;
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffe8e8e8', endColorstr='#fff5f5f5', GradientType=0);
   -webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 0 rgba(255, 255, 255, 0.1);
-          box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 0 rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
-/* Specialised css */
+/*
+ * MEng Specialised css 
+ **********************************************
+ */
 
-#footer .row{
-	color: #fff;
-}
+ #footer .row{
+   color: #fff;
+ }
 
-body{
+ body{
   background-color: rgba(226, 226, 226, 0.65);
 }
 
@@ -476,6 +479,11 @@ body{
 	float: none!important;
 }
 
+img.displayed {
+  display: block;
+  margin-left: auto;
+  margin-right: auto 
+}  
 html, body, #booking {
   height: 100%;
   /* The html and body elements cannot have any padding or margin. */
@@ -501,21 +509,53 @@ html, body, #booking {
   padding: 1px 10px;
 }
 
+/* sub modal */
+.modal.submodal{
+  width: 50%!important;
+  margin-left: auto;
+  margin-right: auto;
+  overflow: hidden;
+  outline-color: transparent!important;
+}
 
-/* Login Page */
-#login-form #remember-me{
+.modal.submodal .modal-dialog{
+  width: 100%
+}
+
+.modal.submodal .modal-content{
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+
+}
+
+
+/*
+ * Loading Indicator 
+ */
+
+ #loading-indicator{
+
+   font-size: 40px;
+
+ }
+
+
+
+
+ /* Login Page */
+ #login-form #remember-me{
   margin: 0px 15px 15px;
 }
 
 
 /* Lastly, apply responsive CSS fixes as necessary */
 @media (max-width: 767px) {
-#footer {
-  margin-left: -20px;
-  margin-right: -20px;
-  padding-left: 20px;
-  padding-right: 20px;
-}
+  #footer {
+    margin-left: -20px;
+    margin-right: -20px;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
 }
 
 /**
@@ -523,37 +563,37 @@ html, body, #booking {
  * ******************************************
  */
 
-#booking .navbar{
+ #booking .navbar-top{
  	border-radius: 0!important;
  	border-bottom: 3px solid <?php echo $brandSecondary;?>;
-	border-right-style: none;
-	border-left-style: none;
-	background-color: <?php echo $brandPrimary;?>!important;
-}
+   border-right-style: none;
+   border-left-style: none;
+   background-color: <?php echo $brandPrimary;?>!important;
+ }
 
 
-#footer, .footer{
-	margin-top: 2em;
-	padding: 1em;
-	background-color: <?php echo $brandPrimary;?>;
-}
+ #footer, .footer{
+   margin-top: 2em;
+   padding: 1em;
+   background-color: <?php echo $brandPrimary;?>;
+ }
 
-#booking #footer .nav-pills li a{
-	color: #2A6496;
-}
+ #booking #footer .nav-pills li a{
+   color: #2A6496;
+ }
 
-#booking #footer .nav-pills li a:hover{
-	background-color: rgba(255, 255, 255, 0);
-	color: #428BCA;
-}
+ #booking #footer .nav-pills li a:hover{
+   background-color: rgba(255, 255, 255, 0);
+   color: #428BCA;
+ }
 
 
-#booking .nav .caret{
-	border-top-color: <?php echo $brandSecondary;?>;
-	border-bottom-color: <?php echo $brandSecondary;?>;
-}
+ #booking .nav .caret{
+   border-top-color: <?php echo $brandSecondary;?>;
+   border-bottom-color: <?php echo $brandSecondary;?>;
+ }
 
-#booking .navbar .dropdown-menu::after {
+ #booking .navbar .dropdown-menu::after {
   position: absolute;
   top: -6px;
   right: 20px;
@@ -569,14 +609,66 @@ html, body, #booking {
 	margin-bottom: 15px;
 }
 
+/* Calendar */
+
+#booking #calendar .fc-day:hover,
+#booking #calendar .fc-agenda-slots tr:hover
+{
+  background-color: rgba(255, 255, 255, 0.49);
+}
+
+#booking #eventModal #eventColor{
+  color: #bbb;
+  font-size: 35px;
+}
+
+/*
+#booking #eventModal #event-description{
+	display:block;
+}
+
+#booking #eventModal button.close{
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  background-color: #B4B4B4;
+  border-radius: 20px;
+  padding-left: 5px;
+  padding-right: 5px;
+  opacity: 1;
+  border: 2px solid #000;
+}
+*/
+
 #booking .form-control:focus{
 	border: 1px solid <?php echo $brandSecondary;?>;
 	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),0 0 8px rgba(102, 175, 233, 0.6);
 	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),0 0 8px rgba(102, 175, 233, 0.6);	
 }
 
-img.displayed {
-    display: block;
-    margin-left: auto;
-    margin-right: auto 
-}  
+#booking #eventModal .modal-body{
+  max-height: 400px;
+  min-height: 100px;
+}
+
+#booking #eventModal #event-member-list a.list-group-item input{
+  margin-right: 5px;
+}
+
+
+#booking #eventModal #event-member-list a.list-group-item{
+  text-transform: capitalize;
+}
+
+
+/*autocomplete results*/
+ul.ui-menu .ui-menu-item:hover {
+  background-color: <?php echo $brandSecondary?>;
+  cursor: pointer;
+  color: #0ff!important;
+}
+
+ul.ui-menu .ui-menu-item {
+  padding: 5px 0 5px 0;
+}
+

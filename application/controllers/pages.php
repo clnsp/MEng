@@ -58,6 +58,31 @@
                 }
 
 		/**
+		 * Admin calendar booking page
+		 */
+		public function admin_calendar($page = 'admin-calendar'){
+
+			if(!$this->tank_auth->is_logged_in()){
+			  //If no session, redirect to login page
+				$data['user_type'] = 'guest';
+				redirect('login', 'refresh');
+			}
+			else{
+				$this->load->Model('Rooms');
+				$this->load->Model('Categories');
+				
+				$data['rooms'] = $this->Rooms->getRooms();
+				$data['categories'] = $this->Categories->getCategories();
+
+				parse_temp($page, $this->load->view('pages/'.$page, $data, true));
+			}
+
+
+		}
+
+
+
+		/**
 		 * Logout of system
 		 */
 		public function logout(){
@@ -74,6 +99,8 @@
 			session_destroy();
 			redirect('login', 'refresh');
 		}
+
+
 
 		
 		
