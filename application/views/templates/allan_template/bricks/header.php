@@ -33,7 +33,7 @@
            <div class="navbar navbar-default navbar-inverse navbar-top" role="navigation">
              <div class="container">
 
-              <a class="navbar-brand" href="<?php echo base_url();?>"> <img class="displayed" src="http://www.strath.ac.uk/media/system/homepage/img/logotab[2].jpg" alt="Strathclyde University CSR"></a>
+              <a class="navbar-brand" href="<?php echo base_url();?>"> <img class="displayed" src="<?php echo base_url();?>/assets/img/menu-logo-small.jpg" alt="Strathclyde University CSR"></a>
 
               <div class="navbar-header">
 

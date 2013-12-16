@@ -30,7 +30,7 @@
 
 </div><!--end footer-->
 
-    <!-- Latest compiled and minified JavaScript -->
+<!-- Latest compiled and minified JavaScript -->
 
 
 
@@ -39,19 +39,21 @@
       ================================================== -->
       <!-- Placed at the end of the document so the pages load faster -->
       <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-  <!-- Latest compiled and minified JavaScript -->
-  	<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
-        <script src="<?php echo base_url();?>assets/js/bootstrap.submodal.js"></script>
-	<!-- COLIN TEST FIX-->
-	<script src="<?php echo base_url();?>assets/datatab/js/jquery.dataTables.min.js"></script>
-		<script src="<?php echo base_url();?>assets/datatab/js/DT_bootstrap.min.js"></script>
-		<script src="<?php echo base_url();?>assets/datatab/js/user_custom.js"></script>
+      <!-- Latest compiled and minified JavaScript -->
+      <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
+      <script src="<?php echo base_url();?>assets/js/bootstrap.submodal.js"></script>
+      <!-- COLIN TEST FIX-->
+      <script src="<?php echo base_url();?>assets/datatab/js/jquery.dataTables.min.js"></script>
+      <script src="<?php echo base_url();?>assets/datatab/js/DT_bootstrap.min.js"></script>
+      <script src="<?php echo base_url();?>assets/datatab/js/user_custom.js"></script>
 
 
       <script src="<?php echo base_url();?>assets/js/jquery-ui.custom.min.js"></script>
-    <script src="<?php echo base_url();?>assets/js/jquery-ui-autocomplete.custom.min.js"></script>
+      <script src="<?php echo base_url();?>assets/js/jquery-ui-autocomplete.custom.min.js"></script>
       <script src="<?php echo base_url();?>assets/cal/fullcalendar.min.js"></script>
-    <script> 
+      <script type="text/javascript" src="<?php echo base_url();?>assets/js/booking-calendar.js"></script>
+
+      <script> 
       // using JQUERY's ready method to know when all dom elements are rendered
       $( document ).ready(function () {
 
@@ -81,12 +83,11 @@
       });
 	  // COLIN TEST
 	  $('#member').dataTable( {
-	"sDom": "<'row'<'col-md-6'l><'col-md-6'f>r>t<'row'<'col-md-6'i><'col-md-6'p>>"
-    } );
+     "sDom": "<'row'<'col-md-6'l><'col-md-6'f>r>t<'row'<'col-md-6'i><'col-md-6'p>>"
+   } );
 // END COLIN
-      });
-    });
-      
+});
+
   // Store the initial content so we can revisit it later
   history.replaceState({
    content: $("#page-body").html(),
