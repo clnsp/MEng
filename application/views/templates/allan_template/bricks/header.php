@@ -14,8 +14,9 @@
     <link rel="stylesheet" href="<?php echo base_url();?>assets/css/bootstrap-theme.php">
     <link rel="stylesheet" href="<?php echo base_url();?>assets/css/bootstrap.submodal.css">
     <link rel="stylesheet" href="<?php echo base_url();?>assets/css/jquery-ui-autocomplete.custom.min.css">
-
-<link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/cal/fullcalendar.css">
+    <link rel="stylesheet" href="<?php echo base_url();?>assets/datatab/css/DT_bootstrap.css"/>
+    <link rel="stylesheet" href="<?php echo base_url();?>assets/css/bootstrap-overides.css"/>
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/cal/fullcalendar.css">
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
       <!--[if lt IE 9]>

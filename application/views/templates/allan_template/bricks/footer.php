@@ -59,7 +59,7 @@
 
 
         // set an on click on the button
-        $("a.ajax").click(function (e) {
+        $("a.ajax").click(function (e) {/*
          //prevent default
          e.preventDefault();
 
@@ -73,14 +73,17 @@
           pagebody.load(href + " #body-wrapper", function(){
             window.history.pushState({title: title, content: pagebody.html()}, title, "<?php echo site_url(); ?>/" + title);
           });
-        });
+        */
+      });
 
-      // Revert to a previously saved state
+    /*  // Revert to a previously saved state
       window.addEventListener('popstate', function(event) {
         console.log('popstate fired!' + event.state);
 
         updateContent(event.state);
       });
+
+      */
 	  // COLIN TEST
 	  $('#member').dataTable( {
      "sDom": "<'row'<'col-md-6'l><'col-md-6'f>r>t<'row'<'col-md-6'i><'col-md-6'p>>"
