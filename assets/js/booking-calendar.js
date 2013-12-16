@@ -12,7 +12,7 @@ var eventModal,eventTitle,eventTitle, eventdate1, eventdate2, eventSpacesMax, ev
  */
  function load_event_attendants() {
 
- 	$.getJSON('users_fetch/get_class_attendants/?class=' + eventid, function(data) {
+ 	$.getJSON('calendar/getClassAttendants/?class=' + eventid, function(data) {
  		eventMembers.empty();
  		eventSpacesTaken.text(data.length);
  		if(data.length>0){
@@ -152,7 +152,7 @@ $('#calendar').fullCalendar({
 
 		eventSources: [
 		{
-			url: 'caljson',
+			url: 'calendar',
 			startParam: 'start',
 			endParam: 'end',
 
@@ -235,7 +235,7 @@ eventMembers.html('');
  	var mid = memberinputbox.attr('data-member-id');
  	if(mid != ''){
  		$.ajax({
- 			url: "booking/add_member",
+ 			url: "calendar/addMember",
  			type: "POST",
  			data: { 'member_id': mid, 'class_booking_id':eventid  },
  			success: function() {
@@ -275,7 +275,7 @@ eventMembers.html('');
 
  	if(mids.length > 0){
  		$.ajax({
- 			url: "booking/remove_member",
+ 			url: "calendar/removeMember",
  			type: "POST",
  			data: { 'member_id': mids, 'class_booking_id':eventid  },
  			success: function() {
@@ -295,7 +295,7 @@ eventMembers.html('');
  var noResultsLabel = "No members found Add guest?";
 
  var autocomplete = $("#search-users").autocomplete({
- 	source: "users_fetch/get_users",
+ 	source: "calendar/getUsers",
  	minLength: 3, 
  	select: function (event, ui) {
  		if(ui.item.label == noResultsLabel){

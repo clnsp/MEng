@@ -1,7 +1,7 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 /**
- * Bookings
+ * Classes
  *
  * This model represents user authentication data. It operates the following tables:
  * - user account data,
@@ -9,7 +9,7 @@
  *
  * @author	MEng Project
  */
-class Bookings extends CI_Model
+class Classes extends CI_Model
 {
 	private $table_name			= 'class_tbl';			// user accounts
 
@@ -60,7 +60,7 @@ class Bookings extends CI_Model
 			$this -> db -> join('class_type_tbl', 'class_type_tbl.class_type_id = class_tbl.class_type_id');
 
 		}else{
-			return $this->fetchData($start, $end);
+			return $this->getClassessBetween($start, $end);
 		}
 
 		$query = $this -> db -> get();

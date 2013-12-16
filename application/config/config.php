@@ -14,8 +14,9 @@
 | path to your installation.
 |
 */
-$config['base_url']	= 'https://devweb2013.cis.strath.ac.uk/~xvb09151/MEng';
 
+$config['base_url']	= 'https://devweb2013.cis.strath.ac.uk/~xvb09137/MEngBranchAW/';
+/*mine*/
 /*
 |--------------------------------------------------------------------------
 | Index File

@@ -32,12 +32,12 @@ class Members extends CI_Model
    */
   function getUserByID($id) //was fetchUser($id)
   {
-    $this -> db -> select('first_name, second_name, email, home_number, mobile_number, twitter');
-    $this -> db -> from($this -> table_name);
-    $this -> db -> where('id', $id);
-    
-    $query = $this -> db -> get();   
-    return $query->result();
+  	$this -> db -> select('first_name, second_name, email, home_number, mobile_number, twitter');
+  	$this -> db -> from($this -> table_name);
+  	$this -> db -> where('id', $id);
+
+  	$query = $this -> db -> get();   
+  	return $query->result();
   }
 
   /* 
@@ -45,14 +45,29 @@ class Members extends CI_Model
    */
   function getUserName($q) // was get_user_name
   {
-    $this -> db -> select('CONCAT(first_name, " ", second_name, " ", "(", email, ")"), id');
-    $this -> db -> like('first_name', $q);
-    $this -> db -> or_like('second_name', $q);
-    
-    $query = $this -> db -> get($this -> table_name);
-    return $query -> result();
+  	$this -> db -> select('CONCAT(first_name, " ", second_name, " ", "(", email, ")"), id');
+  	$this -> db -> like('first_name', $q);
+  	$this -> db -> or_like('second_name', $q);
+
+  	$query = $this -> db -> get($this -> table_name);
+  	return $query -> result();
   }
 
+  /* Get name and id return array */
+  function getUserByNameLike($q){
+  	$this->db->select('username, id');
+  	$this->db->like('username', $q);
+  	$query = $this->db->get('users');
+  	if($query->num_rows > 0){
+  		foreach ($query->result_array() as $row){
+  			$new_row['label']=htmlentities(stripslashes($row['username']));
+  			$new_row['user_id']=htmlentities(stripslashes($row['id']));
+        $row_set[] = $new_row; //build an array
+    }
+      echo json_encode($row_set); //format the array into json data
+  }
+}
 
-  
+
+
 }
