@@ -8,17 +8,18 @@ class Calendar extends CI_Controller{
 
         if (isset($_GET['term'])){
             $q = strtolower($_GET['term']);
-            $query = $this->members->getUserByNameLike($q);
+
+            $query = $this->members->getUserName($q);
 
             if($query->num_rows > 0){
                 foreach ($query->result_array() as $row){
-                    $new_row['label']=htmlentities(stripslashes($row['username']));
+                    $new_row['label']=htmlentities(stripslashes($row['name']));
                     $new_row['user_id']=htmlentities(stripslashes($row['id']));
-        $row_set[] = $new_row; //build an array
+                    $row_set[] = $new_row; //build an array
+                }
+                echo json_encode($row_set); //format the array into json data
+            }
     }
-      echo json_encode($row_set); //format the array into json data
-  }
-}
 }
 
     /*

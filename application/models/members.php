@@ -40,28 +40,22 @@ class Members extends CI_Model
   	return $query->result();
   }
 
-  /* 
-   * Get single name
+   /**
+   * Fetch users that partially match a first or second name
+   * @param string
+   * @return  object
    */
   function getUserName($q) // was get_user_name
   {
-  	$this -> db -> select('CONCAT(first_name, " ", second_name, " ", "(", email, ")"), id');
-  	$this -> db -> like('first_name', $q);
-  	$this -> db -> or_like('second_name', $q);
+  	$this -> db -> select("id, CONCAT_WS(' ', first_name, second_name) AS name", FALSE);
 
-  	$query = $this -> db -> get($this -> table_name);
-  	return $query -> result();
+    $term = strtolower($q);
+    $this->db->where("(LOWER(first_name) LIKE '%{$q}%' OR LOWER(second_name) LIKE '%{$q}%')");
+
+    $query = $this -> db -> get($this -> table_name);
+
+    return $query;
   }
-
-  /* Get name and id return array */
-  function getUserByNameLike($q){
-  	$this->db->select('username, id');
-  	$this->db->like('username', $q);
-  	$query = $this->db->get('users');
-  	
-  	return $query;
-  }
-
 
 
 }
