@@ -42,22 +42,27 @@
 
 		}
 		
-		         /**
-                 * Admin User Mangement
-                 */
-		         public function users($page = 'users'){
+		 /**
+		 * Admin User Mangement
+		 */
+		 public function users($page = 'users'){
 
-		         	if(!$this->tank_auth->is_logged_in()){
-                          //If no session, redirect to login page
-		         		$data['user_type'] = 'guest';
-		         		redirect('login', 'refresh');
-		         	}
-		         	else{
-		         		$this->load->Model('members');
-		         		$data['users'] = $this->members->getAllUsers();
-		         		parse_temp($page, $this->load->view('pages/'.$page, $data, true));
-		         	}
-		         }
+			if(!$this->tank_auth->is_logged_in()){
+				  //If no session, redirect to login page
+				$data['user_type'] = 'guest';
+				redirect('login', 'refresh');
+			}
+			else{
+				$this->load->Model('members');
+				// Get all Users
+				$data['users'] = $this->members->getAllUsers();
+				// SMS Enabled
+				$data['sms'] = $this->config->item('sms_allow', 'communication');
+				// Twitter Enabled
+				$data['twitter'] = $this->config->item('twitter_allow','communication');
+				parse_temp($page, $this->load->view('pages/'.$page, $data, true));
+			}
+		 }
 
 		/**
 		 * Admin calendar booking page

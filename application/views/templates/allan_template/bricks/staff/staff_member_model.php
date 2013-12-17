@@ -8,28 +8,8 @@
             <!--BODY-->
             <div class="modal-body">
                 <!-- Sub-Modal -->
-                <div id="mySubModal" class="modal-content sub-modal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index:4;">
-                    <div class="modal-content">
-                        <div class="modal-body">
-                            <p class="center">Are you sure you want to close your account?<br />You won't be able to undo this.</p>
-                            <hr />
-                            <form class="form-horizontal">
-                                <div class="form-group">
-                                    <label class="control-label" for="inputEmail">Confirm Your Password: </label>
-                                    <input class="form-control" type="text" />
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label" for="inputEmail">Confirm Your Password: </label>
-                                    <p id="ban_reason"></p>
-                                </div>
-                            </form>
-                            <div class="modal-footer">
-                                <button class="btn btn-sm" data-dismiss="submodal" aria-hidden="true">Cancel</button>
-                                <button class="btn btn-sm btn-danger" data-dismiss="submodal">Close Account</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+		<?php $this->load->view('templates/allan_template/bricks/staff/staff_member_sub_model'); ?>
+                <!--End Sub-Modal -->
                 <div id="mainContent" style="z-index:2;">
                     <div class="panel panel-info">
                         <div class="panel-heading">
@@ -104,11 +84,15 @@
                                 <i class="fa fa-user fa-fw"></i> Contact <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="#"><i class="fa fa-envelope fa-fw"></i>  Email</a></li>
+                                <li><a href="#"><i class="fa fa-envelope fa-fw communicate"></i>  Email</a></li>
+								<?php if($twitter) {?>
 								<li class="divider"></li>
-                                <li><a href="#"><i class="fa fa-twitter fa-fw"></i>  Tweet</a></li>
+                                <li><a href="#"><i class="fa fa-twitter fa-fw communicate"></i>  Tweet</a></li>
+								<?php }?>
+								<?php if($sms) {?>
                                 <li class="divider"></li>
-                                <li><a href="#"><i class="fa fa-mobile fa-fw"></i>  SMS</a></li>
+                                <li><a href="#"><i class="fa fa-mobile fa-fw communicate"></i>  SMS</a></li>
+								<?php }?>
                             </ul>
                         </div>
                         <!-- Single button -->

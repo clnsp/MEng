@@ -28,6 +28,12 @@ $('#save_changes').on("click", function(){
 	}
 });
 
+// CLEAR DIV
+// $('.sub-modal .modal-body').empty();
+
+
+
+
 // Change View - Summary or Edit
 $("#views").on( "click", function() {
 	if($(this).html() != "Overview"){
