@@ -75,7 +75,9 @@ class Classes extends CI_Model
 	 * @return	object
 	 */
 	function getClassAttendants($class){ //getBookingAttendants
-		$this -> db -> select('member_id, username');
+		
+
+		$this -> db -> select("member_id, CONCAT_WS(' ', first_name, second_name) AS username", FALSE);
 		$this -> db -> from('class_booking_tbl');
 		$this -> db -> where('class_id', $class);
 		$this -> db -> join('users', 'users.id = class_booking_tbl.member_id');
