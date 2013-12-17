@@ -56,10 +56,11 @@
 				$this->load->Model('members');
 				// Get all Users
 				$data['users'] = $this->members->getAllUsers();
-				// SMS Enabled
-				$data['sms'] = $this->config->item('sms_allow', 'communication');
 				// Twitter Enabled
-				$data['twitter'] = $this->config->item('twitter_allow','communication');
+				$data['twitter'] = $this->config->item('twitter_allow');
+				// SMS Enabled
+				$data['sms'] = $this->config->item('sms_allow');
+				
 				parse_temp($page, $this->load->view('pages/'.$page, $data, true));
 			}
 		 }
