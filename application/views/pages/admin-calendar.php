@@ -10,7 +10,7 @@
 -->
 
 
-<div class="dropdown pull-right">
+<div id="category-dropdown" class="dropdown pull-right">
 	<button class="btn dropdown-toggle" type="button" id="category-dropdown-btn" data-toggle="dropdown">Categories
 		<span class="caret"></span>
 	</button>
@@ -118,7 +118,7 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				<button type="button" class="btn btn-primary">Cancel Class</button>
+				<button id="event-cancel-class-btn" type="button" class="btn btn-primary">Cancel Class</button>
 			</div>
 		</div><!-- /.modal-content -->
 	</div><!-- /.modal-dialog -->

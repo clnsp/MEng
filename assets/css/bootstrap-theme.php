@@ -660,6 +660,10 @@ html, body, #booking {
   text-transform: capitalize;
 }
 
+#booking #category-dropdown li.selected a:before{
+  content: "Y";
+}
+
 
 /*autocomplete results*/
 ul.ui-menu .ui-menu-item:hover {

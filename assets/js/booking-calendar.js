@@ -9,27 +9,65 @@ var eventModal,eventTitle,eventTitle, eventdate1, eventdate2, eventSpacesMax, ev
 
 /*
  * Load the attendants of this event
+ * @param bool
  */
- function load_event_attendants() {
+ function load_event_attendants(past) {
 
  	$.getJSON('calendar/getClassAttendants/?class=' + eventid, function(data) {
  		eventMembers.empty();
  		eventSpacesTaken.text(data.length);
+
  		if(data.length>0){
- 			eventModal.find('#event-remove-member-button').prop('disabled', false);;
  			$.each( data, function( key, mem ) {
- 				eventMembers.append('<a href="#" class="list-group-item"> <input name="member_id" value="'+mem['member_id']+'" type="checkbox">'+mem['username']+'</a>');
+ 				disable_remove_button(false);
+ 				add_member_to_member_list(mem['member_id'], mem['username'], !past);
+ 				if(past){
+ 					disable_remove_button(true);
+
+ 				}
  			});
  		}else{
  			eventMembers.append('<li class="list-group-item"> No attendants</li>');
- 			eventModal.find('#event-remove-member-button').prop('disabled', true);;
-
+ 			disable_remove_button(true);
  		}
 
  	});
  }
 
 
+/**
+ * Add member to the member list
+ */
+ function add_member_to_member_list(id, username, checkbox){
+ 	if(checkbox){
+ 		eventMembers.append('<a href="#" class="list-group-item"> <input name="member_id" value="'+ id +'" type="checkbox">' + username + '</a>');
+ 	}else{
+ 		eventMembers.append('<a href="#" class="list-group-item">' + username + '</a>');
+ 	}
+
+ }
+
+/**
+ * Disable/Enable the remove member button
+ */
+ function disable_remove_button(disable){
+ 	eventModal.find('#event-remove-member-button').prop('disabled', disable);
+ }
+
+/**
+ * Disable/Enable the cancel class button
+ */
+ function disable_cancel_class(disable){
+ 	eventModal.find('#event-cancel-class-btn').prop('disabled', disable);
+ }
+
+/**
+ * Disable/Enable the add member functionality
+ */
+ function disable_add_member(disable){
+ 	eventModal.find('input#search-users').prop('disabled', disable);
+ 	eventModal.find('button#btn-add-member').prop('disabled', disable);
+ }
  /*
   * Show an error message for dialog
   */
@@ -86,109 +124,121 @@ $('#calendar').fullCalendar({
 		var s_date, e_date, s_time, e_time;
 
 		if(exists(calEvent.start)){
-				//s_date = calEvent.start.toDateString('dddd, d MMM yyyy');
-				//s_time = calEvent.start.toTimeString('HH:mm');
-				s_date = $.fullCalendar.formatDate(calEvent.start, "dddd, d MMMM yyyy");
-				s_time = $.fullCalendar.formatDate(calEvent.start, "HH:mm");
-			}
+			s_date = $.fullCalendar.formatDate(calEvent.start, "dddd, d MMMM yyyy");
+			s_time = $.fullCalendar.formatDate(calEvent.start, "HH:mm");
+		}
 
-			if(exists(calEvent.end)){
-				e_date = $.fullCalendar.formatDate(calEvent.end, "dddd, d MMMM yyyy");
-				e_time = $.fullCalendar.formatDate(calEvent.end, "HH:mm");
-			}
+		if(exists(calEvent.end)){
+			e_date = $.fullCalendar.formatDate(calEvent.end, "dddd, d MMMM yyyy");
+			e_time = $.fullCalendar.formatDate(calEvent.end, "HH:mm");
+		}
 
-			/*all day no time*/
-			if(exists(calEvent.allDay) && calEvent.allDay){
+		/*all day no time*/
+		if(exists(calEvent.allDay) && calEvent.allDay){
+			eventdate1.text(s_date);
+			eventdate2.text("All Day Event");
+		}else{
+			/* within one day */
+			if(s_date == e_date){
 				eventdate1.text(s_date);
-				eventdate2.text("All Day Event");
+				eventdate2.text(s_time + ' to ' + e_time);
+			}
+			/*split over multiple days*/
+			else{
+				eventdate1.text(s_time + ' ' + s_date + ' to');
+				eventdate2.text(e_time + ' ' + e_date);
+			}
+		}
+
+		/*max_attendance*/
+		if(exists(calEvent.max_attendance)){
+			eventSpacesMax.text(calEvent.max_attendance);
+		}
+
+		/*attending*/
+		if(exists(calEvent.attending)){
+			eventSpacesTaken.text(calEvent.attending);
+		}
+
+		/*color*/
+		if(exists(calEvent.color)){
+			eventColor.css( "color", calEvent.color );
+		}
+
+		/*room*/
+		if(exists(calEvent.room)){
+			if(exists(calEvent.room_id)){
+				eventLocation.html('<a href="room/' + calEvent.room_id + '">' + calEvent.room + '</a>');
 			}else{
-				/* within one dat*/
-				if(s_date == e_date){
-					eventdate1.text(s_date);
-					eventdate2.text(s_time + ' to ' + e_time);
-				}
-				/*split over multiple days*/
-				else{
-					eventdate1.text(s_time + ' ' + s_date + ' to');
-					eventdate2.text(e_time + ' ' + e_date);
-				}
-			}
-
-			/*max_attendance*/
-			if(exists(calEvent.max_attendance)){
-				eventSpacesMax.text(calEvent.max_attendance);
-			}
-
-			/*attending*/
-			if(exists(calEvent.attending)){
-				eventSpacesTaken.text(calEvent.attending);
-			}
-
-			/*color*/
-			if(exists(calEvent.color)){
-				eventColor.css( "color", calEvent.color );
-			}
-
-			/*room*/
-			if(exists(calEvent.room)){
-				if(exists(calEvent.room_id)){
-					eventLocation.html('<a href="room/' + calEvent.room_id + '">' + calEvent.room + '</a>');
-				}else{
-					eventLocation.text(calEvent.room);
-				}
-
-			}
-
-			/*if(exists(calEvent.description)){
-				eventDescription.text(calEvent.description);
-			}*/
-			
-			/*load members*/
-			load_event_attendants();
-			
-			/*setup form*/
-			eventModal.modal('show');
-		},
-
-		eventSources: [
-		{
-			url: 'calendar',
-			startParam: 'start',
-			endParam: 'end',
-
-		data: function() { // a function that returns an object
-			return {
-				room: $('#bookingCalTabs .active a').attr('href'),	};
-			},
-
-
-			error: function() {
-				if(!$('#calendar-error').length){
-					$('#calendar').prepend('<div id="calendar-error" class="alert alert-danger text-center">There was an error loading the calendar</div>');
-
-				}
-			},
-		}
-		],
-
-		loading: function(b) {
-			if (b) 
-				$('#loading-indicator').toggleClass('hidden');
-			else 
-				$('#loading-indicator').toggleClass('hidden');
-		},
-		dayClick: function(date, allDay, jsEvent, view) {
-
-			view.calendar.gotoDate(date);
-			if(view.name == 'month'){	
-				view.calendar.changeView('agendaWeek');
-			}else if(view.name == 'agendaWeek'){
-				view.calendar.changeView('agendaDay');
+				eventLocation.text(calEvent.room);
 			}
 
 		}
 
-	});
+		/*load members*/
+		load_event_attendants(calEvent.past);
+
+		disable_add_member(calEvent.past);
+
+		disable_cancel_class(calEvent.past);
+		
+		/*setup form*/
+		eventModal.modal('show');
+	},
+
+	eventRender: function(event, element,view) {
+		console.log('');
+		if(event.end <  new Date()){
+			event.past = true;
+			element.css('opacity', '0.5');
+		}
+		else{
+			event.past = false;
+		}
+	},
+
+	eventSources: [
+	{
+		url: 'calendar',
+		startParam: 'start',
+		endParam: 'end',
+			//fetch room
+			data: function() { // a function that returns an object
+				return {
+					room: $('#bookingCalTabs .active a').attr('href'),	};
+				},
+			data: function() { // a function that returns an object
+				return {
+					room: $('#bookingCalTabs .active a').attr('href'),	};
+				},
+
+				error: function() {
+					if(!$('#calendar-error').length){
+						$('#calendar').prepend('<div id="calendar-error" class="alert alert-danger text-center">There was an error loading the calendar</div>');
+
+					}
+				},
+			}
+			],
+
+			loading: function(b) {
+				if (b) 
+					$('#loading-indicator').toggleClass('hidden');
+				else 
+					$('#loading-indicator').toggleClass('hidden');
+			},
+			dayClick: function(date, allDay, jsEvent, view) {
+
+				view.calendar.gotoDate(date);
+				if(view.name == 'month'){	
+					view.calendar.changeView('agendaWeek');
+				}else if(view.name == 'agendaWeek'){
+					view.calendar.changeView('agendaDay');
+				}
+
+			}
+
+		});
 
 
 
@@ -205,8 +255,8 @@ $('#calendar').fullCalendar({
   	eventColor.css('color', '#000'); 
   	eventLocation.text('[RoomName]'); 
   	eventid = "";
-//	eventDescription.text('[Descripttion]');
-eventMembers.html('');
+	//	eventDescription.text('[Descripttion]');
+	eventMembers.html('');
 });
 
 
@@ -223,6 +273,14 @@ eventMembers.html('');
 
   	});
 
+  });
+
+  /* 
+  * Control the dropdown list for categories
+  */
+  $('#category-dropdown .dropdown-menu li').click(function(e){	
+  	e.preventDefault();
+  	$(this).toggleClass('selected');
   });
 
 
@@ -342,6 +400,8 @@ eventMembers.html('');
  	.append( $( "<a>" ).text( item.label ) )
  	.appendTo( ul );
  };
+
+
 
 
 
