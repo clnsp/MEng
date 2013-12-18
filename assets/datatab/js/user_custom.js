@@ -7,15 +7,19 @@ $.member.utils.customVal = function(v){if(v.is("input")){return v.val();}else{re
 
 // Get User and Load Modal
 $("#member tbody").on( "click", "tr", function() {
-  $.getJSON('member/getUserDetails/?id=' + $(this).attr('id'), function(data) {
+  $id = $(this).attr('id')
+  $.getJSON('member/getUserDetails/?id=' + $id, function(data) {
   if(data.length>0){
     $('.modal-title').html($.member.utils.CFirst(data[0].first_name) + " " + $.member.utils.CFirst(data[0].second_name));
-	//HIDDEN FORM ELEMENT STORE ID -- TODO
+    $('#id').val($id);
+    console.log($(this).attr('id'));
     $.each( data[0], function( key, mem ) { $('#'+key).html($.member.utils.CFirst(mem)); });   
 	$('#myModal').modal('show');
 	$.member.changes = false;
-	}
-	});   
+  }else{
+    alert("Member Doesn't Exist");
+  }
+});   
 });
 
 // Submit Changes
@@ -27,7 +31,7 @@ $('#save_changes').on("click", function(){
 		console.log($query);
 		console.log(JSON.stringify($query));
 
-		$.post('member/updateUserDetails',{ id: 1, changes: $query}, function(data) {
+		$.post('member/updateUserDetails',{ id: $('#id').val(), changes: $query}, function(data) {
 			alert(data);
 			$.member.changes = false;
 		});

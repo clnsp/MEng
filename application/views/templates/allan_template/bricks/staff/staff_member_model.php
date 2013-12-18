@@ -21,6 +21,7 @@
                                 <div class="form-group">
                                     <label class="control-label">First:</label>
                                     <label class="editable" id="first_name">First Name</label>
+			            <input type="hidden" id="id" value=""/>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label">Status:</label>
