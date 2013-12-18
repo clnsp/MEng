@@ -2,7 +2,6 @@
 //birds.php
 class Calendar extends CI_Controller{
 
-
     function getUsers(){
         $this->load->model('members');
 
@@ -19,8 +18,8 @@ class Calendar extends CI_Controller{
                 }
                 echo json_encode($row_set); //format the array into json data
             }
+        }
     }
-}
 
     /*
      * Get users from associated with a class booking
@@ -32,8 +31,21 @@ class Calendar extends CI_Controller{
             $q = strtolower($_GET['class']);
             echo json_encode($this->classes->getClassAttendants($q));       
         }
-        
     }
+
+    /**
+    * Determines whether a class is fully booked
+    * @param int
+    * @return bool
+    */
+    function isClassBookedOut($class_id){
+        $this->load->model('classes');
+        $capacity = $this->classes->getClassCapacity($class_id);
+        $attending = $this->classes->countClassAttendants($class_id);
+
+        return ($attending < $capacity);
+    }
+
 
     /*Add a user to a class booking*/
     function addMember(){
@@ -42,7 +54,9 @@ class Calendar extends CI_Controller{
         if (isset($_POST['member_id']) && isset($_POST['class_booking_id'])){
             $m = strtolower($_POST['member_id']);
             $b = strtolower($_POST['class_booking_id']);
-            $this->bookings->addMember($b, $m);
+            if($this->isClassBookedOut($b)){
+                $this->bookings->addMember($b, $m);
+            }
         }       
     }
 
@@ -58,10 +72,7 @@ class Calendar extends CI_Controller{
                 $b = strtolower($_POST['class_booking_id']);
                 $this->bookings->removeMember($b, $m);
             }
-
         }
-        
-        
     }
 
 
@@ -95,11 +106,7 @@ class Calendar extends CI_Controller{
             echo json_encode(($this->Calendar->fetchAllData()));
 
         }
-
     }
-    
-    
-
 }
 
 

@@ -52,7 +52,7 @@ class Classes extends CI_Model
 	function getClassesWithRoomBetween($start, $end, $room){
 
 		if($room != 'allrooms'){
-		$this -> db -> select(' class_type AS title, class_start_date AS start, class_end_date AS end, category, class_id, max_attendance, room, room_tbl.room_id, color');
+			$this -> db -> select(' class_type AS title, class_start_date AS start, class_end_date AS end, category, class_id, max_attendance, room, room_tbl.room_id, color');
 			$this -> db -> from('class_tbl');
 			$this -> db -> where('class_tbl.room_id',$room, ' start BETWEEN "' . $start . '" AND "' . $end . '"');
 			$this -> db -> join('room_tbl', 'room_tbl.room_id = class_tbl.room_id');
@@ -69,14 +69,12 @@ class Classes extends CI_Model
 	}
 
 	/**
-	 * Get attendants of a specific bookings
+	 * Get attendants of a specific booking
 	 *
 	 * @param	int
 	 * @return	object
 	 */
 	function getClassAttendants($class){ //getBookingAttendants
-		
-
 		$this -> db -> select("member_id, CONCAT_WS(' ', first_name, second_name) AS username", FALSE);
 		$this -> db -> from('class_booking_tbl');
 		$this -> db -> where('class_id', $class);
@@ -87,5 +85,35 @@ class Classes extends CI_Model
 		return $query->result();
 	}
 
+	/**
+	 * Count attendants of a specific booking
+	 *
+	 * @param	int
+	 * @return	int
+	 */
+	function countClassAttendants($class){ 
+		$this -> db -> select("member_id");
+		$this -> db -> from('class_booking_tbl');
+		$this -> db -> where('class_id', $class);
+
+		return $this->db->count_all_results();
+	}
+
+	/**
+	 * Get the maximum attendance for a specific class booking
+	 *
+	 * @param	int
+	 * @return	object
+	 */
+	function getClassCapacity($class){ 
+		$this -> db -> select('max_attendance');
+		$this -> db -> from('class_tbl');
+		$this -> db -> join('class_type_tbl', 'class_tbl.class_type_id = class_type_tbl.class_type_id');
+		$this -> db -> where('class_id', $class);
+
+		$query = $this -> db -> get();
+
+		return $query->row()->max_attendance;
+	}
 
 }
