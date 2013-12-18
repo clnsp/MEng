@@ -58,4 +58,12 @@ class Members extends CI_Model
   }
 
 
+  function updateUser($id, $changes)
+  {
+
+
+	return "Not Implemented";
+  }
+
+
 }

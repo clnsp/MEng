@@ -1,7 +1,7 @@
 <div id="myModal" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header" style="z-index:5;">
+            <div class="modal-header">
                 <button type="button" id="member" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title">Modal title</h4>
             </div>
@@ -24,7 +24,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label">Status:</label>
-                                    <label id="home_number">Active</label>
+                                    <label id="status">Active</label>
                                 </div>
                             </div>
                             <!--RIGHT-->
@@ -38,7 +38,7 @@
                                     <label id="member">13 - 14</label>
                                 </div>
                             </div>
-                            <p id="reason">REASONS</p>
+                            <p id="reason"></p>
                         </div>
                     </div>
                     <div class="panel panel-info">
@@ -54,7 +54,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label">Email:</label>
-                                    <label class="editable" id="home_number">00000000000</label>
+                                    <label class="editable" id="email">00000000000</label>
                                 </div>
                             </div>
                             <!--RIGHT-->

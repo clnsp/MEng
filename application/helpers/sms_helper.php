@@ -29,7 +29,7 @@ if ( ! function_exists('send_sms'))
 		{
 			return "Error: SMS Disabled";
 		}
-		else if(empty($numbers) || empty($message))
+		else if(!empty($numbers) && !empty($message))
 		{
 			if($CI->config->item('sms_txtlocal_sms','communication')) {	return _txtLocal($numbers, $message);}
 			else{return "Error: No SMS Provider Selected";}
