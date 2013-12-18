@@ -12,39 +12,38 @@ class Member extends CI_Controller{
             }                
         }
 		
-		/*
-		 * Update User details
-		 */
-		 
-		 function updateUserDetails(){
-			$this->load->model('members');
-			if(isset($_POST['id']) && isset($_POST['changes'])){
-				//echo updateUser(strtolower($_POST['id'], strtolower($_POST['changes']);
-				echo($_POST['changes']);
-			}
-		 }
-		
-		/*
-		 * Update User Membership
-		 */
-		function updateUserMembership(){
-				
+	/*
+	 * Update User details
+	 */
+	 
+	 function updateUserDetails(){
+		$this->load->model('members');
+		if(isset($_POST['id']) && isset($_POST['changes'])){
+			echo $this->members->updateUser(strtolower($_POST['id']), array_map('strtolower',$_POST['changes']));
 		}
-		
-		/*
-		 * Block / unBlock / Delete
-		 */
-		function alterUserExistance(){
-		
-		}
-		
-		/*
-		 * Contact User
-		 */
-		 
-		function contactUser() {
-		
-		
-		}
+	 }
+	
+	/*
+	 * Update User Membership
+	 */
+	function updateUserMembership(){
+			
+	}
+	
+	/*
+	 * Block / unBlock / Delete
+	 */
+	function alterUserExistance(){
+	
+	}
+	
+	/*
+	 * Contact User
+	 */
+	 
+	function contactUser() {
+	
+	
+	}
     }
     ?>

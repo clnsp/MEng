@@ -60,9 +60,9 @@ class Members extends CI_Model
 
   function updateUser($id, $changes)
   {
-
-
-	return "Not Implemented";
+	$this->db->where('id', $id);
+	$this->db->update('users', $changes); 
+	return "4:Sucess";
   }
 
 
