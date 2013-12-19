@@ -41,8 +41,8 @@ class Calendar extends CI_Controller{
     function isClassBookedOut($class_booking_id){
         $this->load->model('classes');
         $this->load->model('bookings');
-        $capacity = $this->classes->getClassCapacity($class_id);
-        $attending = $this->bookings->countBookingAttendants($class_id);
+        $capacity = $this->classes->getClassCapacity($class_booking_id);
+        $attending = $this->bookings->countBookingAttendants($class_booking_id);
 
         return ($attending < $capacity);
     }
@@ -57,7 +57,7 @@ class Calendar extends CI_Controller{
         if (isset($_POST['member_id']) && isset($_POST['class_booking_id'])){
             $m = strtolower($_POST['member_id']);
             $b = strtolower($_POST['class_booking_id']);
-            if($this->isClassBookedOut($b)){
+            if($this->isClassBookedOut($b) && !$this->bookings->isBookingInPast($b)){
                 $this->bookings->addMember($b, $m);
             }
         }       
