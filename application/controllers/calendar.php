@@ -93,7 +93,8 @@ class Calendar extends CI_Controller{
             foreach($_POST['member_id'] as $mid){
                 $m = strtolower($mid);
                 $b = strtolower($_POST['class_booking_id']);
-                if($this->bookings->countBookingAttendants($b) > 0 ){
+
+                if(!$this->isClassInPast($b) && $this->bookings->countBookingAttendants($b) > 0 ){
                     $this->bookings->removeMember($b, $m);
                 }
             }
