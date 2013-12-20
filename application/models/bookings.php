@@ -132,19 +132,5 @@ class Bookings extends CI_Model
 		return $query->result();
 	}
 
-	/**
-	 * Get attendants of a specific bookings
-	 *
-	 * @param	int
-	 * @return	object
-	 */
-	function isBookingInPast($class_id){
-		$this -> db -> select("member_id");
-		$this -> db -> from($this -> table_name);
-		$this -> db -> where('class_id', $class_id);
 
-		$query = $this -> db -> get();
-
-		return $query->result();
-	}
 }

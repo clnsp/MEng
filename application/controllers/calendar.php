@@ -1,7 +1,9 @@
 <?php
-//birds.php
 class Calendar extends CI_Controller{
 
+    /**
+     * Get users that match a partial term. Used for autocomplete
+     */
     function getUsers(){
         $this->load->model('members');
 
@@ -21,7 +23,7 @@ class Calendar extends CI_Controller{
         }
     }
 
-    /*
+    /**
      * Get users from associated with a class booking
      */
     function getClassAttendants(){
@@ -44,12 +46,24 @@ class Calendar extends CI_Controller{
         $capacity = $this->classes->getClassCapacity($class_booking_id);
         $attending = $this->bookings->countBookingAttendants($class_booking_id);
 
-        return ($attending < $capacity);
+        return ($attending >= $capacity);
+    }
+
+    /**
+    * Determines whether a class is in the past or not
+    * @param int
+    * @return bool
+    */
+    function isClassInPast($class_booking_id){
+        $this->load->model('classes');
+        $end = $this->classes->getClassEndDate($class_booking_id);
+
+        return (time() >  strtotime($end));
     }
 
 
     /**
-    * Add a user to a class booking
+    * Add a member to a class
     */
     function addMember(){
         $this->load->model('bookings');
@@ -57,15 +71,19 @@ class Calendar extends CI_Controller{
         if (isset($_POST['member_id']) && isset($_POST['class_booking_id'])){
             $m = strtolower($_POST['member_id']);
             $b = strtolower($_POST['class_booking_id']);
-            if($this->isClassBookedOut($b) && !$this->bookings->isBookingInPast($b)){
+            echo "Member id " . $m . ' class id ' . $b; 
+
+            if(!$this->isClassBookedOut($b) && !$this->isClassInPast($b)){
                 $this->bookings->addMember($b, $m);
+                echo "Added";
+
             }
         }       
     }
 
 
     /**
-     * Remove  a user from a class booking
+     * Remove a member from a class
      */
     function removeMember(){
         $this->load->model('bookings');
@@ -82,13 +100,31 @@ class Calendar extends CI_Controller{
         }
     }
 
-
-
-    /*
-     Expects two  parameters in the url start and end
-     Both of form unix timestamp
+    /**
+     * Cancel a class
      */
-     function index(){
+    function cancelClass(){
+        $this->load->model('bookings');
+
+        if (isset($_POST['class_booking_id'])){
+
+            foreach($_POST['member_id'] as $mid){
+                $m = strtolower($mid);
+                $b = strtolower($_POST['class_booking_id']);
+                if($this->bookings->countBookingAttendants($b) > 0 ){
+                    $this->bookings->removeMember($b, $m);
+                }
+            }
+        }
+    }
+
+
+    /**
+    * Generates json for the calendar
+     * Expects two  parameters in the url start and end
+     * Both of form unix timestamp
+     */
+    function index(){
         $params = getQueryStringParams();
         $this->load->model('classes');
 

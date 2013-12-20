@@ -3,9 +3,8 @@
 /**
  * Classes
  *
- * This model represents user authentication data. It operates the following tables:
- * - user account data,
- * - user profiles
+ * This model represents functions for classes. 
+ * Classes are an instance of a specific class type.
  *
  * @author	MEng Project
  */
@@ -70,7 +69,7 @@ class Classes extends CI_Model
 
 
 	/**
-	 * Get the maximum attendance for a specific class booking
+	 * Get the maximum attendance for a specific class
 	 *
 	 * @param	int
 	 * @return	object
@@ -84,6 +83,23 @@ class Classes extends CI_Model
 		$query = $this -> db -> get();
 
 		return $query->row()->max_attendance;
+	}
+
+	/**
+	 * Get the end date of a specific class
+	 *
+	 * @param	int
+	 * @return	string
+	 */
+	function getClassEndDate($class_id){
+		$this -> db -> select("class_end_date");
+		$this -> db -> from($this -> table_name);
+		$this -> db -> where('class_id', $class_id);
+
+		$query = $this -> db -> get();
+		$arr = $query->result_array();
+
+		return $arr[0]["class_end_date"];
 	}
 
 }
