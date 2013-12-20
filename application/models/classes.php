@@ -102,4 +102,20 @@ class Classes extends CI_Model
 		return $arr[0]["class_end_date"];
 	}
 
+	/**
+	 * Cancel a class
+	 *
+	 * @param	int
+	 */
+	function cancelClass($class_id){
+
+		$data = array(
+			'cancelled' => 1,
+			);
+
+		$this->db->where('class_id', $class_id);
+		$this->db->update($this -> table_name, $data); 
+
+	}
+
 }
