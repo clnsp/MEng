@@ -117,5 +117,30 @@ class Classes extends CI_Model
 		$this->db->update($this -> table_name, $data); 
 
 	}
+	
+	/**
+	 * Check whether a class is cancelled
+	 *
+	 * @param	int
+	 * @return	bool
+	 */
+	function isClassCancelled($class_id){
+		$this->db->select('cancelled');
+		$this->db->from($this -> table_name); 
+		$this -> db -> where('class_id', $class_id);
+		
+		$query = $this -> db -> get();
+		
+		if ($query->num_rows() == 1){
+			$cancelled = $query->row(1)->cancelled;
+			
+			return  $cancelled == 1;
+		}
+		
+		return false;
+		
+		
+
+	}
 
 }

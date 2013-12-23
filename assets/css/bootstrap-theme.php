@@ -516,6 +516,7 @@ html, body, #booking {
   margin-right: auto;
   overflow: hidden;
   outline-color: transparent!important;
+  outline:none;
 }
 
 .modal.submodal .modal-dialog{

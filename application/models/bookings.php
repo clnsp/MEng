@@ -3,9 +3,7 @@
 /**
  * Bookings
  *
- * This model represents user authentication data. It operates the following tables:
- * - user account data,
- * - user profiles
+ * This model represents member bookings into classes
  *
  * @author	MEng Project
  */
@@ -116,7 +114,7 @@ class Bookings extends CI_Model
 
 
 	/**
-	 * Get attendants of a specific bookings
+	 * Get attendants of bookings for a specific class
 	 *
 	 * @param	int
 	 * @return	object
@@ -130,6 +128,24 @@ class Bookings extends CI_Model
 		$query = $this -> db -> get();
 
 		return $query->result();
+	}
+	
+	
+	/**
+	 * Get email addresses associated with bookings for a class
+	 *
+	 * @param	int
+	 * @return	array
+	 */
+	function getBookingEmails($class_id){
+		$this -> db -> select("email");
+		$this -> db -> from($this -> table_name);
+		$this -> db -> where('class_id', $class_id);
+		$this -> db -> join('users', 'users.id = class_booking_tbl.member_id');
+
+		$query = $this -> db -> get();
+
+		return $query->result_array();
 	}
 
 
