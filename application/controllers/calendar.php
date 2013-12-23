@@ -107,15 +107,24 @@ class Calendar extends CI_Controller{
     function cancelClass(){
         $this->load->model('bookings');
         $this->load->model('classes');
-        $this->load->library('email');       	
+        $this->load->library('email');  
+        
        	
         if (isset($_POST['class_booking_id'])){
+        
             $bid = $_POST['class_booking_id'];
             
-            if(!$this->classes->isClassCancelled(1)){
+            $msg = '';
+            
+            if (isset($_POST['cancel_message'])){
+            	$msg = $_POST['cancel_message'];
+            }
+            
+            
+            if(!$this->classes->isClassCancelled($bid)){
             
 	            $this->classes->cancelClass($bid);
-	            
+	                    
 	            $emails = $this->bookings->getBookingEmails($bid);
 	            
 	            foreach ($emails as $email){   
@@ -123,7 +132,7 @@ class Calendar extends CI_Controller{
 	               $this->email->to($email['email']); 
 	               
 	               $this->email->subject('Class Cancelled');
-	               $this->email->message('Testing the email class.');	
+	               $this->email->message('Your class has been cancelled.' . $msg);	
 	               
 	               $this->email->send();
 	               

@@ -313,6 +313,30 @@ $('#calendar').fullCalendar({
  	}
 
  });
+ 
+ /*
+  * Confirm cancel button
+  */
+  
+  $('#confirmCancelBtn').click(function(e){
+  
+  	var msg = $('input#cancelMessage').val();
+  
+ 	 $.ajax({
+   			url: "calendar/cancelClass",
+   			type: "POST",
+   			data: { 'class_booking_id':eventid, 'cancel_message':msg },
+   			success: function() {
+	   			alert('message sent, class cancelled');
+  
+   			},
+   			error: function(){
+   				alert("Cancel class error");
+  
+   			},
+   		});
+  
+   	});
 
 /*
  * Select anywhere along the member list row 

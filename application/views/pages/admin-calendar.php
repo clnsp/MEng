@@ -118,7 +118,7 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				<button id="event-cancel-class-btn" type="button" class="btn btn-primary">Cancel Class</button>
+				<button id="event-cancel-class-btn" data-target="#cancelClassModal" data-toggle='modal' type="button" class="btn btn-primary">Cancel Class</button>
 			</div>
 		</div><!-- /.modal-content -->
 	</div><!-- /.modal-dialog -->
@@ -140,4 +140,23 @@
 		</div><!-- /.modal-content -->
 	</div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
+<div class="modal fade submodal" id="cancelClassModal" tabindex="-1" role="dialog" aria-labelledby="cancelClassModal" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header ">
+				<h4 class="modal-title">Cancel Class</h4>
+			</div>
+			<div class="modal-body">
+				<p>Please enter a reason for cancelling this class to send to members.</p>
+				<textarea id="cancelMessage" class="form-control" rows="3"></textarea>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancel</button>
+				<button id="confirmCancelBtn" type="button"  class="btn btn-primary">Confirm Cancellation</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 <div class="clearfix"></div>
