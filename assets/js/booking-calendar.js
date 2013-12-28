@@ -117,59 +117,20 @@ $('#calendar').fullCalendar({
 	eventClick: function(calEvent, jsEvent, view) {
 		eventid = calEvent.class_id;
 
-		/*title*/
-		eventTitle.text(calEvent.title);
-
-		/*date time*/
-		var s_date, e_date, s_time, e_time;
-
-		if(exists(calEvent.start)){
-			s_date = $.fullCalendar.formatDate(calEvent.start, "dddd, d MMMM yyyy");
-			s_time = $.fullCalendar.formatDate(calEvent.start, "HH:mm");
+		render_title(calEvent.title);
+		
+		if(calEvent.cancelled){
+			render_cancelled();
 		}
+		
+		render_date(calEvent.start, calEvent.end, calEvent.allDay);
+		
+		render_attendance_numbers(calEvent.attending, calEvent.max_attendance);
+				
+		render_color(calEvent.color);
 
-		if(exists(calEvent.end)){
-			e_date = $.fullCalendar.formatDate(calEvent.end, "dddd, d MMMM yyyy");
-			e_time = $.fullCalendar.formatDate(calEvent.end, "HH:mm");
-		}
-
-		/*all day no time*/
-		if(exists(calEvent.allDay) && calEvent.allDay){
-			eventdate1.text(s_date);
-			eventdate2.text("All Day Event");
-		}else{
-			/* within one day */
-			if(s_date == e_date){
-				eventdate1.text(s_date);
-				eventdate2.text(s_time + ' to ' + e_time);
-			}
-			/*split over multiple days*/
-			else{
-				eventdate1.text(s_time + ' ' + s_date + ' to');
-				eventdate2.text(e_time + ' ' + e_date);
-			}
-		}
-
-		/*max_attendance*/
-		if(exists(calEvent.max_attendance)){
-			eventSpacesMax.text(calEvent.max_attendance);
-		}
-
-		/*attending*/
-		if(exists(calEvent.attending)){
-			eventSpacesTaken.text(calEvent.attending);
-		}
-
-		/*color*/
-		if(exists(calEvent.color)){
-			eventColor.css( "color", calEvent.color );
-		}
-
-		/*room*/
 		render_room(calEvent.room_id, calEvent.room);
 		
-
-		/*load members*/
 		load_event_attendants(calEvent.past || calEvent.cancelled);
 
 		disable_add_member(calEvent.past|| calEvent.cancelled);
@@ -251,7 +212,76 @@ $('#calendar').fullCalendar({
 	}
  }
 
+/**
+ * Render the category color
+ */
+ function render_color(color) {
+	eventColor.css( "color", color );
+ }
+ 
+/**
+ * Render the date of the event
+ */
+ function render_date(start, end, allDay) {
+	var s_date, e_date, s_time, e_time;
 
+	if(exists(start)){
+		s_date = $.fullCalendar.formatDate(start, "dddd, d MMMM yyyy");
+		s_time = $.fullCalendar.formatDate(start, "HH:mm");
+	}
+
+	if(exists(end)){
+		e_date = $.fullCalendar.formatDate(end, "dddd, d MMMM yyyy");
+		e_time = $.fullCalendar.formatDate(end, "HH:mm");
+	}
+
+	/*all day no time*/
+	if(exists(allDay) && allDay){
+		eventdate1.text(s_date);
+		eventdate2.text("All Day Event");
+	}else{
+		/* within one day */
+		if(s_date == e_date){
+			eventdate1.text(s_date);
+			eventdate2.text(s_time + ' to ' + e_time);
+		}
+		/*split over multiple days*/
+		else{
+			eventdate1.text(s_time + ' ' + s_date + ' to');
+			eventdate2.text(e_time + ' ' + e_date);
+		}
+	}
+ }
+
+
+ /**
+ * Render the title
+ */
+ function render_title(title) {
+	eventTitle.text(title); 
+ }
+ 
+ /**
+ * Render the title
+ */
+ function render_cancelled() {
+ 	eventTitle.append("<span class='cancelled-banner'><i style='font-size:20px;' class='glyphicon glyphicon-minus-sign'></i> Cancelled</span>"); 
+ }
+ 
+ /**
+ * Render the attendance numbers
+ */
+ function render_attendance_numbers(attending, max_attendance) {
+	if(exists(max_attendance)){
+		eventSpacesMax.text(max_attendance);
+	}
+
+	if(exists(attending)){
+		eventSpacesTaken.text(attending);
+	}
+
+ }
+ 
  /*
   * Tear down the modal properties
   */

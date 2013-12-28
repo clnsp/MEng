@@ -623,6 +623,15 @@ html, body, #booking {
   font-size: 35px;
 }
 
+#booking #eventModal .cancelled-banner{
+	background-color: rgba(0, 0, 0, 0.69);
+	padding: 0 5px 0 5px;
+	border-radius: 5px;
+	margin-left: 10px;
+	border: 1px solid #000;
+	color: rgba(255, 255, 255, 0.74);
+}
+
 /*
 #booking #eventModal #event-description{
 	display:block;
