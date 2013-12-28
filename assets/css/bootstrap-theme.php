@@ -665,6 +665,13 @@ html, body, #booking {
   content: "Y";
 }
 
+#booking .fc-event.cancelled{
+	background-image: -webkit-linear-gradient(45deg,rgba(255, 255, 255, 0.15) 25%,rgba(0, 0, 0, 0.5) 25%,rgba(0, 0, 0, 0.5) 50%,rgba(255, 255, 255, 0.15) 50%,rgba(255, 255, 255, 0.15) 75%,rgba(0, 0, 0, 0.5) 75%,rgba(0, 0, 0, 0.5));
+	background-image: linear-gradient(45deg,rgba(255, 255, 255, 0.15) 25%,rgba(0, 0, 0, 0.5) 25%,rgba(0, 0, 0, 0.5) 50%,rgba(255, 255, 255, 0.15) 50%,rgba(255, 255, 255, 0.15) 75%,rgba(0, 0, 0, 0.5) 75%,rgba(0, 0, 0, 0.5));
+	border: 1px solid #000000!important;
+	font-weight: bold;
+}
+
 
 /*autocomplete results*/
 ul.ui-menu .ui-menu-item:hover {

@@ -32,7 +32,7 @@ class Classes extends CI_Model
 	 */
 	function getClassessBetween($start, $end){ //getBookingsBetween used to be
 
-		$this -> db -> select('class_type AS title, class_start_date AS start, class_end_date AS end, category, class_id, max_attendance, room, room_tbl.room_id, color');
+		$this -> db -> select('class_type AS title, class_start_date AS start, class_end_date AS end, category, class_id, max_attendance, room, room_tbl.room_id, color, cancelled');
 		$this -> db -> from($this -> table_name);
 		$this -> db -> where('class_start_date BETWEEN "' . $start . '" AND "' . $end . '"');
 		$this -> db -> join('room_tbl', 'room_tbl.room_id = class_tbl.room_id');
@@ -51,7 +51,7 @@ class Classes extends CI_Model
 	function getClassesWithRoomBetween($start, $end, $room){
 
 		if($room != 'allrooms'){
-			$this -> db -> select(' class_type AS title, class_start_date AS start, class_end_date AS end, category, class_id, max_attendance, room, room_tbl.room_id, color');
+			$this -> db -> select(' class_type AS title, class_start_date AS start, class_end_date AS end, category, class_id, max_attendance, room, room_tbl.room_id, color, cancelled');
 			$this -> db -> from($this -> table_name);
 			$this -> db -> where('class_tbl.room_id',$room, ' start BETWEEN "' . $start . '" AND "' . $end . '"');
 			$this -> db -> join('room_tbl', 'room_tbl.room_id = class_tbl.room_id');

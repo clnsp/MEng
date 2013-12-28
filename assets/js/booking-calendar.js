@@ -11,7 +11,7 @@ var eventModal,eventTitle,eventTitle, eventdate1, eventdate2, eventSpacesMax, ev
  * Load the attendants of this event
  * @param bool
  */
- function load_event_attendants(past) {
+ function load_event_attendants(disabled) {
 
  	$.getJSON('calendar/getClassAttendants/?class=' + eventid, function(data) {
  		eventMembers.empty();
@@ -20,8 +20,8 @@ var eventModal,eventTitle,eventTitle, eventdate1, eventdate2, eventSpacesMax, ev
  		if(data.length>0){
  			$.each( data, function( key, mem ) {
  				disable_remove_button(false);
- 				add_member_to_member_list(mem['member_id'], mem['username'], !past);
- 				if(past){
+ 				add_member_to_member_list(mem['member_id'], mem['username'], !disabled);
+ 				if(disabled){
  					disable_remove_button(true);
 
  				}
@@ -166,21 +166,15 @@ $('#calendar').fullCalendar({
 		}
 
 		/*room*/
-		if(exists(calEvent.room)){
-			if(exists(calEvent.room_id)){
-				eventLocation.html('<a href="room/' + calEvent.room_id + '">' + calEvent.room + '</a>');
-			}else{
-				eventLocation.text(calEvent.room);
-			}
-
-		}
+		render_room(calEvent.room_id, calEvent.room);
+		
 
 		/*load members*/
-		load_event_attendants(calEvent.past);
+		load_event_attendants(calEvent.past || calEvent.cancelled);
 
-		disable_add_member(calEvent.past);
+		disable_add_member(calEvent.past|| calEvent.cancelled);
 
-		disable_cancel_class(calEvent.past);
+		disable_cancel_class(calEvent.past|| calEvent.cancelled);
 		
 		/*setup form*/
 		eventModal.modal('show');
@@ -194,6 +188,11 @@ $('#calendar').fullCalendar({
 		}
 		else{
 			event.past = false;
+		}
+		
+		
+		if(event.cancelled == true){
+			element.addClass('cancelled');
 		}
 	},
 
@@ -240,6 +239,17 @@ $('#calendar').fullCalendar({
 
 		});
 
+
+/**
+ * Render the room
+ */
+ function render_room(room_id, room) {
+	if(exists(room_id)){
+		eventLocation.html('<a href="room/' + room_id + '">' + room + '</a>');
+	}else{
+		eventLocation.text(calEvent.room);
+	}
+ }
 
 
  /*
@@ -328,6 +338,7 @@ $('#calendar').fullCalendar({
    			data: { 'class_booking_id':eventid, 'cancel_message':msg },
    			success: function() {
 	   			alert('message sent, class cancelled');
+	   			$('input#cancelMessage').val('');
   
    			},
    			error: function(){
