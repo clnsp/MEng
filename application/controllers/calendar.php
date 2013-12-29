@@ -104,44 +104,61 @@ class Calendar extends CI_Controller{
     /**
      * Cancel a class
      */
-    function cancelClass(){
-        $this->load->model('bookings');
-        $this->load->model('classes');
-        $this->load->library('email');  
-        
-       	
+    function cancelClass($cancelled){
+    	$cancelled = $cancelled == "true";
+        	
         if (isset($_POST['class_booking_id'])){
-        
-            $bid = $_POST['class_booking_id'];
-            
+	        $this->load->model('classes');
+	        	        
+	        $bid = $_POST['class_booking_id'];
             $msg = '';
             
             if (isset($_POST['cancel_message'])){
             	$msg = $_POST['cancel_message'];
             }
             
+            $iscancelled = $this->classes->isClassCancelled($bid);          
             
-            if(!$this->classes->isClassCancelled($bid)){
-            
-	            $this->classes->cancelClass($bid);
-	                    
-	            $emails = $this->bookings->getBookingEmails($bid);
-	            
-	            foreach ($emails as $email){   
-	               $this->email->from('your@example.com', 'Booking');
-	               $this->email->to($email['email']); 
-	               
-	               $this->email->subject('Class Cancelled');
-	               $this->email->message('Your class has been cancelled.' . $msg);	
-	               
-	               $this->email->send();
-	               
-	               echo $this->email->print_debugger();
-	            }
-            
+            if($cancelled == $iscancelled){
+            	echo "change status";
+	        	$this->changeClassStatus($bid, $msg, !$cancelled);
             }
-            
         }
+    }
+    
+    
+    /**
+     * Change a class status to cancelled or open
+     * @param	int
+     * @param	string
+     * @param	bool
+     */
+    function changeClassStatus($bid, $msg, $cancel) {
+	    $this->load->library('email');
+	    $this->load->model('bookings');
+        $this->load->model('classes');	                
+    		       
+    	$this->classes->cancelClass($bid, $cancel);
+    	        
+    	$emails = $this->bookings->getBookingEmails($bid);
+    	
+    	if($cancel){
+    		"Your class has been cancelled. " + $msg;
+    	}else{
+    		"Your class has been reopened. " + $msg;
+    	}
+    	
+    	foreach ($emails as $email){   
+    	   $this->email->from('your@example.com', 'Booking');
+    	   $this->email->to($email['email']); 
+    	   
+    	   $this->email->subject('Update to your class');
+    	   $this->email->message($msg);	
+    	   
+    	   $this->email->send();
+    	   
+    	   echo $this->email->print_debugger();
+    	}
     }
 
 

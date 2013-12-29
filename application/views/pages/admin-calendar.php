@@ -54,6 +54,8 @@
 						<h3 class="modal-title" id="event-title">Class Title</h3>
 					</div>
 					<div class="col-xs-4">
+						<h3 class="modal-title pull-right" id='cancelled-banner'><i style='font-size:20px;' class='glyphicon glyphicon-minus-sign'></i> Cancelled</h3>
+					
 						<i id="eventColor" class="pull-right glyphicon glyphicon-stop"></i>
 					</div>
 				</div>
@@ -118,7 +120,9 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				<button id="event-cancel-class-btn" data-target="#cancelClassModal" data-toggle='modal' type="button" class="btn btn-primary">Cancel Class</button>
+				<button id="event-cancel-class-btn" data-target="#cancelClassModal" data-title="Cancel Class" data-toggle='modal' type="button" class="btn btn-primary open-Model-button">Cancel Class</button>
+				<button id="event-uncancel-class-btn" data-target="#cancelClassModal" data-title="Reopen Class" data-toggle='modal' type="button" class="btn btn-primary open-Model-button">Reopen Class</button>
+				
 			</div>
 		</div><!-- /.modal-content -->
 	</div><!-- /.modal-dialog -->
@@ -148,12 +152,12 @@
 				<h4 class="modal-title">Cancel Class</h4>
 			</div>
 			<div class="modal-body">
-				<p>Please enter a reason for cancelling this class to send to members.</p>
+				<p>Please enter a reason for to send to members.</p>
 				<textarea id="cancelMessage" class="form-control" rows="3"></textarea>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancel</button>
-				<button id="confirmCancelBtn" type="button"  class="btn btn-primary">Confirm Cancellation</button>
+				<button id="confirmCancelBtn" type="button"  class="btn btn-primary">Confirm</button>
 			</div>
 		</div><!-- /.modal-content -->
 	</div><!-- /.modal-dialog -->

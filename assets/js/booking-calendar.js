@@ -5,7 +5,8 @@ function exists(variable){
 	return true;
 }
 
-var eventModal,eventTitle,eventTitle, eventdate1, eventdate2, eventSpacesMax, eventSpacesTaken, eventColor, eventLocation, eventMembers, eventid;
+var eventModal,eventTitle, eventdate1, eventdate2, eventSpacesMax, eventSpacesTaken, eventColor, eventLocation, eventMembers, eventid;
+var activeEvent;
 
 /*
  * Load the attendants of this event
@@ -58,20 +59,28 @@ var eventModal,eventTitle,eventTitle, eventdate1, eventdate2, eventSpacesMax, ev
  * Render the cancel class button
  */
  function render_cancel_button(cancelled){
- 	var btn = eventModal.find('#event-cancel-class-btn');
- 	if(cancelled == true){
- 		btn.attr("class","uncancel-btn btn btn-primary").text('Reopen Class');
+   cancel = eventModal.find('#event-cancel-class-btn');
+   reopen = eventModal.find('#event-uncancel-class-btn');
+ 
+ 	if(cancelled){
+ 		reopen.removeClass('hidden');
+ 		cancel.addClass('hidden').prop('disabled', true);
  	}else{
- 		btn.attr("class", "cancel-btn btn btn-primary").text('Cancel Class');
+ 	  	cancel.removeClass('hidden');
+ 	  	reopen.addClass('hidden').prop('disabled', true);
  	}
- 	
+  	
  }
  
  /**
-  * Disable/Enable the cancel class button
+  * Disable/Enable the cancel/reopen button
   */
-  function disable_cancel_button(disable){
-  	 eventModal.find('#event-cancel-class-btn').prop('disabled', disable);
+  function disable_cancel_button(past){
+  	var cancel, reopen;
+	eventModal.find('.open-Model-button').each(function(){
+		$(this).prop('disabled', past);
+	});
+  	 	
   }
 
 /**
@@ -104,7 +113,7 @@ var eventModal,eventTitle,eventTitle, eventdate1, eventdate2, eventSpacesMax, ev
   	eventMembers = eventModal.find('#event-member-list .list-group');
   	eventError = eventModal.find('#event-warning');
 //	var eventDescription =eventModal.find('#event-description');
-
+	
 
 /* Handler for the event button */
 eventError.find('button.close').click(function(e){
@@ -128,13 +137,13 @@ $('#calendar').fullCalendar({
 	editable: false,
 
 	eventClick: function(calEvent, jsEvent, view) {
+		activeEvent = calEvent;
+		
 		eventid = calEvent.class_id;
 
 		render_title(calEvent.title);
 		
-		if(calEvent.cancelled && calEvent.past != true){
-			render_cancelled_banner();
-		}
+		render_cancelled_banner(calEvent.cancelled);
 		
 		render_cancel_button(calEvent.cancelled);
 		
@@ -150,7 +159,7 @@ $('#calendar').fullCalendar({
 		
 		load_event_attendants(calEvent.past || calEvent.cancelled);
 
-		disable_add_member(calEvent.past|| calEvent.cancelled);
+		disable_add_member(calEvent.past || calEvent.cancelled);
 		
 		/*setup form*/
 		eventModal.modal('show');
@@ -164,9 +173,9 @@ $('#calendar').fullCalendar({
 		else{
 			event.past = false;
 		}
+		event.cancelled = event.cancelled == true;
 		
-		
-		if(event.cancelled == true){
+		if(event.cancelled){
 			element.addClass('cancelled');
 		}
 	},
@@ -278,8 +287,14 @@ $('#calendar').fullCalendar({
  /**
  * Add a cancelled banner
  */
- function render_cancelled_banner() {
- 	eventTitle.append("<span class='cancelled-banner'><i style='font-size:20px;' class='glyphicon glyphicon-minus-sign'></i> Cancelled</span>"); 
+ function render_cancelled_banner(render) {
+ 	var banner = eventModal.find('#cancelled-banner');
+ 	if(render){
+ 		banner.removeClass('hidden');
+ 	}else{
+ 	 	banner.addClass('hidden');
+
+ 	}
  }
  
  /**
@@ -334,6 +349,7 @@ $('#calendar').fullCalendar({
 	eventid = "";
   	//	eventDescription.text('[Descripttion]');
   	eventMembers.html('');
+  	activeEvent = null;
   }
 
 
@@ -384,9 +400,9 @@ $('#calendar').fullCalendar({
   $('#confirmCancelBtn').click(function(e){
   
   	var msg = $('input#cancelMessage').val();
-  
+  	
  	 $.ajax({
-   			url: "calendar/cancelClass",
+   			url: "calendar/cancelClass/" + activeEvent.cancelled,
    			type: "POST",
    			data: { 'class_booking_id':eventid, 'cancel_message':msg },
    			success: function() {
@@ -479,7 +495,7 @@ $('#calendar').fullCalendar({
  		return 	$( "<li>" )
  		.attr( "data-value", item.value )
  		.addClass('list-group-item')
- 		.append( $( "<a data-toggle='modal' data-target='#addGuestModal' class='btn btn-default'>" ).text( item.label ) )
+ 		.append($("<a data-toggle='modal' data-target='#addGuestModal' class='btn btn-default'>").text( item.label ) )
  		.appendTo( ul );
  	}
  	return $( "<li>" )
@@ -488,12 +504,14 @@ $('#calendar').fullCalendar({
  	.append( $( "<a>" ).text( item.label ) )
  	.appendTo( ul );
  };
-
-
-
-
-
-
+ 
+ 
+ eventModal.on("click", ".open-Model-button", function () {
+      var title = $(this).data('title');
+      $("#cancelClassModal .modal-title").text(title);
+ });
+ 
+    
 });
 
 

@@ -626,7 +626,7 @@ html, body, #booking {
   font-size: 35px;
 }
 
-#booking #eventModal .cancelled-banner{
+#booking #eventModal #cancelled-banner{
 	background-color: rgba(0, 0, 0, 0.69);
 	padding: 0 5px 0 5px;
 	border-radius: 5px;

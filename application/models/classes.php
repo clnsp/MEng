@@ -106,11 +106,12 @@ class Classes extends CI_Model
 	 * Cancel a class
 	 *
 	 * @param	int
+	 * @param 	int
 	 */
-	function cancelClass($class_id){
+	function cancelClass($class_id, $cancel){
 
 		$data = array(
-			'cancelled' => 1,
+			'cancelled' => $cancel,
 			);
 
 		$this->db->where('class_id', $class_id);
@@ -130,11 +131,10 @@ class Classes extends CI_Model
 		$this -> db -> where('class_id', $class_id);
 		
 		$query = $this -> db -> get();
-		
 		if ($query->num_rows() == 1){
 			$cancelled = $query->row(1)->cancelled;
-			
-			return  $cancelled == 1;
+						
+			return  $cancelled == "1";
 		}
 		
 		return false;
