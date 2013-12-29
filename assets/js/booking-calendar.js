@@ -408,6 +408,7 @@ $('#calendar').fullCalendar({
    			success: function() {
 	   			alert('message sent, class cancelled');
 	   			$('input#cancelMessage').val('');
+	   			$('#calendar').fullCalendar( 'refetchEvents' );
   
    			},
    			error: function(){
