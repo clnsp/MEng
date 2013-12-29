@@ -55,11 +55,24 @@ var eventModal,eventTitle,eventTitle, eventdate1, eventdate2, eventSpacesMax, ev
  }
 
 /**
- * Disable/Enable the cancel class button
+ * Render the cancel class button
  */
- function disable_cancel_class(disable){
- 	eventModal.find('#event-cancel-class-btn').prop('disabled', disable);
+ function render_cancel_button(cancelled){
+ 	var btn = eventModal.find('#event-cancel-class-btn');
+ 	if(cancelled == true){
+ 		btn.attr("class","uncancel-btn btn btn-primary").text('Reopen Class');
+ 	}else{
+ 		btn.attr("class", "cancel-btn btn btn-primary").text('Cancel Class');
+ 	}
+ 	
  }
+ 
+ /**
+  * Disable/Enable the cancel class button
+  */
+  function disable_cancel_button(disable){
+  	 eventModal.find('#event-cancel-class-btn').prop('disabled', disable);
+  }
 
 /**
  * Disable/Enable the add member functionality
@@ -119,9 +132,13 @@ $('#calendar').fullCalendar({
 
 		render_title(calEvent.title);
 		
-		if(calEvent.cancelled){
-			render_cancelled();
+		if(calEvent.cancelled && calEvent.past != true){
+			render_cancelled_banner();
 		}
+		
+		render_cancel_button(calEvent.cancelled);
+		
+		disable_cancel_button(calEvent.past);
 		
 		render_date(calEvent.start, calEvent.end, calEvent.allDay);
 		
@@ -134,15 +151,12 @@ $('#calendar').fullCalendar({
 		load_event_attendants(calEvent.past || calEvent.cancelled);
 
 		disable_add_member(calEvent.past|| calEvent.cancelled);
-
-		disable_cancel_class(calEvent.past|| calEvent.cancelled);
 		
 		/*setup form*/
 		eventModal.modal('show');
 	},
 
-	eventRender: function(event, element,view) {
-		console.log('');
+	eventRender: function(event, element, view) {
 		if(event.end <  new Date()){
 			event.past = true;
 			element.css('opacity', '0.5');
@@ -262,9 +276,9 @@ $('#calendar').fullCalendar({
  }
  
  /**
- * Render the title
+ * Add a cancelled banner
  */
- function render_cancelled() {
+ function render_cancelled_banner() {
  	eventTitle.append("<span class='cancelled-banner'><i style='font-size:20px;' class='glyphicon glyphicon-minus-sign'></i> Cancelled</span>"); 
  }
  
@@ -285,35 +299,44 @@ $('#calendar').fullCalendar({
  /*
   * Tear down the modal properties
   */
-  $('#eventModal').on('hidden.bs.modal', function () {
+  $('#eventModal').on('hidden.bs.modal', teardown_modal);
+  
+  
+   /* 
+    *Fetch room associated calendar view
+    */
+    $('#bookingCalTabs a').each(function(){	
+  
+    	var $this = $(this);
+    	$this.click(function (e) {
+    		e.preventDefault();
+    		$this.tab('show');
+    		$('#calendar').fullCalendar( 'refetchEvents' );
+  
+    	});
+  
+    });
+  
+  
+  
+  
+  /**
+   * Cleanup the modal attributes
+   */
+  function teardown_modal() {
+	eventTitle.text('[Title]');
+	eventdate1.text('[Date]'); 
+	eventdate2.text('[Date]'); 
+	eventSpacesMax.text('[0]'); 
+	eventSpacesTaken.text('[0]'); 
+	eventColor.css('color', '#000'); 
+	eventLocation.text('[RoomName]'); 
+	eventid = "";
+  	//	eventDescription.text('[Descripttion]');
+  	eventMembers.html('');
+  }
 
-  	eventTitle.text('[Title]');
-  	eventdate1.text('[Date]'); 
-  	eventdate2.text('[Date]'); 
-  	eventSpacesMax.text('[0]'); 
-  	eventSpacesTaken.text('[0]'); 
-  	eventColor.css('color', '#000'); 
-  	eventLocation.text('[RoomName]'); 
-  	eventid = "";
-	//	eventDescription.text('[Descripttion]');
-	eventMembers.html('');
-});
 
-
- /* 
-  *Fetch room associated calendar view
-  */
-  $('#bookingCalTabs a').each(function(){	
-
-  	var $this = $(this);
-  	$this.click(function (e) {
-  		e.preventDefault();
-  		$this.tab('show');
-  		$('#calendar').fullCalendar( 'refetchEvents' );
-
-  	});
-
-  });
 
   /* 
   * Control the dropdown list for categories

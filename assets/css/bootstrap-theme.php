@@ -612,9 +612,12 @@ html, body, #booking {
 
 /* Calendar */
 
+#booking #calendar .fc-event.cancelled .fc-event-title:after{
+	content: " Cancelled";
+}
+
 #booking #calendar .fc-day:hover,
-#booking #calendar .fc-agenda-slots tr:hover
-{
+#booking #calendar .fc-agenda-slots tr:hover{
   background-color: rgba(255, 255, 255, 0.49);
 }
 
