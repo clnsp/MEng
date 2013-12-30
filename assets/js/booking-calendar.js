@@ -166,6 +166,7 @@ $('#calendar').fullCalendar({
 	},
 
 	eventRender: function(event, element, view) {
+				
 		if(event.end <  new Date()){
 			event.past = true;
 			element.css('opacity', '0.5');
@@ -178,6 +179,16 @@ $('#calendar').fullCalendar({
 		if(event.cancelled){
 			element.addClass('cancelled');
 		}
+		
+		//fetch the currently selected category ids
+		var categories = [];
+		$('#category-dropdown li.selected a').each(function(){
+		  var $this = $(this);
+		  categories.push($this.data('category-id') + "");
+		});
+		
+		if($.inArray(event.category_id, categories) == -1)
+			element.addClass('hidden');
 	},
 
 	eventSources: [
@@ -190,11 +201,6 @@ $('#calendar').fullCalendar({
 				return {
 					room: $('#bookingCalTabs .active a').attr('href'),	};
 				},
-			data: function() { // a function that returns an object
-				return {
-					room: $('#bookingCalTabs .active a').attr('href'),	};
-				},
-
 				error: function() {
 					if(!$('#calendar-error').length){
 						$('#calendar').prepend('<div id="calendar-error" class="alert alert-danger text-center">There was an error loading the calendar</div>');
@@ -510,8 +516,13 @@ $('#calendar').fullCalendar({
  	e.preventDefault();
  	e.stopPropagation();
  	$(this).toggleClass('selected');
+ 	
  });
  
+ /* Full Calendar refresh*/
+ $('#category-dropdown .dropdown-menu.multi-select li').click(function () {
+ 	$('#calendar').fullCalendar('rerenderEvents');
+ });
   
     
 });
