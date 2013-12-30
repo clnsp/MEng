@@ -15,9 +15,9 @@
 		<span class="caret"></span>
 	</button>
 
-	<ul class=" dropdown-menu" role="menu">
+	<ul class="dropdown-menu multi-select" role="menu">
 		<?php foreach($categories as $cat): ?>
-		<li role="presentation"><a style="color:<?php echo $cat['color'] ?>" href="<?php echo $cat['category_id'] ?>"><?php echo $cat['category'] ?></a></li>
+		<li role="presentation" class="selected"><a style="color:<?php echo $cat['color'] ?>" href="<?php echo $cat['category_id'] ?>"><?php echo $cat['category'] ?></a></li>
 
 	<?php endforeach; ?>
 </ul>

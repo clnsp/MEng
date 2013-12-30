@@ -509,7 +509,8 @@ html, body, #booking {
   padding: 1px 10px;
 }
 
-/* sub modal */
+/* @group Sub Modal */
+
 .modal.submodal{
   width: 50%!important;
   margin-left: auto;
@@ -529,6 +530,8 @@ html, body, #booking {
 
 }
 
+/* @end */
+
 
 /*
  * Loading Indicator 
@@ -539,14 +542,14 @@ html, body, #booking {
    font-size: 40px;
 
  }
-
-
-
-
- /* Login Page */
- #login-form #remember-me{
-  margin: 0px 15px 15px;
-}
+ 
+ /* @group Login */
+ 
+  #login-form #remember-me{
+   margin: 0px 15px 15px;
+ }
+ 
+ /* @end */
 
 
 /* Lastly, apply responsive CSS fixes as necessary */
@@ -612,6 +615,8 @@ html, body, #booking {
 
 /* Calendar */
 
+/* @group Calendar */
+
 #booking #calendar .fc-event.cancelled .fc-event-title:after{
 	content: " Cancelled";
 }
@@ -673,10 +678,6 @@ html, body, #booking {
   text-transform: capitalize;
 }
 
-#booking #category-dropdown li.selected a:before{
-  content: "Y";
-}
-
 #booking .fc-event.cancelled{
 	background-image: -webkit-linear-gradient(45deg,rgba(255, 255, 255, 0.15) 25%,rgba(0, 0, 0, 0.5) 25%,rgba(0, 0, 0, 0.5) 50%,rgba(255, 255, 255, 0.15) 50%,rgba(255, 255, 255, 0.15) 75%,rgba(0, 0, 0, 0.5) 75%,rgba(0, 0, 0, 0.5));
 	background-image: linear-gradient(45deg,rgba(255, 255, 255, 0.15) 25%,rgba(0, 0, 0, 0.5) 25%,rgba(0, 0, 0, 0.5) 50%,rgba(255, 255, 255, 0.15) 50%,rgba(255, 255, 255, 0.15) 75%,rgba(0, 0, 0, 0.5) 75%,rgba(0, 0, 0, 0.5));
@@ -685,7 +686,10 @@ html, body, #booking {
 }
 
 
-/*autocomplete results*/
+/* @end */
+
+/* @group Autocomplete */
+
 ul.ui-menu .ui-menu-item:hover {
   background-color: <?php echo $brandSecondary?>;
   cursor: pointer;
@@ -696,3 +700,24 @@ ul.ui-menu .ui-menu-item {
   padding: 5px 0 5px 0;
 }
 
+/* @end */
+
+/* @group Multi Select Dropdown */
+
+#booking .dropdown-menu.multi-select li a:before{
+  content: "\e067";
+  font-family: 'Glyphicons Halflings';
+  visibility: hidden;
+  padding-right: 2px;
+}
+
+.dropdown-menu.multi-select>li>a {
+	padding: 3px 10px;
+}
+
+#booking .dropdown-menu.multi-select li.selected a:before{
+  visibility: visible;
+}
+
+
+/* @end */

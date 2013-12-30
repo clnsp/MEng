@@ -127,10 +127,10 @@ $('#calendar').fullCalendar({
 	header: {
 		left: 'prev,next today',
 		center: 'title',
-		right: 'month,agendaWeek,agendaDay'
+		right: 'month,agendaWeek,agendaDay',
 	},
 
-
+	defaultView: 'agendaWeek',
 	allDayDefault: false,
 	selectHelper: true, 
 	/*	lazyFetching: true, //caches data*/
@@ -353,16 +353,6 @@ $('#calendar').fullCalendar({
   }
 
 
-
-  /* 
-  * Control the dropdown list for categories
-  */
-  $('#category-dropdown .dropdown-menu li').click(function(e){	
-  	e.preventDefault();
-  	$(this).toggleClass('selected');
-  });
-
-
 /* 
  * Add member to event 
  */
@@ -512,6 +502,17 @@ $('#calendar').fullCalendar({
       $("#cancelClassModal .modal-title").text(title);
  });
  
+ 
+ /* 
+ * Control the multiselect dropdown list
+ */
+ $('.dropdown-menu.multi-select li').click(function(e){	
+ 	e.preventDefault();
+ 	e.stopPropagation();
+ 	$(this).toggleClass('selected');
+ });
+ 
+  
     
 });
 

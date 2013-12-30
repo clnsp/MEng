@@ -97,7 +97,8 @@
    title: document.title
  }, document.title, document.location.href);
 
-  $('.navbar li').click(function(e) {
+  
+  /*$('.navbar li').click(function(e) {
     var $this = $(this);
     $this.parent().find('li.active').removeClass("active");
 
@@ -107,7 +108,7 @@
     }
 
 
-  });
+  });*/
 
   function updateContent(data) {
    if(!data){
