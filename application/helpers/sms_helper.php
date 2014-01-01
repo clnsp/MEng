@@ -32,7 +32,7 @@ if ( ! function_exists('send_sms'))
 		else if(!empty($numbers) && !empty($message))
 		{
 			if($CI->config->item('sms_txtlocal_sms','communication')) {	return _txtLocal($numbers, $message);}
-			else{return "Error: No SMS Provider Selected";}
+			else {return "Error: No SMS Provider Selected";}
 		}
 		else {
 			return "Error: Invalid Number or Message";

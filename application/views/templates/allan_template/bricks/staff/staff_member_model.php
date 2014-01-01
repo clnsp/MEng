@@ -85,14 +85,14 @@
                                 <i class="fa fa-user fa-fw"></i> Contact <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="#"><i class="fa fa-envelope fa-fw communicate"></i>  Email</a></li>
+                                <li id="email" class="message"><a href="#mySubModal" data-toggle="submodal"><i class="fa fa-envelope fa-fw"></i>  Email</a></li>
 								<?php if($twitter) {?>
 								<li class="divider"></li>
-                                <li><a href="#"><i class="fa fa-twitter fa-fw communicate"></i>  Tweet</a></li>
+                                <li id="twitter" class="message"><a href="#mySubModal" data-toggle="submodal"><i class="fa fa-twitter fa-fw"></i>  Tweet</a></li>
 								<?php }?>
 								<?php if($sms) {?>
                                 <li class="divider"></li>
-                                <li><a href="#"><i class="fa fa-mobile fa-fw communicate"></i>  SMS</a></li>
+                                <li id="sms" class="message"><a href="#mySubModal" data-toggle="submodal"><i class="fa fa-mobile fa-fw"></i>  SMS</a></li>
 								<?php }?>
                             </ul>
                         </div>

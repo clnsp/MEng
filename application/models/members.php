@@ -57,13 +57,33 @@ class Members extends CI_Model
     return $query;
   }
 
-
+   /**
+   * Update User Details
+   * @param number
+   * @param Array
+   * @param string
+   */
   function updateUser($id, $changes)
   {
 	$this->db->where('id', $id);
 	$this->db->update('users', $changes); 
-	return "4:Sucess";
+	return "4:Success";
   }
+ 
+  /**
+  * Get Specfic Value 
+  * @param number 
+  * @param row for value
+  * @return object
+  */
 
+  function getUserColumn($id, $row) // $row = 'first_name'
+  {
+	$this->db->select($row);
+        $this->db->from($this->table_name);
+	$this->db->where('id', $id);
 
+  	$query = $this -> db -> get();   
+  	return $query->result();
+  } 
 }

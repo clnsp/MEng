@@ -7,8 +7,8 @@
 | These details are used when allowing and sending SMS
 |--------------------------------------------------------------------------
 */
-$config['sms_sender'] = 'Your project';
-$config['sms_allow'] = FALSE;
+$config['sms_sender'] = 'Your project Sender';
+$config['sms_allow'] = TRUE;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,4 +28,5 @@ $config['sms_txtlocal_hash'] = 'Your API hash';
 | These details are used allowing and sending Tweets
 |--------------------------------------------------------------------------
 */
-$config['twitter_allow'] = FALSE;
+$config['twitter_allow'] = TRUE;
+$config['twitter_account'] = 'Your Account ID'; 

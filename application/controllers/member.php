@@ -40,9 +40,44 @@ class Member extends CI_Controller{
 	/*
 	 * Contact User
 	 */
-	 
+
 	function contactUser() {
-	
+	$this->load->model('members');
+	if(isset($_POST['id']) && isset($_POST['service']) && isset($_POST['message']))
+	{
+                $id = $_POST['id'];
+		$service = strtolower($_POST['service']);
+                $message = $_POST['message'];
+
+		switch ($service) {
+		// EMAIL
+		case "service equals email":
+			$email_address = $this->members->getUserColumn($id, 'email'); 
+			break;
+		// SMS
+		case "service equals sms":
+			$mobile_number = $this->members->getUserColumn($id, 'mobile_number');  
+			if(!$this->config->item('sms_allow'))
+			{
+				echo "Service Disabled";			
+			}
+			break;
+		// TWITTER
+		case "service equals twitter":
+                        $twitter_name = $this->members->getUserColumn($id, 'twitter'); 
+			if(!$this->config->item('twitter_allow')) 
+			{
+				echo "Service Disabled";
+			}
+			break;
+		default:
+			echo "Invalid Service";
+		}
+	}
+	else
+	{
+		echo "Incomplete";
+	}
 	
 	}
     }
