@@ -59,17 +59,17 @@ var activeEvent;
  * Render the cancel class button
  */
  function render_cancel_button(cancelled){
-   cancel = eventModal.find('#event-cancel-class-btn');
-   reopen = eventModal.find('#event-uncancel-class-btn');
- 
+ 	cancel = eventModal.find('#event-cancel-class-btn');
+ 	reopen = eventModal.find('#event-uncancel-class-btn');
+
  	if(cancelled){
  		reopen.removeClass('hidden');
  		cancel.addClass('hidden').prop('disabled', true);
  	}else{
- 	  	cancel.removeClass('hidden');
- 	  	reopen.addClass('hidden').prop('disabled', true);
+ 		cancel.removeClass('hidden');
+ 		reopen.addClass('hidden').prop('disabled', true);
  	}
-  	
+
  }
  
  /**
@@ -77,10 +77,10 @@ var activeEvent;
   */
   function disable_cancel_button(past){
   	var cancel, reopen;
-	eventModal.find('.open-Model-button').each(function(){
-		$(this).prop('disabled', past);
-	});
-  	 	
+  	eventModal.find('.open-Model-button').each(function(){
+  		$(this).prop('disabled', past);
+  	});
+
   }
 
 /**
@@ -113,7 +113,7 @@ var activeEvent;
   	eventMembers = eventModal.find('#event-member-list .list-group');
   	eventError = eventModal.find('#event-warning');
 //	var eventDescription =eventModal.find('#event-description');
-	
+
 
 /* Handler for the event button */
 eventError.find('button.close').click(function(e){
@@ -132,61 +132,77 @@ $('#calendar').fullCalendar({
 
 	firstDay: 1,
 
-	defaultView: 'agendaWeek',
-	allDayDefault: false,
-	selectHelper: true, 
-	/*	lazyFetching: true, //caches data*/
-	editable: false,
 
-	eventClick: function(calEvent, jsEvent, view) {
-		activeEvent = calEvent;
-		
-		eventid = calEvent.class_id;
 
-		render_title(calEvent.title);
-		
-		render_cancelled_banner(calEvent.cancelled);
-		
-		render_cancel_button(calEvent.cancelled);
-		
-		disable_cancel_button(calEvent.past);
-		
-		render_date(calEvent.start, calEvent.end, calEvent.allDay);
-		
-		render_attendance_numbers(calEvent.attending, calEvent.max_attendance);
-				
-		render_color(calEvent.color);
+	/* cal col headings */
+	columnFormat: {
+        month: 'dddd', 
+        week: 'ddd d', 
+        day: '' 
+    },
 
-		render_room(calEvent.room_id, calEvent.room);
-		
-		load_event_attendants(calEvent.past || calEvent.cancelled);
-
-		disable_add_member(calEvent.past || calEvent.cancelled);
-		
-		/*setup form*/
-		eventModal.modal('show');
+    titleFormat: {
+    	month: 'MMMM yyyy',                             // September 2009
+    	week: "MMM d[ yyyy]{ -[ MMM] d, yyyy}", // Sep 7 - 13 2009
+    	day: 'dddd d MMMM yyyy'                  // Tuesday, Sep 8, 2009
 	},
 
-	eventRender: function(event, element, view) {
-				
-		if(event.end <  new Date()){
-			event.past = true;
-			element.css('opacity', '0.5');
-		}
-		else{
-			event.past = false;
-		}
-		event.cancelled = event.cancelled == true;
-		
-		if(event.cancelled){
-			element.addClass('cancelled');
-		}
-		
+
+    defaultView: 'agendaWeek',
+    allDayDefault: false,
+    selectHelper: true, 
+    /*	lazyFetching: true, //caches data*/
+    editable: false,
+
+    eventClick: function(calEvent, jsEvent, view) {
+    	activeEvent = calEvent;
+
+    	eventid = calEvent.class_id;
+
+    	render_title(calEvent.title);
+
+    	render_cancelled_banner(calEvent.cancelled);
+
+    	render_cancel_button(calEvent.cancelled);
+
+    	disable_cancel_button(calEvent.past);
+
+    	render_date(calEvent.start, calEvent.end, calEvent.allDay);
+
+    	render_attendance_numbers(calEvent.attending, calEvent.max_attendance);
+
+    	render_color(calEvent.color);
+
+    	render_room(calEvent.room_id, calEvent.room);
+
+    	load_event_attendants(calEvent.past || calEvent.cancelled);
+
+    	disable_add_member(calEvent.past || calEvent.cancelled);
+
+    	/*setup form*/
+    	eventModal.modal('show');
+    },
+
+    eventRender: function(event, element, view) {
+
+    	if(event.end <  new Date()){
+    		event.past = true;
+    		element.css('opacity', '0.5');
+    	}
+    	else{
+    		event.past = false;
+    	}
+    	event.cancelled = event.cancelled == true;
+
+    	if(event.cancelled){
+    		element.addClass('cancelled');
+    	}
+
 		//fetch the currently selected category ids
 		var categories = [];
 		$('#category-dropdown li.selected a').each(function(){
-		  var $this = $(this);
-		  categories.push($this.data('category-id') + "");
+			var $this = $(this);
+			categories.push($this.data('category-id') + "");
 		});
 		
 		if($.inArray(event.category_id, categories) == -1)
@@ -236,52 +252,52 @@ $('#calendar').fullCalendar({
  * Render the room
  */
  function render_room(room_id, room) {
-	if(exists(room_id)){
-		eventLocation.html('<a href="room/' + room_id + '">' + room + '</a>');
-	}else{
-		eventLocation.text(calEvent.room);
-	}
+ 	if(exists(room_id)){
+ 		eventLocation.html('<a href="room/' + room_id + '">' + room + '</a>');
+ 	}else{
+ 		eventLocation.text(calEvent.room);
+ 	}
  }
 
 /**
  * Render the category color
  */
  function render_color(color) {
-	eventColor.css( "color", color );
+ 	eventColor.css( "color", color );
  }
  
 /**
  * Render the date of the event
  */
  function render_date(start, end, allDay) {
-	var s_date, e_date, s_time, e_time;
+ 	var s_date, e_date, s_time, e_time;
 
-	if(exists(start)){
-		s_date = $.fullCalendar.formatDate(start, "dddd, d MMMM yyyy");
-		s_time = $.fullCalendar.formatDate(start, "HH:mm");
-	}
+ 	if(exists(start)){
+ 		s_date = $.fullCalendar.formatDate(start, "dddd, d MMMM yyyy");
+ 		s_time = $.fullCalendar.formatDate(start, "HH:mm");
+ 	}
 
-	if(exists(end)){
-		e_date = $.fullCalendar.formatDate(end, "dddd, d MMMM yyyy");
-		e_time = $.fullCalendar.formatDate(end, "HH:mm");
-	}
+ 	if(exists(end)){
+ 		e_date = $.fullCalendar.formatDate(end, "dddd, d MMMM yyyy");
+ 		e_time = $.fullCalendar.formatDate(end, "HH:mm");
+ 	}
 
-	/*all day no time*/
-	if(exists(allDay) && allDay){
-		eventdate1.text(s_date);
-		eventdate2.text("All Day Event");
-	}else{
-		/* within one day */
-		if(s_date == e_date){
-			eventdate1.text(s_date);
-			eventdate2.text(s_time + ' to ' + e_time);
-		}
-		/*split over multiple days*/
-		else{
-			eventdate1.text(s_time + ' ' + s_date + ' to');
-			eventdate2.text(e_time + ' ' + e_date);
-		}
-	}
+ 	/*all day no time*/
+ 	if(exists(allDay) && allDay){
+ 		eventdate1.text(s_date);
+ 		eventdate2.text("All Day Event");
+ 	}else{
+ 		/* within one day */
+ 		if(s_date == e_date){
+ 			eventdate1.text(s_date);
+ 			eventdate2.text(s_time + ' to ' + e_time);
+ 		}
+ 		/*split over multiple days*/
+ 		else{
+ 			eventdate1.text(s_time + ' ' + s_date + ' to');
+ 			eventdate2.text(e_time + ' ' + e_date);
+ 		}
+ 	}
  }
 
 
@@ -289,7 +305,7 @@ $('#calendar').fullCalendar({
  * Render the title
  */
  function render_title(title) {
-	eventTitle.text(title); 
+ 	eventTitle.text(title); 
  }
  
  /**
@@ -300,7 +316,7 @@ $('#calendar').fullCalendar({
  	if(render){
  		banner.removeClass('hidden');
  	}else{
- 	 	banner.addClass('hidden');
+ 		banner.addClass('hidden');
 
  	}
  }
@@ -309,13 +325,13 @@ $('#calendar').fullCalendar({
  * Render the attendance numbers
  */
  function render_attendance_numbers(attending, max_attendance) {
-	if(exists(max_attendance)){
-		eventSpacesMax.text(max_attendance);
-	}
+ 	if(exists(max_attendance)){
+ 		eventSpacesMax.text(max_attendance);
+ 	}
 
-	if(exists(attending)){
-		eventSpacesTaken.text(attending);
-	}
+ 	if(exists(attending)){
+ 		eventSpacesTaken.text(attending);
+ 	}
 
  }
  
@@ -329,32 +345,32 @@ $('#calendar').fullCalendar({
     *Fetch room associated calendar view
     */
     $('#bookingCalTabs a').each(function(){	
-  
+
     	var $this = $(this);
     	$this.click(function (e) {
     		e.preventDefault();
     		$this.tab('show');
     		$('#calendar').fullCalendar( 'refetchEvents' );
-  
+
     	});
-  
+
     });
-  
-  
-  
-  
+
+
+
+
   /**
    * Cleanup the modal attributes
    */
-  function teardown_modal() {
-	eventTitle.text('[Title]');
-	eventdate1.text('[Date]'); 
-	eventdate2.text('[Date]'); 
-	eventSpacesMax.text('[0]'); 
-	eventSpacesTaken.text('[0]'); 
-	eventColor.css('color', '#000'); 
-	eventLocation.text('[RoomName]'); 
-	eventid = "";
+   function teardown_modal() {
+   	eventTitle.text('[Title]');
+   	eventdate1.text('[Date]'); 
+   	eventdate2.text('[Date]'); 
+   	eventSpacesMax.text('[0]'); 
+   	eventSpacesTaken.text('[0]'); 
+   	eventColor.css('color', '#000'); 
+   	eventLocation.text('[RoomName]'); 
+   	eventid = "";
   	//	eventDescription.text('[Descripttion]');
   	eventMembers.html('');
   	activeEvent = null;
@@ -396,26 +412,26 @@ $('#calendar').fullCalendar({
   */
   
   $('#confirmCancelBtn').click(function(e){
-  
+
   	var msg = $('input#cancelMessage').val();
   	
- 	 $.ajax({
-   			url: "calendar/cancelClass/" + activeEvent.cancelled,
-   			type: "POST",
-   			data: { 'class_booking_id':eventid, 'cancel_message':msg },
-   			success: function() {
-	   			alert('message sent, class cancelled');
-	   			$('input#cancelMessage').val('');
-	   			$('#calendar').fullCalendar( 'refetchEvents' );
-  
-   			},
-   			error: function(){
-   				alert("Cancel class error");
-  
-   			},
-   		});
-  
-   	});
+  	$.ajax({
+  		url: "calendar/cancelClass/" + activeEvent.cancelled,
+  		type: "POST",
+  		data: { 'class_booking_id':eventid, 'cancel_message':msg },
+  		success: function() {
+  			alert('message sent, class cancelled');
+  			$('input#cancelMessage').val('');
+  			$('#calendar').fullCalendar( 'refetchEvents' );
+
+  		},
+  		error: function(){
+  			alert("Cancel class error");
+
+  		},
+  	});
+
+  });
 
 /*
  * Select anywhere along the member list row 
@@ -506,8 +522,8 @@ $('#calendar').fullCalendar({
  
  
  eventModal.on("click", ".open-Model-button", function () {
-      var title = $(this).data('title');
-      $("#cancelClassModal .modal-title").text(title);
+ 	var title = $(this).data('title');
+ 	$("#cancelClassModal .modal-title").text(title);
  });
  
  
@@ -525,8 +541,8 @@ $('#calendar').fullCalendar({
  $('#category-dropdown .dropdown-menu.multi-select li').click(function () {
  	$('#calendar').fullCalendar('rerenderEvents');
  });
-  
-    
+
+
 });
 
 
