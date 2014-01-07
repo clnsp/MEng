@@ -142,12 +142,11 @@ class Classes extends CI_Model
 
 	/**
 	 * Populate a number of random classes into the database.
-	 * The offset is the time in seconds from now to start generating the classes
-	 * The months are how many months you want to generate for.
 	 * eg. addRandomClasses(10, 60*60*24*7, 2) generates 10 classes between a week from today and the next two months
 	 * 
-	 * @param int 
-	 * @param offset
+	 * @param int - number of classes to generate
+	 * @param int - offset is the time in seconds from now to start generating the classes
+	 * @param int - number of months you want to generate classes for
 	 */
 	function addRandomClasses($num, $offset, $months){
 
