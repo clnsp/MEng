@@ -483,7 +483,7 @@ img.displayed {
   display: block;
   margin-left: auto;
   margin-right: auto 
-}  
+} 
 html, body, #booking {
   height: 100%;
   /* The html and body elements cannot have any padding or margin. */
@@ -498,12 +498,29 @@ html, body, #booking {
   margin: 0 auto -155px;
 }
 
+#booking .username{
+  text-transform: capitalize;
+}
+
+/* @group Footer */
+
 /* Set the fixed height of the footer here */
 .push,
 #footer {
   height: 155px;
   margin-top: 0!important;
 }
+/* Lastly, apply responsive CSS fixes as necessary */
+@media (max-width: 767px) {
+  #footer {
+    margin-left: -20px;
+    margin-right: -20px;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+
+/* @end */
 
 #booking .navbar-brand{
   padding: 1px 10px;
@@ -533,15 +550,28 @@ html, body, #booking {
 /* @end */
 
 
-/*
- * Loading Indicator 
- */
+/* @group Loading Indicator */
+
+#loading-indicator i{
+  font-size: 20px;
+  margin-left: 10px;
+}
 
  #loading-indicator{
-
-   font-size: 40px;
-
+  color: #fff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 250px;
+  background-color: rgba(56, 56, 56, 0.63);
+  border-radius: 10px;
+  margin-left: -125px;
+  text-align: center;
+  padding: 10px;
+  z-index: 250000;
  }
+
+ /* @end */
  
  /* @group Login */
  
@@ -552,70 +582,77 @@ html, body, #booking {
  /* @end */
 
 
-/* Lastly, apply responsive CSS fixes as necessary */
-@media (max-width: 767px) {
-  #footer {
-    margin-left: -20px;
-    margin-right: -20px;
-    padding-left: 20px;
-    padding-right: 20px;
-  }
-}
-
-/**
- * Bootstrap Overrides
- * ******************************************
- */
-
+ 
+ /* @group Bootstrap Overrides  */
+ 
  #booking .navbar-top{
- 	border-radius: 0!important;
- 	border-bottom: 3px solid <?php echo $brandSecondary;?>;
-   border-right-style: none;
-   border-left-style: none;
-   background-color: <?php echo $brandPrimary;?>!important;
+  	border-radius: 0!important;
+  	border-bottom: 3px solid <?php echo $brandSecondary;?>;
+    border-right-style: none;
+    border-left-style: none;
+    background-color: <?php echo $brandPrimary;?>!important;
+  }
+ 
+ 
+  #footer, .footer{
+    margin-top: 2em;
+    padding: 1em;
+    background-color: <?php echo $brandPrimary;?>;
+  }
+ 
+  #booking #footer .nav-pills li a{
+    color: #2A6496;
+  }
+ 
+  #booking #footer .nav-pills li a:hover{
+    background-color: rgba(255, 255, 255, 0);
+    color: #428BCA;
+  }
+ 
+ 
+  #booking .nav .caret{
+    border-top-color: <?php echo $brandSecondary;?>;
+    border-bottom-color: <?php echo $brandSecondary;?>;
+  }
+ 
+  #booking .navbar .dropdown-menu::after {
+   position: absolute;
+   top: -6px;
+   right: 20px;
+   display: inline-block;
+   border-right: 6px solid transparent;
+   border-bottom: 6px solid white;
+   border-left: 6px solid transparent;
+   content: '';
+   color: rgba(65, 128, 123, 0.63);
  }
-
-
- #footer, .footer{
-   margin-top: 2em;
-   padding: 1em;
-   background-color: <?php echo $brandPrimary;?>;
+ 
+ #booking #page-body.page-login div.input-group{
+ 	margin-bottom: 15px;
  }
-
- #booking #footer .nav-pills li a{
-   color: #2A6496;
+ 
+ @media (min-width: 1200px){
+	 #booking .container {
+		 width: 100%;
+	 }
  }
+ 
+ /* @end */
 
- #booking #footer .nav-pills li a:hover{
-   background-color: rgba(255, 255, 255, 0);
-   color: #428BCA;
- }
-
-
- #booking .nav .caret{
-   border-top-color: <?php echo $brandSecondary;?>;
-   border-bottom-color: <?php echo $brandSecondary;?>;
- }
-
- #booking .navbar .dropdown-menu::after {
-  position: absolute;
-  top: -6px;
-  right: 20px;
-  display: inline-block;
-  border-right: 6px solid transparent;
-  border-bottom: 6px solid white;
-  border-left: 6px solid transparent;
-  content: '';
-  color: rgba(65, 128, 123, 0.63);
-}
-
-#booking #page-body.page-login div.input-group{
-	margin-bottom: 15px;
-}
-
-/* Calendar */
 
 /* @group Calendar */
+
+#booking #calendar .fc-view tbody{
+  background-color: #fff;
+}
+
+#booking #calendar thead .fc-first{
+  border-top-left-radius: 5px;
+}
+
+#booking #calendar thead .fc-last{
+  border-top-right-radius: 5px;
+}
 
 #booking #calendar .fc-event.cancelled .fc-event-title:after{
 	content: " Cancelled";

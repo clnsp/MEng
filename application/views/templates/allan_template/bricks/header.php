@@ -93,7 +93,7 @@
               <?php if($logged_in):?>
               
               <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">{user_name} <span class="glyphicon glyphicon-user"><span class="caret"></span></a>            
+                <a href="#" class="dropdown-toggle username" data-toggle="dropdown">{user_name} <span class="glyphicon glyphicon-user"><span class="caret"></span></a>            
 
                 <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownUser">
                   <li><a href="auth/account_settings"><i class="fa fa-cog"></i>  Account Settings</a></li>

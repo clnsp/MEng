@@ -130,6 +130,8 @@ $('#calendar').fullCalendar({
 		right: 'month,agendaWeek,agendaDay',
 	},
 
+	firstDay: 1,
+
 	defaultView: 'agendaWeek',
 	allDayDefault: false,
 	selectHelper: true, 
