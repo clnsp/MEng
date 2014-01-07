@@ -1,5 +1,5 @@
 function exists(variable){
-	if(typeof variable == 'undefined'){
+	if(typeof variable == 'undefined' || variable == null){
 		return false;
 	}
 	return true;
@@ -176,7 +176,7 @@ $('#calendar').fullCalendar({
 
     	if(event.end <  new Date()){
     		event.past = true;
-    		element.css('opacity', '0.5');
+    		element.css('opacity', '0.55');
     	}
     	else{
     		event.past = false;
@@ -263,12 +263,12 @@ $('#calendar').fullCalendar({
  	var s_date, e_date, s_time, e_time;
 
  	if(exists(start)){
- 		s_date = $.fullCalendar.formatDate(start, "dddd, d MMMM yyyy");
+ 		s_date = $.fullCalendar.formatDate(start, "dddd d MMMM yyyy");
  		s_time = $.fullCalendar.formatDate(start, "HH:mm");
  	}
 
  	if(exists(end)){
- 		e_date = $.fullCalendar.formatDate(end, "dddd, d MMMM yyyy");
+ 		e_date = $.fullCalendar.formatDate(end, "dddd d MMMM yyyy");
  		e_time = $.fullCalendar.formatDate(end, "HH:mm");
  	}
 

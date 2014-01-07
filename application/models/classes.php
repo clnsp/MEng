@@ -168,7 +168,7 @@ class Classes extends CI_Model
 		$categoryIds = $this -> db -> get()->result_array();
 		$maxCatindex = count($categoryIds)-1;
 
-		$now = time('Y-m-d h:i:s') + $offset;
+		$now = time() + $offset;
 
 		
 
@@ -179,8 +179,8 @@ class Classes extends CI_Model
 
 			//start and end date one hour apart
 			$randtime = $now + rand(30, 60 * 60 * 24 * 30 * $months);
-			$class_start_date = date('Y-m-d h:0:0',  $randtime);
-			$class_end_date = date('Y-m-d h:0:0', strtotime('+1 hours', $randtime));
+			$class_start_date = date('Y-m-d H:0:0',  $randtime);
+			$class_end_date = date('Y-m-d H:0:0', $randtime + (60*60));
 
 			//max attendance random no. between 5 and 50
 			$max_attendance = rand(5, 50);
