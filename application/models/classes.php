@@ -133,14 +133,88 @@ class Classes extends CI_Model
 		$query = $this -> db -> get();
 		if ($query->num_rows() == 1){
 			$cancelled = $query->row(1)->cancelled;
-						
+
 			return  $cancelled == "1";
 		}
 		
 		return false;
-		
-		
-
 	}
 
+	/**
+	 * Populate a number of random classes into the database.
+	 * The offset is the time in seconds from now to start generating the classes
+	 * The months are how many months you want to generate for.
+	 * eg. addRandomClasses(10, 60*60*24*7, 2) generates 10 classes between a week from today and the next two months
+	 * 
+	 * @param int 
+	 * @param offset
+	 */
+	function addRandomClasses($num, $offset, $months){
+
+		// Get all the class types
+		$this->db->select('class_type_id');
+		$this->db->from('class_type_tbl'); 
+		$classTypes = $this -> db -> get()->result_array();
+		$maxCTindex = count($classTypes)-1;
+
+		//get all the room ids
+		$this->db->select('room_id');
+		$this->db->from('room_tbl'); 
+		$roomIds = $this -> db -> get()->result_array();
+		$maxRindex = count($roomIds)-1;
+
+		//get all categories
+		$this->db->select('category_id');
+		$this->db->from('category_tbl'); 
+		$categoryIds = $this -> db -> get()->result_array();
+		$maxCatindex = count($categoryIds)-1;
+
+		$now = time('Y-m-d h:i:s') + $offset;
+
+		
+
+		for ($i = 1; $i <= $num; $i++) {
+
+			//select random class type
+			$class_type_id = $classTypes[rand(0, $maxCTindex)]['class_type_id'];
+
+			//start and end date one hour apart
+			$randtime = $now + rand(30, 60 * 60 * 24 * 30 * $months);
+			$class_start_date = date('Y-m-d h:0:0',  $randtime);
+			$class_end_date = date('Y-m-d h:0:0', strtotime('+1 hours', $randtime));
+
+			//max attendance random no. between 5 and 50
+			$max_attendance = rand(5, 50);
+			$max_attendance = $max_attendance - ($max_attendance%10);
+
+			//select random room
+			$room_id = $roomIds[rand(0, $maxRindex)]['room_id'];
+
+			//select random category
+			$category_id = $categoryIds[rand(0, $maxCatindex)]['category_id'];
+
+			echo $i . 'Inserting: class_type_id: ' . $class_type_id . ' start: '. $class_start_date . ' end: ' .  $class_end_date  . ' room_id: ' . $room_id . ' category_id:' . $category_id . ' max_attendance: '. $max_attendance .  ' cancelled: 0' . "<br/>";
+
+			$data = array(
+				'class_type_id' => $class_type_id ,
+				'class_start_date' => $class_start_date ,
+				'class_end_date' => $class_end_date ,
+				'room_id' => $room_id,
+				'category_id' => $category_id,
+				'max_attendance' => $max_attendance,
+				'cancelled' => 0,
+				);
+
+			$this->db->insert($this -> table_name, $data); 
+			
+
+		}
+
+
+		
+
+
+
+		
+	}
 }

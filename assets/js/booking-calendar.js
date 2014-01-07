@@ -156,27 +156,16 @@ $('#calendar').fullCalendar({
 
     eventClick: function(calEvent, jsEvent, view) {
     	activeEvent = calEvent;
-
     	eventid = calEvent.class_id;
-
     	render_title(calEvent.title);
-
     	render_cancelled_banner(calEvent.cancelled);
-
     	render_cancel_button(calEvent.cancelled);
-
     	disable_cancel_button(calEvent.past);
-
     	render_date(calEvent.start, calEvent.end, calEvent.allDay);
-
     	render_attendance_numbers(calEvent.attending, calEvent.max_attendance);
-
     	render_color(calEvent.color);
-
     	render_room(calEvent.room_id, calEvent.room);
-
     	load_event_attendants(calEvent.past || calEvent.cancelled);
-
     	disable_add_member(calEvent.past || calEvent.cancelled);
 
     	/*setup form*/
@@ -234,6 +223,7 @@ $('#calendar').fullCalendar({
 				else 
 					$('#loading-indicator').toggleClass('hidden');
 			},
+			
 			dayClick: function(date, allDay, jsEvent, view) {
 
 				view.calendar.gotoDate(date);

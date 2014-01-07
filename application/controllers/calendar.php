@@ -24,6 +24,26 @@ class Calendar extends CI_Controller{
     }
 
     /**
+     * Populate the database with random classes
+     * @param int - number of classes to generate
+     * @param int - offset time in seconds from now to start generating
+     * @param int - number of months to generate classes for
+     * 
+     */
+    function insertClasses($numberClasses = 0, $offset = 0, $months = 1){
+
+        if($numberClasses > 0){
+
+           $this->load->model('classes');
+           $this->classes->addRandomClasses($numberClasses, $offset, $months);
+       }
+       else{
+            echo "No classes added. Supply a number of months to generate.";
+       }
+       
+   }
+
+    /**
      * Get users from associated with a class booking
      */
     function getClassAttendants(){
@@ -106,27 +126,27 @@ class Calendar extends CI_Controller{
      */
     function cancelClass($cancelled){
     	$cancelled = $cancelled == "true";
-        	
+
         if (isset($_POST['class_booking_id'])){
-	        $this->load->model('classes');
-	        	        
-	        $bid = $_POST['class_booking_id'];
-            $msg = '';
-            
-            if (isset($_POST['cancel_message'])){
-            	$msg = $_POST['cancel_message'];
-            }
-            
-            $iscancelled = $this->classes->isClassCancelled($bid);          
-            
-            if($cancelled == $iscancelled){
-            	echo "change status";
-	        	$this->changeClassStatus($bid, $msg, !$cancelled);
-            }
-        }
-    }
-    
-    
+           $this->load->model('classes');
+
+           $bid = $_POST['class_booking_id'];
+           $msg = '';
+
+           if (isset($_POST['cancel_message'])){
+               $msg = $_POST['cancel_message'];
+           }
+
+           $iscancelled = $this->classes->isClassCancelled($bid);          
+
+           if($cancelled == $iscancelled){
+               echo "change status";
+               $this->changeClassStatus($bid, $msg, !$cancelled);
+           }
+       }
+   }
+
+
     /**
      * Change a class status to cancelled or open
      * @param	int
@@ -134,32 +154,32 @@ class Calendar extends CI_Controller{
      * @param	bool
      */
     function changeClassStatus($bid, $msg, $cancel) {
-	    $this->load->library('email');
-	    $this->load->model('bookings');
-        $this->load->model('classes');	                
-    		       
-    	$this->classes->cancelClass($bid, $cancel);
-    	        
-    	$emails = $this->bookings->getBookingEmails($bid);
-    	
-    	if($cancel){
-    		"Your class has been cancelled. " + $msg;
-    	}else{
-    		"Your class has been reopened. " + $msg;
-    	}
-    	
-    	foreach ($emails as $email){   
-    	   $this->email->from('your@example.com', 'Booking');
-    	   $this->email->to($email['email']); 
-    	   
-    	   $this->email->subject('Update to your class');
-    	   $this->email->message($msg);	
-    	   
-    	   $this->email->send();
-    	   
-    	   echo $this->email->print_debugger();
-    	}
+       $this->load->library('email');
+       $this->load->model('bookings');
+       $this->load->model('classes');	                
+
+       $this->classes->cancelClass($bid, $cancel);
+
+       $emails = $this->bookings->getBookingEmails($bid);
+
+       if($cancel){
+          "Your class has been cancelled. " + $msg;
+      }else{
+          "Your class has been reopened. " + $msg;
+      }
+
+      foreach ($emails as $email){   
+        $this->email->from('your@example.com', 'Booking');
+        $this->email->to($email['email']); 
+
+        $this->email->subject('Update to your class');
+        $this->email->message($msg);	
+
+        $this->email->send();
+
+        echo $this->email->print_debugger();
     }
+}
 
 
     /**
