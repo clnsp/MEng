@@ -42,22 +42,22 @@
 
 		}
 		
-		         /**
-                 * Admin User Mangement
-                 */
-		         public function users($page = 'users'){
+	     /**
+	     * Admin User Mangement
+	     */
+	     public function users($page = 'users'){
 
-		         	if(!$this->tank_auth->is_logged_in()){
-                          //If no session, redirect to login page
-		         		$data['user_type'] = 'guest';
-		         		redirect('login', 'refresh');
-		         	}
-		         	else{
-		         		$this->load->Model('members');
-		         		$data['users'] = $this->members->getAllUsers();
-		         		parse_temp($page, $this->load->view('pages/'.$page, $data, true));
-		         	}
-		         }
+	     	if(!$this->tank_auth->is_logged_in()){
+	              //If no session, redirect to login page
+	     		$data['user_type'] = 'guest';
+	     		redirect('login', 'refresh');
+	     	}
+	     	else{
+	     		$this->load->Model('members');
+	     		$data['users'] = $this->members->getAllUsers();
+	     		parse_temp($page, $this->load->view('pages/'.$page, $data, true));
+	     	}
+	     }
 
 		/**
 		 * Admin calendar booking page
@@ -78,8 +78,6 @@
 				
 				parse_temp($page, $this->load->view('pages/'.$page, $data, true));
 			}
-
-
 		}
 
 
@@ -100,6 +98,16 @@
 			$this->session->unset_userdata('logged_in');
 			session_destroy();
 			redirect('login', 'refresh');
+		}
+
+		/**
+		 * Room
+		 */
+		public function room($id='1'){
+			$data['room_id'] = $id;
+
+			parse_temp('room', $this->load->view('pages/room', $data, true));
+
 		}
 
 

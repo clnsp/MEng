@@ -130,8 +130,8 @@ $('#calendar').fullCalendar({
 		right: 'month,agendaWeek,agendaDay',
 	},
 
-	firstDay: 1,
-
+	firstDay: 1, //makes first day monday
+	firstHour: new Date().getUTCHours() - 5, //makes the first hour in view 5 hours ago
 
 
 	/* cal col headings */

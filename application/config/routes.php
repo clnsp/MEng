@@ -54,6 +54,7 @@ $route['admin-calendar'] = 'pages/admin_calendar';
 $route['caljson'] = 'caljson';
 $route['users_fetch'] = 'users_fetch';
 $route['booking'] = 'booking';
+$route['room'] = 'pages/room';
 
 $route['welcome'] = 'welcome';
 
