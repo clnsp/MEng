@@ -103,7 +103,7 @@
 		/**
 		 * Room
 		 */
-		public function room($id='1'){
+		public function room($id=1){
 			$data['room_id'] = $id;
 
 			parse_temp('room', $this->load->view('pages/room', $data, true));
