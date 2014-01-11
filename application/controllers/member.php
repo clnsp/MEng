@@ -1,6 +1,6 @@
 <?php
 class Member extends CI_Controller{
-        /*
+        /**
          * Get user details for editing
          */
         function getUserDetails(){
@@ -11,6 +11,43 @@ class Member extends CI_Controller{
                 echo json_encode($this->members->getUserByID($q));                
             }                
         }
+       
+       
+		/**
+        * Get user details for editing
+        */
+       function addGuest(){
+           $this->load->model('tank_auth/users');
+
+           if (isset($_POST['guest_first_name'])){
+               $first = strtolower($_POST['guest_first_name']);       
+           } else{return;}
+           
+           if (isset($_POST['guest_last_name'])){
+               $last = strtolower($_POST['guest_last_name']);       
+           } else{return;}
+           
+           if (isset($_POST['guest_email'])){
+               $email = strtolower($_POST['guest_email']);       
+           } else{return;}
+           
+           if (isset($_POST['guest_phone'])){
+               $phone = strtolower($_POST['guest_phone']);       
+           } else{return;}
+           
+           $data = array(
+              'membership_type_id' => 2,
+              'first_name' => $first ,
+              'second_name' => $last,
+              'email'	=> $email,
+              'home_number' =>$phone
+              
+           );
+                  
+           $this->users->create_user($data);
+           
+       }
+      
     }
 
     ?>

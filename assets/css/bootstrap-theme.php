@@ -728,9 +728,9 @@ html, body, #booking {
 /* @group Autocomplete */
 
 ul.ui-menu .ui-menu-item:hover {
-  background-color: <?php echo $brandSecondary?>;
+ // background-color: <?php echo $brandSecondary?>;
   cursor: pointer;
-  color: #0ff!important;
+ // color: #0ff!important;
 }
 
 ul.ui-menu .ui-menu-item {

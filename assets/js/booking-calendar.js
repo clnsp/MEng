@@ -484,7 +484,7 @@ $('#calendar').fullCalendar({
  /*override the autocomp dropdown results display*/
  $.ui.autocomplete.prototype._renderMenu = function( ul, items ) {
  	var that = this;
- 	$(ul).addClass('list-group popover bottom')
+ 	$(ul).addClass('list-group dropdown-menu popover bottom')
  	.append(' <div class="arrow"></div>');    
 
 
@@ -530,6 +530,25 @@ $('#calendar').fullCalendar({
  /* Full Calendar refresh*/
  $('#category-dropdown .dropdown-menu.multi-select li').click(function () {
  	$('#calendar').fullCalendar('rerenderEvents');
+ });
+
+
+$('form#addGuestForm').submit(function(e){
+e.preventDefault();
+ 		$.ajax({
+ 			url: "calendar/addMember",
+ 			type: "POST",
+ 			data: $("this").serialize() ,
+ 			success: function() {
+ 				alert('success');
+
+ 			},
+ 			error: function(){
+ 			//	show_error('User already exists');
+ 			},
+ 		});
+
+
  });
 
 

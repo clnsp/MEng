@@ -110,7 +110,10 @@
 						</div>
 						<!-- /input-group -->
 					</form>
+				<button data-toggle="modal" data-target="#addGuestModal" class="btn btn-default" id="btn-add-member" type="submit">Add Guest</button>
 				</div>
+				
+				
 
 				<div class="clearfix"></div><!-- Fix body of modal running over the footer-->
 
@@ -135,11 +138,41 @@
 				<h4 class="modal-title">Add Guest</h4>
 			</div>
 			<div class="modal-body">
-				<form></form>
+				
+				<form id="addGuestForm" class="form-horizontal" role="form">
+				
+				<div class="form-group">
+				  <label for="guest_last_name" class="col-sm-3 control-label">First Name</label>
+				  <div class="col-sm-9">
+				    <input id="guest-first-name" type="text" class="form-control" name="guest_first_name" placeholder="First name">
+				  </div>
+				</div>
+				<div class="form-group">
+				  <label for="guest_last_name" class="col-sm-3 control-label">Last Name</label>
+				  <div class="col-sm-9">
+				    <input id="guest-last-name" type="text" class="form-control" name="guest_last_name" placeholder="Last name">
+				  </div>
+				</div>
+				
+				  <div class="form-group">
+				    <label for="guest_email" class="col-sm-3 control-label">Email</label>
+				    <div class="col-sm-9">
+				      <input id="guest-email" type="email" class="form-control" name="guest_email" placeholder="Email address">
+				    </div>
+				  </div>
+				  
+				  <div class="form-group">
+				    <label for="guest_email" class="col-sm-3 control-label">Phone</label>
+				    <div class="col-sm-7">
+				      <input id="guest-phone" type="number" class="form-control" name="guest_phone" placeholder="Phone Number">
+				    </div>
+				  </div>
+				  				
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-				<button type="button" class="btn btn-primary">Add New Member</button>
+				<input type="submit" value="Add New Member" class="btn btn-primary">
+					</form>
 			</div>
 		</div><!-- /.modal-content -->
 	</div><!-- /.modal-dialog -->

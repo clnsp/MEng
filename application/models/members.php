@@ -41,21 +41,24 @@ class Members extends CI_Model
   }
 
    /**
-   * Fetch users that partially match a first or second name
+   * Add a new user
    * @param string
-   * @return  object
    */
-  function getUserName($q) // was get_user_name
+  function addUser($user) // was get_user_name
   {
-  	$this -> db -> select("id, CONCAT_WS(' ', first_name, second_name) AS name", FALSE);
-
-    $term = strtolower($q);
-    $this->db->where("(LOWER(first_name) LIKE '%{$q}%' OR LOWER(second_name) LIKE '%{$q}%')");
+  
+  	$data = array(
+  	   'title' => 'My title' ,
+  	   'name' => 'My Name' ,
+  	   'date' => 'My date'
+  	);
+  	
+    $this->db->insert("(LOWER(first_name) LIKE '%{$q}%' OR LOWER(second_name) LIKE '%{$q}%')");
 
     $query = $this -> db -> get($this -> table_name);
 
     return $query;
   }
-
+  
 
 }
