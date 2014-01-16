@@ -40,18 +40,34 @@ class Members extends CI_Model
   	return $query->result();
   }
 
+  /**
+  * Fetch users that partially match a first or second name
+  * @param string
+  * @return  object
+  */
+  function getUserLike($q){
+   $this -> db -> select("id, CONCAT_WS(' ', first_name, second_name) AS name", FALSE);
+
+   $term = strtolower($q);
+   $this->db->where("(LOWER(first_name) LIKE '%{$q}%' OR LOWER(second_name) LIKE '%{$q}%')");
+   $query = $this -> db -> get($this -> table_name);
+
+   return $query;
+ }
+
+
    /**
    * Add a new user
    * @param string
    */
   function addUser($user) // was get_user_name
   {
-  
+
   	$data = array(
-  	   'title' => 'My title' ,
-  	   'name' => 'My Name' ,
-  	   'date' => 'My date'
-  	);
+      'title' => 'My title' ,
+      'name' => 'My Name' ,
+      'date' => 'My date'
+      );
   	
     $this->db->insert("(LOWER(first_name) LIKE '%{$q}%' OR LOWER(second_name) LIKE '%{$q}%')");
 
@@ -62,18 +78,18 @@ class Members extends CI_Model
   
   
      /**
-     * Returns an array of the member type ids
+     * Get member type ids
+     * @return array
      */
-    function getMembershipTypes() // was get_user_name
-    {
-    
-      	
-  	$this -> db -> select('id');
-  
-      $query = $this -> db -> get('membership_type_tbl');
-  
-      return $query->result_array();
-    }
-  
+     function getMembershipTypes() {
 
-}
+
+       $this -> db -> select('id');
+
+       $query = $this -> db -> get('membership_type_tbl');
+
+       return $query->result_array();
+     }
+
+
+   }

@@ -10,7 +10,7 @@ class Calendar extends CI_Controller{
         if (isset($_GET['term'])){
             $q = strtolower($_GET['term']);
 
-            $query = $this->members->getUserName($q);
+            $query = $this->members->getUserLike($q);
 
             if($query->num_rows > 0){
                 foreach ($query->result_array() as $row){

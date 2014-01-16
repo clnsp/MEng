@@ -535,10 +535,11 @@ $('#calendar').fullCalendar({
 
 $('form#addGuestForm').submit(function(e){
 e.preventDefault();
+    var postdata = this.serialize();
  		$.ajax({
  			url: "member/addGuest",
  			type: "POST",
- 			data: $("this").serialize() ,
+ 			data:  postdata,
  			success: function() {
  				alert('success');
 

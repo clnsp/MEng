@@ -18,12 +18,13 @@ class Member extends CI_Controller{
         */
        function addGuest(){
            $this->load->model('tank_auth/users');
-			
+			     
+           echo $_POST;
 		
            if (isset($_POST['guest_first_name'])){
            		echo('First');
                $first = strtolower($_POST['guest_first_name']);       
-           } else{return;}
+           } else{ echo 'No first ';return;}
            
            if (isset($_POST['guest_last_name'])){
                $last = strtolower($_POST['guest_last_name']);       
