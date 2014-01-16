@@ -737,6 +737,11 @@ ul.ui-menu .ui-menu-item {
   padding: 5px 0 5px 0;
 }
 
+ul.ui-autocomplete.popover.dropdown-menu{
+  max-height: 300px;
+  overflow-y: scroll;
+}
+
 /* @end */
 
 /* @group Multi Select Dropdown */

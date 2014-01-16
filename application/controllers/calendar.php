@@ -16,13 +16,14 @@ class Calendar extends CI_Controller{
                 $query = $this->members->getUserLike($term)->result_array();
                 $matched = array_merge($matched, $query);
             }
-
+            
+            $matched = array_unique($matched, SORT_REGULAR);
 
             foreach ($matched as $match){
                 $new_row['label']=htmlentities(stripslashes($match['name']));
                 $new_row['user_id']=htmlentities(stripslashes($match['id']));
-                    $row_set[] = $new_row; //build an array
-                }
+                $row_set[] = $new_row; //build an array
+            }
                 echo json_encode($row_set); //format the array into json data
             }
             
@@ -116,23 +117,23 @@ class Calendar extends CI_Controller{
     	$cancelled = $cancelled == "true";
 
         if (isset($_POST['class_booking_id'])){
-           $this->load->model('classes');
+         $this->load->model('classes');
 
-           $bid = $_POST['class_booking_id'];
-           $msg = '';
+         $bid = $_POST['class_booking_id'];
+         $msg = '';
 
-           if (isset($_POST['cancel_message'])){
-               $msg = $_POST['cancel_message'];
-           }
+         if (isset($_POST['cancel_message'])){
+             $msg = $_POST['cancel_message'];
+         }
 
-           $iscancelled = $this->classes->isClassCancelled($bid);          
+         $iscancelled = $this->classes->isClassCancelled($bid);          
 
-           if($cancelled == $iscancelled){
-               echo "change status";
-               $this->changeClassStatus($bid, $msg, !$cancelled);
-           }
-       }
-   }
+         if($cancelled == $iscancelled){
+             echo "change status";
+             $this->changeClassStatus($bid, $msg, !$cancelled);
+         }
+     }
+ }
 
 
     /**
@@ -142,31 +143,31 @@ class Calendar extends CI_Controller{
      * @param	bool
      */
     function changeClassStatus($bid, $msg, $cancel) {
-       $this->load->library('email');
-       $this->load->model('bookings');
-       $this->load->model('classes');	                
+     $this->load->library('email');
+     $this->load->model('bookings');
+     $this->load->model('classes');	                
 
-       $this->classes->cancelClass($bid, $cancel);
+     $this->classes->cancelClass($bid, $cancel);
 
-       $emails = $this->bookings->getBookingEmails($bid);
+     $emails = $this->bookings->getBookingEmails($bid);
 
-       if($cancel){
-          "Your class has been cancelled. " + $msg;
-      }else{
-          "Your class has been reopened. " + $msg;
-      }
+     if($cancel){
+      "Your class has been cancelled. " + $msg;
+  }else{
+      "Your class has been reopened. " + $msg;
+  }
 
-      foreach ($emails as $email){   
-        $this->email->from('your@example.com', 'Booking');
-        $this->email->to($email['email']); 
+  foreach ($emails as $email){   
+    $this->email->from('your@example.com', 'Booking');
+    $this->email->to($email['email']); 
 
-        $this->email->subject('Update to your class');
-        $this->email->message($msg);	
+    $this->email->subject('Update to your class');
+    $this->email->message($msg);	
 
-        $this->email->send();
+    $this->email->send();
 
-        echo $this->email->print_debugger();
-    }
+    echo $this->email->print_debugger();
+}
 }
 
 
