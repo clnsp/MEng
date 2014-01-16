@@ -56,40 +56,21 @@ class Members extends CI_Model
  }
 
 
-   /**
-   * Add a new user
-   * @param string
-   */
-  function addUser($user) // was get_user_name
-  {
+ 
 
-  	$data = array(
-      'title' => 'My title' ,
-      'name' => 'My Name' ,
-      'date' => 'My date'
-      );
-  	
-    $this->db->insert("(LOWER(first_name) LIKE '%{$q}%' OR LOWER(second_name) LIKE '%{$q}%')");
-
-    $query = $this -> db -> get($this -> table_name);
-
-    return $query;
-  }
-  
-  
-     /**
-     * Get member type ids
-     * @return array
-     */
-     function getMembershipTypes() {
+ /**
+ * Get member type ids
+ * @return array
+ */
+ function getMembershipTypes() {
 
 
-       $this -> db -> select('id');
+   $this -> db -> select('id');
 
-       $query = $this -> db -> get('membership_type_tbl');
+   $query = $this -> db -> get('membership_type_tbl');
 
-       return $query->result_array();
-     }
+   return $query->result_array();
+ }
 
 
-   }
+}
