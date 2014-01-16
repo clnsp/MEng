@@ -536,7 +536,7 @@ $('#calendar').fullCalendar({
 $('form#addGuestForm').submit(function(e){
 e.preventDefault();
  		$.ajax({
- 			url: "calendar/addMember",
+ 			url: "member/addGuest",
  			type: "POST",
  			data: $("this").serialize() ,
  			success: function() {

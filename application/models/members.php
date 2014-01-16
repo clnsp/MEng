@@ -60,5 +60,20 @@ class Members extends CI_Model
     return $query;
   }
   
+  
+     /**
+     * Returns an array of the member type ids
+     */
+    function getMembershipTypes() // was get_user_name
+    {
+    
+      	
+  	$this -> db -> select('id');
+  
+      $query = $this -> db -> get('membership_type_tbl');
+  
+      return $query->result_array();
+    }
+  
 
 }

@@ -23,25 +23,7 @@ class Calendar extends CI_Controller{
         }
     }
 
-    /**
-     * Populate the database with random classes
-     * @param int - number of classes to generate
-     * @param int - offset time in seconds from now to start generating
-     * @param int - number of months to generate classes for
-     * 
-     */
-    function insertClasses($numberClasses = 0, $offset = 0, $months = 1){
 
-        if($numberClasses > 0){
-
-           $this->load->model('classes');
-           $this->classes->addRandomClasses($numberClasses, $offset, $months);
-       }
-       else{
-            echo "No classes added. Supply a number of months to generate.";
-       }
-       
-   }
 
     /**
      * Get users from associated with a class booking

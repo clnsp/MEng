@@ -10,8 +10,8 @@
  */
 class Classes extends CI_Model
 {
-	private $table_name			= 'class_tbl';			// user accounts
-
+	private $table_name			= 'class_tbl';	
+	private $class_type_tbl			= 'class_type_tbl';	
 
 	function __construct()
 	{
@@ -141,79 +141,21 @@ class Classes extends CI_Model
 	}
 
 	/**
-	 * Populate a number of random classes into the database.
-	 * eg. addRandomClasses(10, 60*60*24*7, 2) generates 10 classes between a week from today and the next two months
-	 * 
-	 * @param int - number of classes to generate
-	 * @param int - offset is the time in seconds from now to start generating the classes
-	 * @param int - number of months you want to generate classes for
+	 * Returns all the possible class type ids
+	 * @return array
 	 */
-	function addRandomClasses($num, $offset, $months){
-
-		// Get all the class types
+	function getClassTypeIDs(){
 		$this->db->select('class_type_id');
-		$this->db->from('class_type_tbl'); 
-		$classTypes = $this -> db -> get()->result_array();
-		$maxCTindex = count($classTypes)-1;
+		$this->db->from($this -> class_type_tbl); 
 
-		//get all the room ids
-		$this->db->select('room_id');
-		$this->db->from('room_tbl'); 
-		$roomIds = $this -> db -> get()->result_array();
-		$maxRindex = count($roomIds)-1;
+		return $this -> db -> get()->result_array();
+	}
 
-		//get all categories
-		$this->db->select('category_id');
-		$this->db->from('category_tbl'); 
-		$categoryIds = $this -> db -> get()->result_array();
-		$maxCatindex = count($categoryIds)-1;
-
-		$now = time() + $offset;
-
-		
-
-		for ($i = 1; $i <= $num; $i++) {
-
-			//select random class type
-			$class_type_id = $classTypes[rand(0, $maxCTindex)]['class_type_id'];
-
-			//start and end date one hour apart
-			$randtime = $now + rand(30, 60 * 60 * 24 * 30 * $months);
-			$class_start_date = date('Y-m-d H:0:0',  $randtime);
-			$class_end_date = date('Y-m-d H:0:0', $randtime + (60*60));
-
-			//max attendance random no. between 5 and 50
-			$max_attendance = rand(5, 50);
-			$max_attendance = $max_attendance - ($max_attendance%10);
-
-			//select random room
-			$room_id = $roomIds[rand(0, $maxRindex)]['room_id'];
-
-			//select random category
-			$category_id = $categoryIds[rand(0, $maxCatindex)]['category_id'];
-
-			echo $i . 'Inserting: class_type_id: ' . $class_type_id . ' start: '. $class_start_date . ' end: ' .  $class_end_date  . ' room_id: ' . $room_id . ' category_id:' . $category_id . ' max_attendance: '. $max_attendance .  ' cancelled: 0' . "<br/>";
-
-			$data = array(
-				'class_type_id' => $class_type_id ,
-				'class_start_date' => $class_start_date ,
-				'class_end_date' => $class_end_date ,
-				'room_id' => $room_id,
-				'category_id' => $category_id,
-				'max_attendance' => $max_attendance,
-				'cancelled' => 0,
-				);
-
-			$this->db->insert($this -> table_name, $data); 
-			
-
-		}
-
-
-		
-
-
-
-		
+	/**
+	 * Insert a new class
+	 * @param array
+	 */
+	function insertClass($data){
+		$this->db->insert($this -> table_name, $data); 
 	}
 }

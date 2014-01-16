@@ -18,8 +18,10 @@ class Member extends CI_Controller{
         */
        function addGuest(){
            $this->load->model('tank_auth/users');
-
+			
+		
            if (isset($_POST['guest_first_name'])){
+           		echo('First');
                $first = strtolower($_POST['guest_first_name']);       
            } else{return;}
            
@@ -43,6 +45,8 @@ class Member extends CI_Controller{
               'home_number' =>$phone
               
            );
+           
+           print_r($data);
                   
            $this->users->create_user($data);
            
