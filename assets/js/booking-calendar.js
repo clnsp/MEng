@@ -500,11 +500,14 @@ $('#calendar').fullCalendar({
  		return 	$( "<li>" )
  		.attr( "data-value", item.value )
  		.addClass('list-group-item')
+    .attr('data-placement',"left")
  		.append($("<a data-toggle='modal' data-target='#addGuestModal' class='btn btn-default'>").text( item.label ) )
  		.appendTo( ul );
  	}
  	return $( "<li>" )
  	.attr( "data-value", item.value )
+  .attr('title', item.email)
+  .attr('data-toggle', 'tooltip')
  	.addClass('list-group-item')
  	.append( $( "<a>" ).text( item.label ) )
  	.appendTo( ul );

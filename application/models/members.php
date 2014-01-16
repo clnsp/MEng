@@ -46,7 +46,7 @@ class Members extends CI_Model
   * @return  object
   */
   function getUserLike($q){
-   $this -> db -> select("id, CONCAT_WS(' ', first_name, second_name) AS name", FALSE);
+   $this -> db -> select("id, email, CONCAT_WS(' ', first_name, second_name) AS name", FALSE);
 
    $term = strtolower($q);
    $this->db->where("(LOWER(first_name) LIKE '%{$q}%' OR LOWER(second_name) LIKE '%{$q}%')");

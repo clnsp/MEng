@@ -16,12 +16,13 @@ class Calendar extends CI_Controller{
                 $query = $this->members->getUserLike($term)->result_array();
                 $matched = array_merge($matched, $query);
             }
-            
+
             $matched = array_unique($matched, SORT_REGULAR);
 
             foreach ($matched as $match){
                 $new_row['label']=htmlentities(stripslashes($match['name']));
                 $new_row['user_id']=htmlentities(stripslashes($match['id']));
+                $new_row['email']=htmlentities(stripslashes($match['email']));
                 $row_set[] = $new_row; //build an array
             }
                 echo json_encode($row_set); //format the array into json data
