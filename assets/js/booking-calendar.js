@@ -176,7 +176,7 @@ $('#calendar').fullCalendar({
 
     	if(event.end <  new Date()){
     		event.past = true;
-    		element.css('opacity', '0.55');
+    		element.css('opacity', '0.35');
     	}
     	else{
     		event.past = false;
