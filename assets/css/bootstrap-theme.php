@@ -72,19 +72,19 @@ $linkColor = "#555555";
 }
 
 .btn-primary {
-  background-image: -webkit-gradient(linear, left 0%, left 100%, from(<?php echo $brandSecondary;?>), to(#2d6ca2));
-  background-image: -webkit-linear-gradient(top, <?php echo $brandSecondary;?> 0%, #2d6ca2 100%);
-  background-image: -moz-linear-gradient(top, <?php echo $brandSecondary;?> 0%, #2d6ca2 100%);
-  background-image: linear-gradient(to bottom, <?php echo $brandSecondary;?> 0%, #2d6ca2 100%);
+  background-image: -webkit-gradient(linear, left 0%, left 100%, from(#3478b2), to(#1a4972));
+  background-image: -webkit-linear-gradient(top, #3478b2 0%, #1a4972 100%);
+  background-image: -moz-linear-gradient(top, #3478b2 0%, #1a4972 100%);
+  background-image: linear-gradient(to bottom, #3478b2 0%, #1a4972 100%);
   background-repeat: repeat-x;
-  border-color: #2b669a;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff41807B', endColorstr='#ff2d6ca2', GradientType=0);
+  border-color: #3478b2;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#3478b2', endColorstr='#1a4972', GradientType=0);
   filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
 }
 
 .btn-primary:hover,
 .btn-primary:focus {
-  background-color: #2d6ca2;
+  background-color: #1A4972;
   background-position: 0 -15px;
 }
 
@@ -557,7 +557,7 @@ html, body, #booking {
   margin-left: 10px;
 }
 
- #loading-indicator{
+#loading-indicator{
   color: #fff;
   position: absolute;
   top: 50%;
@@ -569,75 +569,75 @@ html, body, #booking {
   text-align: center;
   padding: 10px;
   z-index: 250000;
- }
+}
 
- /* @end */
- 
- /* @group Login */
- 
-  #login-form #remember-me{
-   margin: 0px 15px 15px;
- }
- 
- /* @end */
+/* @end */
+
+/* @group Login */
+
+#login-form #remember-me{
+ margin: 0px 15px 15px;
+}
+
+/* @end */
 
 
- 
- /* @group Bootstrap Overrides  */
- 
- #booking .navbar-top{
-  	border-radius: 0!important;
-  	border-bottom: 3px solid <?php echo $brandSecondary;?>;
-    border-right-style: none;
-    border-left-style: none;
-    background-color: <?php echo $brandPrimary;?>!important;
-  }
- 
- 
-  #footer, .footer{
-    margin-top: 2em;
-    padding: 1em;
-    background-color: <?php echo $brandPrimary;?>;
-  }
- 
-  #booking #footer .nav-pills li a{
-    color: #2A6496;
-  }
- 
-  #booking #footer .nav-pills li a:hover{
-    background-color: rgba(255, 255, 255, 0);
-    color: #428BCA;
-  }
- 
- 
-  #booking .nav .caret{
-    border-top-color: <?php echo $brandSecondary;?>;
-    border-bottom-color: <?php echo $brandSecondary;?>;
-  }
- 
-  #booking .navbar .dropdown-menu::after {
-   position: absolute;
-   top: -6px;
-   right: 20px;
-   display: inline-block;
-   border-right: 6px solid transparent;
-   border-bottom: 6px solid white;
-   border-left: 6px solid transparent;
-   content: '';
-   color: rgba(65, 128, 123, 0.63);
+
+/* @group Bootstrap Overrides  */
+
+#booking .navbar-top{
+ border-radius: 0!important;
+ border-bottom: 3px solid <?php echo $brandSecondary;?>;
+ border-right-style: none;
+ border-left-style: none;
+ background-color: <?php echo $brandPrimary;?>!important;
+}
+
+
+#footer, .footer{
+  margin-top: 2em;
+  padding: 1em;
+  background-color: <?php echo $brandPrimary;?>;
+}
+
+#booking #footer .nav-pills li a{
+  color: #2A6496;
+}
+
+#booking #footer .nav-pills li a:hover{
+  background-color: rgba(255, 255, 255, 0);
+  color: #428BCA;
+}
+
+
+#booking .nav .caret{
+  border-top-color: <?php echo $brandSecondary;?>;
+  border-bottom-color: <?php echo $brandSecondary;?>;
+}
+
+#booking .navbar .dropdown-menu::after {
+ position: absolute;
+ top: -6px;
+ right: 20px;
+ display: inline-block;
+ border-right: 6px solid transparent;
+ border-bottom: 6px solid white;
+ border-left: 6px solid transparent;
+ content: '';
+ color: rgba(65, 128, 123, 0.63);
+}
+
+#booking #page-body.page-login div.input-group{
+  margin-bottom: 15px;
+}
+
+@media (min-width: 1200px){
+  #booking .container {
+   width: 100%;
  }
- 
- #booking #page-body.page-login div.input-group{
- 	margin-bottom: 15px;
- }
- 
- @media (min-width: 1200px){
-	 #booking .container {
-		 width: 100%;
-	 }
- }
- 
- /* @end */
+}
+
+/* @end */
 
 
 /* @group Calendar */
@@ -706,6 +706,11 @@ html, body, #booking {
   min-height: 100px;
 }
 
+#booking #eventModal .modal-body #event-member-list{
+  max-height: 325px;
+  overflow-y: scroll;
+  margin-bottom: 25px;
+}
 #booking #eventModal #event-member-list a.list-group-item input{
   margin-right: 5px;
 }
@@ -729,7 +734,7 @@ html, body, #booking {
 
 ul.ui-menu .ui-menu-item:hover {
  // background-color: <?php echo $brandSecondary?>;
-  cursor: pointer;
+ cursor: pointer;
  // color: #0ff!important;
 }
 
@@ -740,6 +745,14 @@ ul.ui-menu .ui-menu-item {
 ul.ui-autocomplete.popover.dropdown-menu{
   max-height: 300px;
   overflow-y: scroll;
+}
+
+/* @end */
+
+/* @group Add Guest Modal */
+
+#eventModal #btn-add-guest-member{
+  margin-top: 20px;
 }
 
 /* @end */

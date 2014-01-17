@@ -55,7 +55,7 @@
 					</div>
 					<div class="col-xs-4">
 						<h3 class="modal-title pull-right" id='cancelled-banner'><i style='font-size:20px;' class='glyphicon glyphicon-minus-sign'></i> Cancelled</h3>
-					
+
 						<i id="eventColor" class="pull-right glyphicon glyphicon-stop"></i>
 					</div>
 				</div>
@@ -90,10 +90,10 @@
 					<div id="event-member-list">
 						<form id="event-remove-member-form" method="post" action="">
 							<ul class="list-group"></ul>
-							<button type="submit" id="event-remove-member-button" class="btn btn-sm">Remove</button>
+						</div>
+						<button type="submit" id="event-remove-member-button" class="btn btn-sm">Remove</button>
 
-						</form>
-					</div>
+					</form>
 					
 					
 					<!-- event-member-list -->
@@ -110,7 +110,7 @@
 						</div>
 						<!-- /input-group -->
 					</form>
-				<button data-toggle="modal" data-target="#addGuestModal" class="btn btn-default" id="btn-add-member" type="submit">Add Guest</button>
+					<button data-toggle="modal" data-target="#addGuestModal" class="btn btn-default" id="btn-add-guest-member" type="submit">Add Guest</button>
 				</div>
 				
 				
@@ -138,41 +138,41 @@
 				<h4 class="modal-title">Add Guest</h4>
 			</div>
 			<div class="modal-body">
-			
+
 				<form id="addGuestForm" class="form-horizontal" role="form">
-				
-				<div class="form-group">
-				  <label for="guest_last_name" class="col-sm-3 control-label">First Name</label>
-				  <div class="col-sm-9">
-				    <input id="guest-first-name" type="text" class="form-control" name="guest_first_name" placeholder="First name">
-				  </div>
+
+					<div class="form-group">
+						<label for="guest_last_name" class="col-sm-3 control-label">First Name</label>
+						<div class="col-sm-9">
+							<input id="guest-first-name" type="text" class="form-control" name="guest_first_name" placeholder="First name">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="guest_last_name" class="col-sm-3 control-label">Last Name</label>
+						<div class="col-sm-9">
+							<input id="guest-last-name" type="text" class="form-control" name="guest_last_name" placeholder="Last name">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="guest_email" class="col-sm-3 control-label">Email</label>
+						<div class="col-sm-9">
+							<input id="guest-email" type="email" class="form-control" name="guest_email" placeholder="Email address">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="guest_email" class="col-sm-3 control-label">Phone</label>
+						<div class="col-sm-7">
+							<input id="guest-phone" type="number" class="form-control" name="guest_phone" placeholder="Phone Number">
+						</div>
+					</div>
+
 				</div>
-				<div class="form-group">
-				  <label for="guest_last_name" class="col-sm-3 control-label">Last Name</label>
-				  <div class="col-sm-9">
-				    <input id="guest-last-name" type="text" class="form-control" name="guest_last_name" placeholder="Last name">
-				  </div>
-				</div>
-				
-				  <div class="form-group">
-				    <label for="guest_email" class="col-sm-3 control-label">Email</label>
-				    <div class="col-sm-9">
-				      <input id="guest-email" type="email" class="form-control" name="guest_email" placeholder="Email address">
-				    </div>
-				  </div>
-				  
-				  <div class="form-group">
-				    <label for="guest_email" class="col-sm-3 control-label">Phone</label>
-				    <div class="col-sm-7">
-				      <input id="guest-phone" type="number" class="form-control" name="guest_phone" placeholder="Phone Number">
-				    </div>
-				  </div>
-				  				
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-				<input type="submit" value="Add New Member" class="btn btn-primary">
-					</form>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+					<input type="submit" value="Add New Member" class="btn btn-primary">
+				</form>
 			</div>
 		</div><!-- /.modal-content -->
 	</div><!-- /.modal-dialog -->

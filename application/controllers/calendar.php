@@ -121,23 +121,23 @@ class Calendar extends CI_Controller{
     	$cancelled = $cancelled == "true";
 
         if (isset($_POST['class_booking_id'])){
-         $this->load->model('classes');
+           $this->load->model('classes');
 
-         $bid = $_POST['class_booking_id'];
-         $msg = '';
+           $bid = $_POST['class_booking_id'];
+           $msg = '';
 
-         if (isset($_POST['cancel_message'])){
-             $msg = $_POST['cancel_message'];
-         }
+           if (isset($_POST['cancel_message'])){
+               $msg = $_POST['cancel_message'];
+           }
 
-         $iscancelled = $this->classes->isClassCancelled($bid);          
+           $iscancelled = $this->classes->isClassCancelled($bid);          
 
-         if($cancelled == $iscancelled){
-             echo "change status";
-             $this->changeClassStatus($bid, $msg, !$cancelled);
-         }
-     }
- }
+           if($cancelled == $iscancelled){
+               echo "change status";
+               $this->changeClassStatus($bid, $msg, !$cancelled);
+           }
+       }
+   }
 
 
     /**
@@ -147,31 +147,31 @@ class Calendar extends CI_Controller{
      * @param	bool
      */
     function changeClassStatus($bid, $msg, $cancel) {
-     $this->load->library('email');
-     $this->load->model('bookings');
-     $this->load->model('classes');	                
+       $this->load->library('email');
+       $this->load->model('bookings');
+       $this->load->model('classes');	                
 
-     $this->classes->cancelClass($bid, $cancel);
+       $this->classes->cancelClass($bid, $cancel);
 
-     $emails = $this->bookings->getBookingEmails($bid);
+       $emails = $this->bookings->getBookingEmails($bid);
 
-     if($cancel){
-      "Your class has been cancelled. " + $msg;
-  }else{
-      "Your class has been reopened. " + $msg;
-  }
+       if($cancel){
+          "Your class has been cancelled. " + $msg;
+      }else{
+          "Your class has been reopened. " + $msg;
+      }
 
-  foreach ($emails as $email){   
-    $this->email->from('your@example.com', 'Booking');
-    $this->email->to($email['email']); 
+      foreach ($emails as $email){   
+        $this->email->from('your@example.com', 'Booking');
+        $this->email->to($email['email']); 
 
-    $this->email->subject('Update to your class');
-    $this->email->message($msg);	
+        $this->email->subject('Update to your class');
+        $this->email->message($msg);	
 
-    $this->email->send();
+        $this->email->send();
 
-    echo $this->email->print_debugger();
-}
+        echo $this->email->print_debugger();
+    }
 }
 
 
@@ -206,7 +206,52 @@ class Calendar extends CI_Controller{
 
         }
     }
+
+    /**
+     * Add guest to class
+     * @param int - class_id to add guest to
+     */
+    function addGuestToClass($class_id){
+       $this->load->model('tank_auth/users');
+       $this->load->model('bookings');
+
+       if(isset($class_id)){
+           if (isset($_POST['guest_first_name'])){
+             echo('First');
+             $first = strtolower($_POST['guest_first_name']);       
+         } else{return;}
+
+         if (isset($_POST['guest_last_name'])){
+             $last = strtolower($_POST['guest_last_name']);       
+         } else{return;}
+
+         if (isset($_POST['guest_email'])){
+             $email = strtolower($_POST['guest_email']);       
+         } else{return;}
+
+         if (isset($_POST['guest_phone'])){
+             $phone = strtolower($_POST['guest_phone']);       
+         } else{return;}
+
+         $data = array(
+          'membership_type_id' => 2,
+          'first_name' => $first ,
+          'second_name' => $last,
+          'email'   => $email,
+          'home_number' =>$phone
+          );
+
+
+         $newuser = $this->users->create_user($data); 
+
+         $this->bookings->addMember($class_id, $newuser['user_id']);
+
+     }
+
+ }
 }
+
+
 
 
 /*

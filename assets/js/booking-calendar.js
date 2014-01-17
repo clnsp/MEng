@@ -5,8 +5,8 @@ function exists(variable){
 	return true;
 }
 
-var eventModal,eventTitle, eventdate1, eventdate2, eventSpacesMax, eventSpacesTaken, eventColor, eventLocation, eventMembers, eventid;
-var activeEvent;
+var eventModal, eventTitle, eventdate1, eventdate2, eventSpacesMax, eventSpacesTaken, eventColor, eventLocation, eventMembers, eventid;
+var activeEvent, addGuestModal;
 
 /*
  * Load the attendants of this event
@@ -112,6 +112,7 @@ var activeEvent;
   	eventLocation = eventModal.find('#event-location');
   	eventMembers = eventModal.find('#event-member-list .list-group');
   	eventError = eventModal.find('#event-warning');
+    addGuestModal = $('#addGuestModal');
 //	var eventDescription =eventModal.find('#event-description');
 
 
@@ -136,16 +137,16 @@ $('#calendar').fullCalendar({
 
 	/* cal col headings */
 	columnFormat: {
-        month: 'dddd', 
-        week: 'ddd d', 
-        day: '' 
-    },
+    month: 'dddd', 
+    week: 'ddd d', 
+    day: '' 
+  },
 
-    titleFormat: {
+  titleFormat: {
     	month: 'MMMM yyyy',                             // September 2009
     	week: "MMM d[ yyyy]{ -[ MMM] d, yyyy}", // Sep 7 - 13 2009
     	day: 'dddd d MMMM yyyy'                  // Tuesday, Sep 8, 2009
-	},
+    },
 
 
     defaultView: 'agendaWeek',
@@ -366,6 +367,14 @@ $('#calendar').fullCalendar({
   	activeEvent = null;
   }
 
+    /**
+   * Cleanup the modal attributes
+   */
+   function teardown_add_guest_modal() {
+    addGuestModal.find('#addGuestForm')[0].reset();
+
+  }
+
 
 /* 
  * Add member to event 
@@ -508,22 +517,22 @@ $('#calendar').fullCalendar({
   .attr( "data-value", item.value )
   .attr('data-title', item.email)
   .attr('title', item.email)
- 	.addClass('list-group-item')
- 	.append( $( "<a>" ).text( item.label ) )
- 	.appendTo( ul )
+  .addClass('list-group-item')
+  .append( $( "<a>" ).text( item.label ) )
+  .appendTo( ul )
   .tooltip({
     'placement': 'left',
     'container': eventModal
   })
- };
- 
- 
- eventModal.on("click", ".open-Model-button", function () {
- 	var title = $(this).data('title');
- 	$("#cancelClassModal .modal-title").text(title);
- });
- 
- 
+};
+
+
+eventModal.on("click", ".open-Model-button", function () {
+  var title = $(this).data('title');
+  $("#cancelClassModal .modal-title").text(title);
+});
+
+
  /* 
  * Control the multiselect dropdown list
  */
@@ -540,24 +549,25 @@ $('#calendar').fullCalendar({
  });
 
 
-$('form#addGuestForm').submit(function(e){
-e.preventDefault();
-    var postdata = this.serialize();
- 		$.ajax({
- 			url: "member/addGuest",
- 			type: "POST",
- 			data:  postdata,
- 			success: function() {
- 				alert('success');
-
- 			},
- 			error: function(){
- 			//	show_error('User already exists');
- 			},
- 		});
-
-
+ $('form#addGuestForm').submit(function(e){
+  e.preventDefault();
+  var postdata = $(this).serialize() + '';
+  $.ajax({
+    url: "calendar/addGuestToClass/" + eventid,
+    type: "POST",
+    data:  postdata,
+    success: function() {
+     load_event_attendants(false);
+     addGuestModal.modal('hide');
+     teardown_add_guest_modal();
+   },
+   error: function(){
+     alert('Error occurred');
+   },
  });
+
+
+});
 
 
 });
