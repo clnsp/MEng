@@ -1,6 +1,6 @@
 <?php
 class Member extends CI_Controller{
-  
+
   /**
    * Get user details for editing
    */
@@ -12,6 +12,7 @@ class Member extends CI_Controller{
       echo json_encode($this->members->getUserByID($q));                
     }                
   }
+
 
 }
 

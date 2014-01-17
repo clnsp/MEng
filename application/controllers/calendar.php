@@ -214,7 +214,7 @@ class Calendar extends CI_Controller{
     function addGuestToClass($class_id){
        $this->load->model('tank_auth/users');
        $this->load->model('bookings');
-
+       $this->load->model('members');
        if(isset($class_id)){
            if (isset($_POST['guest_first_name'])){
              echo('First');
@@ -241,10 +241,21 @@ class Calendar extends CI_Controller{
           'home_number' =>$phone
           );
 
+         $newuserid = $this->users->create_user($data);
+         $newuserid = $newuserid['user_id'];
+         $this->bookings->addMember($class_id, $newuserid);
 
-         $newuser = $this->users->create_user($data); 
+         $email = $this->members->getMemberEmail($newuserid);
 
-         $this->bookings->addMember($class_id, $newuser['user_id']);
+         $this->email->from('your@example.com', 'Booking');
+         $this->email->to($email); 
+
+         $this->email->subject('Booked into a class');
+         $this->email->message('You have been booked in as a guest');    
+
+         $this->email->send();
+
+         echo $this->email->print_debugger();
 
      }
 

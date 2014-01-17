@@ -55,9 +55,6 @@ class Members extends CI_Model
    return $query;
  }
 
-
- 
-
  /**
  * Get member type ids
  * @return array
@@ -69,5 +66,16 @@ class Members extends CI_Model
    return $query->result_array();
  }
 
+ /**
+ * Get member email
+ * @return string
+ */
+ function getMemberEmail($member_id) {
+   $this -> db -> select('email');
+   $this -> db -> where('id', $member_id);
+   $this -> db -> from($this -> table_name);
 
+   return $this->db->get()->row()->email;
+
+ }
 }
