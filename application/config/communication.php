@@ -7,7 +7,7 @@
 | These details are used when allowing and sending SMS
 |--------------------------------------------------------------------------
 */
-$config['sms_sender'] = 'Your project Sender';
+$config['sms_sender'] = 'Test Gym';
 $config['sms_allow'] = TRUE;
 
 /*
@@ -17,9 +17,9 @@ $config['sms_allow'] = TRUE;
 | Use Text Local to SMS (Requires an Account)
 |--------------------------------------------------------------------------
 */
-$config['sms_txtlocal_sms'] = FALSE;
-$config['sms_txtlocal_username'] = 'youremail@address.com';
-$config['sms_txtlocal_hash'] = 'Your API hash';
+$config['sms_txtlocal_sms'] = TRUE;
+$config['sms_txtlocal_username'] = 'colin.espie@strath.ac.uk';
+$config['sms_txtlocal_hash'] = '79c9c60054b672eb9543c572cbb1adf12178f0d3';
 
 /*
 |--------------------------------------------------------------------------

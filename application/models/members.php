@@ -32,9 +32,10 @@ class Members extends CI_Model
    */
   function getUserByID($id) //was fetchUser($id)
   {
-  	$this -> db -> select('first_name, second_name, email, home_number, mobile_number, twitter');
+  	$this -> db -> select('first_name, second_name, email, home_number, mobile_number, twitter, activated, banned, ban_reason, membership_type');
   	$this -> db -> from($this -> table_name);
-  	$this -> db -> where('id', $id);
+  	$this -> db -> where($this -> table_name.'.id', $id);
+	$this->db->join('membership_type_tbl', 'membership_type_tbl.id = '.$this -> table_name.'.membership_type_id');
 
   	$query = $this -> db -> get();   
   	return $query->result();
@@ -54,7 +55,7 @@ class Members extends CI_Model
 
     $query = $this -> db -> get($this -> table_name);
 
-    return $query;
+    return $query->result();
   }
 
    /**

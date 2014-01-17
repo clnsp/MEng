@@ -25,13 +25,14 @@ if ( ! function_exists('send_sms'))
 	function send_sms($numbers, $message = 'Hello World')
 	{
 		$CI =& get_instance();
-		if(!$CI->config->item('sms_allow','communication'))
+		
+		if(!$CI->config->item('sms_allow'))
 		{
 			return "Error: SMS Disabled";
 		}
 		else if(!empty($numbers) && !empty($message))
 		{
-			if($CI->config->item('sms_txtlocal_sms','communication')) {	return _txtLocal($numbers, $message);}
+			if($CI->config->item('sms_txtlocal_sms')) {	return _txtLocal($numbers, $message);}
 			else {return "Error: No SMS Provider Selected";}
 		}
 		else {
@@ -61,11 +62,11 @@ function _txtLocal($numbers, $message)
 	$CI =& get_instance();
 	
 	// Textlocal account details
-	$username = $CI->config->item('sms_txtlocal_username','communication');
-	$hash = $CI->config->item('sms_txtlocal_hash','communication');
+	$username = $CI->config->item('sms_txtlocal_username');
+	$hash = $CI->config->item('sms_txtlocal_hash');
 	
 	// Message details
-	$sender = $CI->config->item('sms_sender','communication');
+	$sender = $CI->config->item('sms_sender');
  
 	// Prepare data for POST request
 	$data = array('username' => $username, 'hash' => $hash, 'numbers' => $numbers, "sender" => $sender, "message" => $message);

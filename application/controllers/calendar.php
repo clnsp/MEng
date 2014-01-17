@@ -10,7 +10,7 @@ class Calendar extends CI_Controller{
             $q = strtolower($_GET['term']);
 
             $query = $this->members->getUserName($q);
-
+			
             if($query->num_rows > 0){
                 foreach ($query->result_array() as $row){
                     $new_row['label']=htmlentities(stripslashes($row['name']));

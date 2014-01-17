@@ -1,4 +1,4 @@
-<div id="myModal" class="modal fade">
+<div id="MemberDetails" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">

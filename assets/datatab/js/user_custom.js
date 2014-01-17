@@ -1,13 +1,13 @@
 $.member = { utils: {} };
 
 // Upper Case First Letter
-$.member.utils.CFirst = function (s) { return s.substr(0, 1).toUpperCase() + s.substr(1).toLowerCase(); };
+$.member.utils.CFirst = function (s) { if (s != null) { return s.substr(0, 1).toUpperCase() + s.substr(1).toLowerCase(); } else { return s; } };
 // Get value from either label or input
 $.member.utils.customVal = function (v) { if (v.is("input")) { return v.val(); } else { return v.html(); } };
 
-var EditModule = (function () {
+$.member.utils.EditModule = (function () {
 
-	var $changes = false
+    var $changes = false
     load = function ($id) {
         $.getJSON('member/getUserDetails/?id=' + $id, function (data) {
             if (data.length > 0) {
@@ -15,8 +15,8 @@ var EditModule = (function () {
                 $('#id').val($id);
                 console.log($(this).attr('id'));
                 $.each(data[0], function (key, mem) { $('#' + key).html($.member.utils.CFirst(mem)); });
-                $('#myModal').modal('show');
-                $.member.changes = false;
+                $('#MemberDetails').modal('show');
+                $changes = false;
             } else {
                 alert("Member No Longer Exist");
             }
@@ -29,7 +29,7 @@ var EditModule = (function () {
 	        $.each($.member.changes, function (index, value) { $query[value] = $.member.utils.customVal($('#' + value)); });
 	        $.post('member/updateUserDetails', { id: $('#id').val(), changes: $query }, function (data) {
 	            if (data == "4:Success") {
-	                $.member.changes = false;
+	                $changes = false;
 	                if ("first_name" in $query || "second_name" in $query) { $('.modal-title').html($.member.utils.CFirst($.member.utils.customVal($('#first_name'))) + " " + $.member.utils.CFirst($.member.utils.customVal($('#second_name')))); }
 	            }
 	        });
@@ -55,38 +55,41 @@ var EditModule = (function () {
 	    $changes.push($id);
 	}
 
-    // Get User and Load Modal
-    $("#member tbody").on("click", "tr", function () { load($(this).attr('id')); });
+    uiConnections = function () {
+        // Get User and Load Modal
+        $("#member tbody").on("click", "tr", function () { load($(this).attr('id')); });
 
-    // Submit Changes
-    $('#save_changes').on("click", function () { submit(); });
+        // Submit Changes
+        $('#save_changes').on("click", function () { submit(); });
 
-    // Change View - Summary or Edit
-    $("#views").on("click", function () { swapMode($(this)); });
+        // Change View - Summary or Edit
+        $("#views").on("click", function () { swapMode($(this)); });
 
-    // Swap back to Summary Mode on Close
-    $('#myModal').on('hidden.bs.modal', function (e) {
-        $("input[type=text].editable").replaceWith(function () {
-            return "<label class=\"editable\" id=\"" + $(this).attr('id') + "\">" + $(this).val() + "</label>";
+        // Swap back to Summary Mode on Close
+        $('#myModal').on('hidden.bs.modal', function (e) {
+            $("input[type=text].editable").replaceWith(function () {
+                return "<label class=\"editable\" id=\"" + $(this).attr('id') + "\">" + $(this).val() + "</label>";
+            });
+            $("#views").html("<i class=\"fa fa-pencil fa-fw\"></i> Edit</i>");
         });
-        $("#views").html("Edit View");
-    });
 
-    // Notify of data edit
-    $('#myModal').on("change", ":input.editable", function () { recordChanges($(this).attr('id')); });
+        // Notify of data edit
+        $('#myModal').on("change", ":input.editable", function () { recordChanges($(this).attr('id')); });
 
-    // Discard Changes
-    $('#myModal').on('hide.bs.modal', function (e) { if ($.member.changes) return window.confirm("Discard, Unsaved Changes?"); });
+        // Discard Changes
+        $('#myModal').on('hide.bs.modal', function (e) { if ($.member.changes) return window.confirm("Discard, Unsaved Changes?"); });
+    }
 
+    this.uiConnections();
 })();
 
-var ContactModule = (function () {
+$.member.utils.ContactModule = (function () {
 
     var $selector = $(".message");
     var $display = $("#mySubModal .modal-content");
     var $message = $('#message');
     var body = '<h3>Contact:</h3><form class="form-horizontal"><div class="form-group"><label class="control-label" for="inputEmail">Message: </label><textarea id="message" class="form-control" rows="3"></textarea><span class="help-block">Length: <span id="length">0</span> Characters <span class="pull-right" id="warning-message"></span></span></div></form>';
-    var footer = '<button class="btn btn-sm" data-dismiss="submodal" aria-hidden="true">Cancel</button><button class="btn btn-sm btn-danger" data-dismiss="submodal">Submit</button>';
+    var footer = '<button class="btn btn-sm" data-dismiss="submodal" aria-hidden="true">Cancel</button><button class="btn btn-sm btn-danger submit" data-dismiss="submodal">Submit</button>';
     var type = "email";
 
     // Listen For Contact
@@ -100,10 +103,11 @@ var ContactModule = (function () {
         $display.children('.modal-footer').html(footer);
         // Listener
         $message = $('#message'); // Point to New Element
+		
+		$("#mySubModal .submit").on( "click", function() {send(); });
+		
         type = mt;
         if (type == 'twitter') { $("#message").attr('maxlength', 140) }
-        console.log(type);
-
         $display.on('keyup keydown', $message, function () {
             $('#length').html($message.val().length);
             if (type == 'twitter') { twitter(); } else if (type == 'sms') { sms(); } else { email(); }
@@ -112,7 +116,7 @@ var ContactModule = (function () {
 
     // TWITTER
     twitter = function () {
-        if ($message.val().length > 130) {
+        if ($message.val().length > 139) {
             addFormError('has-error', 'Message has reached it\'s maximum length');
         }
         else if ($message.parent('.form-group').hasClass('has-error')) {
@@ -131,15 +135,11 @@ var ContactModule = (function () {
     },
     // EMAIL
     email = function () {
-
+       // Validation -- Max Length
     },
     // SEND MESSAGE
     send = function () {
-
-    },
-    // CLEAR FORM
-    clear = function () {
-        $message.val("");
+		 $.post('member/contactUser', { id: $('#id').val(), service: type, message: $message.val() }, function (data) {        });
     },
     // ERROR 
     addFormError = function (type, message) {
@@ -154,11 +154,4 @@ var ContactModule = (function () {
     this.uiConnection();
 })();
 
-
-
-
-
-
-
-
-
+//.post('member/updateUserDetails', { id: $('#id').val(), changes: $query }, function (data) {

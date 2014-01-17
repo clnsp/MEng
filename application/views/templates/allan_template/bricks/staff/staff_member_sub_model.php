@@ -5,7 +5,7 @@
             <form class="form-horizontal">
                 <div class="form-group">
                     <label class="control-label" for="inputEmail">Message (email): </label>
-                    <textarea id="message" class="form-control" rows="3">Message</textarea>
+                    <textarea id="message" class="form-control" rows="5">Message</textarea>
                     <span class="help-block">Length: <span id="length">0</span> Characters <span id="warning-message" class="pull-right"></span></span>
                 </div>
             </form>
