@@ -21,6 +21,9 @@ label.editable{
 padding-top: 7px
 }
 
+.tooltip{
+	z-index:9999!important;
+}
 
 
 

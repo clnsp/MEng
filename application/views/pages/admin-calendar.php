@@ -138,7 +138,7 @@
 				<h4 class="modal-title">Add Guest</h4>
 			</div>
 			<div class="modal-body">
-				
+			
 				<form id="addGuestForm" class="form-horizontal" role="form">
 				
 				<div class="form-group">

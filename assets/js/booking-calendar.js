@@ -500,17 +500,21 @@ $('#calendar').fullCalendar({
  		return 	$( "<li>" )
  		.attr( "data-value", item.value )
  		.addClass('list-group-item')
-    .attr('data-placement',"left")
  		.append($("<a data-toggle='modal' data-target='#addGuestModal' class='btn btn-default'>").text( item.label ) )
  		.appendTo( ul );
  	}
  	return $( "<li>" )
- 	.attr( "data-value", item.value )
-  .attr('title', item.email)
   .attr('data-toggle', 'tooltip')
+  .attr( "data-value", item.value )
+  .attr('data-title', item.email)
+  .attr('title', item.email)
  	.addClass('list-group-item')
  	.append( $( "<a>" ).text( item.label ) )
- 	.appendTo( ul );
+ 	.appendTo( ul )
+  .tooltip({
+    'placement': 'left',
+    'container': eventModal
+  })
  };
  
  

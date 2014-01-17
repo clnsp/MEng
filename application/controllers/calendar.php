@@ -13,6 +13,9 @@ class Calendar extends CI_Controller{
 
             $matched = array();
             foreach($terms as $term){
+                if($term==''){
+                    continue;
+                }
                 $query = $this->members->getUserLike($term)->result_array();
                 $matched = array_merge($matched, $query);
             }

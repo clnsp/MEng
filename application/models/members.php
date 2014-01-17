@@ -63,10 +63,7 @@ class Members extends CI_Model
  * @return array
  */
  function getMembershipTypes() {
-
-
    $this -> db -> select('id');
-
    $query = $this -> db -> get('membership_type_tbl');
 
    return $query->result_array();
