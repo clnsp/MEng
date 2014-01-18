@@ -87,12 +87,12 @@
                             <ul class="dropdown-menu" role="menu">
                                 <li id="email" class="message"><a href="#mySubModal" data-toggle="submodal"><i class="fa fa-envelope fa-fw"></i>  Email</a></li>
 								<?php if($twitter) {?>
-								<li class="divider"></li>
-                                <li id="twitter" class="message"><a href="#mySubModal" data-toggle="submodal"><i class="fa fa-twitter fa-fw"></i>  Tweet</a></li>
+								<li class="divider tweet"></li>
+                                <li id="tweet" class="message tweet"><a href="#mySubModal" data-toggle="submodal"><i class="fa fa-twitter fa-fw"></i>  Tweet</a></li>
 								<?php }?>
 								<?php if($sms) {?>
-                                <li class="divider"></li>
-                                <li id="sms" class="message"><a href="#mySubModal" data-toggle="submodal"><i class="fa fa-mobile fa-fw"></i>  SMS</a></li>
+                                <li class="divider sms"></li>
+                                <li id="sms" class="message sms"><a href="#mySubModal" data-toggle="submodal"><i class="fa fa-mobile fa-fw"></i>  SMS</a></li>
 								<?php }?>
                             </ul>
                         </div>

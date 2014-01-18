@@ -46,15 +46,8 @@ class Tank_auth
 	function login($login, $password, $remember, $login_by_username, $login_by_email)
 	{
 		if ((strlen($login) > 0) AND (strlen($password) > 0)) {
-
-			// Which function to use to login (based on config)
-			if ($login_by_username AND $login_by_email) {
-				$get_user_func = 'get_user_by_login';
-			} else if ($login_by_username) {
-				$get_user_func = 'get_user_by_username';
-			} else {
-				$get_user_func = 'get_user_by_email';
-			}
+			// Only Use Email
+			$get_user_func = 'get_user_by_email';
 
 			if (!is_null($user = $this->ci->users->$get_user_func($login))) {	// login ok
 
@@ -71,6 +64,7 @@ class Tank_auth
 						$this->ci->session->set_userdata(array(
 								'user_id'	=> $user->id,
 								'username'	=> $user->username,
+								'userpermission'	=> $user->permission_level_id,
 								'status'	=> ($user->activated == 1) ? STATUS_ACTIVATED : STATUS_NOT_ACTIVATED,
 						));
 
@@ -127,6 +121,16 @@ class Tank_auth
 	function is_logged_in($activated = TRUE)
 	{
 		return $this->ci->session->userdata('status') === ($activated ? STATUS_ACTIVATED : STATUS_NOT_ACTIVATED);
+	}
+	
+	/**
+	 * Is the User and Admin or Memeber
+	 * @return  bool
+	 * Colin 18/1/2014
+	 */
+	function is_admin()
+	{
+		return $this->ci->session->userdata('userpermission') > 1;
 	}
 
 	/**

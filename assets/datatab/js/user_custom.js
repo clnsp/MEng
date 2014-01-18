@@ -8,6 +8,7 @@ $.member.utils.customVal = function (v) { if (v.is("input")) { return v.val(); }
 $.member.utils.EditModule = (function () {
 
     var $changes = false
+	var modal = "MemberDetails";
     load = function ($id) {
         $.getJSON('member/getUserDetails/?id=' + $id, function (data) {
             if (data.length > 0) {
@@ -15,7 +16,8 @@ $.member.utils.EditModule = (function () {
                 $('#id').val($id);
                 console.log($(this).attr('id'));
                 $.each(data[0], function (key, mem) { $('#' + key).html($.member.utils.CFirst(mem)); });
-                $('#MemberDetails').modal('show');
+                $('#'+modal).modal('show');
+				if(data[0].comms_preference == 3){$(".sms , .tweet").show();}else if(data[0].comms_preference == 2){$(".sms").show();$(".tweet").hide();}else {$(".sms ,.tweet").hide();}				
                 $changes = false;
             } else {
                 alert("Member No Longer Exist");
@@ -26,12 +28,18 @@ $.member.utils.EditModule = (function () {
 	submit = function () {
 	    if ($changes) {
 	        $query = {};
-	        $.each($.member.changes, function (index, value) { $query[value] = $.member.utils.customVal($('#' + value)); });
-	        $.post('member/updateUserDetails', { id: $('#id').val(), changes: $query }, function (data) {
+			$id = $('#id').val();
+	        $.each($changes, function (index, value) { $query[value] = $.member.utils.customVal($('#' + value)); });
+	        $.post('member/updateUserDetails', { id: $id, changes: $query }, function (data) {
+				console.log(data);
 	            if (data == "4:Success") {
-	                $changes = false;
+					$changes = false;
+					// Local Changes ??
 	                if ("first_name" in $query || "second_name" in $query) { $('.modal-title').html($.member.utils.CFirst($.member.utils.customVal($('#first_name'))) + " " + $.member.utils.CFirst($.member.utils.customVal($('#second_name')))); }
-	            }
+					//console.log($query);
+					$.each($query,function( index,val ) {$('#'+$id).children('.'+index).html(val);});
+					swapMode();
+				}
 	        });
 	    }
 	},
@@ -66,7 +74,7 @@ $.member.utils.EditModule = (function () {
         $("#views").on("click", function () { swapMode($(this)); });
 
         // Swap back to Summary Mode on Close
-        $('#myModal').on('hidden.bs.modal', function (e) {
+        $('#'+modal).on('hidden.bs.modal', function (e) {
             $("input[type=text].editable").replaceWith(function () {
                 return "<label class=\"editable\" id=\"" + $(this).attr('id') + "\">" + $(this).val() + "</label>";
             });
@@ -74,10 +82,10 @@ $.member.utils.EditModule = (function () {
         });
 
         // Notify of data edit
-        $('#myModal').on("change", ":input.editable", function () { recordChanges($(this).attr('id')); });
+        $('#'+modal).on("change", ":input.editable", function () { recordChanges($(this).attr('id')); });
 
         // Discard Changes
-        $('#myModal').on('hide.bs.modal', function (e) { if ($.member.changes) return window.confirm("Discard, Unsaved Changes?"); });
+        $('#'+modal).on('hide.bs.modal', function (e) { if ($.member.changes) return window.confirm("Discard, Unsaved Changes?"); });
     }
 
     this.uiConnections();
@@ -97,7 +105,7 @@ $.member.utils.ContactModule = (function () {
         $selector.on("click", function () { generateUI($(this).attr('id')); });
     },
     // Create UI
-    generateUI = function (mt) {
+    generateUI = function (type) {
         // Display Contact
         $display.children('.modal-body').html(body);
         $display.children('.modal-footer').html(footer);
@@ -105,12 +113,10 @@ $.member.utils.ContactModule = (function () {
         $message = $('#message'); // Point to New Element
 		
 		$("#mySubModal .submit").on( "click", function() {send(); });
-		
-        type = mt;
-        if (type == 'twitter') { $("#message").attr('maxlength', 140) }
+        if (type == 'tweet') { $("#message").attr('maxlength', 140) }
         $display.on('keyup keydown', $message, function () {
             $('#length').html($message.val().length);
-            if (type == 'twitter') { twitter(); } else if (type == 'sms') { sms(); } else { email(); }
+            if (type == 'tweet') { twitter(); } else if (type == 'sms') { sms(); } else { email(); }
         });
     },
 
@@ -153,5 +159,3 @@ $.member.utils.ContactModule = (function () {
     // Start Point
     this.uiConnection();
 })();
-
-//.post('member/updateUserDetails', { id: $('#id').val(), changes: $query }, function (data) {

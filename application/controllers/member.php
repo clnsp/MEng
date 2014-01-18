@@ -43,7 +43,7 @@ class Member extends CI_Controller{
  // TODO TIDY UP ***
 	function contactUser() {
 	$this->load->model('members');
-	$this->config->load('communication',true);
+	//$this->config->load('communication',true);
 	if(isset($_POST['id']) && isset($_POST['service']) && isset($_POST['message']))
 	{
                 $id = $_POST['id'];
