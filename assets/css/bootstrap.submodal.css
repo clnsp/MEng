@@ -1,8 +1,7 @@
 .sub-modal{
     position: absolute;
     top: 0;
-    /*left: 60%;*/
-    width: 96%;
+    width: 97%;
     border-top: none;
 	display: none;
     

@@ -36,7 +36,7 @@ $.member.utils.EditModule = (function () {
 					$changes = false;
 					// Local Changes ??
 	                if ("first_name" in $query || "second_name" in $query) { $('.modal-title').html($.member.utils.CFirst($.member.utils.customVal($('#first_name'))) + " " + $.member.utils.CFirst($.member.utils.customVal($('#second_name')))); }
-					//console.log($query);
+					//console.log($query);					
 					$.each($query,function( index,val ) {$('#'+$id).children('.'+index).html(val);});
 					swapMode();
 				}
@@ -105,13 +105,14 @@ $.member.utils.ContactModule = (function () {
         $selector.on("click", function () { generateUI($(this).attr('id')); });
     },
     // Create UI
-    generateUI = function (type) {
+    generateUI = function (temp) {
         // Display Contact
         $display.children('.modal-body').html(body);
         $display.children('.modal-footer').html(footer);
         // Listener
         $message = $('#message'); // Point to New Element
 		
+		type = temp
 		$("#mySubModal .submit").on( "click", function() {send(); });
         if (type == 'tweet') { $("#message").attr('maxlength', 140) }
         $display.on('keyup keydown', $message, function () {
@@ -158,4 +159,16 @@ $.member.utils.ContactModule = (function () {
     },
     // Start Point
     this.uiConnection();
+})();
+
+$.member.utils.MembershipModule = (function () {
+	var body = '<h3>Membership:</h3><form class="form-horizontal"><div class="form-group"><label class="control-label" for="inputEmail">Message: </label><textarea id="message" class="form-control" rows="3"></textarea><span class="help-block">Length: <span id="length">0</span> Characters <span class="pull-right" id="warning-message"></span></span></div></form>';
+    var footer = '<button class="btn btn-sm" data-dismiss="submodal" aria-hidden="true">Cancel</button><button class="btn btn-sm btn-danger submit" data-dismiss="submodal">Submit</button>';
+
+})();
+
+$.member.utils.AccountModule = (function () {
+	var body = '<h3>Alter Account:</h3><form class="form-horizontal"><div class="form-group"><label class="control-label" for="inputEmail">Message: </label><textarea id="message" class="form-control" rows="3"></textarea><span class="help-block">Length: <span id="length">0</span> Characters <span class="pull-right" id="warning-message"></span></span></div></form>';
+    var footer = '<button class="btn btn-sm" data-dismiss="submodal" aria-hidden="true">Cancel</button><button class="btn btn-sm btn-danger submit" data-dismiss="submodal">Submit</button>';
+
 })();

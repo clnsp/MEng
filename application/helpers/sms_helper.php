@@ -22,7 +22,7 @@ if ( ! function_exists('valid_uk_number'))
  */
 if ( ! function_exists('send_sms'))
 {
-	function send_sms($numbers, $message = 'Hello World')
+	function send_sms($numbers, $message)
 	{
 		$CI =& get_instance();
 		
