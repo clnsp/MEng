@@ -158,4 +158,24 @@ class Classes extends CI_Model
 	function insertClass($data){
 		$this->db->insert($this -> table_name, $data); 
 	}
+	
+	/**
+	 * Get class information
+	 *
+	 * @param	int
+	 * @return	object
+	 */
+	function getClassInformation($class_id){
+
+		$this -> db -> select('class_type, class_start_date, class_end_date, room');
+		$this -> db -> from($this -> table_name);
+		$this -> db -> where('class_id =' . $class_id);
+		$this -> db -> join('class_type_tbl', 'class_type_tbl.class_type_id = class_tbl.class_type_id');
+		$this -> db -> join('room_tbl', 'room_tbl.room_id = class_tbl.room_id');
+
+		$query = $this -> db -> get();
+
+		return $query->row_array();
+	}
+
 }

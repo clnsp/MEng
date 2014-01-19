@@ -88,6 +88,7 @@ class Calendar extends CI_Controller{
 
             if(!$this->isClassBookedOut($b) && !$this->isClassInPast($b)){
                 $this->bookings->addMember($b, $m);
+                $this->_emailMemberAddedToClass($m, $b);
                 echo "Added";
 
             }
@@ -109,6 +110,8 @@ class Calendar extends CI_Controller{
 
                 if(!$this->isClassInPast($b) && $this->bookings->countBookingAttendants($b) > 0 ){
                     $this->bookings->removeMember($b, $m);
+                    $this->_emailMemberRemovedClass($m, $b);
+                    
                 }
             }
         }
@@ -147,7 +150,7 @@ class Calendar extends CI_Controller{
      * @param	bool
      */
     function changeClassStatus($bid, $msg, $cancel) {
-       $this->load->library('email');
+       $this->load->helper('email');
        $this->load->model('bookings');
        $this->load->model('classes');	                
 
@@ -162,15 +165,7 @@ class Calendar extends CI_Controller{
       }
 
       foreach ($emails as $email){   
-        $this->email->from('your@example.com', 'Booking');
-        $this->email->to($email['email']); 
-
-        $this->email->subject('Update to your class');
-        $this->email->message($msg);	
-
-        $this->email->send();
-
-        echo $this->email->print_debugger();
+        send_email($email['email'],'Update to your class',$msg );
     }
 }
 
@@ -215,6 +210,7 @@ class Calendar extends CI_Controller{
        $this->load->model('tank_auth/users');
        $this->load->model('bookings');
        $this->load->model('members');
+       
        if(isset($class_id)){
            if (isset($_POST['guest_first_name'])){
              echo('First');
@@ -241,25 +237,50 @@ class Calendar extends CI_Controller{
           'home_number' =>$phone
           );
 
-         $newuserid = $this->users->create_user($data);
-         $newuserid = $newuserid['user_id'];
-         $this->bookings->addMember($class_id, $newuserid);
-
-         $email = $this->members->getMemberEmail($newuserid);
-
-         $this->email->from('your@example.com', 'Booking');
-         $this->email->to($email); 
-
-         $this->email->subject('Booked into a class');
-         $this->email->message('You have been booked in as a guest');    
-
-         $this->email->send();
-
-         echo $this->email->print_debugger();
-
+			$newuserid = $this->users->create_user($data);
+			$newuserid = $newuserid['user_id'];
+			$this->bookings->addMember($class_id, $newuserid);
+			
+			$this->_emailMemberAddedToClass($newuserid, $class_id);
      }
 
  }
+ 
+ /**
+ * Email a member confirmation they've been added to a class
+ * @param int
+ */
+ function _emailMemberAddedToClass($member_id, $class_id) {
+ 	 $this->load->model('members');
+ 	 $this->load->model('classes');
+ 	 $this->load->helper('email');
+ 	 
+     $email = $this->members->getMemberEmail($member_id);
+ 	 $classDetails = $this->classes->getClassInformation($class_id);
+ 
+ 	 $msg = 'You have booked into the following class: ' . $classDetails['class_type'] . '. \r\nStarting: '. $classDetails['class_type'] . '\r\nEnd: '. $classDetails['class_type'];
+     
+     send_email($email, 'Booked into a Class', $msg);
+ }
+ 
+  /**
+  * Email a member confirmation they've been added to a class
+  * @param int
+  */
+  function _emailMemberRemovedClass($member_id, $class_id) {
+  	 $this->load->model('members');
+  	 $this->load->model('classes');
+  	 $this->load->helper('email');
+  	 
+      $email = $this->members->getMemberEmail($member_id);
+  	 $classDetails = $this->classes->getClassInformation($class_id);
+  	
+  	 
+  	 $msg = 'You have removed from the following class: ' . $classDetails['class_type'] . '. \r\nStarting: '. $classDetails['class_type'] . '\r\nEnd: '. $classDetails['class_type'];
+      
+      send_email($email, 'Removed from a Class', $msg);
+  }
+ 
 }
 
 
