@@ -121,7 +121,7 @@ class Calendar extends CI_Controller{
      * Cancel a class
      */
     function cancelClass($cancelled){
-    	$cancelled = $cancelled == "true";
+      $cancelled = $cancelled == "true";
 
         if (isset($_POST['class_booking_id'])){
            $this->load->model('classes');
@@ -145,14 +145,14 @@ class Calendar extends CI_Controller{
 
     /**
      * Change a class status to cancelled or open
-     * @param	int
-     * @param	string
-     * @param	bool
+     * @param int
+     * @param string
+     * @param bool
      */
     function changeClassStatus($bid, $msg, $cancel) {
        $this->load->helper('email');
        $this->load->model('bookings');
-       $this->load->model('classes');	                
+       $this->load->model('classes');                 
 
        $this->classes->cancelClass($bid, $cancel);
 
@@ -237,11 +237,11 @@ class Calendar extends CI_Controller{
           'home_number' =>$phone
           );
 
-			$newuserid = $this->users->create_user($data);
-			$newuserid = $newuserid['user_id'];
-			$this->bookings->addMember($class_id, $newuserid);
-			
-			$this->_emailMemberAddedToClass($newuserid, $class_id);
+      $newuserid = $this->users->create_user($data);
+      $newuserid = $newuserid['user_id'];
+      $this->bookings->addMember($class_id, $newuserid);
+      
+      $this->_emailMemberAddedToClass($newuserid, $class_id);
      }
 
  }
@@ -251,14 +251,14 @@ class Calendar extends CI_Controller{
  * @param int
  */
  function _emailMemberAddedToClass($member_id, $class_id) {
- 	 $this->load->model('members');
- 	 $this->load->model('classes');
- 	 $this->load->helper('email');
- 	 
+   $this->load->model('members');
+   $this->load->model('classes');
+   $this->load->helper('email');
+   
      $email = $this->members->getMemberEmail($member_id);
- 	 $classDetails = $this->classes->getClassInformation($class_id);
+   $classDetails = $this->classes->getClassInformation($class_id);
  
- 	 $msg = 'You have booked into the following class: ' . $classDetails['class_type'] . '. \r\nStarting: '. $classDetails['class_type'] . '\r\nEnd: '. $classDetails['class_type'];
+   $msg = 'You have booked into the following class: ' . $classDetails['class_type'] . '. \r\nStarting: '. $classDetails['class_type'] . '\r\nEnd: '. $classDetails['class_type'];
      
      send_email($email, 'Booked into a Class', $msg);
  }
@@ -268,15 +268,15 @@ class Calendar extends CI_Controller{
   * @param int
   */
   function _emailMemberRemovedClass($member_id, $class_id) {
-  	 $this->load->model('members');
-  	 $this->load->model('classes');
-  	 $this->load->helper('email');
-  	 
+     $this->load->model('members');
+     $this->load->model('classes');
+     $this->load->helper('email');
+     
       $email = $this->members->getMemberEmail($member_id);
-  	 $classDetails = $this->classes->getClassInformation($class_id);
-  	
-  	 
-  	 $msg = 'You have removed from the following class: ' . $classDetails['class_type'] . '. \r\nStarting: '. $classDetails['class_type'] . '\r\nEnd: '. $classDetails['class_type'];
+     $classDetails = $this->classes->getClassInformation($class_id);
+    
+     
+     $msg = 'You have removed from the following class: ' . $classDetails['class_type'] . '. \r\nStarting: '. $classDetails['class_type'] . '\r\nEnd: '. $classDetails['class_type'];
       
       send_email($email, 'Removed from a Class', $msg);
   }

@@ -42,34 +42,50 @@
 
 		}
 		
-	     /**
-	     * Admin User Mangement
-	     */
-	     public function users($page = 'users'){
 
-	     	if(!$this->tank_auth->is_logged_in()){
-	              //If no session, redirect to login page
-	     		$data['user_type'] = 'guest';
-	     		redirect('login', 'refresh');
-	     	}
-	     	else{
-	     		$this->load->Model('members');
-	     		$data['users'] = $this->members->getAllUsers();
-	     		parse_temp($page, $this->load->view('pages/'.$page, $data, true));
-	     	}
-	     }
+		 /**
+		 * Admin User Mangement
+		 */
+		 public function users($page = 'users'){
+
+		 	if(!$this->tank_auth->is_logged_in() || !$this->tank_auth->is_admin()){
+		 		if($this->tank_auth->is_logged_in())
+		 		{
+					// REDIRECT TO MEMBERS  HOME PAGE !!
+		 		}
+		 		else
+		 		{
+					//If no session, redirect to login page
+		 			$data['user_type'] = 'guest';
+		 			redirect('login', 'refresh');
+		 		}
+		 	}
+		 	else{
+		 		$data['user'] = $this->tank_auth->is_admin();
+		 		$this->load->Model('members');
+				// Get all Users
+		 		$data['users'] = $this->members->getAllUsers();
+				// Twitter Enabled
+		 		$data['twitter'] = $this->config->item('twitter_allow');
+				// SMS Enabled
+		 		$data['sms'] = $this->config->item('sms_allow');
+
+		 		parse_temp($page, $this->load->view('pages/'.$page, $data, true));
+		 	}
+		 }
 
 		/**
 		 * Admin calendar booking page
 		 */
 		public function admin_calendar($page = 'admin-calendar'){
 
-			if(!$this->tank_auth->is_logged_in()){
+			if(!$this->tank_auth->is_logged_in() || !$this->tank_auth->is_admin()){
 			  //If no session, redirect to login page
 				$data['user_type'] = 'guest';
 				redirect('login', 'refresh');
 			}
 			else{
+				$data['user'] = $this->tank_auth->is_admin();
 				$this->load->Model('Rooms');
 				$this->load->Model('Categories');
 				
@@ -110,10 +126,6 @@
 
 		}
 
-
-
-		
-		
 
 	}
 

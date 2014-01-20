@@ -81,7 +81,8 @@ class Users extends CI_Model
 	function get_user_by_email($email)
 	{
 		$this->db->where('LOWER(email)=', strtolower($email));
-
+		$this->db->join('member_type_tbl', 'member_type_tbl.id = '.$this->table_name.'.member_type_id');
+		
 		$query = $this->db->get($this->table_name);
 		if ($query->num_rows() == 1) return $query->row();
 		return NULL;

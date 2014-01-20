@@ -80,7 +80,7 @@ $autoload['helper'] = array('url', 'temp_helper');
 |
 */
 
-$autoload['config'] = array();
+$autoload['config'] = array('communication');
 
 
 /*

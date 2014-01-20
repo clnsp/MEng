@@ -51,12 +51,10 @@
                 <ul class="nav navbar-nav ">
 
                  <?php
-                 if($logged_in){
-                  if(isset($user_type)){
-
-                    if($user_type=='1'){ $this->load->view('templates/allan_template/bricks/staff/staff_header_menu'); }
-                    else if($user_type=='2') { $this->load->view('templates/allan_template/bricks/student/student_header_menu'); }
-
+                 if($logged_in){ 
+                  if(isset($user)){
+                    if($user){ $this->load->view('templates/allan_template/bricks/staff/staff_header_menu'); }
+                    else if(!$user) { $this->load->view('templates/allan_template/bricks/student/student_header_menu'); }
                   }
                 }
                 

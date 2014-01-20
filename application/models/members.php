@@ -23,7 +23,12 @@ class Members extends CI_Model
 	 */
 	function getAllUsers() //was get_all_user()
 	{
-		$query = $this -> db -> get($this -> table_name);
+		$this->db->select($this->table_name.'.id,first_name,second_name,email,activated,banned,type,membership_type');  // CHANGE
+		$this -> db -> from($this -> table_name);
+		$this->db->join('member_type_tbl', $this->table_name.'.member_type_id = member_type_tbl.id');
+		$this->db->join('membership_type_tbl', $this->table_name.'.membership_type_id = membership_type_tbl.id');
+		
+		$query = $this->db->get();
 		return $query -> result();
 	}
 	
@@ -32,13 +37,14 @@ class Members extends CI_Model
    */
   function getUserByID($id) //was fetchUser($id)
   {
-  	$this -> db -> select('first_name, second_name, email, home_number, mobile_number, twitter');
+  	$this -> db -> select('first_name, second_name, email, home_number, mobile_number, twitter, comms_preference, activated, banned, ban_reason, membership_type');
   	$this -> db -> from($this -> table_name);
-  	$this -> db -> where('id', $id);
+  	$this -> db -> where($this -> table_name.'.id', $id);
+   $this->db->join('membership_type_tbl', 'membership_type_tbl.id = '.$this -> table_name.'.membership_type_id');
 
-  	$query = $this -> db -> get();   
-  	return $query->result();
-  }
+   $query = $this -> db -> get();   
+   return $query->result();
+ }
 
   /**
   * Fetch users that partially match a first or second name
@@ -54,6 +60,7 @@ class Members extends CI_Model
 
    return $query;
  }
+
 
  /**
  * Get member type ids
@@ -78,4 +85,37 @@ class Members extends CI_Model
    return $this->db->get()->row()->email;
 
  }
+
+
+   /**
+   * Update User Details
+   * @param number
+   * @param Array
+   * @param string
+   */
+   function updateUser($id, $changes)
+   {
+     $this->db->where('id', $id);
+     $this->db->update('users', $changes); 
+     return "4:Success";
+   }
+   
+  /**
+  * Get Specfic Value 
+  * @param number 
+  * @param row for value
+  * @return object
+  */
+
+  function getUserColumn($id, $row) // $row = 'first_name'
+  {
+   $this->db->select($row);
+   $this->db->from($this->table_name);
+   $this->db->where('id', $id);
+
+   $query = $this -> db -> get();   
+   return $query->result();
+ }
+
+
 }

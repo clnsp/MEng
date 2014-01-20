@@ -25,5 +25,8 @@ padding-top: 7px
 	z-index:9999!important;
 }
 
+/*Colin Modal*/
 
-
+#MemberDetails .modal-dialog{
+width: 80% !important;
+}
