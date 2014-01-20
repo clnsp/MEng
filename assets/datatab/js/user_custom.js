@@ -17,7 +17,9 @@ $.member.utils.EditModule = (function () {
                 console.log($(this).attr('id'));
                 $.each(data[0], function (key, mem) { $('#' + key).html($.member.utils.CFirst(mem)); });
                 $('#'+modal).modal('show');
-				if(data[0].comms_preference == 3){$(".sms , .tweet").show();}else if(data[0].comms_preference == 2){$(".sms").show();$(".tweet").hide();}else {$(".sms ,.tweet").hide();}				
+				if(data[0].comms_preference == 3){$(".sms , .tweet").show();}else if(data[0].comms_preference == 2){$(".sms").show();$(".tweet").hide();}else {$(".sms ,.tweet").hide();}
+				if(data[0].activated == 1 && data[0].banned == 0){$(".mem-status").html('<span class="text-success">Active</span>');}else if (data[0].activated == 0){$(".mem-status").html('<span class="text-warning" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Email not Verified">Pending</span>'); $('.mem-status span').tooltip();} 
+				else{$('.mem-status').html('<span class="text-danger" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="'+data[0].ban_reason+'">Blocked</span>');$('.mem-status span').tooltip();}
                 $changes = false;
             } else {
                 alert("Member No Longer Exist");
@@ -82,7 +84,11 @@ $.member.utils.EditModule = (function () {
         });
 
         // Notify of data edit
-        $('#'+modal).on("change", ":input.editable", function () { recordChanges($(this).attr('id')); });
+        $('#'+modal).on("change", ":input.editable", function () { 
+			recordChanges($(this).attr('id')); 
+			
+		// UPDATE DATA IDENTICAL FIELD
+		});
 
         // Discard Changes
         $('#'+modal).on('hide.bs.modal', function (e) { if ($.member.changes) return window.confirm("Discard, Unsaved Changes?"); });

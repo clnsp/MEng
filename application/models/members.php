@@ -86,10 +86,32 @@ class Members extends CI_Model
   function getUserColumn($id, $row) // $row = 'first_name'
   {
 	$this->db->select($row);
-        $this->db->from($this->table_name);
+    $this->db->from($this->table_name);
 	$this->db->where('id', $id);
 
   	$query = $this -> db -> get();   
   	return $query->result();
-  } 
+  }
+
+  /**
+  * Get all the possible membership type for that user and what there current membership is
+  * @param number
+  * @return object
+  */
+  /*
+  function getMemberships($id)
+  {	
+	$this->db->select('type,membership_type');  // CHANGE
+	$this->db->from($this -> table_name);
+	$this->db->join('member_type_tbl', $this->table_name.'.member_type_id = member_type_tbl.id');
+	$this->db->join('membership_type_tbl', $this->table_name.'.membership_type_id = membership_type_tbl.id');
+	
+	$query->result();
+	if ($query->num_rows() > 0)
+	{
+		$row = $query->row_array();
+		//$row['type']
+   }  
+  }
+  */
 }

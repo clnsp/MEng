@@ -3,7 +3,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" id="member" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Modal title</h4>
+				<h4 class="modal-title">Modal title</h4><span>Status: <strong class="mem-status"><span class="text-success">Active</span></strong></span>
             </div>
             <!--BODY-->
             <div class="modal-body">
@@ -11,62 +11,110 @@
 		<?php $this->load->view('templates/allan_template/bricks/staff/staff_member_sub_model'); ?>
                 <!--End Sub-Modal -->
                 <div id="mainContent" style="z-index:2;">
-                    <div class="panel panel-info">
+                    <div class="panel panel-primary col-lg-6" style="padding:0px;">
                         <div class="panel-heading">
                             <h3 class="panel-title">Account Details</h3>
                         </div>
-                        <div class="panel-body">
+                        <div class="panel-body hidden-xs">
                             <!--LEFT-->
-                            <div class="col-md-6">
+                            <div class="col-sm-6">
                                 <div class="form-group">
                                     <label class="control-label">First:</label>
-                                    <label class="editable" id="first_name">First Name</label>
+                                    <label class="editable first_name" id="first_name">First Name</label>
 			            <input type="hidden" id="id" value=""/>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label">Status:</label>
-                                    <label id="status">Active</label>
+                                    <label class="control-label">Type:</label>
+                                    <label id="type">Student</label>
                                 </div>
                             </div>
                             <!--RIGHT-->
-                            <div class="col-md-6">
+                            <div class="col-sm-6">
                                 <div class="form-group">
                                     <label class="control-label">Last:</label>
-                                    <label class="editable" id="second_name">Second Name</label>
+                                    <label class="editable second_name" id="second_name">Second Name</label>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label">Membership:</label>
                                     <label id="member">13 - 14</label>
                                 </div>
                             </div>
-                            <p id="reason"></p>
                         </div>
-                    </div>
-                    <div class="panel panel-info">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">Contact Details</h3>
-                        </div>
-                        <div class="panel-body">
+						 <div class="panel-body visible-xs">
                             <!--LEFT-->
-                            <div class="col-md-6">
+                            <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label class="control-label">Home:</label>
-                                    <label class="editable" id="home_number">00000000000</label>
+                                    <label class="control-label">First:</label>
+                                    <label class="editable first_name" id="first_name">First Name</label>
+			            <input type="hidden" id="id" value=""/>
                                 </div>
-                                <div class="form-group">
-                                    <label class="control-label">Email:</label>
-                                    <label class="editable" id="email">00000000000</label>
+								 <div class="form-group">
+                                    <label class="control-label">Last:</label>
+                                    <label class="editable second_name" id="second_name">Second Name</label>
                                 </div>
                             </div>
                             <!--RIGHT-->
-                            <div class="col-md-6">
+                            <div class="col-sm-6">
+                               <div class="form-group">
+                                    <label class="control-label">Type:</label>
+                                    <label id="type">Student</label>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">Membership:</label>
+                                    <label id="member">13 - 14</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-primary col-lg-6" style="padding:0px;">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Contact Details</h3>
+                        </div>
+                        <div class="panel-body hidden-xs">
+                            <!--LEFT-->
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label">Home:</label>
+                                    <label class="editable home_number" id="home_number">00000000000</label>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">Email:</label>
+                                    <label class="editable email" id="email">00000000000</label>
+                                </div>
+                            </div>
+                            <!--RIGHT-->
+                            <div class="col-sm-6">
                                 <div class="form-group">
                                     <label class="control-label">Mobile:</label>
-                                    <label class="editable" id="mobile_number">00000000000</label>
+                                    <label class="editable mobile_number" id="mobile_number">00000000000</label>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label">Twitter:</label>
-                                    <label class="editable" id="twitter">temptwitter</label>
+                                    <label class="editable twitter" id="twitter">temptwitter</label>
+                                </div>
+                            </div>
+                        </div>
+						<div class="panel-body visible-xs"> <!-- Sort Order -->
+                            <!--LEFT-->
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label">Home:</label>
+                                    <label class="editable home_number" id="home_number">00000000000</label>
+                                </div>
+								<div class="form-group">
+                                    <label class="control-label">Mobile:</label>
+                                    <label class="editable mobile_number" id="mobile_number">00000000000</label>
+                                </div>
+                            </div>
+                            <!--RIGHT-->
+                            <div class="col-sm-6">
+								<div class="form-group">
+                                    <label class="control-label">Email:</label>
+                                    <label class="editable email" id="email">00000000000</label>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">Twitter:</label>
+                                    <label class="editable twitter" id="twitter">temptwitter</label>
                                 </div>
                             </div>
                         </div>

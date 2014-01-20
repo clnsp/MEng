@@ -124,7 +124,17 @@ class Tank_auth
 	}
 	
 	/**
-	 * Is the User and Admin or Memeber
+	 * Is the Super Admin ?
+	 * @return  bool
+	 * Colin 18/1/2014
+	 */
+	function is_super_admin()
+	{
+		return $this->ci->session->userdata('userpermission') > 2;
+	}
+	
+	/**
+	 * Is Admin or Above ?
 	 * @return  bool
 	 * Colin 18/1/2014
 	 */

@@ -46,7 +46,7 @@
 		 * Admin User Mangement
 		 */
 		 public function users($page = 'users'){
-
+		 
 			if(!$this->tank_auth->is_logged_in() || !$this->tank_auth->is_admin()){
 				if($this->tank_auth->is_logged_in())
 				{
