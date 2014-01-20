@@ -48,19 +48,7 @@
 		 */
 		 public function users($page = 'users'){
 
-		 	if(!$this->tank_auth->is_logged_in() || !$this->tank_auth->is_admin()){
-		 		if($this->tank_auth->is_logged_in())
-		 		{
-					// REDIRECT TO MEMBERS  HOME PAGE !!
-		 		}
-		 		else
-		 		{
-					//If no session, redirect to login page
-		 			$data['user_type'] = 'guest';
-		 			redirect('login', 'refresh');
-		 		}
-		 	}
-		 	else{
+		 	if(check_admin()){
 		 		$data['user'] = $this->tank_auth->is_admin();
 		 		$this->load->Model('members');
 				// Get all Users
@@ -79,12 +67,7 @@
 		 */
 		public function admin_calendar($page = 'admin-calendar'){
 
-			if(!$this->tank_auth->is_logged_in() || !$this->tank_auth->is_admin()){
-			  //If no session, redirect to login page
-				$data['user_type'] = 'guest';
-				redirect('login', 'refresh');
-			}
-			else{
+			if(check_admin()){
 				$data['user'] = $this->tank_auth->is_admin();
 				$this->load->Model('Rooms');
 				$this->load->Model('Categories');

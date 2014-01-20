@@ -14,7 +14,7 @@ if ( ! function_exists('parse_temp'))
     	$data['page_title'] = $page; //title should be more descriptive eg. "Sports Hall Bookings"
 		$data['page_slug'] = $page; //slug should uniquely id a page eg "sports_hall_bookings"
 		$data['page_body'] = $page_body;
-        
+
 
         $data['logged_in'] = $ci->tank_auth->is_logged_in(); 
 
@@ -23,7 +23,7 @@ if ( ! function_exists('parse_temp'))
         $data['user_type'] = '1';//$session_data['member_type']; 
         $data['user_name'] = $ci->tank_auth->get_username();
         
-		$ci->parser->parse(template_url(), $data);
+        $ci->parser->parse(template_url(), $data);
     }
 
     /* 
@@ -31,6 +31,22 @@ if ( ! function_exists('parse_temp'))
 	 */
     function template_url(){
     	return 'templates/allan_template/allan_template';
+    }
+
+    function check_admin(){
+
+        $ci = get_instance();
+        $ci->load->library('tank_auth');
+        if(!$ci->tank_auth->is_logged_in() || !$ci->tank_auth->is_admin()){
+
+            //If no session, redirect to login page
+            $data['user_type'] = 'guest';
+            redirect('login', 'refresh');
+            return false;
+        }
+
+        return true;
+
     }
 
 }
