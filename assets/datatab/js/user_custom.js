@@ -7,10 +7,11 @@ $.member.utils.customVal = function (v) { if (v.is("input")) { return v.val(); }
 $.member.utils.EditModule = (function () {
 
     var $changes = false
+	var $statusChange = false;
 	var modal = "MemberDetails";
 	var $member = false;
 	var accountBody = '<div class="row"><div class="col-sm-6"><span>Status: <strong class="mem-status"><span class="text-success">Active</span></strong></span></div><div class="col-sm-6"><form class="form-horizontal"><div id="mem-options"  style="padding-right: 12px;" class="form-group pull-right" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Change Status"><div id="status-choice" class="btn-group" data-toggle="buttons"><label class="btn btn-success btn-xs" id="active-btn"><input type="radio" name="options"> Active</label><label class="btn btn-warning btn-xs" id="pending-label"><input type="radio" name="options" id="pending-btn"> Pending</label><label class="btn btn-danger btn-xs" id="banned-btn"><input type="radio" name="options"> Banned</label></div></div></div></div><form class="form-horizontal"><div class="form-group"><label class="control-label" for="banReason">Reason for Blocking: </label><textarea id="bad_reason" class="form-control" rows="3" disabled>N/A: Account is still Active</textarea></div></form>';
-    var footer = '<button class="btn btn-sm" data-dismiss="submodal" aria-hidden="true">Cancel</button><button class="btn btn-sm btn-danger submit" data-dismiss="submodal">Submit</button>';
+    var footer = '<button class="btn btn-sm" data-dismiss="submodal" aria-hidden="true">Cancel</button><button id="submitState" class="btn btn-sm btn-danger submit" data-dismiss="submodal">Submit</button>';
     var $display = $("#mySubModal .modal-content");
 		
 	// Load Member
@@ -44,8 +45,7 @@ $.member.utils.EditModule = (function () {
 	            if (data == "4:Success") {
 					$changes = false;
 					// Local Changes ??
-	                if ("first_name" in $query || "second_name" in $query) { $('.modal-title').html($.member.utils.CFirst($.member.utils.customVal($('#first_name'))) + " " + $.member.utils.CFirst($.member.utils.customVal($('#second_name')))); }
-					//console.log($query);					
+	                if ("first_name" in $query || "second_name" in $query) { $('.modal-title').html($.member.utils.CFirst($.member.utils.customVal($('#first_name'))) + " " + $.member.utils.CFirst($.member.utils.customVal($('#second_name')))); }					
 					$.each($query,function( index,val ) {$('#'+$id).children('.'+index).html(val);});
 					swapMode();
 				}
@@ -74,6 +74,7 @@ $.member.utils.EditModule = (function () {
 	
 	loadStatusEditor = function()
 	{
+		$statusChange = false;
 	    $display.children('.modal-body').html(accountBody);
         $display.children('.modal-footer').html(footer);
         // Listener
@@ -82,10 +83,12 @@ $.member.utils.EditModule = (function () {
 		if($member.activated == 1 && $member.banned == 0){$(".mem-status").html('<span class="text-success">Active</span>'); $('#pending-label').hide();$('#banned-btn').toggleClass('btn-danger').toggleClass('btn-default'); $('#active-btn').button('toggle'); $('#active-btn').attr("disabled", "disabled"); $('#mem-options').tooltip();}else if ($member.activated == 0){$(".mem-status").html('<span class="text-warning" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Email not Verified">Pending</span>'); $('.mem-status span').tooltip(); $('#pending-label').show();$('#banned-btn').toggleClass('btn-danger').toggleClass('btn-default'); $('#active-btn').toggleClass('btn-success').toggleClass('btn-default'); $('#bad_reason').val('N/A: Account currently pending users email being verified'); $('#pending-label').button('toggle'); $('#active-btn').attr("disabled", "disabled"); $('#banned-btn').attr("disabled", "disabled");} 
 		else{$('.mem-status').html('<span class="text-danger" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="'+$member.ban_reason+'">Blocked</span>');$('.mem-status span').tooltip(); $('#pending-label').hide(); $('#bad_reason').val($member.ban_reason); $('#active-btn').toggleClass('btn-success').toggleClass('btn-default');$('#banned-btn').button('toggle'); $('#banned-btn').attr("disabled", "disabled"); $('#mem-options').tooltip();}
 		$('#banned-btn, #active-btn').on('click',function (){ statusAlter($(this));});
+		$('#submitState').on('click',function() {saveAlteredStatus();} );
 	},
 	
 	statusAlter = function(btn)
 	{
+		if (!$statusChange) { $statusChange = {}; }
 		$('#banned-btn').toggleClass('btn-danger').toggleClass('btn-default');
 		$('#active-btn').toggleClass('btn-success').toggleClass('btn-default');
 		if(btn.attr('id') == "active-btn")
@@ -94,22 +97,32 @@ $.member.utils.EditModule = (function () {
 			$('#active-btn').attr("disabled", "disabled");
 			$('#banned-btn').removeAttr("disabled");
 			$('#bad_reason').attr("disabled", "disabled");
-			if($member.banned==0){$('#bad_reason').val('N/A: Account is still Active');}
-			else{$('#bad_reason').val('N/A: This account will be un-blocked');}
+			if($member.banned==0){$('#bad_reason').val('N/A: Account is still Active'); $statusChange = {};}
+			else{$('#bad_reason').val('N/A: This account will be un-blocked'); $statusChange['banned'] = 0;}
 		}
 		else if(btn.attr('id') == "banned-btn")
 		{
 			$('#banned-btn').button('toggle'); 
 			$('#banned-btn').attr("disabled", "disabled");
 			$('#active-btn').removeAttr("disabled");
-			if($member.banned==0){$('#bad_reason').val(""); $('#bad_reason').removeAttr("disabled");}
-			else{$('#bad_reason').val($member.ban_reason);}
+			if($member.banned==0){$('#bad_reason').val(""); $('#bad_reason').removeAttr("disabled"); $statusChange['banned'] = 1;}
+			else{$('#bad_reason').val($member.ban_reason); $statusChange = {};}
 		}
 	},
 	
-	saveAlteredStatus = functiom()
+	saveAlteredStatus = function()
 	{
-	
+		if($statusChange && $statusChange != {})
+		{
+			if($statusChange['banned'] == 1) {$statusChange['ban_reason'] = $('#bad_reason').val();} else {$statusChange['ban_reason'] = "";}
+			console.log($statusChange);
+			$.post('member/updateUserDetails', { id: $member.id, changes: $statusChange }, function (data) {
+	            if (data == "4:Success") {
+				console.log("SAVED");
+				}
+	        });
+		}
+		$statusChange = false;
 	},
 
     uiConnections = function () {
