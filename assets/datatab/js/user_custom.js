@@ -9,7 +9,7 @@ $.member.utils.EditModule = (function () {
     var $changes = false
 	var modal = "MemberDetails";
 	var $member = false;
-	var accountBody = '<div class="row"><div class="col-sm-6"><span>Status: <strong class="mem-status"><span class="text-success">Active</span></strong></span></div><div class="col-sm-6"><form class="form-horizontal"><div id="mem-options" class="form-group pull-right" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Change Status"><div id="status-choice" class="btn-group" data-toggle="buttons"><label class="btn btn-success btn-xs" id="active-btn"><input type="radio" name="options"> Active</label><label class="btn btn-warning btn-xs" id="pending-label"><input type="radio" name="options" id="pending-btn"> Pending</label><label class="btn btn-danger btn-xs" id="banned-btn"><input type="radio" name="options"> Banned</label></div></div></div></div><form class="form-horizontal"><div class="form-group"><label class="control-label" for="banReason">Reason for Blocking: </label><textarea id="bad_reason" class="form-control" rows="3" disabled>N/A: Account is still Active</textarea></div></form>';
+	var accountBody = '<div class="row"><div class="col-sm-6"><span>Status: <strong class="mem-status"><span class="text-success">Active</span></strong></span></div><div class="col-sm-6"><form class="form-horizontal"><div id="mem-options"  style="padding-right: 12px;" class="form-group pull-right" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Change Status"><div id="status-choice" class="btn-group" data-toggle="buttons"><label class="btn btn-success btn-xs" id="active-btn"><input type="radio" name="options"> Active</label><label class="btn btn-warning btn-xs" id="pending-label"><input type="radio" name="options" id="pending-btn"> Pending</label><label class="btn btn-danger btn-xs" id="banned-btn"><input type="radio" name="options"> Banned</label></div></div></div></div><form class="form-horizontal"><div class="form-group"><label class="control-label" for="banReason">Reason for Blocking: </label><textarea id="bad_reason" class="form-control" rows="3" disabled>N/A: Account is still Active</textarea></div></form>';
     var footer = '<button class="btn btn-sm" data-dismiss="submodal" aria-hidden="true">Cancel</button><button class="btn btn-sm btn-danger submit" data-dismiss="submodal">Submit</button>';
     var $display = $("#mySubModal .modal-content");
 		
@@ -81,10 +81,35 @@ $.member.utils.EditModule = (function () {
 		
 		if($member.activated == 1 && $member.banned == 0){$(".mem-status").html('<span class="text-success">Active</span>'); $('#pending-label').hide();$('#banned-btn').toggleClass('btn-danger').toggleClass('btn-default'); $('#active-btn').button('toggle'); $('#active-btn').attr("disabled", "disabled"); $('#mem-options').tooltip();}else if ($member.activated == 0){$(".mem-status").html('<span class="text-warning" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Email not Verified">Pending</span>'); $('.mem-status span').tooltip(); $('#pending-label').show();$('#banned-btn').toggleClass('btn-danger').toggleClass('btn-default'); $('#active-btn').toggleClass('btn-success').toggleClass('btn-default'); $('#bad_reason').val('N/A: Account currently pending users email being verified'); $('#pending-label').button('toggle'); $('#active-btn').attr("disabled", "disabled"); $('#banned-btn').attr("disabled", "disabled");} 
 		else{$('.mem-status').html('<span class="text-danger" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="'+$member.ban_reason+'">Blocked</span>');$('.mem-status span').tooltip(); $('#pending-label').hide(); $('#bad_reason').val($member.ban_reason); $('#active-btn').toggleClass('btn-success').toggleClass('btn-default');$('#banned-btn').button('toggle'); $('#banned-btn').attr("disabled", "disabled"); $('#mem-options').tooltip();}
-		$('#status-choice').on('click',function (){ 
-		
-		
-		});
+		$('#banned-btn, #active-btn').on('click',function (){ statusAlter($(this));});
+	},
+	
+	statusAlter = function(btn)
+	{
+		$('#banned-btn').toggleClass('btn-danger').toggleClass('btn-default');
+		$('#active-btn').toggleClass('btn-success').toggleClass('btn-default');
+		if(btn.attr('id') == "active-btn")
+		{
+			$('#active-btn').button('toggle'); 
+			$('#active-btn').attr("disabled", "disabled");
+			$('#banned-btn').removeAttr("disabled");
+			$('#bad_reason').attr("disabled", "disabled");
+			if($member.banned==0){$('#bad_reason').val('N/A: Account is still Active');}
+			else{$('#bad_reason').val('N/A: This account will be un-blocked');}
+		}
+		else if(btn.attr('id') == "banned-btn")
+		{
+			$('#banned-btn').button('toggle'); 
+			$('#banned-btn').attr("disabled", "disabled");
+			$('#active-btn').removeAttr("disabled");
+			if($member.banned==0){$('#bad_reason').val(""); $('#bad_reason').removeAttr("disabled");}
+			else{$('#bad_reason').val($member.ban_reason);}
+		}
+	},
+	
+	saveAlteredStatus = functiom()
+	{
+	
 	},
 
     uiConnections = function () {
