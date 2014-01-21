@@ -18,15 +18,17 @@
 				// Whoops, we don't have a page for that!
 				show_404();
 			}
-
+	
 
 			if(!$this->tank_auth->is_logged_in()){
 			  //If no session, redirect to login page
 				$data['user_type'] = 'guest';
 				redirect('login', 'refresh');
+			}else{
+				$data['user'] = $this->tank_auth->is_admin();
 			}
 
-			parse_temp($page, $this->load->view('pages/'.$page, '', true));
+			parse_temp($page, $this->load->view('pages/'.$page, $data, true));
 
 		}
 

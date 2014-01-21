@@ -37,7 +37,7 @@ if ( ! function_exists('parse_temp'))
     * @return bool
     */
     function check_admin(){
-
+		
         $ci = get_instance();
         $ci->load->library('tank_auth');
         if(!$ci->tank_auth->is_logged_in() || !$ci->tank_auth->is_admin()){
