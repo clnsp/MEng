@@ -110,6 +110,22 @@
 			parse_temp('room', $this->load->view('pages/room', $data, true));
 
 		}
+		
+		/**
+		 * Admin calendar booking page
+		 */
+		public function manage($page = 'manage'){
+
+			if(check_admin()){
+				$this->load->Model('Categories');
+				$data['user'] = $this->tank_auth->is_admin();
+	
+				$data['categories'] = $this->Categories->getCategories();
+							
+				parse_temp($page, $this->load->view('pages/'.$page, $data, true));
+			}
+		}
+		
 
 
 	}
