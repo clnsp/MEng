@@ -89,7 +89,7 @@
 
 					<div id="event-member-list">
 						<form id="event-remove-member-form" method="post" action="">
-							<ul class="list-group"></ul>
+							<ul class="list-group checkbox-group"></ul>
 						</div>
 						<button type="submit" id="event-remove-member-button" class="btn btn-sm">Remove</button>
 

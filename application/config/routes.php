@@ -55,6 +55,7 @@ $route['users_fetch'] = 'users_fetch';
 $route['booking'] = 'booking';
 $route['room/(:any)'] = 'pages/room/$1';
 $route['manage'] = 'pages/manage';
+$route['category/(:any)'] = 'category/$1';
 
 $route['welcome'] = 'welcome';
 

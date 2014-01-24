@@ -585,6 +585,15 @@ html, body, #booking {
 
 /* @group Bootstrap Overrides  */
 
+i.square{
+  font-size: 20px;
+}
+
+/* Margin for list checkbox*/
+a.list-group-item input{
+  margin-right: 5px;
+}
+
 #booking .navbar-top{
  border-radius: 0!important;
  border-bottom: 3px solid <?php echo $brandSecondary;?>;
@@ -668,6 +677,8 @@ html, body, #booking {
   font-size: 35px;
 }
 
+
+
 #booking #eventModal #cancelled-banner{
 	background-color: rgba(0, 0, 0, 0.69);
 	padding: 0 5px 0 5px;
@@ -710,9 +721,6 @@ html, body, #booking {
   max-height: 325px;
   overflow-y: scroll;
   margin-bottom: 25px;
-}
-#booking #eventModal #event-member-list a.list-group-item input{
-  margin-right: 5px;
 }
 
 

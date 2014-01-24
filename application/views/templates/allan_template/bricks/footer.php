@@ -52,6 +52,13 @@
       <script src="<?php echo base_url();?>assets/js/jquery-ui-autocomplete.custom.min.js"></script>
       <script src="<?php echo base_url();?>assets/cal/fullcalendar.min.js"></script>
       <script type="text/javascript" src="<?php echo base_url();?>assets/js/booking-calendar.js"></script>
+      <script type="text/javascript" src="<?php echo base_url();?>assets/js/bootstrap-override.js"></script>
+
+      <!-- Admin Manage Scripts -->
+      <script type="text/javascript" src="<?php echo base_url();?>assets/js/bootstrap-formhelpers-colorpicker.js"></script>
+      <script type="text/javascript" src="<?php echo base_url();?>assets/js/spectrum-colorpicker.js"></script>
+      <script type="text/javascript" src="<?php echo base_url();?>assets/js/manage.js"></script>
+
 
       <script> 
       // using JQUERY's ready method to know when all dom elements are rendered

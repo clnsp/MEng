@@ -432,13 +432,6 @@ $('#calendar').fullCalendar({
 
   });
 
-/*
- * Select anywhere along the member list row 
- */
- eventMembers.on('click', 'a', function() {
- 	$(this).find('input[type=checkbox]').trigger('click');
- });
-
 
 /*
  * Remove member from event
