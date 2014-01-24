@@ -2687,6 +2687,7 @@
 		
 		/**
 		 * Draw the table for the first time, adding all required features
+		 * MOD TO SHOW HIDDEN TABLE AND HIDE LOADING MESSAGE - COLIN - 24/01/2014
 		 *  @param {object} oSettings dataTables settings object
 		 *  @param {object} [json] JSON from the server that completed the table, if using Ajax source
 		 *    with client-side processing (optional)
@@ -2695,6 +2696,8 @@
 		function _fnInitComplete ( oSettings, json )
 		{
 			oSettings._bInitComplete = true;
+			$('#'+oSettings.sTableId).show(); // SHOW TABLE
+			$('#'+oSettings.sTableId+"-loading").hide(); // HIDE LOADING MESAGE			
 			_fnCallbackFire( oSettings, 'aoInitComplete', 'init', [oSettings, json] );
 		}
 		

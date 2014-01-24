@@ -11,7 +11,8 @@ $.member.utils.EditModule = (function () {
 	var modal = "MemberDetails";
 	var $member = false;
 	var accountBody = '<div class="row"><div class="col-sm-6"><span>Status: <strong class="mem-status"><span class="text-success">Active</span></strong></span></div><div class="col-sm-6"><form class="form-horizontal"><div id="mem-options"  style="padding-right: 12px;" class="form-group pull-right" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Change Status"><div id="status-choice" class="btn-group" data-toggle="buttons"><label class="btn btn-success btn-xs" id="active-btn"><input type="radio" name="options"> Active</label><label class="btn btn-warning btn-xs" id="pending-label"><input type="radio" name="options" id="pending-btn"> Pending</label><label class="btn btn-danger btn-xs" id="banned-btn"><input type="radio" name="options"> Banned</label></div></div></div></div><form class="form-horizontal"><div class="form-group"><label class="control-label" for="banReason">Reason for Blocking: </label><textarea id="bad_reason" class="form-control" rows="3" disabled>N/A: Account is still Active</textarea></div></form>';
-    var footer = '<button class="btn btn-sm" data-dismiss="submodal" aria-hidden="true">Cancel</button><button id="submitState" class="btn btn-sm btn-danger submit" data-dismiss="submodal">Submit</button>';
+    var deleteBody = '<div class="row"><div class="col-sm-12"><span>Delete: <strong id="mem-name">Default</strong></span></div></div><form class="form-horizontal"><div class="form-group"><label class="control-label" for="banReason">Members Full Name: </label><input type="email" class="form-control dcap" id="full-name" placeholder="{Firstname} {Secondname}"></div><div class="form-group"><label class="control-label" for="banReason">Reason for Deleting: </label><textarea id="delete_reason" class="form-control" rows="3" disabled>N/A: Please confirm the complete members name</textarea></div></form>';
+	var footer = '<button class="btn btn-sm" data-dismiss="submodal" aria-hidden="true">Cancel</button><button id="submitState" class="btn btn-sm btn-danger submit" data-dismiss="submodal">Submit</button>';
     var $display = $("#mySubModal .modal-content");
 		
 	// Load Member
@@ -26,10 +27,7 @@ $.member.utils.EditModule = (function () {
 				if($member.activated == 1 && $member.banned == 0){$(".mem-status").html('<span class="text-success">Active</span>');}else if ($member.activated == 0){$(".mem-status").html('<span class="text-warning" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Email not Verified">Pending</span>'); $('.mem-status span').tooltip();} 
 				else{$('.mem-status').html('<span class="text-danger" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="'+$member.ban_reason+'">Blocked</span>');$('.mem-status span').tooltip();}
                 $changes = false;
-				
-            } else {
-                alert("Member No Longer Exist");
-            }
+            } else { alert("Member No Longer Exist"); }
         });
 		}
 		$('#'+modal).modal('show');
@@ -115,16 +113,38 @@ $.member.utils.EditModule = (function () {
 		if($statusChange && $statusChange != {})
 		{
 			if($statusChange['banned'] == 1) {$statusChange['ban_reason'] = $('#bad_reason').val();} else {$statusChange['ban_reason'] = "";}
-			console.log($statusChange);
 			$.post('member/updateUserDetails', { id: $member.id, changes: $statusChange }, function (data) {
 	            if (data == "4:Success") {
-				console.log("SAVED");
+					$member.banned = $statusChange['banned'];
+					$member.ban_reason = $statusChange['ban_reason'];
+					if($member.activated == 1 && $member.banned == 0){$(".mem-status").html('<span class="text-success">Active</span>'); $('#'+$member.id).children('.status').html('Active');}else if ($member.activated == 0){$(".mem-status").html('<span class="text-warning" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Email not Verified">Pending</span>'); $('.mem-status span').tooltip();} 
+					else{$('.mem-status').html('<span class="text-danger" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="'+$member.ban_reason+'">Blocked</span>');$('.mem-status span').tooltip(); $('#'+$member.id).children('.status').html('Blocked');}				
 				}
 	        });
 		}
 		$statusChange = false;
 	},
-
+	
+	loadDelete = function(){
+		$display.children('.modal-body').html(deleteBody);
+        $display.children('.modal-footer').html(footer);
+		$member.fullname = ($member.first_name.toLowerCase().trim()) + " " + ($member.second_name.toLowerCase().trim())
+		console.log($member.fullname);
+		$('#mem-name').html($.member.utils.CFirst($member.first_name) + " " + $.member.utils.CFirst($member.second_name));
+		
+		$('#full-name').on('keyup keydown', function () {
+			var temp = $(this).val().toLowerCase().trim();
+			if(temp == $member.fullname)
+			{
+				alert("Same!!");
+			}
+		});
+		
+		// http://stackoverflow.com/questions/1226574/disable-copy-paste-into-html-form-using-javascript
+		$('input.dcap').bind('copy paste', function (e) { e.preventDefault(); });
+	
+	},	
+	
     uiConnections = function () {
         // Get User and Load Modal
         $("#member tbody").on("click", "tr", function () { load($(this).attr('id')); });
@@ -140,21 +160,22 @@ $.member.utils.EditModule = (function () {
             $("input[type=text].editable").replaceWith(function () {
                 return "<label class=\"editable\" id=\"" + $(this).attr('id') + "\">" + $(this).val() + "</label>";
             });
+			$('#mySubModal').hide();
             $("#views").html("<i class=\"fa fa-pencil fa-fw\"></i> Edit</i>");
         });
 
         // Notify of data edit
-        $('#'+modal).on("change", ":input.editable", function () { 
-			recordChanges($(this).attr('id')); 
-			
+        $('#'+modal).on("change", ":input.editable", function () { recordChanges($(this).attr('id')); 
 		// UPDATE DATA IDENTICAL FIELD
 		});
 		
 		// Status
 		$('.status').on("click", function () { loadStatusEditor(); });
+		
+		$('.delete').on("click", function () { loadDelete(); });
 
         // Discard Changes
-        $('#'+modal).on('hide.bs.modal', function (e) { if ($.member.changes) return window.confirm("Discard, Unsaved Changes?"); });
+        $('#'+modal).on('hide.bs.modal', function (e) { if ($.member.changes){ return window.confirm("Discard, Unsaved Changes?");} });
     },		
 	this.uiConnections();
 })();
