@@ -19,6 +19,8 @@
     <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/cal/fullcalendar.css">
 
     <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/css/spectrum-colorpicker.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/css/jquery.minicolors.css">
+
 <!--     <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/css/bootstrap-formhelpers-colorpicker.css">
  -->
 

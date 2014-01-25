@@ -57,6 +57,7 @@
       <!-- Admin Manage Scripts -->
       <script type="text/javascript" src="<?php echo base_url();?>assets/js/bootstrap-formhelpers-colorpicker.js"></script>
       <script type="text/javascript" src="<?php echo base_url();?>assets/js/spectrum-colorpicker.js"></script>
+      <script type="text/javascript" src="<?php echo base_url();?>assets/js/jquery.minicolors.js"></script>
       <script type="text/javascript" src="<?php echo base_url();?>assets/js/manage.js"></script>
 
 

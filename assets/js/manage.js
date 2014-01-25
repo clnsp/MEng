@@ -3,10 +3,10 @@ $('#page-body').on('click', 'i.catColor', function() {
 	$('#mypick').bfhcolorpicker('toggle');
 });
 
-//$('INPUT.minicolors').minicolors(settings);
-
 
 $( document ).ready(function() {
+
+
 
 	var classcategories = (function() {
 
@@ -36,15 +36,32 @@ $( document ).ready(function() {
 				if(data.length>0){
 					$.each( data, function( key, cat ) {
 						$categorylist.append(createListItem(cat['category_id'], cat['category'], cat['color']));
+								
 					});
+					initColorPickers();
 				}
 
 			});
 		},
 
 		createListItem = function(id, name, color){
-			return $('<a href="#" class="list-group-item"><input name="category_id" value="'+ id + '" type="checkbox"><i class="glyphicon glyphicon-stop catColor square" style="color: '+ color +'"></i>'+ name +'</a>');
+			return $('<a href="#" class="list-group-item"></a>')
+				.append($('<input name="category_id" value="'+ id + '" type="checkbox">'))
+				.append($('<input>').attr({
+				    type: 'hidden',
+				    class: 'minicolors',
+				    size: 1,
+				    value: color,
+				    
+				}))
+				.append(name);
 		},
+		
+		initColorPickers = function() {
+			$('INPUT.minicolors').minicolors();
+		},
+		
+	
 
 		buildUrl = function() {
 			return urlBase + $currentItem.attr( "id" );
@@ -76,10 +93,14 @@ $( document ).ready(function() {
 
 
 		return {
-			refresh: refresh
+			refresh: refresh,
+			initColorPickers: initColorPickers,
 		};
 
 	})();
-
+	
+	
+//	classcategories.initColorPickers();
+	classcategories.refresh();
 
 });
