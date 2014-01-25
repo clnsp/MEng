@@ -30,3 +30,45 @@ padding-top: 7px
 #MemberDetails .modal-dialog{
 width: 80% !important;
 }
+
+.third{
+width: 33% !important;
+}
+
+div.list {
+    overflow-x: auto;
+	overflow-y: hidden;
+    white-space: nowrap;
+}
+div.list [class*="col-"] {
+    display: inline-block;
+    float: none; /* Very important */
+}
+
+div.classes {
+	clear:both;
+    overflow-y: auto;
+	overflow-x: hidden;
+	z-index: 2;
+}
+
+/*.clearfix:after{clear:both;content:".";display:block;height:0;overflow:hidden;visibility:hidden}*//*TRELLO*/
+
+/*http://stackoverflow.com/questions/3387489/make-child-visible-outside-an-overflowhidden-parent*/
+.clearfix:before,
+.clearfix:after {
+  content: ".";    
+  display: block;    
+  height: 0;    
+  overflow: hidden; 
+}
+.clearfix:after {clear: both;}
+.clearfix {zoom: 1;} /* IE < 8 */
+
+h2.time {
+	font-size: 30px;
+	line-height: 1;
+	color: #999;
+	margin-top: -10px;
+	margin-bottom: 0px;
+}

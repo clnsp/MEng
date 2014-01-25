@@ -26,7 +26,10 @@
 				redirect('login', 'refresh');
 			}
 
-			parse_temp($page, $this->load->view('pages/'.$page, '', true));
+			if(check_admin()){
+		 		$data['user'] = $this->tank_auth->is_admin();
+				parse_temp($page, $this->load->view('pages/'.$page, $data, true));
+			}
 
 		}
 

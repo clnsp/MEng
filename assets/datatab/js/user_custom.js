@@ -11,7 +11,7 @@ $.member.utils.EditModule = (function () {
 	var modal = "MemberDetails";
 	var $member = false;
 	var accountBody = '<div class="row"><div class="col-sm-6"><span>Status: <strong class="mem-status"><span class="text-success">Active</span></strong></span></div><div class="col-sm-6"><form class="form-horizontal"><div id="mem-options"  style="padding-right: 12px;" class="form-group pull-right" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Change Status"><div id="status-choice" class="btn-group" data-toggle="buttons"><label class="btn btn-success btn-xs" id="active-btn"><input type="radio" name="options"> Active</label><label class="btn btn-warning btn-xs" id="pending-label"><input type="radio" name="options" id="pending-btn"> Pending</label><label class="btn btn-danger btn-xs" id="banned-btn"><input type="radio" name="options"> Banned</label></div></div></div></div><form class="form-horizontal"><div class="form-group"><label class="control-label" for="banReason">Reason for Blocking: </label><textarea id="bad_reason" class="form-control" rows="3" disabled>N/A: Account is still Active</textarea></div></form>';
-    var deleteBody = '<div class="row"><div class="col-sm-12"><span>Delete: <strong id="mem-name">Default</strong></span></div></div><form class="form-horizontal"><div class="form-group"><label class="control-label" for="banReason">Members Full Name: </label><input type="email" class="form-control dcap" id="full-name" placeholder="{Firstname} {Secondname}"></div><div class="form-group"><label class="control-label" for="banReason">Reason for Deleting: </label><textarea id="delete_reason" class="form-control" rows="3" disabled>N/A: Please confirm the complete members name</textarea></div></form>';
+    var deleteBody = '<div class="row"><div class="col-sm-12"><span>Delete: <strong id="mem-name">Default</strong></span></div></div><form class="form-horizontal"><div class="form-group"><label class="control-label" for="banReason">Members Full Name: </label><input type="email" class="form-control dcap third" id="full-name" placeholder="{Firstname} {Secondname}"></div><div class="form-group"><label class="control-label" for="banReason">Reason for Deleting: </label><textarea id="delete_reason" class="form-control" rows="3" disabled>N/A: Please confirm the complete members name</textarea></div></form>';
 	var footer = '<button class="btn btn-sm" data-dismiss="submodal" aria-hidden="true">Cancel</button><button id="submitState" class="btn btn-sm btn-danger submit" data-dismiss="submodal">Submit</button>';
     var $display = $("#mySubModal .modal-content");
 		
@@ -27,10 +27,10 @@ $.member.utils.EditModule = (function () {
 				if($member.activated == 1 && $member.banned == 0){$(".mem-status").html('<span class="text-success">Active</span>');}else if ($member.activated == 0){$(".mem-status").html('<span class="text-warning" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Email not Verified">Pending</span>'); $('.mem-status span').tooltip();} 
 				else{$('.mem-status').html('<span class="text-danger" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="'+$member.ban_reason+'">Blocked</span>');$('.mem-status span').tooltip();}
                 $changes = false;
+				$('#'+modal).modal('show'); // only show are parsing complete
             } else { alert("Member No Longer Exist"); }
         });
-		}
-		$('#'+modal).modal('show');
+		} else { $('#'+modal).modal('show'); } // Data already stored
     },
 
 	submit = function () {
@@ -57,7 +57,7 @@ $.member.utils.EditModule = (function () {
 	            return "<input class=\"form-control input-sm editable\" id=\"" + $(this).attr('id') + "\" type=\"text\" value=\"" + $(this).html() + "\" />";
 	        });
 	        $it.html("Overview");
-	    } else {
+	    } else { 
 	        $("input[type=text].editable").replaceWith(function () {
 	            return "<label class=\"editable\" id=\"" + $(this).attr('id') + "\">" + $(this).val() + "</label>";
 	        });
@@ -128,15 +128,34 @@ $.member.utils.EditModule = (function () {
 	loadDelete = function(){
 		$display.children('.modal-body').html(deleteBody);
         $display.children('.modal-footer').html(footer);
-		$member.fullname = ($member.first_name.toLowerCase().trim()) + " " + ($member.second_name.toLowerCase().trim())
-		console.log($member.fullname);
+		$member.fullname = (($member.first_name.toLowerCase().trim()) + " " + ($member.second_name.toLowerCase().trim())).trim();
 		$('#mem-name').html($.member.utils.CFirst($member.first_name) + " " + $.member.utils.CFirst($member.second_name));
 		
 		$('#full-name').on('keyup keydown', function () {
 			var temp = $(this).val().toLowerCase().trim();
 			if(temp == $member.fullname)
 			{
-				alert("Same!!");
+				$('#delete_reason').removeAttr("disabled");
+				$('#delete_reason').val("");
+				$('#full-name').parent('.form-group').removeClass('has-error has-warning');
+				$('#full-name').parent('.form-group').addClass('has-success');
+				
+			}
+			else if(temp == $member.fullname.substring(temp.length))
+			{
+				$('#full-name').parent('.form-group').removeClass('has-error has-success');
+				$('#full-name').parent('.form-group').addClass('has-warning');
+			}
+			else if(!$('#delete_reason').attr('disabled'))
+			{
+				$('#delete_reason').attr("disabled", "disabled");
+				$('#delete_reason').val("N/A: Please confirm the complete members name");
+				$('#full-name').parent('.form-group').removeClass('has-success has-warning');
+				$('#full-name').parent('.form-group').addClass('has-error');
+			}
+			else
+			{
+			
 			}
 		});
 		
