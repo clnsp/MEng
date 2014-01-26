@@ -28,7 +28,46 @@ Class Categories extends CI_Model{
 
 		return $this -> db -> get()->result_array();
 	}
+	
+	/**
+	 * Set the color of a category
+	 * @param	int
+	 * @param	string - hex value
+	 */
+	function setColor($category_id, $color){
+		echo ('updating ' + $category_id + ' ' + $color);
+		
+		$this->db->where('category_id', $category_id);
+		$this->db->update($this -> category_tbl, array('color' => $color)); 
 
+	}
+	
+	/**
+	 * Add new category
+	 * @param	string - title
+	 * @param	string - hex value
+	 */
+	function addCategory($category, $color){
+		echo ('inserting ' + $category + ' ' + $color);
+		
+		$data = array(
+		   'category' => $category ,
+		   'color' => $color,
+		);
+		
+		$this->db->insert($this -> category_tbl, $data); 
+
+	}
+	
+	/**
+	 * Remove categories
+	 * @param	array 
+	 */
+	function removeCategories($categories){	
+		$this->db->where_in('category_id', $categories);
+		$this->db->delete($this -> category_tbl);
+
+	}
 	
 }
 ?>

@@ -1,18 +1,18 @@
 
-$('#page-body').on('click', 'i.catColor', function() {
-	$('#mypick').bfhcolorpicker('toggle');
+$('#page-body').on('click', '.minicolors-swatch-color', function(e) {
+	e.stopImmediatePropagation(); //prevent clicking the row when selecting color swatch
 });
+
+
 
 
 $( document ).ready(function() {
 
-
-
-	var classcategories = (function() {
+	var categories = (function() {
 
 		var $categorylist = $( "#class-categories-list" );
 		var $container = $( "<div class='container'></div>" );
-		var $currentItem = null;
+		var $currentColor = null;
 		var urlBase = "category/";
 
 		var createContainer = function() {
@@ -22,85 +22,113 @@ $( document ).ready(function() {
 		},
 
 		refresh = function() {
-			clear();
-			fetchCategories();
+			$.getJSON(urlBase + 'fetchAll', function(data) {
+				var $tempList = $('<ul></ul>');
+				if(data.length>0){
+					$.each( data, function( key, cat ) {
+						$tempList.append(createListItem(cat['category_id'], cat['category'], cat['color']));	
+					});
+					
+				}
+				$categorylist.html($tempList.html());
+				initColorPickers();
+			});
 		},
 
 		clear = function() {
 			$categorylist.empty();
 		},
 
-		fetchCategories = function(){
-			$.getJSON(urlBase + 'fetchAll', function(data) {
 
-				if(data.length>0){
-					$.each( data, function( key, cat ) {
-						$categorylist.append(createListItem(cat['category_id'], cat['category'], cat['color']));
-								
-					});
-					initColorPickers();
-				}
-
-			});
-		},
 
 		createListItem = function(id, name, color){
-			return $('<a href="#" class="list-group-item"></a>')
-				.append($('<input name="category_id" value="'+ id + '" type="checkbox">'))
-				.append($('<input>').attr({
-				    type: 'hidden',
-				    class: 'minicolors',
-				    size: 1,
-				    value: color,
-				    
-				}))
+			return $('<span class="list-group-item"></span>')
+				.append($('<input class="pull-right" name="category_id[]" value="'+ id + '" type="checkbox">'))
+				.append($('<input>')
+					.attr({
+					    type: 'hidden',
+					    class: 'minicolors',
+					    value: color,
+					    size: 7,
+					})
+					.data('category_id', id))			
 				.append(name);
 		},
 		
 		initColorPickers = function() {
-			$('INPUT.minicolors').minicolors();
+			$('INPUT.minicolors').minicolors({
+				hide: saveColor,
+				show: storeColor,
+			});
 		},
 		
-	
-
-		buildUrl = function() {
-			return urlBase + $currentItem.attr( "id" );
+		storeColor = function() {
+			currentColor = this.value;
 		},
-
-		showItem = function() {
-			$currentItem = $( this );
-			getContent( showContent );
-		},
-
-		showItemByIndex = function( idx ) {
-			$.proxy( showItem, $items.get( idx ) );
-		},
-
-		getContent = function( callback ) {
-			$currentItem.data( "container" ).load( buildUrl(), callback );
-		},
-
-		showContent = function() {
-			$currentItem.data( "container" ).show();
-			hideContent();
-		},
-
-		hideContent = function() {
-			$currentItem.siblings().each(function() {
-				$( this ).data( "container" ).hide();
-			});
-		};
-
+		
+		saveColor = function() {
+			if(this.value != currentColor){
+				$.post( urlBase + 'setColor', { category_id: $(this).data('category_id'), color: this.value })
+				  .done(function( data ) {
+				    alert("Color saved");
+				  });
+			 }
+		}
 
 		return {
 			refresh: refresh,
-			initColorPickers: initColorPickers,
+			initColorPickers: initColorPickers
 		};
 
 	})();
 	
+	categories.initColorPickers();
 	
-//	classcategories.initColorPickers();
-	classcategories.refresh();
+	$('INPUT.minicolors-inline').minicolors({
+		theme: 'bootstrap',
+		control: 'wheel',
+	});
+	
+	
+	 $('form#add-category-form').submit(function(e){
+	  e.preventDefault();
+	  var postdata = $(this).serialize();
+	  
+	  $.ajax({
+	    url: "category/addCategory/",
+	    type: "POST",
+	    data:  postdata,
+	    success: function() {
+	    	categories.refresh();
+	   },
+	   error: function(){
+	     alert('Error occurred');
+	   },
+	 });
+	
+	
+	});
+	
+	
+	$('form#remove-category-form').submit(function(e){
+	  e.preventDefault();
+	  var postdata = $(this).serialize();
+	  
+	  
+	  $.ajax({
+	    url: "category/removeCategories/",
+	    type: "POST",
+	    data:  postdata,
+	    success: function() {
+	    	categories.refresh();
+	   },
+	   error: function(){
+	     alert('Error occurred');
+	   },
+	 });
+	
+	
+	});
+
 
 });

@@ -41,9 +41,9 @@ var activeEvent, addGuestModal;
  */
  function add_member_to_member_list(id, username, checkbox){
  	if(checkbox){
- 		eventMembers.append('<a href="#" class="list-group-item"> <input name="member_id" value="'+ id +'" type="checkbox">' + username + '</a>');
+ 		eventMembers.append('<li class="list-group-item"> <input name="member_id" value="'+ id +'" type="checkbox">' + username + '</li>');
  	}else{
- 		eventMembers.append('<a href="#" class="list-group-item">' + username + '</a>');
+ 		eventMembers.append('<li class="list-group-item">' + username + '</li>');
  	}
 
  }

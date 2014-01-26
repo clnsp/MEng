@@ -590,8 +590,16 @@ i.square{
 }
 
 /* Margin for list checkbox*/
-a.list-group-item input{
+.checkbox-group .list-group-item input{
   margin-right: 5px;
+}
+
+
+.checkbox-group .list-group-item:hover,
+.checkbox-group .list-group-item:focus{
+	 background-color: #F5F5F5;
+	 cursor: pointer;
+	
 }
 
 #booking .navbar-top{
@@ -724,7 +732,7 @@ a.list-group-item input{
 }
 
 
-#booking #eventModal #event-member-list a.list-group-item{
+#booking #eventModal #event-member-list .list-group-item{
   text-transform: capitalize;
 }
 
@@ -741,9 +749,7 @@ a.list-group-item input{
 /* @group Autocomplete */
 
 ul.ui-menu .ui-menu-item:hover {
- // background-color: <?php echo $brandSecondary?>;
  cursor: pointer;
- // color: #0ff!important;
 }
 
 ul.ui-menu .ui-menu-item {
@@ -784,3 +790,13 @@ ul.ui-autocomplete.popover.dropdown-menu{
 
 
 /* @end */
+
+/* @group Manage */
+
+	.manage-panel{
+		max-height: 450px;
+		overflow-y: scroll;
+	}
+
+/* @end */
+
