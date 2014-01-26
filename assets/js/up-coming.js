@@ -32,6 +32,7 @@ $.pageManager = (function () {
 		$( window ).on("resize", function() {resize()});
 		$(".classes tr").on("dblclick", function(){attendee($(this));});
 		$(".list").on('selectstart', function (event) {event.preventDefault();});
+		$(".dropdown-menu li").on('click',  function() { $('.'+$(this).attr('id')).toggle();});
 	},
 
 	resize();
