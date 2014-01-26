@@ -118,9 +118,12 @@
 
 			if(check_admin()){
 				$this->load->Model('Categories');
+				$this->load->Model('classes');
+				
 				$data['user'] = $this->tank_auth->is_admin();
 	
 				$data['categories'] = $this->Categories->getCategories();
+				$data['class_types'] = $this->classes->getClassTypes();
 							
 				parse_temp($page, $this->load->view('pages/'.$page, $data, true));
 			}

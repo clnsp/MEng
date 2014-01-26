@@ -284,9 +284,6 @@ class Calendar extends CI_Controller{
  
 }
 
-
-
-
 /*
  * Get paramters from the url
  * http://stackoverflow.com/questions/2894250/how-to-make-codeigniter-accept-query-string-urls

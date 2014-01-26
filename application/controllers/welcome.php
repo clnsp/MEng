@@ -9,11 +9,6 @@ class Welcome extends CI_Controller
 		$this->load->model('caljson_model');
 	}
 
-	function index()
-	{
-
-
-	}
 }
 
 /* End of file welcome.php */

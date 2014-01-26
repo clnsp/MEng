@@ -150,6 +150,16 @@ class Classes extends CI_Model
 
 		return $this -> db -> get()->result_array();
 	}
+	
+	/**
+	 * Returns class type information
+	 * @return array
+	 */
+	function getClassTypes(){
+		$this->db->from($this -> class_type_tbl); 
+
+		return $this -> db -> get()->result_array();
+	}
 
 	/**
 	 * Insert a new class
@@ -177,5 +187,36 @@ class Classes extends CI_Model
 
 		return $query->row_array();
 	}
+	
+	/**
+	 * Insert a new class type
+	 * @param string
+	 * @param string
+	 */
+	function addNewClassType($class_type, $class_description){
+	$data = array(
+		'class_type'		=>	$class_type,
+		'class_description'	=>	$class_description
+	);
+	
+		$this->db->insert($this -> class_type_tbl, $data); 
+	}
+	
+	/**
+	 * Update a class type
+	 * @param int
+	 * @param string
+	 * @param string
+	 */
+	function updateClassType($class_type_id, $class_type, $class_description){
+	
+	$data = array(
+		'class_type'		=>	$class_type,
+		'class_description'	=>	$class_description
+	);
+	
+		$this->db->where('class_type_id', $class_type_id);
+		$this->db->update($this -> class_type_tbl, $data); 
+	}	
 
 }
