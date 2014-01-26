@@ -62,7 +62,6 @@ class Category extends CI_Controller
 		if($this->tank_auth->is_admin()){
 		
 			if (isset($_POST['category_id'])){
-			print_r($_POST['category_id']);
 				$this->categories->removeCategories($_POST['category_id']);
 			}else{
 				echo "No post values";
@@ -70,6 +69,22 @@ class Category extends CI_Controller
 		
 		}
 	}
+	
+	/**
+	* Set category name
+	*/
+	function setName(){
+		if($this->tank_auth->is_admin()){
+		
+			if (isset($_POST['category_id']) && isset($_POST['category'])){
+				$this->categories->setName($_POST['category_id'], $_POST['category']);
+			}else{
+				echo "No post values";
+			}
+		
+		}
+	}
+	
 }
 
 	/* End of file welcome.php */

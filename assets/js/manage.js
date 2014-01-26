@@ -1,11 +1,3 @@
-
-$('#page-body').on('click', '.minicolors-swatch-color', function(e) {
-	e.stopImmediatePropagation(); //prevent clicking the row when selecting color swatch
-});
-
-
-
-
 $( document ).ready(function() {
 
 	var categories = (function() {
@@ -42,7 +34,7 @@ $( document ).ready(function() {
 
 
 		createListItem = function(id, name, color){
-			return $('<span class="list-group-item"></span>')
+			return $('<li class="list-group-item"></li>')
 				.append($('<input class="pull-right" name="category_id[]" value="'+ id + '" type="checkbox">'))
 				.append($('<input>')
 					.attr({
@@ -70,14 +62,15 @@ $( document ).ready(function() {
 			if(this.value != currentColor){
 				$.post( urlBase + 'setColor', { category_id: $(this).data('category_id'), color: this.value })
 				  .done(function( data ) {
-				    alert("Color saved");
+				    alert("Name set");
 				  });
 			 }
 		}
 
 		return {
 			refresh: refresh,
-			initColorPickers: initColorPickers
+			initColorPickers: initColorPickers,
+			urlBase : urlBase, 
 		};
 
 	})();
@@ -129,6 +122,28 @@ $( document ).ready(function() {
 	
 	
 	});
+
+
+
+$('#page-body').on('click', '.minicolors-swatch-color', function(e) {
+	e.stopImmediatePropagation(); //prevent clicking the row when selecting color swatch
+});
+
+
+ $('#manage-categories')
+
+ 	/* Select anywhere along a checkbox-group row  */
+ 	.on('blur', 'input.editable', function(e) {
+	 	if($(this).val() != $(this).data('previous')){
+	 	
+	 		$.post( categories.urlBase + 'setName', { category_id: $(this).parent('.list-group-item').data('category_id'), category: this.value })
+	 		  .done(function( data ) {
+	 		    alert("Color saved");
+	 		  });
+	 			 		
+	 	}
+	 });
+
 
 
 });

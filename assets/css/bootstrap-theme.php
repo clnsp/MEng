@@ -581,7 +581,28 @@ html, body, #booking {
 
 /* @end */
 
+/* @group Checkbox Group */
 
+/* Margin for list checkbox*/
+.checkbox-group .list-group-item input{
+  margin-right: 5px;
+}
+
+.checkbox-group .list-group-item.selected{
+	background-color: #E8E8E8;
+
+}
+.checkbox-group .list-group-item:hover,
+.checkbox-group .list-group-item:focus{
+	 background-color: #F5F5F5;
+	 cursor: pointer;
+}
+
+.checkbox-group .list-group-item .editable{
+	cursor: text;
+}
+
+/* @end */
 
 /* @group Bootstrap Overrides  */
 
@@ -589,18 +610,7 @@ i.square{
   font-size: 20px;
 }
 
-/* Margin for list checkbox*/
-.checkbox-group .list-group-item input{
-  margin-right: 5px;
-}
 
-
-.checkbox-group .list-group-item:hover,
-.checkbox-group .list-group-item:focus{
-	 background-color: #F5F5F5;
-	 cursor: pointer;
-	
-}
 
 #booking .navbar-top{
  border-radius: 0!important;

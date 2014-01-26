@@ -69,6 +69,18 @@ Class Categories extends CI_Model{
 
 	}
 	
+	/**
+	 * Set the name of a category
+	 * @param	int
+	 * @param	string
+	 */
+	function setName($category_id, $category){
+		echo ('updating ' + $category_id + ' ' + $category);
+		
+		$this->db->where('category_id', $category_id);
+		$this->db->update($this -> category_tbl, array('category' => $category)); 
+
+	}	
 }
 ?>
 
