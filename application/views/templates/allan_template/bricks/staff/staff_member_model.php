@@ -163,9 +163,9 @@
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="#mySubModal" data-toggle="submodal"><i class="fa fa-users"></i>  Update Membership</a></li>
                                 <li class="divider"></li>
-                                <li><a href="#mySubModal" data-toggle="submodal"><i class="fa fa-ban fa-fw"></i>  Block</a></li>
+                                <li class="status"><a href="#mySubModal" data-toggle="submodal"><i class="fa fa-ban fa-fw"></i>  Change Status</a></li>
                                 <li class="divider"></li>
-                                <li><a href="#mySubModal" data-toggle="submodal"><i class="fa fa-trash-o fa-fw"></i>  Delete</a></li>
+                                <li class="delete"><a href="#mySubModal" data-toggle="submodal"><i class="fa fa-trash-o fa-fw"></i>  Delete</a></li>
                             </ul>
                         </div>
                     </div>

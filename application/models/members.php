@@ -37,7 +37,7 @@ class Members extends CI_Model
    */
   function getUserByID($id) //was fetchUser($id)
   {
-  	$this -> db -> select('first_name, second_name, email, home_number, mobile_number, twitter, comms_preference, activated, banned, ban_reason, membership_type');
+  	$this -> db -> select($this -> table_name.'.id, first_name, second_name, email, home_number, mobile_number, twitter, comms_preference, activated, banned, ban_reason, membership_type');
   	$this -> db -> from($this -> table_name);
   	$this -> db -> where($this -> table_name.'.id', $id);
    $this->db->join('membership_type_tbl', 'membership_type_tbl.id = '.$this -> table_name.'.membership_type_id');
