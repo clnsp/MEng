@@ -1,5 +1,5 @@
 
-
+<?php if(!check_admin()){?>
 <div id="footer">
 
 
@@ -27,7 +27,7 @@
   </div>
 
 </div><!--end footer-->
-
+<?php;};?>
 <!-- Latest compiled and minified JavaScript -->
 
 

@@ -66,6 +66,8 @@ Class Categories extends CI_Model{
 	function removeCategories($categories){	
 		$this->db->where_in('category_id', $categories);
 		$this->db->delete($this -> category_tbl);
+		
+		return $this->db->_error_number()==0;
 
 	}
 	

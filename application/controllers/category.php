@@ -25,15 +25,14 @@ class Category extends CI_Controller
 		if($this->tank_auth->is_admin()){
 			
 			if (isset($_POST['category_id']) && isset($_POST['color'])){
-			
-				$this->categories->setColor($_POST['category_id'], $_POST['color']);
-				echo 'success';
+				if($_POST['category_id'] != 1){
+					$this->categories->setColor($_POST['category_id'], $_POST['color']);
+					echo 'success';
+				}else{
+					echo 'Cannot alter uncategorised';
+				}
 			}
 			
-			else{
-				echo 'post values not set';
-				print_r($_POST);
-			}
 		}else{
 		
 			echo 'not admin';
@@ -62,9 +61,18 @@ class Category extends CI_Controller
 		if($this->tank_auth->is_admin()){
 		
 			if (isset($_POST['category_id'])){
-				$this->categories->removeCategories($_POST['category_id']);
-			}else{
-				echo "No post values";
+				
+				if(in_array(1, $_POST['category_id'])){
+					$_POST['category_id'] = array_diff( $_POST['category_id'], array(1)); //cannot remove the uncategorized category
+					echo("You cannot remove the uncategorized category<br>");
+				}
+				
+				if(sizeof($_POST['category_id']) > 0){					
+					$this->categories->removeCategories($_POST['category_id']);
+				}else{
+					echo("No categories were removed<br>");
+				}
+				
 			}
 		
 		}

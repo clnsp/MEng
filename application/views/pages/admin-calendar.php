@@ -198,6 +198,3 @@
 
 <div class="clearfix"></div>
 
-
-
-<div class="push"></div>

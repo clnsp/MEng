@@ -116,6 +116,7 @@
 							<tr>
 								<th>Title</th>
 								<th>Description</th>
+								<th>Category</th>
 							</tr>
 							
 							<tbody>
@@ -125,6 +126,7 @@
 															
 										<td class="class_type"><?php echo $type['class_type'] ?></td>
 										<td class="class_description"><?php echo $type['class_description'] ?></td>
+										<td data-category_id="<?php echo $type['category_id'] ?>" class="category"><?php echo $type['category'] ?></td>
 															
 									</tr>
 							
@@ -158,6 +160,17 @@
           </div>
           
           <div class="form-group">
+            <label for="class_category">Category</label>
+	             <select name="category_id" type="dropdown" class="form-control">
+	             
+	             	<?php foreach($categories as $cat): ?>
+		             	 <option value="<?php echo $cat['category_id'] ?>"><?php echo $cat['category'] ?></option>
+	             	<?php endforeach; ?>
+	             
+	             </select>
+          </div>
+                    
+          <div class="form-group">
             <label for="class_description">Description</label>
              	<textarea name="class_description" class="form-control" rows="3"></textarea>
           </div>
@@ -176,7 +189,3 @@
 
 </div><!--/container-->
 
-
-
-
-<div class="push"></div>

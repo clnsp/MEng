@@ -25,8 +25,7 @@
 				$data['user_type'] = 'guest';
 				redirect('login', 'refresh');
 			}else{
-				$data['user'] = $this->tank_auth->is_admin();
-			}
+		
 
 			if(check_admin()){
 		 		$data['user'] = $this->tank_auth->is_admin();
@@ -53,6 +52,8 @@
 				parse_temp($page, $this->load->view('pages/'.$page, $data, true));
 			}
 
+		}
+		
 		}
 
 		/**

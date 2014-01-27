@@ -9,8 +9,10 @@ $( document ).ready(function() {
 	$('#page-body').on('click', '.minicolors-swatch-color', function(e) {
 		e.stopImmediatePropagation(); //prevent clicking the row when selecting color swatch
 	});
+	
+	var categories, addclasstypes, manageclasstypes;
 
-	var categories = (function() {
+	categories = (function() {
 
 		var $categorylist 	= $("#class-categories-list");
 		var $currentColor 	= null;
@@ -18,17 +20,19 @@ $( document ).ready(function() {
 		var removeForm 		= $('form#remove-category-form');
 		var urlBase 		= "category/";
 
-
-
 		refresh = function() {
+		
 			$.getJSON(urlBase + 'fetchAll', function(data) {
 				var $tempList = $('<ul></ul>');
+				clear();
 				if(data.length>0){
 					$.each( data, function( key, cat ) {
-						$tempList.append(createListItem(cat['category_id'], cat['category'], cat['color']));	
+						$tempList.append(createListItem(cat['category_id'], cat['category'], cat['color']));
+						manageclasstypes.category_id.append(createOption(cat));
 					});
 					
 				}
+				
 				$categorylist.html($tempList.html());
 				initColorPickers();
 			});
@@ -36,9 +40,13 @@ $( document ).ready(function() {
 
 		clear = function() {
 			$categorylist.empty();
+			manageclasstypes.category_id.html('');
 		},
 
-
+		createOption = function (type) {
+			return($('<option value"' + type['class_category_id'] + '"></option>')
+				.append(type['category']));			
+		},
 
 		createListItem = function(id, name, color){
 			return $('<li class="list-group-item"></li>')
@@ -94,20 +102,18 @@ $( document ).ready(function() {
 			
 		},
 		removeCategory = function() {
-			
-			 $.ajax({
-			   url: urlBase + "removeCategories/",
-			   type: "POST",
-			   data:  removeForm.serialize(),
-			   success: function() {
-			   	categories.refresh();
-			   	resetAddForm();
-			  },
-			  error: function(){
-			    alert('Error occurred');
-			  },
-			});
-			
+		
+			$.post( urlBase + "removeCategories/",
+					removeForm.serialize(), 
+					function(result) {
+					  alert(result);
+					  categories.refresh();
+					  resetAddForm();
+					})
+				  .fail(function(result) {
+				    alert("Error: " + result );
+				  });
+
 		}
 		
 
@@ -123,7 +129,7 @@ $( document ).ready(function() {
 
 	})();
 	
-	var addclasstypes = (function() {
+	addclasstypes = (function() {
 		//var $classTypeList = $( "#class-type-list" );
 		var urlBase = "class_type/";
 		var form = $('form#add-class-type-form'); 
@@ -166,6 +172,7 @@ $( document ).ready(function() {
 		var class_type_id = form.find('input[name=class_type_id]');
 		var class_type = form.find('input[name=class_type]');
 		var class_description = form.find('textarea[name=class_description]');
+		var category_id = form.find('select[name=category_id]');
 		
 		var typeTable = $('table#class-types-table tbody'); 
 			
@@ -194,11 +201,16 @@ $( document ).ready(function() {
 			 
 		},
 		
-		createRow = function (class_type_id, class_type, class_description) {
-			return($('<tr data-class_type_id="' + class_type_id + '"></tr>')
-				.append('<td class="class_type">'+class_type + '</td>')
-				.append('<td class="class_description">' + class_description +'</td>'));			
+		createRow = function (type) {
+			return($('<tr data-class_type_id="' + type['class_type_id'] + '"></tr>')
+				.append('<td class="class_type">'+type['class_type'] + '</td>')
+				.append('<td class="class_description">' + type['class_description'] +'</td>')
+				.append('<td data-category_id='+ type['category_id'] +' class="category">' + type['category'] +'</td>')
+				);			
 		},
+		
+	
+		
 		refresh = function () {
 			typeTable.empty();
 			
@@ -206,7 +218,8 @@ $( document ).ready(function() {
 				var $tempList = $('<tbody></tbody>');
 				if(data.length>0){
 					$.each( data, function( key, type ) {
-						$tempList.append(createRow(type['class_type_id'], type['class_type'], type['class_description']));	
+						$tempList.append(createRow(type));
+						
 					});
 					
 				}
@@ -220,7 +233,7 @@ $( document ).ready(function() {
 			setupModal: setupModal,
 			form: form,
 			sendForm: sendForm,
-			refresh: refresh
+			category_id: category_id,
 			
 		};
 

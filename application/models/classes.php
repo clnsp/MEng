@@ -147,8 +147,10 @@ class Classes extends CI_Model
 	 * @return array
 	 */
 	function getClassTypes(){
+		$this->db->select('*');
 		$this->db->from($this -> class_type_tbl); 
-
+		$this->db->join('category_tbl', 'class_type_tbl.category_id = category_tbl.category_id');
+		
 		return $this -> db -> get()->result_array();
 	}
 
