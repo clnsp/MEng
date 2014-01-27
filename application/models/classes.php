@@ -12,6 +12,7 @@ class Classes extends CI_Model
 {
 	private $table_name			= 'class_tbl';	
 	private $class_type_tbl			= 'class_type_tbl';	
+	private $class_info_view			= 'class_info_view';	
 
 	function __construct()
 	{
@@ -31,15 +32,9 @@ class Classes extends CI_Model
 	 * @return	object
 	 */
 	function getClassessBetween($start, $end){ //getBookingsBetween used to be
-
-		$this -> db -> select('class_type AS title, class_start_date AS start, class_end_date AS end, category, class_tbl.category_id, class_id, max_attendance, room, room_tbl.room_id, color, cancelled');
-		$this -> db -> from($this -> table_name);
-		$this -> db -> where('class_start_date BETWEEN "' . $start . '" AND "' . $end . '"');
-		$this -> db -> join('room_tbl', 'room_tbl.room_id = class_tbl.room_id');
-		$this -> db -> join('category_tbl', 'category_tbl.category_id = class_tbl.category_id');
-		$this -> db -> join('class_type_tbl', 'class_type_tbl.class_type_id = class_tbl.class_type_id');
-
-		$query = $this -> db -> get();
+		
+		$this -> db -> where('start BETWEEN "' . $start . '" AND "' . $end . '"');
+		$query = $this->db->get($this -> class_info_view);
 
 		return $query->result();
 	}
@@ -51,19 +46,15 @@ class Classes extends CI_Model
 	function getClassesWithRoomBetween($start, $end, $room){
 
 		if($room != 'allrooms'){
-			$this -> db -> select(' class_type AS title, class_start_date AS start, class_end_date AS end, category, class_tbl.category_id, class_id, max_attendance, room, room_tbl.room_id, color, cancelled');
-			$this -> db -> from($this -> table_name);
-			$this -> db -> where('class_tbl.room_id',$room, ' start BETWEEN "' . $start . '" AND "' . $end . '"');
-			$this -> db -> join('room_tbl', 'room_tbl.room_id = class_tbl.room_id');
-			$this -> db -> join('category_tbl', 'category_tbl.category_id = class_tbl.category_id');
-			$this -> db -> join('class_type_tbl', 'class_type_tbl.class_type_id = class_tbl.class_type_id');
+			$this -> db -> where('room_id',$room, ' start BETWEEN "' . $start . '" AND "' . $end . '"');
+			$query = $this->db->get($this -> class_info_view);
+
 
 		}else{
 			return $this->getClassessBetween($start, $end);
 		}
 
-		$query = $this -> db -> get();
-
+	
 		return $query->result();
 	}
 
