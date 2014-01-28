@@ -21,7 +21,7 @@ $( document ).ready(function() {
 		var urlBase 		= "category/";
 
 		refresh = function() {
-		
+
 			$.getJSON(urlBase + 'fetchAll', function(data) {
 				var $tempList = $('<ul></ul>');
 				clear();
@@ -49,17 +49,21 @@ $( document ).ready(function() {
 		},
 
 		createListItem = function(id, name, color){
-			return $('<li class="list-group-item"></li>')
+			if(id != 1){
+				return $('<li class="list-group-item"></li>')
 				.append($('<input class="pull-right" name="category_id[]" value="'+ id + '" type="checkbox">'))
 				.append($('<input>')
 					.attr({
-					    type: 'hidden',
-					    class: 'minicolors',
-					    value: color,
-					    size: 7,
+						type: 'hidden',
+						class: 'minicolors',
+						value: color,
+						size: 7,
 					})
-					.data('category_id', id))			
-				.append(name);
+					.data('category_id', id))		
+				.append('<span class="editable">' + name + '</span>');
+			}else{
+				return null;
+			}
 		},
 		
 		initColorPickers = function() {
@@ -76,10 +80,10 @@ $( document ).ready(function() {
 		saveColor = function() {
 			if(this.value != currentColor){
 				$.post( urlBase + 'setColor', { category_id: $(this).data('category_id'), color: this.value })
-				  .done(function( data ) {
-				    alert("Name set");
-				  });
-			 }
+				.done(function( result ) {
+					alert(result);
+				});
+			}
 		},
 		
 		resetAddForm = function() {
@@ -88,32 +92,38 @@ $( document ).ready(function() {
 		
 		addCategory = function() {
 			$.ajax({
-			   url: urlBase + "addCategory/",
-			   type: "POST",
-			   data:  addForm.serialize(),
-			   success: function() {
-			   	categories.refresh();
-			   	resetAddForm();
-			  },
-			  error: function(){
-			    alert('Error occurred');
-			  },
+				url: urlBase + "addCategory/",
+				type: "POST",
+				data:  addForm.serialize(),
+				success: function(result) {
+					alert(result);
+					categories.refresh();
+					resetAddForm();
+				},
+				error: function(){
+					alert('Error occurred');
+				},
 			});
 			
 		},
 		removeCategory = function() {
-		
-			$.post( urlBase + "removeCategories/",
-					removeForm.serialize(), 
-					function(result) {
-					  alert(result);
-					  categories.refresh();
-					  resetAddForm();
-					})
-				  .fail(function(result) {
-				    alert("Error: " + result );
-				  });
 
+			$.post( urlBase + "removeCategories/", removeForm.serialize())
+			.done(function(result) {
+				alert('Success: ' + result);
+				categories.refresh();
+				resetAddForm();
+			})
+			.fail(function(result) {
+				alert("Error: " + result );
+			});
+
+		},
+
+		storename = function(category_id, category){
+			$.post( categories.urlBase + 'setName', { category_id: category_id, category: category })
+			.done(function( result ) { alert(result); })
+			.fail(function( result ) { alert(result); });
 		}
 		
 
@@ -124,7 +134,8 @@ $( document ).ready(function() {
 			addCategory : addCategory,
 			removeCategory : removeCategory,  
 			addForm: addForm, 
-			removeForm: removeForm
+			removeForm: removeForm,
+			storename : storename,
 		};
 
 	})();
@@ -135,27 +146,27 @@ $( document ).ready(function() {
 		var form = $('form#add-class-type-form'); 
 		
 		addNewClassType = function() {
-			  $.ajax({
-			    url: urlBase + "addClassType/",
-			    type: "POST",
-			    data:  form.serialize(),
-			    success: function() {
+			$.ajax({
+				url: urlBase + "addClassType/",
+				type: "POST",
+				data:  form.serialize(),
+				success: function() {
 			    	//categories.refresh();
-			    	  alert('Success');
-			    	  resetAddForm();
-			    	  
-			   },
-			   error: function(){
-			     alert('Error occurred');
-			   },
-			 });
+			    	alert('Success');
+			    	resetAddForm();
+
+			    },
+			    error: function(){
+			    	alert('Error occurred');
+			    },
+			});
 			
 		},
 		
 		resetAddForm = function () {
 			//todo
 		}
-	
+
 		
 		return {
 			addNewClassType: addNewClassType,
@@ -175,9 +186,9 @@ $( document ).ready(function() {
 		var category_id = form.find('select[name=category_id]');
 		
 		var typeTable = $('table#class-types-table tbody'); 
-			
+
 		var urlBase = "class_type/";
-			
+
 		setupModal = function (ci, ct, cd) {				
 			class_type_id.val(ci);
 			class_type.val(ct);
@@ -193,23 +204,23 @@ $( document ).ready(function() {
 		sendForm = function (id) {
 			
 			$.post( urlBase + 'updateClassType/', form.serialize())
-			  .done(function( data ) {
-			    alert("Changed class type");
-			    modal.modal('hide');
-			    refresh();
-			  });
-			 
+			.done(function( data ) {
+				alert("Changed class type");
+				modal.modal('hide');
+				refresh();
+			});
+
 		},
 		
 		createRow = function (type) {
 			return($('<tr data-class_type_id="' + type['class_type_id'] + '"></tr>')
 				.append('<td class="class_type">'+type['class_type'] + '</td>')
 				.append('<td class="class_description">' + type['class_description'] +'</td>')
-				.append('<td data-category_id='+ type['category_id'] +' class="category">' + type['category'] +'</td>')
+				.append('<td data-category_id='+ type['category_id'] +' class="category">' + type['category'] +'</td>') 
 				);			
 		},
 		
-	
+
 		
 		refresh = function () {
 			typeTable.empty();
@@ -234,12 +245,15 @@ $( document ).ready(function() {
 			form: form,
 			sendForm: sendForm,
 			category_id: category_id,
+			refresh: refresh,
 			
 		};
 
 	})();
-	
+
+	categories.refresh();
 	categories.initColorPickers();
+	manageclasstypes.refresh();
 	
 	$('INPUT.minicolors-inline').minicolors({
 		theme: 'bootstrap',
@@ -247,7 +261,7 @@ $( document ).ready(function() {
 	});
 	
 	
-	 categories.addForm.submit(function(){ categories.addCategory() });
+	categories.addForm.submit(function(){ categories.addCategory() });
 	
 	
 	categories.removeForm.submit(function(){ categories.removeCategory() });
@@ -263,18 +277,14 @@ $( document ).ready(function() {
 	
 	manageclasstypes.form.submit(function() { manageclasstypes.sendForm() });
 
-	 $('#manage-categories')
+	$('#manage-categories')
 
- 	/* Select anywhere along a checkbox-group row  */
- 	.on('blur', 'input.editable', function(e) {
-	 	if($(this).val() != $(this).data('previous')){
-	 	
-	 		$.post( categories.urlBase + 'setName', { category_id: $(this).parent('.list-group-item').data('category_id'), category: this.value })
-	 		  .done(function( data ) {
-	 		    alert("Color saved");
-	 		  }); 		
-	 	}
-	 });
+	/* Select anywhere along a checkbox-group row  */
+	.on('blur', 'input.editable', function(e) {
+		if($(this).val() != $(this).data('previous')){
+			categories.storename($(this).parent('.list-group-item').data('category_id'), this.value );
+		}
+	});
 
 
 

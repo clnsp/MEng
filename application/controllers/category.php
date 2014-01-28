@@ -27,14 +27,14 @@ class Category extends CI_Controller
 			if (isset($_POST['category_id']) && isset($_POST['color'])){
 				if($_POST['category_id'] != 1){
 					$this->categories->setColor($_POST['category_id'], $_POST['color']);
-					echo 'success';
+					echo 'Color changed';
 				}else{
-					echo 'Cannot alter uncategorised';
+					echo 'Cannot alter "Uncategorised" category';
 				}
 			}
 			
 		}else{
-		
+
 			echo 'not admin';
 			print_r($_POST);
 		}
@@ -47,10 +47,11 @@ class Category extends CI_Controller
 		if($this->tank_auth->is_admin()){
 			if (isset($_POST['category']) && isset($_POST['color'])){
 				$this->categories->addCategory($_POST['category'], $_POST['color']);
+				echo "Category Added";
 			}else{
-				echo "No post values";
+				echo "No values supplied";
 			}
-		
+
 		}
 	}
 	
@@ -59,22 +60,26 @@ class Category extends CI_Controller
 	*/
 	function removeCategories(){
 		if($this->tank_auth->is_admin()){
-		
+
 			if (isset($_POST['category_id'])){
 				
-				if(in_array(1, $_POST['category_id'])){
-					$_POST['category_id'] = array_diff( $_POST['category_id'], array(1)); //cannot remove the uncategorized category
-					echo("You cannot remove the uncategorized category<br>");
-				}
+				echo gettype($_POST['category_id']);
+				print_r($_POST['category_id']);
+
+			//	if(in_array(1, $_POST['category_id'])){
+			//		$_POST['category_id'] = array_diff( $_POST['category_id'], array(1)); //cannot remove the uncategorized category
+				//	echo("You cannot remove the uncategorized category");
+			//	}
 				
-				if(sizeof($_POST['category_id']) > 0){					
+			 if(sizeof($_POST['category_id']) > 0){					
 					$this->categories->removeCategories($_POST['category_id']);
+					echo("Category removed");
 				}else{
-					echo("No categories were removed<br>");
+					echo("No categories were removed");
 				}
 				
 			}
-		
+
 		}
 	}
 	
@@ -83,17 +88,23 @@ class Category extends CI_Controller
 	*/
 	function setName(){
 		if($this->tank_auth->is_admin()){
-		
 			if (isset($_POST['category_id']) && isset($_POST['category'])){
-				$this->categories->setName($_POST['category_id'], $_POST['category']);
+				if($_POST['category_id'] != 1){
+					$this->categories->setName($_POST['category_id'], $_POST['category']);
+					echo "Category name changed";
+				}else{
+					echo "Cannot change name of uncategorized category";
+					return false;
+				}
+
 			}else{
-				echo "No post values";
+				echo "No values entered";
 			}
-		
+
 		}
 	}
-	
+
 }
 
-	/* End of file welcome.php */
+/* End of file welcome.php */
 /* Location: ./application/controllers/categories.php */

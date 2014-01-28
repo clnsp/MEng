@@ -44,21 +44,7 @@
 					<h5>Edit Categories</h5>
 					<div class="manage-panel">
 				<form id="remove-category-form" class="prevent">
-					<ul id='class-categories-list' class="list-group checkbox-group">
-						
-						<?php foreach($categories as $cat): ?>
-					
-							<li  data-category_id="<?php echo $cat['category_id'] ?>" class="list-group-item"> 
-								<input class="pull-right" name="category_id[]" value="<?php echo $cat['category_id'] ?>" type="checkbox">
-							
-								<input data-category_id="<?php echo $cat['category_id'] ?>" type="hidden" class="demo minicolors" value="<?php echo $cat['color'] ?>" size="7">
-								<span class="editable"><?php echo $cat['category'] ?></span>
-													
-							</li>
-					
-						<?php endforeach; ?>
-					
-					</ul>
+					<ul id='class-categories-list' class="list-group checkbox-group"></ul>
 					</div>
 					<button type="submit" class="btn btn-danger pull-right">Remove</button>
 					</form>
@@ -119,19 +105,7 @@
 								<th>Category</th>
 							</tr>
 							
-							<tbody>
-								<?php foreach($class_types as $type):  ?>
-							
-									<tr  data-class_type_id="<?php echo $type['class_type_id'] ?>"> 
-															
-										<td class="class_type"><?php echo $type['class_type'] ?></td>
-										<td class="class_description"><?php echo $type['class_description'] ?></td>
-										<td data-category_id="<?php echo $type['category_id'] ?>" class="category"><?php echo $type['category'] ?></td>
-															
-									</tr>
-							
-								<?php endforeach; ?>
-							</tbody>
+							<tbody></tbody>
 						</table>
 					</div>
 					
@@ -161,13 +135,7 @@
           
           <div class="form-group">
             <label for="class_category">Category</label>
-	             <select name="category_id" type="dropdown" class="form-control">
-	             
-	             	<?php foreach($categories as $cat): ?>
-		             	 <option value="<?php echo $cat['category_id'] ?>"><?php echo $cat['category'] ?></option>
-	             	<?php endforeach; ?>
-	             
-	             </select>
+	             <select name="category_id" type="dropdown" class="form-control"></select>
           </div>
                     
           <div class="form-group">

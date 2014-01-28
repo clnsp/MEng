@@ -18,19 +18,21 @@
 				// Whoops, we don't have a page for that!
 				show_404();
 			}
-	
+
 
 			if(!$this->tank_auth->is_logged_in()){
 			  //If no session, redirect to login page
 				$data['user_type'] = 'guest';
 				redirect('login', 'refresh');
-			}else{
-		
+			}
 
-			if(check_admin()){
-		 		$data['user'] = $this->tank_auth->is_admin();
-				
-				$h = gmdate('H');
+			else{
+
+
+				if(check_admin()){
+					$data['user'] = $this->tank_auth->is_admin();
+
+					$h = gmdate('H');
 				$s = gmdate("Y-m-d H:i:s", 1390176000); // GET FOR CURRENT TIME  date('Y-m-d H:') . ':00:00';
 				$e = gmdate("Y-m-d H:i:s", 1390780800);
 				
@@ -54,7 +56,7 @@
 
 		}
 		
-		}
+	}
 
 		/**
 		 * Login to system
@@ -145,10 +147,10 @@
 				$this->load->Model('classes');
 				
 				$data['user'] = $this->tank_auth->is_admin();
-	
+
 				$data['categories'] = $this->Categories->getCategories();
 				$data['class_types'] = $this->classes->getClassTypes();
-							
+
 				parse_temp($page, $this->load->view('pages/'.$page, $data, true));
 			}
 		}
