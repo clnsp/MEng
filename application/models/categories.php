@@ -67,6 +67,10 @@ Class Categories extends CI_Model{
 		$this->db->where_in('category_id', $categories);
 		$this->db->delete($this -> category_tbl);
 		
+		if ($this->db->_error_message()){
+			echo "You cannot remove categories that are assigned to classes";
+		}
+
 		return $this->db->_error_number()==0;
 
 	}

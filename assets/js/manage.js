@@ -110,7 +110,7 @@ $( document ).ready(function() {
 
 			$.post( urlBase + "removeCategories/", removeForm.serialize())
 			.done(function(result) {
-				alert('Success: ' + result);
+				alert(result);
 				categoriesPanel.refresh();
 				resetAddForm();
 			})
