@@ -62,16 +62,13 @@ class Category extends CI_Controller
 		if($this->tank_auth->is_admin()){
 
 			if (isset($_POST['category_id'])){
-				
-				echo gettype($_POST['category_id']);
-				print_r($_POST['category_id']);
 
-			//	if(in_array(1, $_POST['category_id'])){
-			//		$_POST['category_id'] = array_diff( $_POST['category_id'], array(1)); //cannot remove the uncategorized category
-				//	echo("You cannot remove the uncategorized category");
-			//	}
+				if(in_array(1, $_POST['category_id'])){
+					$_POST['category_id'] = array_diff( $_POST['category_id'], array(1)); //cannot remove the uncategorized category
+					echo("You cannot remove the uncategorized category");
+				}
 				
-			 if(sizeof($_POST['category_id']) > 0){					
+				if(sizeof($_POST['category_id']) > 0){					
 					$this->categories->removeCategories($_POST['category_id']);
 					echo("Category removed");
 				}else{

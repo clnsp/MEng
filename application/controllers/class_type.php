@@ -14,10 +14,11 @@ class class_type extends CI_Controller
 	*/
 	function addClassType(){
 		if($this->tank_auth->is_admin()){
-			if (isset($_POST['class_type']) && isset($_POST['class_description'])){
-				$this->classes->addNewClassType($_POST['class_type'], $_POST['class_description']);
+			if (isset($_POST['class_type']) && isset($_POST['class_description']) && isset($_POST['category_id'])){
+				$this->classes->addNewClassType($_POST['class_type'], $_POST['class_description'], $_POST['category_id']);
+				echo "Class Added";
 			}else{
-				echo "No post values";
+				echo "No values";
 			}
 		
 		}
