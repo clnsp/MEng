@@ -32,20 +32,24 @@
 		 		$data['user'] = $this->tank_auth->is_admin();
 				
 				$h = gmdate('H');
-				$s = gmdate("Y-m-d H:i:s", 1390176000); // GET FOR CURRENT TIME  date('Y-m-d H:') . ':00:00';
-				$e = gmdate("Y-m-d H:i:s", 1390780800);
+				//$s = gmdate("Y-m-d H:i:s", 1390176000); // GET FOR CURRENT TIME  date('Y-m-d H:') . ':00:00';
+				//$e = gmdate("Y-m-d H:i:s", 1390780800);
 				
-				//$s = gmdate('Y-m-d ').($h-1). ':00:00'; // GET FOR CURRENT TIME  
-				//$e = gmdate('Y-m-d ').($h+1). ':00:00'; 
+				$s = gmdate('Y-m-d ').($h-1). ':00:00'; // GET FOR CURRENT TIME  
+			$e = gmdate('Y-m-d ').($h+8). ':00:00'; 
 				
 				$this->load->Model('Rooms');
 				$this->load->Model('Categories');
 				$this->load->Model('classes');
+				$this->load->Model('Bookings');
 				
 				$data['rooms'] = $this->Rooms->getRooms();
 				$data['categories'] = $this->Categories->getCategories();
 				$data['classes'] = $this->classes->getClassesWithRoomBetween($s, $e, 'allrooms');
-				
+
+				foreach ($data['classes'] as $class){
+					$class->attendees = $this->Bookings->getBookingAttendantsNames($class->class_id);
+				}				
 				$data['cDate'] = gmdate('l, dS F'); // "Wednesday 29th, Januaray";
 				
 				$data['cTimespan'] = "$h:00 - ".($h+1).":00";

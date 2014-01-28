@@ -21,111 +21,22 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>1</td>
-              <td>Mark</td>
-              <td>Otto</td>
+<?php $i=1; foreach($class->attendees as $attendee){ ?>
+	      <tr id="<?php echo($attendee->member_id); ?>">
+              <td><?php echo($i); ?></td>
+              <td><?php echo(ucfirst($attendee->first_name)); ?></td>
+              <td><?php echo(ucfirst($attendee->second_name)); ?></td>
             </tr>
-            <tr>
-              <td>2</td>
-              <td>Jacob</td>
-              <td>Thornton</td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td>Larry</td>
-              <td>the Bird</td>
-            </tr>
-			<tr>
-              <td>4</td>
-              <td>Mark</td>
-              <td>Otto</td>
-            </tr>
-            <tr>
-              <td>5</td>
-              <td>Jacob</td>
-              <td>Thornton</td>
-            </tr>
-            <tr>
-              <td>6</td>
-              <td>Larry</td>
-              <td>the Bird</td>
-            </tr>
-			<tr>
-              <td>7</td>
-              <td>Mark</td>
-              <td>Otto</td>
-            </tr>
-            <tr>
-              <td>8</td>
-              <td>Jacob</td>
-              <td>Thornton</td>
-            </tr>
-            <tr>
-              <td>9</td>
-              <td>Larry</td>
-              <td>the Bird</td>
-            </tr>
-			<tr>
-              <td>10</td>
-              <td>Mark</td>
-              <td>Otto</td>
-            </tr>
-            <tr>
-              <td>11</td>
-              <td>Jacob</td>
-              <td>Thornton</td>
-            </tr>
-			<tr>
-              <td>12</td>
-              <td>Mark</td>
-              <td>Otto</td>
-            </tr>
-            <tr>
-              <td>13</td>
-              <td>Jacob</td>
-              <td>Thornton</td>
-            </tr>
-			<tr>
-              <td>14</td>
-              <td>Mark</td>
-              <td>Otto</td>
-            </tr>
-            <tr>
-              <td>15</td>
-              <td>Jacob</td>
-              <td>Thornton</td>
-            </tr>
-            <tr>
-              <td>16</td>
-              <td>Larry</td>
-              <td>the Bird</td>
-            </tr>
-			<tr>
-              <td>17</td>
-              <td>Mark</td>
-              <td>Otto</td>
-            </tr>
-            <tr>
-              <td>18</td>
-              <td>Jacob</td>
-              <td>Thornton</td>
-            </tr>
-            <tr>
-              <td>19</td>
-              <td>Larry</td>
-              <td>the Bird</td>
-            </tr>
-			<tr>
-              <td>20</td>
-              <td>Larry</td>
-              <td>the Bird</td>
-            </tr>
+<?php $i++;	}?>
           </tbody>
         </table>
       </div>
 	  </div>
 </div><!--/CLASS-->
-<?php }?>
+<?php } if(count($classes) == 0) { ?>
+<div class="jumbotron">
+  <h1>Hooray !!</h1>
+  <p>No Classes Scheduled for the next 2 Hours</p>
+</div>
+<?php } ?>
 </div><!--/ROW-->
-<?php //print_r($classes); ?>
