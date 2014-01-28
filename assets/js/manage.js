@@ -89,7 +89,7 @@ $( document ).ready(function() {
 		},
 		
 		resetAddForm = function() {
-			//todo
+			addForm[0].reset();
 		},
 		
 		addCategory = function() {
@@ -100,7 +100,7 @@ $( document ).ready(function() {
 				success: function(result) {
 					alert(result);
 					categoriesPanel.refresh();
-					resetAddForm();
+					categoriesPanel.resetAddForm();
 				},
 				error: function(){
 					alert('Error occurred');
@@ -138,6 +138,7 @@ $( document ).ready(function() {
 			addForm: addForm, 
 			removeForm: removeForm,
 			storename : storename,
+			resetAddForm: resetAddForm,
 		};
 
 	})();
@@ -153,7 +154,7 @@ $( document ).ready(function() {
 			$.post(urlBase + 'addClassType/', form.serialize())
 			.done(function( result ) { 
 				alert(result); 
-				resetAddForm();
+				addClassTypePanel.resetAddForm();
 				manageClassTypesPanel.refresh();
 			})
 			.fail(function( result ) { alert(result); });			
@@ -161,7 +162,7 @@ $( document ).ready(function() {
 
 		
 		resetAddForm = function () {
-			//todo
+			form[0].reset();
 		}
 
 		
@@ -169,6 +170,7 @@ $( document ).ready(function() {
 			sendForm: sendForm,
 			form: form,
 			categoryDropdown : categoryDropdown,
+			resetAddForm: resetAddForm
 		};
 
 	})();
