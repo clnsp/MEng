@@ -202,11 +202,12 @@ class Classes extends CI_Model
 	 * @param string
 	 * @param string
 	 */
-	function updateClassType($class_type_id, $class_type, $class_description){
+	function updateClassType($class_type_id, $class_type, $class_description, $category_id){
 	
 	$data = array(
 		'class_type'		=>	$class_type,
-		'class_description'	=>	$class_description
+		'class_description'	=>	$class_description,
+		'category_id'		=>	$category_id
 	);
 	
 		$this->db->where('class_type_id', $class_type_id);

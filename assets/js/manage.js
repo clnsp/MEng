@@ -10,8 +10,6 @@ $( document ).ready(function() {
 		e.stopImmediatePropagation(); //prevent clicking the row when selecting color swatch
 	});
 	
-	var categories, addclasstypes, manageClassTypesPanel;
-
 	var categoriesPanel, addClassTypePanel, manageClassTypesPanel, editClassTypeModal;
 
 	categoriesPanel = (function() {
@@ -175,34 +173,34 @@ $( document ).ready(function() {
 
 	})();
 	
-	
-	var manageClassTypesPanel = (function() {
+
+	var editClassTypeModal = (function(){
 		var modal =  $('#modal-edit-class-type');
 		var form = modal.find('#edit-class-type-form');
-		
+
 		var class_type_id = form.find('input[name=class_type_id]');
 		var class_type = form.find('input[name=class_type]');
 		var class_description = form.find('textarea[name=class_description]');
 		var category_id = form.find('select[name=category_id]');
-		
-		var typeTable = $('table#class-types-table tbody'); 
 
 		var urlBase = "class_type/";
 
-	//	modal.on('show.bs.modal', );
 
-		setupModal = function (ci, ct, cd) {				
+		setupModal = function (ci, ct, cd, catid) {				
 			class_type_id.val(ci);
 			class_type.val(ct);
 			class_description.html(cd);
+			modal.modal('show');
+			category_id.html(addClassTypePanel.categoryDropdown.html());
+			category_id.val(catid);
 		},
-		
+
 		tearDownModal = function() {
 			class_type_id.val('');
 			class_type.val('');
 			class_description.html('');
 		},
-		
+
 		sendForm = function (id) {
 			
 			$.post( urlBase + 'updateClassType/', form.serialize())
@@ -212,8 +210,23 @@ $( document ).ready(function() {
 				refresh();
 			});
 
-		},
-		
+		}
+
+		return{
+			modal: modal,
+			setupModal: setupModal,
+			form: form,
+			sendForm: sendForm,
+			category_id: category_id,
+
+		};
+
+	})();
+	
+	var manageClassTypesPanel = (function() {
+		var typeTable = $('table#class-types-table tbody'); 
+		var urlBase = "class_type/";
+
 		createRow = function (type) {
 			return($('<tr data-class_type_id="' + type['class_type_id'] + '"></tr>')
 				.append('<td class="class_type">'+type['class_type'] + '</td>')
@@ -221,61 +234,56 @@ $( document ).ready(function() {
 				.append('<td data-category_id='+ type['category_id'] +' class="category">' + type['category'] +'</td>') 
 				);			
 		},
-		
 
-		
+
+
 		refresh = function () {
 			typeTable.empty();
-			
+
 			$.getJSON(urlBase + 'getClassTypes', function(data) {
 				var $tempList = $('<tbody></tbody>');
 				if(data.length>0){
 					$.each( data, function( key, type ) {
 						$tempList.append(createRow(type));
-						
+
 					});
-					
+
 				}
 				typeTable.html($tempList.html());
 
 			});
 		}
-		
+
 		return {
-			modal: modal,
-			setupModal: setupModal,
-			form: form,
-			sendForm: sendForm,
-			category_id: category_id,
+
 			refresh: refresh,
-			
+
 		};
 
 	})();
 
 	categoriesPanel.refresh();
 	manageClassTypesPanel.refresh();
-	
+
 	$('INPUT.minicolors-inline').minicolors({
 		theme: 'bootstrap',
 		control: 'wheel',
 	});
-	
-	
+
+
 	categoriesPanel.addForm.submit(function(){ categoriesPanel.addCategory() });
-	
-	
+
+
 	categoriesPanel.removeForm.submit(function(){ categoriesPanel.removeCategory() });
-	
+
 
 	addClassTypePanel.form.submit(function(){addClassTypePanel.sendForm()});
-	
+
 	$('table#class-types-table tbody').on('click','tr',function(e){
-		manageClassTypesPanel.setupModal($(this).data('class_type_id'), $(this).find('.class_type').html(), $(this).find('.class_description').html());
-		manageClassTypesPanel.modal.modal('show');
+		editClassTypeModal.setupModal($(this).data('class_type_id'), $(this).find('.class_type').html(), $(this).find('.class_description').html(), $(this).find('.category').data('category_id'));
 	});
-	
-	manageClassTypesPanel.form.submit(function() { manageClassTypesPanel.sendForm() });
+
+	editClassTypeModal.form.submit(function() { editClassTypeModal.sendForm() });
 
 	$('#manage-categories')
 
