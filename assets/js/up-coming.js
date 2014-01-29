@@ -6,14 +6,12 @@ Gym Booking System
 $.pageManager = (function () {
 
 	resize = function(){
-		// Get Max Height
-		//http://stackoverflow.com/questions/6060992/element-with-the-max-height-from-a-set-of-elements
-		//var maxHeight = Math.max.apply(null, $(".classes").map(function () { return $(this).height();}).get());
-
 		if($('.list')[0] != undefined){
 			$(".list").css('height',$(window).height() - $('.list').eq(0).offset().top);
 			if($('.classes')[0] != undefined){
-				$(".classes").css('max-height',$(window).height() - $('.classes').eq(0).offset().top-$(".classes").siblings(".panel-heading").eq(0).height()+20);
+				// Get Max Height //http://stackoverflow.com/questions/6060992/element-with-the-max-height-from-a-set-of-elements
+				$maxHeight = Math.max.apply(null, $(".classes").map(function () { return ($(this).offset().top-$(this).siblings(".panel-heading").eq(0).height()+30);}).get());
+				$(".classes").css('max-height',$(window).height() - $maxHeight);
 			}
 		}
 	},
@@ -37,7 +35,7 @@ $.pageManager = (function () {
 		$( window ).on("resize", function() {resize()});
 		$(".classes td").on("dblclick", function(){attendee($(this).parent("tr"));});
 		$(".list").on('selectstart', function (event) {event.preventDefault();});
-		$(".dropdown-menu li").on('click',  function() { $('.'+$(this).attr('id')).toggle();});
+		$(".dropdown-menu li").on('click',  function() { console.log($(this)); $('.'+$(this).attr('id')).toggle();});
 	},
 
 	resize();

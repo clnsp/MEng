@@ -37,12 +37,12 @@ width: 33% !important;
 
 div.list {
     overflow-x: auto;
-	overflow-y: hidden;
+    overflow-y: hidden;
     white-space: nowrap;
 }
 div.list [class*="col-"] {
     display: inline-block;
-    float: none; /* Very important */
+    float: left; /* Very important */
 }
 
 div.classes {

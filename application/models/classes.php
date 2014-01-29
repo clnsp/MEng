@@ -34,7 +34,9 @@ class Classes extends CI_Model
         function getClassessBetween($start, $end){ //getBookingsBetween used to be
                 
                 $this -> db -> where('start BETWEEN "' . $start . '" AND "' . $end . '"');
+		$this -> db -> order_by("start asc, title asc");
                 $query = $this->db->get($this -> class_info_view);
+		
 
                 return $query->result();
         }
@@ -47,6 +49,7 @@ class Classes extends CI_Model
 
                 if($room != 'allrooms'){
                         $this -> db -> where('room_id',$room, ' start BETWEEN "' . $start . '" AND "' . $end . '"');
+			$this -> db -> order_by("start asc, title asc");
                         $query = $this->db->get($this -> class_info_view);
 
 
