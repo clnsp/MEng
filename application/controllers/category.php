@@ -23,7 +23,6 @@ class Category extends CI_Controller
 	function setColor(){
 		
 		if($this->tank_auth->is_admin()){
-			
 			if (isset($_POST['category_id']) && isset($_POST['color'])){
 				if($_POST['category_id'] != 1){
 					$this->categories->setColor($_POST['category_id'], $_POST['color']);
@@ -31,12 +30,13 @@ class Category extends CI_Controller
 				}else{
 					echo 'Cannot alter "Uncategorised" category';
 				}
+			}else{
+				echo "Missing post values";
 			}
 			
 		}else{
 
 			echo 'not admin';
-			print_r($_POST);
 		}
 	}
 	
@@ -54,6 +54,20 @@ class Category extends CI_Controller
 
 		}
 	}
+
+	/**
+	* Determines whether an array of categories has any uncategorised
+	* @param 	array
+	* @param 	array - cleansed array
+	*/
+	function _cleanseUncategorised($categories){
+		if(in_array(1, $categories)){
+			echo("You cannot remove the uncategorized category");
+			return $categories = array_diff( $categories, array(1)); 
+		}
+
+		return $categories;
+	}
 	
 	/**
 	* Remove categories
@@ -63,14 +77,14 @@ class Category extends CI_Controller
 
 			if (isset($_POST['category_id'])){
 
-				if(in_array(1, $_POST['category_id'])){
-					$_POST['category_id'] = array_diff( $_POST['category_id'], array(1)); //cannot remove the uncategorized category
-					echo("You cannot remove the uncategorized category");
-				}
+				$_POST['category_id'] = $this->_cleanseUncategorised($_POST['category_id']);
 				
 				if(sizeof($_POST['category_id']) > 0){					
-					$this->categories->removeCategories($_POST['category_id']);
-					echo("Category removed");
+					if($this->categories->removeCategories($_POST['category_id']))
+						echo("Categories removed");
+					else{
+						echo "Error removing categories";
+					}
 				}else{
 					echo("No categories were removed");
 				}
@@ -78,6 +92,49 @@ class Category extends CI_Controller
 			}
 
 		}
+	}
+
+	/**
+	* Force remove categories even if assigned to class types.
+	* 
+	*/
+	function forceRemoveCategories(){
+		if($this->tank_auth->is_admin()){
+
+			if (isset($_POST['category_id'])){
+				$this->load->model('classes');
+
+				$_POST['category_id'] = $this->_cleanseUncategorised($_POST['category_id']);
+				
+				if(sizeof($_POST['category_id']) > 0){
+
+					$this->classes->uncategoriseClassTypes($_POST['category_id']);
+
+					if($this->categories->removeCategories($_POST['category_id']))
+						echo("Categories removed");
+					else{
+						echo "Error removing categories";
+					}
+				}else{
+					echo("No categories were removed");
+				}
+				
+			}
+
+		}
+	}
+
+
+		/**
+	* Force remove categories even if assigned to class types.
+	* 
+	*/
+	function force(){
+		$this->load->model('classes');
+
+		$this->classes->uncategoriseClassTypes(array(11));
+
+		
 	}
 	
 	/**

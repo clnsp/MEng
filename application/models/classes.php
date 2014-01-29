@@ -54,7 +54,7 @@ class Classes extends CI_Model
 			return $this->getClassessBetween($start, $end);
 		}
 
-	
+
 		return $query->result();
 	}
 
@@ -187,12 +187,12 @@ class Classes extends CI_Model
 	 * @param string
 	 */
 	function addNewClassType($class_type, $class_description, $category_id){
-	$data = array(
-		'class_type'		=>	$class_type,
-		'class_description'	=>	$class_description,
-		'category_id'		=>	$category_id,
-	);
-	
+		$data = array(
+			'class_type'		=>	$class_type,
+			'class_description'	=>	$class_description,
+			'category_id'		=>	$category_id,
+			);
+
 		$this->db->insert($this -> class_type_tbl, $data); 
 	}
 	
@@ -203,15 +203,28 @@ class Classes extends CI_Model
 	 * @param string
 	 */
 	function updateClassType($class_type_id, $class_type, $class_description, $category_id){
-	
-	$data = array(
-		'class_type'		=>	$class_type,
-		'class_description'	=>	$class_description,
-		'category_id'		=>	$category_id
-	);
-	
+
+		$data = array(
+			'class_type'		=>	$class_type,
+			'class_description'	=>	$class_description,
+			'category_id'		=>	$category_id
+			);
+
 		$this->db->where('class_type_id', $class_type_id);
 		$this->db->update($this -> class_type_tbl, $data); 
+
+	}	
+
+	/**
+	 * Change all class types with categories to uncategorised.
+	 * @param	array
+	 */
+	function uncategoriseClassTypes($categories){
+		foreach ($categories as $cat) {
+			$this->db->where('category_id', $cat);
+			$this->db->update($this -> class_type_tbl, array('category_id' => 1)); 
+		}
+
 	}	
 
 }

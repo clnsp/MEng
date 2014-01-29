@@ -20,7 +20,7 @@ class class_type extends CI_Controller
 			}else{
 				echo "No values";
 			}
-		
+
 		}
 	}
 	
@@ -32,7 +32,7 @@ class class_type extends CI_Controller
 			$types = $this->classes->getClassTypes();
 			
 			echo json_encode($types);
-		
+
 		}
 	}
 	
@@ -45,11 +45,13 @@ class class_type extends CI_Controller
 				$this->classes->updateClassType($_POST['class_type_id'], $_POST['class_type'], $_POST['class_description'], $_POST['category_id']);
 				echo "Class type updated";
 			}	
+		}
+
 	}
-	
-}
-	
-	
+
+
+
+
 }
 
 /* End of file welcome.php */

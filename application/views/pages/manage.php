@@ -151,6 +151,7 @@
 
 					</div>
 					<div class="modal-footer">
+						<button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Remove Class Type</button>
 						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 						<button type="submit" class="btn btn-primary">Save changes</button>
 					</div>

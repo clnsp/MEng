@@ -61,17 +61,19 @@ Class Categories extends CI_Model{
 	
 	/**
 	 * Remove categories
-	 * @param	array 
+	 * @param	array
+	 * @return 	bool - whether an error occured
 	 */
 	function removeCategories($categories){	
 		$this->db->where_in('category_id', $categories);
 		$this->db->delete($this -> category_tbl);
-		
-		if ($this->db->_error_message()){
-			echo "You cannot remove categories that are assigned to classes";
+
+		if ($this->db->_error_number()==1451){
+			header("Cannot remove",TRUE,304);
+			echo "You cannot remove categories that are assigned to classes\n";
 		}
 
-		return $this->db->_error_number()==0;
+		return $this->db->_error_number() == 0;
 
 	}
 	
@@ -85,6 +87,8 @@ Class Categories extends CI_Model{
 		$this->db->update($this -> category_tbl, array('category' => $category)); 
 
 	}	
+
+	
 }
 ?>
 

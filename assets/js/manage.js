@@ -58,8 +58,9 @@ $( document ).ready(function() {
 						class: 'minicolors',
 						value: color,
 						size: 7,
-					})
-					.data('category_id', id))		
+						'data-category_id': id
+					}))
+
 				.append('<span class="editable">' + name + '</span>');
 			}else{
 				return null;
@@ -109,15 +110,55 @@ $( document ).ready(function() {
 		removeCategory = function() {
 
 			$.post( urlBase + "removeCategories/", removeForm.serialize())
-			.done(function(result) {
-				alert(result);
-				categoriesPanel.refresh();
-				resetAddForm();
+			.done(function(result, textStatus, jqXHR) {
+				if(jqXHR.status == 304){
+					bootbox.dialog({
+						message: "<p><b>Not all classes were removed. You cannot remove categories that are already assigned to class types.</b></p><p>You should reassign class types with this category or you can continue and assign the class types as uncategorised.</p>",
+						title: "Class Type Category Conflict",
+						buttons: {
+							success: {
+								label: "Cancel",
+								className: "btn-default",
+								callback: function() {
+									bootbox.hideAll();
+								}
+							},
+							danger: {
+								label: "Uncategorise Classes",
+								className: "btn-danger",
+								callback: function() {
+									this.forceRemoveCategories();
+								}
+							}
+							
+						}
+					});	
+				}else{
+					alert(result);
+					categoriesPanel.refresh();
+					resetAddForm();
+				}
+				
 			})
 			.fail(function(result) {
 				alert("Error: " + result );
 			});
 
+		},
+
+		forceRemoveCategories = function(){
+			$.post( urlBase + "forceRemoveCategories/", removeForm.serialize())
+			.done(function(result) {
+				
+				alert(result);
+				manageClassTypesPanel.refresh();
+				categoriesPanel.refresh();
+
+				
+			})
+			.fail(function(result) {
+				alert("Error: " + result );
+			});
 		},
 
 		storename = function(category_id, category){
