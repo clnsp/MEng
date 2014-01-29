@@ -32,6 +32,7 @@ class Auth extends CI_Controller
 	 */
 	function login()
 	{	
+
 		if ($this->tank_auth->is_logged_in()) {									// logged in
 			redirect('');
 

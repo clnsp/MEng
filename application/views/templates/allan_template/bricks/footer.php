@@ -1,5 +1,7 @@
 
-<?php if(!check_admin()){?>
+<?php 
+
+if(!$this->tank_auth->is_admin()){ ?>
 <div id="footer">
 
 
@@ -27,7 +29,7 @@
   </div>
 
 </div><!--end footer-->
-<?php;};?>
+<?php }; ?>
 <!-- Latest compiled and minified JavaScript -->
 
 
