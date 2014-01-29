@@ -48,8 +48,9 @@ div.list [class*="col-"] {
 
 div.classes {
 	clear:both;
-        overflow-y: auto;
+    overflow-y: auto;
 	overflow-x: hidden;
+	vertical-align:top;
 	z-index: 2;
 }
 

@@ -62,6 +62,12 @@ $_POST['first_name'];
 		
 	}
 	
+	function serverTime()
+	{
+		$myTime = array('serverTime' =>  date("U"));	
+		echo json_encode($myTime);	
+	}
+	
 	/*
 	 * Contact User
 	 */
