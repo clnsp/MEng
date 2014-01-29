@@ -36,7 +36,7 @@
 				//$e = gmdate("Y-m-d H:i:s", 1390780800);
 				
 				$s = gmdate('Y-m-d ').($h-1). ':00:00'; // GET FOR CURRENT TIME  
-			$e = gmdate('Y-m-d ').($h+8). ':00:00'; 
+			$e = gmdate('Y-m-d ').($h+4). ':00:00'; 
 				
 				$this->load->Model('Rooms');
 				$this->load->Model('Categories');

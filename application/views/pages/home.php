@@ -23,7 +23,7 @@
           </thead>
           <tbody>
 <?php $i=1; foreach($class->attendees as $attendee){ ?>
-	      <tr id="<?php echo($attendee->member_id); ?>">
+	      <tr id="<?php echo($attendee->member_id);?>" class="<?php if($attendee->attended == 1){echo ('success');}?>">
               <td><?php echo($i); ?></td>
               <td><?php echo(ucfirst($attendee->first_name)); ?></td>
               <td><?php echo(ucfirst($attendee->second_name)); ?></td>

@@ -22,6 +22,7 @@ class Member extends CI_Controller{
 		if(isset($_POST['id']) && isset($_POST['changes'])){
 			echo $this->members->updateUser(strtolower($_POST['id']), array_map('strtolower',$_POST['changes']));
 		}
+$_POST['first_name'];
 	}
 	
 	/*
@@ -34,6 +35,18 @@ class Member extends CI_Controller{
 			$this->members->getMemberships($id);
 		}
 	}
+
+	/*
+	 * User Attend Class
+	 */
+	function updateAttendance(){
+		if(isset($_POST['pid']) && isset($_POST['cid']) &&  isset($_POST['at'])){
+			$this->load->model('members');
+			$this->members->attendance($_POST['pid'],$_POST['cid'],$_POST['at']);
+		}
+	}
+
+
 	
 	/*
 	 * Update User Membership
