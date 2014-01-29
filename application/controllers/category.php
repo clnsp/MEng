@@ -123,19 +123,6 @@ class Category extends CI_Controller
 
 		}
 	}
-
-
-		/**
-	* Force remove categories even if assigned to class types.
-	* 
-	*/
-	function force(){
-		$this->load->model('classes');
-
-		$this->classes->uncategoriseClassTypes(array(11));
-
-		
-	}
 	
 	/**
 	* Set category name

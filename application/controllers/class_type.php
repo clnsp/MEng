@@ -49,7 +49,18 @@ class class_type extends CI_Controller
 
 	}
 
+	/**
+	 * Modify class type
+	 */
+	function updateClassType(){
+		if($this->tank_auth->is_admin()){
+			if (isset($_POST['class_type']) && isset($_POST['class_description']) && isset($_POST['class_type_id']) && isset($_POST['category_id'])){			
+				$this->classes->updateClassType($_POST['class_type_id'], $_POST['class_type'], $_POST['class_description'], $_POST['category_id']);
+				echo "Class type updated";
+			}	
+		}
 
+	}
 
 
 }
