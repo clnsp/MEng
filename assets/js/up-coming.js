@@ -13,29 +13,18 @@ $.pageManager = (function () {
 			$(".list").css('height',$(window).height() - $('.list').eq(0).offset().top);
 			if($('.classes')[0] != undefined){
 				// Get Max Height //http://stackoverflow.com/questions/6060992/element-with-the-max-height-from-a-set-of-elements
-				$maxHeight = Math.max.apply(null, $(".classes").map(function () { return ($(this).offset().top-$(this).siblings(".panel-heading").eq(0).height()+30);}).get());
+				$maxHeight = Math.max.apply(null, $(".classes").map(function () { return ($(this).offset().top-$(this).siblings(".panel-heading").eq(0).height()+20);}).get());
 				$(".classes").css('max-height',$(window).height() - $maxHeight);
 			}
 		}
 	},
-
-	remove = function(){
 	
-	
-	},
-	
-	retreive = function(){
-	
-	
-	},
+	retreive = function(){ $.get('index.php/updateClasses' , function(data){ $(".row.list").html(data); });},
 	
 	nextHour = function(){
-		
-	alert("HOUR");
-	console.log("HOUR");
-	setTimer();
-	newTime();
-	
+		retreive(); // CHANGE TO ??:30
+		setTimer();
+		newTime();
 	},
 	
 	newTime = function(){
@@ -43,9 +32,12 @@ $.pageManager = (function () {
 		$time = d.getHours();
 		$time = $time+":00 - " + ($time+1)%24 + ":00";
 		
-		$date = $.weekdays[d.getDay()] + ", " + suffix(d.getDate()) + " " + $.months[d.getMonth()];
 		console.log("TIME: " + $time);
-		console.log("DATE: " + $date);
+		if(d.getHours() == 0)
+		{
+			$date = $.weekdays[d.getDay()] + ", " + suffix(d.getDate()) + " " + $.months[d.getMonth()];
+			console.log("DATE: " + $date);
+		}
 	},
 	
 	suffix = function(i) {
@@ -62,7 +54,7 @@ $.pageManager = (function () {
 		return i + "th";
 	},
 	
-	attendee = function ($row){
+	attendee = function ($row) {
 
 		if($row.hasClass('success')){$attend=0;} else{$attend=1;}
 		$.post('index.php/member/updateAttendance', { pid:$row.attr('id'),cid: $row.closest("div.panel").attr('id'), at: $attend}, function (data) {
@@ -85,7 +77,8 @@ $.pageManager = (function () {
 		$(".list").on('selectstart', function (event) {event.preventDefault();});
 		$(".dropdown-menu li").on('click',  function() { console.log($(this)); $('.'+$(this).attr('id')).toggle();});
 		setTimer();
-		newTime();
+		//newTime();
+		//retreive();
 	},
 
 	resize();
