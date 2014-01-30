@@ -16,6 +16,7 @@ if ( ! function_exists('parse_temp'))
 		$data['page_body'] = $page_body;
 
         $data['logged_in'] = $ci->tank_auth->is_logged_in(); 
+        $data['user'] = $ci->tank_auth->is_admin();
 
         $data['email'] = $session_data['email'];  
         $data['user_type'] = '1';//$session_data['member_type']; 
@@ -42,7 +43,7 @@ if ( ! function_exists('parse_temp'))
         if(!$ci->tank_auth->is_logged_in() || !$ci->tank_auth->is_admin()){
             //If no session, redirect to login page
             $data['user_type'] = 'guest';
-           redirect('login', 'refresh');
+            redirect('login', 'refresh');
             return false;
         }
 

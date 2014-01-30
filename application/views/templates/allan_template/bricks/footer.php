@@ -52,7 +52,6 @@ if(!$this->tank_auth->is_admin()){ ?>
      <script src="<?php echo base_url();?>assets/js/jquery-ui-autocomplete.custom.min.js"></script>
      <script src="<?php echo base_url();?>assets/cal/fullcalendar.min.js"></script>
      <script type="text/javascript" src="<?php echo base_url();?>assets/js/booking-calendar.js"></script>
-     <script type="text/javascript" src="<?php echo base_url();?>assets/js/bootstrap-override.js"></script>
 
      <!-- Admin Manage Scripts -->
      <script type="text/javascript" src="<?php echo base_url();?>assets/js/jquery.minicolors.js"></script>
@@ -60,9 +59,10 @@ if(!$this->tank_auth->is_admin()){ ?>
 
      <!-- Custom -->
      <script type="text/javascript" src="<?php echo base_url();?>assets/js/bootbox.min.js"></script>
-
-
-
+    
+    <!-- Sitewide javascript -->
+     <script type="text/javascript" src="<?php echo base_url();?>assets/js/bootstrap-override.js"></script>
+    
      <script> 
       // using JQUERY's ready method to know when all dom elements are rendered
       $( document ).ready(function () {

@@ -45,26 +45,21 @@
 
 
 
- // window.old_alert = window.alert;
+ window.old_alert = window.alert;
 
- // window.alert = function(message, fallback){
- // 	if(fallback)
- // 	{
- // 		old_alert(message);
- // 		return;
- // 	}
+ window.alert = function(message, fallback){
+ 	if(fallback){
+ 		old_alert(message);
+ 		return;
+ 	}
 
- // 	var alert= $('<div id="alert" class="alert alert-default fade in"></div>')
- // 	.append($('<h4>Alert</h4>'))
- // 	.append($('<p></p>').html(message))
- // 	.append($('<button type="button" class="btn btn-default">Ok</button>'));
- // 	$('body').append(alert);
+ 	bootbox.alert(message, null);
 
- // };
+ };
 
 
  
-//swapMode = function ($it) {
+// swapMode = function ($it) {
 //    if ($it.html() != "Overview") {
 //        $("label.editable").replaceWith(function () {
 //            return "<input class=\"form-control input-sm editable\" id=\"" + $(this).attr('id') + "\" type=\"text\" value=\"" + $(this).html() + "\" />";
@@ -76,4 +71,4 @@
 //        });
 //        $it.html("<i class=\"fa fa-pencil fa-fw\"></i> Edit</i>");
 //    }
-//},
+// },

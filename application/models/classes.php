@@ -227,4 +227,22 @@ class Classes extends CI_Model
 
 	}	
 
+	/**
+	 * Remove a class type
+	 * @param int
+	 */
+	function removeClassType($class_type_id){
+		$this->db->where_in('class_type_id', $class_type_id);
+		$this->db->delete($this -> class_type_tbl);
+
+		if ($this->db->_error_number()==1451){
+			header("Cannot remove",TRUE,304);
+			echo "Cannot remove class types that are assigned to classes";
+		}
+
+		return $this->db->_error_number() == 0;
+
+
+	}	
+
 }
