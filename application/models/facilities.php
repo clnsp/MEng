@@ -1,8 +1,15 @@
-<?php
-
-Class Rooms extends CI_Model{
+    <?php   
+      
+Class Facilities extends CI_Model {
 
 	private $table_name = 'room_tbl';
+
+            function get_all(){  
+
+		$query = $this -> db ->get('room_tbl');
+		
+                return $query->result_array();  
+            }
                 
             function retrieve_descriptions(){  
                 $this->db->select('description'); 
@@ -31,31 +38,9 @@ Class Rooms extends CI_Model{
                 return $query->result_array();  
             }          
 
-	/**
-	 * Function for fetching all rooms 
-	 * @return array
-	 */
-	function getRooms()	{
-		$query = $this -> db -> get('room_tbl');
+        }  
+          
+    /* End of file facilties.php */  
+    /* Location: ./application/models/facilites.php */ 
 
-		return $query->result_array();
-	}
-
-	/**
-	* Function for fetching all room ids
-	* @return array
-	*/
-	function getRoomIDS(){
-		$this->db->select('room_id');
-		$this->db->from('room_tbl'); 
-		
-		return $this -> db -> get()->result_array();
-	}
-
-
-	//getRoomByName
-	//getRoomById
-	//getRoomByCapacity
-	
-}
-?>
+	?>

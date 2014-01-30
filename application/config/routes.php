@@ -47,6 +47,8 @@ $route['logout'] = 'auth/logout';
 $route['register'] = 'auth/register';
 $route['404_override'] = 'pages/view/page-not-found';
 $route['users'] = 'pages/users';
+$route['rooms'] = 'pages/rooms';
+$route['links'] = 'pages/links';
 
 $route['member'] = 'member';
 

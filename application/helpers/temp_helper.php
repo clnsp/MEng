@@ -17,6 +17,8 @@ if ( ! function_exists('parse_temp'))
 
         $data['logged_in'] = $ci->tank_auth->is_logged_in(); 
 
+	$data['user'] = $ci->tank_auth->is_admin();
+
         $data['email'] = $session_data['email'];  
         $data['user_type'] = '1';//$session_data['member_type']; 
         $data['user_name'] = $ci->tank_auth->get_username();

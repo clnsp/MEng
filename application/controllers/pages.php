@@ -133,6 +133,49 @@
 			parse_temp('room', $this->load->view('pages/room', $data, true));
 
 		}
+
+		/**
+		 * Rooms
+		 */
+		public function rooms(){
+
+			$this->load->Model($page = 'rooms');
+			
+			$data['rooms'] = $this->rooms->getRooms();
+/*
+			$data['room_id'] = $this->facilities->retrieve_ids();
+			$data['room'] = $this->facilities->retrieve_titles();
+			$data['description'] = $this->facilities->retrieve_descriptions();
+
+*/			parse_temp($page, $this->load->view('pages/rooms', $data, true));
+
+		}
+
+		/**
+		 * Links
+		 */
+		public function links(){
+
+			$this->load->Model($page = 'links');
+			
+			$data['links'] = $this->links->get_all();
+
+			parse_temp($page, $this->load->view('pages/user-links', $data, true));
+
+		}
+
+		/**
+		 * Footer
+		 */
+		public function links1(){
+
+			$this->load->Model($page = 'footer');
+			
+			$data['links'] = $this->links->get_all();
+
+			parse_temp($page, $this->load->view('pages/footer', $data, true));
+
+		}
 		
 		/**
 		 * Admin calendar booking page
@@ -142,7 +185,8 @@
 			if(check_admin()){
 				$this->load->Model('Categories');
 				$this->load->Model('classes');
-				
+				$this->load->Model('facilities');
+
 				$data['user'] = $this->tank_auth->is_admin();
 	
 				$data['categories'] = $this->Categories->getCategories();
