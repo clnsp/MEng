@@ -1,5 +1,5 @@
 
-
+<!--
 <div id="footer">
 
 
@@ -26,7 +26,7 @@
     </span>
   </div>
 
-</div><!--end footer-->
+</div>--><!--end footer-->
 
 <!-- Latest compiled and minified JavaScript -->
 

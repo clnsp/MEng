@@ -1,25 +1,43 @@
 <?php
-if ($use_username) {
-	$username = array(
-		'name'	=> 'username',
-		'id'	=> 'username',
-		'value' => set_value('username'),
-		'maxlength'	=> $this->config->item('username_max_length', 'tank_auth'),
-		'size'	=> 30,
-		'class' => 'form-control',
-		'placeholder' => 'Username',
+$id = array(
+	'name'	=> 'id',
+	'id'	=> 'id',
+	'value'	=> set_value('id',$uid),
+	'maxlength'	=> 80,
+	'size'	=> 30,
+	'class' => 'form-control',
+	'placeholder' => 'Unique ID',
+	'disabled' => 'disabled',
+	);
+$firstname = array(
+	'name'	=> 'firstname',
+	'id'	=> 'firstname',
+	'value'	=> set_value('firstname',$firstname),
+	'maxlength'	=> 80,
+	'size'	=> 30,
+	'class' => 'form-control',
+	'placeholder' => 'Firstname',
+	'disabled' => 'disabled',
+	);
+$secondname = array(
+	'name'	=> 'secondname',
+	'id'	=> 'secondname',
+	'value'	=> set_value('secondname',$secondname),
+	'maxlength'	=> 80,
+	'size'	=> 30,
+	'class' => 'form-control',
+	'placeholder' => 'Secondname',
+	'disabled' => 'disabled',
+	);
 
-		);
-}
 $email = array(
 	'name'	=> 'email',
 	'id'	=> 'email',
-	'value'	=> set_value('email'),
+	'value'	=> set_value('email',$email),
 	'maxlength'	=> 80,
 	'size'	=> 30,
 	'class' => 'form-control',
 	'placeholder' => 'Email Address',
-
 	);
 $password = array(
 	'name'	=> 'password',
@@ -30,10 +48,7 @@ $password = array(
 	'type'  => 'password',
 	'class' => 'form-control',
 	'placeholder' => 'Password',
-	
 	);
-
-
 $confirm_password = array(
 	'name'	=> 'confirm_password',
 	'id'	=> 'confirm_password',
@@ -43,6 +58,13 @@ $confirm_password = array(
 	'class' => 'form-control',
 	'placeholder' => 'Confirm Password',
 	);
+$user_type = array(
+	'name' => 'user_type',
+	'id' => 'user_type',
+	);
+
+$user_type_options = array('1'  => 'Student','2'  => 'Staff',);
+	
 $captcha = array(
 	'name'	=> 'captcha',
 	'id'	=> 'captcha',
@@ -63,18 +85,32 @@ $form = array(
 	<p>Lorem ipsum dolor sit amet, feugiat apeirian contentiones ut ius, ius probatus rationibus repudiandae ad. Ad sed vero periculis. An posse delectus philosophia vel. Ne ius pertinax consectetuer, eam ex mundi aeterno dissentiunt. Saepe ancillae assueverit vis et, eam rebum delenit deterruisset cu.</p>
 	<div class="well well-lg  div-center">
 		<?php echo form_open($this->uri->uri_string(), $form); ?>
-		<?php if ($use_username) { ?>
+
+		<?php echo form_error($id['name']); ?>
 		<div class="form-group">
-			<?php echo form_label('Username', $username['id'], $label); ?>
+			<?php echo form_label('ID', $id['id'], $label); ?>
 			<div class="col-sm-10">
-				<?php echo form_input($username); ?>
+				<?php echo form_input($id); ?>
 			</div>
-			<?php echo form_error($username['name']); ?><?php echo isset($errors[$username['name']])?$errors[$username['name']]:''; ?>
 		</div>
-		<?php } ?>
+
+		<?php echo form_error($firstname['name']); ?>
+		<div class="form-group">
+			<?php echo form_label('First Name', $firstname['id'], $label); ?>
+			<div class="col-sm-10">
+				<?php echo form_input($firstname); ?>
+			</div>
+		</div>
+
+		<?php echo form_error($secondname['name']); ?>
+		<div class="form-group">
+			<?php echo form_label('Second Name', $secondname['id'], $label); ?>
+			<div class="col-sm-10">
+				<?php echo form_input($secondname); ?>
+			</div>
+		</div>
 
 		<?php echo form_error($email['name']); ?><?php echo isset($errors[$email['name']])?$errors[$email['name']]:''; ?>
-
 		<div class="form-group">
 			<?php echo form_label('Email', $email['id'], $label); ?>
 			<div class="col-sm-10">
@@ -97,6 +133,13 @@ $form = array(
 			<?php echo form_label('Confirm Password', $confirm_password['id'], $label); ?>
 			<div class="col-sm-10">
 				<?php echo form_password($confirm_password); ?>
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<?php echo form_label('User Type', $user_type['id'], $label); ?>
+			<div class="col-sm-10">
+				<?php echo  form_dropdown($user_type['name'], $user_type_options, '1','class="form-control"'); ?>
 			</div>
 		</div>
 

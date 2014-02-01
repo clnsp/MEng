@@ -17,67 +17,34 @@
 			if ( ! file_exists('application/views/pages/'.$page.'.php')){
 				// Whoops, we don't have a page for that!
 				show_404();
-			}
-	
+			}	
 
 			if(!$this->tank_auth->is_logged_in()){
 			  //If no session, redirect to login page
 				$data['user_type'] = 'guest';
 				redirect('login', 'refresh');
-			}else{
-				$data['user'] = $this->tank_auth->is_admin();
-			}
-
-			if(check_admin()){
-		 		$data['user'] = $this->tank_auth->is_admin();
-				
-				$h = gmdate('H');
-				//$s = gmdate("Y-m-d H:i:s", 1390176000); // GET FOR CURRENT TIME  date('Y-m-d H:') . ':00:00';
-				//$e = gmdate("Y-m-d H:i:s", 1390780800);
-				
-				$s = gmdate('Y-m-d ').($h-2). ':00:00'; // GET FOR CURRENT TIME  
-				$e = gmdate('Y-m-d ').($h+4). ':00:00'; 
-				
-				$this->load->Model('Rooms');
-				$this->load->Model('Categories');
-				$this->load->Model('classes');
-				$this->load->Model('Bookings');
-				
-				$data['rooms'] = $this->Rooms->getRooms();
-				$data['categories'] = $this->Categories->getCategories();
-				$data['classes'] = $this->classes->getClassesWithRoomBetween($s, $e, 'allrooms');
-
-				foreach ($data['classes'] as $class){
-					$class->attendees = $this->Bookings->getBookingAttendantsNames($class->class_id);
-				}				
-				$data['cDate'] = gmdate('l, dS F'); // "Wednesday 29th, Januaray";
-				
-				$data['cTimespan'] = "$h:00 - ".($h+1).":00";
-				
-				parse_temp($page, $this->load->view('pages/'.$page, $data, true));
+			}else if(check_admin()){
+				$data =  getNextClasses(1,1);
+				if($data!=null){
+					$data['user'] = $this->tank_auth->is_admin();	
+					$h = gmdate('H');
+					$data['cDate'] = gmdate('l, dS F'); // "Wednesday 29th, Januaray";
+					$data['cTimespan'] = "$h:00 - ".($h+1).":00";
+					parse_temp($page, $this->load->view('pages/'.$page, $data, true));
+				}
 			}
 		}
 
+		/**
+		 * Get new updated body for up and coming classes
+		 */
 		public function updateClasses($page = 'class-list')
 		{
-			if(check_admin()){				
-				$h = gmdate('H');				
-				$s = gmdate('Y-m-d ').($h). ':00:00'; // GET FOR CURRENT TIME  
-				$e = gmdate('Y-m-d ').($h+4). ':00:00'; 
-				
-				$this->load->Model('Rooms');
-				$this->load->Model('Categories');
-				$this->load->Model('classes');
-				$this->load->Model('Bookings');
-				
-				$data['rooms'] = $this->Rooms->getRooms();
-				$data['categories'] = $this->Categories->getCategories();
-				$data['classes'] = $this->classes->getClassesWithRoomBetween($s, $e, 'allrooms');
-
-				foreach ($data['classes'] as $class){
-					$class->attendees = $this->Bookings->getBookingAttendantsNames($class->class_id);
-				}				
-				$this->load->view('pages/'.$page, $data);
+			if(check_admin()){	
+				$data = getNextClasses(1,2); // Get Class (1hour before current and 2hours after current)	
+				if($data!=null){		
+					$this->load->view('pages/'.$page, $data);
+				}
 			}
 
 		}
@@ -103,8 +70,21 @@
 		 	if(check_admin()){
 		 		$data['user'] = $this->tank_auth->is_admin();
 		 		$this->load->Model('members');
+				$this->load->Model('dbviews');
 				// Get all Users
 		 		$data['users'] = $this->members->getAllUsers();
+				foreach($data['users']as $user){
+					$attended = $this->dbviews->getUserLastAttendance($user->id);
+					if(isset($attended[0]->member_id))
+					{
+						$date = new DateTime($attended[0]->class_start_date);
+						$user->lastClass = $attended[0]->class_type . " " . $date->format('d/m/y');
+					}
+					else
+					{
+						$user->lastClass = "None";
+					}
+				}
 				// Twitter Enabled
 		 		$data['twitter'] = $this->config->item('twitter_allow');
 				// SMS Enabled
@@ -178,9 +158,6 @@
 				parse_temp($page, $this->load->view('pages/'.$page, $data, true));
 			}
 		}
-		
-
-
 	}
 
 	?>

@@ -33,7 +33,7 @@
       </div>
 </div><!--/CLASS-->
 <?php } if(count($classes) == 0) { ?>
-<div class="jumbotron">
+<div class="jumbotron text-center" style="background-color: inherit;">
   <h1>Hooray !!</h1>
   <p>No Classes Scheduled for the next 2 Hours</p>
 </div>

@@ -30,27 +30,16 @@ $.pageManager = (function () {
 	newTime = function(){
 		var d = new Date();
 		$time = d.getHours();
-		$time = $time+":00 - " + ($time+1)%24 + ":00";
-		
-		console.log("TIME: " + $time);
-		if(d.getHours() == 0)
-		{
-			$date = $.weekdays[d.getDay()] + ", " + suffix(d.getDate()) + " " + $.months[d.getMonth()];
-			console.log("DATE: " + $date);
-		}
+		$time = $time+":00 - " + ($time+1)%24 + ":00"; // 01 instead of 1 -- todo
+		$(".current-time").html($time);
+		if(d.getHours() == 0) { $(".current-date").html($.weekdays[d.getDay()] + ", " + suffix(d.getDate()) + " " + $.months[d.getMonth()]);}
 	},
 	
 	suffix = function(i) {
 		var j = i % 10;
-		if (j == 1 && i != 11) {
-			return i + "st";
-		}
-		if (j == 2 && i != 12) {
-			return i + "nd";
-		}
-		if (j == 3 && i != 13) {
-			return i + "rd";
-		}
+		if (j == 1 && i != 11) { return i + "st"; }
+		if (j == 2 && i != 12) { return i + "nd"; }
+		if (j == 3 && i != 13) { return i + "rd"; }
 		return i + "th";
 	},
 	
@@ -68,7 +57,6 @@ $.pageManager = (function () {
 		var minutes = now.getMinutes();
 		var seconds = now.getSeconds();
 		setTimeout('nextHour()',(((60 - (minutes % 60) - ((seconds>0)?1:0)) * 60) + (60 - seconds)) * 1000);
-		console.log((60 - (minutes % 60) - ((seconds>0)?1:0)) * 60);
 	},
 	
 	uiControls = function() {
@@ -77,8 +65,6 @@ $.pageManager = (function () {
 		$(".list").on('selectstart', function (event) {event.preventDefault();});
 		$(".dropdown-menu li").on('click',  function() { console.log($(this)); $('.'+$(this).attr('id')).toggle();});
 		setTimer();
-		//newTime();
-		//retreive();
 	},
 
 	resize();

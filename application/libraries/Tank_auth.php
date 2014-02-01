@@ -154,6 +154,16 @@ class Tank_auth
 	}
 
 	/**
+	 * Get user permission level
+	 *
+	 * @return	string
+	 */
+	function get_user_permissions()
+	{
+		return $this->ci->session->userdata('userpermission');
+	}
+
+	/**
 	 * Get username
 	 *
 	 * @return	string

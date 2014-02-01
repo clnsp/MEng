@@ -159,7 +159,6 @@ class Auth extends CI_Controller
 
 			if ($this->form_validation->run()) {								// validation ok
 				if (!is_null($data = $this->tank_auth->create_user(
-					$use_username ? $this->form_validation->set_value('username') : '',
 					$this->form_validation->set_value('email'),
 					$this->form_validation->set_value('password'),
 						$email_activation))) {									// success
@@ -196,11 +195,19 @@ class Auth extends CI_Controller
 					$data['captcha_html'] = $this->_create_captcha();
 				}
 			}
-			$data['use_username'] = $use_username;
 			$data['captcha_registration'] = $captcha_registration;
 			$data['use_recaptcha'] = $use_recaptcha;
+			
+			$ver = verifyAssociation();
+			if($ver)
+			{
+				$data['uid'] = $ver['uid'][0];
+				$data['firstname'] = $ver['givenName'][0];
+				$data['secondname'] = $ver['sn'][0];
+				$data['email'] = $ver['mail'][0];
+				parse_temp('Register', $this->load->view('auth/register_form', $data, true));
+			}			
 			//$this->load->view('auth/register_form', $data);
-			parse_temp('Register', $this->load->view('auth/register_form', $data, true));
 
 		}
 	}

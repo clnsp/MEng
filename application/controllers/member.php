@@ -85,7 +85,9 @@ $_POST['first_name'];
 				$this->load->helper('sms');
 				$mobile_number = $this->members->getUserColumn($id, 'mobile_number');
 				// GET MOBILE NUMBER
-				echo send_sms($mobile_number[0]->mobile_number,$message);
+				if(isset($mobile_number[0])){
+					echo send_sms($mobile_number[0]->mobile_number,$message);
+				}
 				break;
 			// TWITTER
 				case "twitter":
