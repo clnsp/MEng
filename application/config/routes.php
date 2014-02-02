@@ -54,6 +54,7 @@ $route['admin-calendar'] = 'pages/admin_calendar';
 $route['users_fetch'] = 'users_fetch';
 $route['booking'] = 'booking';
 $route['room/(:any)'] = 'pages/room/$1';
+$route['room/getRoomIDs'] = 'room/getRoomIDs';
 $route['manage'] = 'pages/manage';
 $route['category/(:any)'] = 'category/$1';
 

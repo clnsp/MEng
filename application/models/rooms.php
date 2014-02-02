@@ -63,5 +63,23 @@ Class Rooms extends CI_Model{
 		return $this -> db -> get()->result_array();
 	}
 	
+	/**
+	 * Determines whether a value exceeds the capacity of the room
+	 * @param	int
+	 * @param	int
+	 * @return	bool
+	 */
+	function exceedsClassTypeCapacity($room_id, $numberOfMembers){
+		
+		return $numberOfMembers =='';
+		
+		$this->db->select('max_capacity');
+		$this->db->where('room_id', $room_id);
+		$this->db->from($this -> table_name);
+
+		return $numberOfMembers > $query[0]['max_capacity'];
+	
+	}	
+	
 }
 ?>

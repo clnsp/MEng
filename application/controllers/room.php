@@ -9,9 +9,8 @@ class Room extends CI_Controller{
 
 	/**
 	 * Get room names and ids
-	 *
 	 */
-	function getNameIds($start, $end){ //getBookingsBetween used to be
+	function getRoomIDs(){ 
 		
 		$rooms = $this->rooms->getRoomNameIDs();
 		echo json_encode($rooms);

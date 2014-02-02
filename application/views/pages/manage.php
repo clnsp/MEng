@@ -144,13 +144,13 @@
 							<div class="form-group">
 								<label for="class_start_date" class="col-sm-3 control-label">Class Start</label>
 								<div class="col-sm-9">
-									<input name="class_start_date" type="time" class="form-control" >
+									<input name="class_start_date" type="datetime" class="form-control" >
 								</div>
 							</div>
 							<div class="form-group">
 								<label for="class_end_date" class="col-sm-3 control-label">Class End</label>
 								<div class="col-sm-9">
-									<input name="class_end_date" type="time" class="form-control" >
+									<input name="class_end_date" type="datetime" class="form-control" >
 								</div>
 							</div>
 

@@ -244,5 +244,21 @@ class Classes extends CI_Model
 
 
 	}	
+	
+	/**
+	 * Determines whether this is a valid class type id
+	 * @param	int
+	 * @return	bool
+	 */
+	function validClassType($class_type_id){
+		$this->db->where('class_type_id', $class_type_id);
+		$this->db->from($this -> class_type_tbl);
+		$query = $this -> db -> get();
+
+		return $this->db->count_all_results() > 0;
+
+	}	
+	
+
 
 }

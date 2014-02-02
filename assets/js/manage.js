@@ -10,62 +10,21 @@ $( document ).ready(function() {
 		e.stopImmediatePropagation(); //prevent clicking the row when selecting color swatch
 	});
 	
-	var categoriesPanel, addClassTypePanel, manageClassTypesPanel, editClassTypeModal, manageAddBlockClassesPanel;
+	var categoriesPanel, addClassTypePanel, manageClassTypesPanel, editClassTypeModal, addBlockClassesPanel, categories, classtypes;
+
+
+
+
+	
 
 	categoriesPanel = (function() {
 
-		var $categorylist 	= $("#class-categories-list");
-		var $currentColor 	= null;
+		var categorylist 	= $("#class-categories-list");
+		var currentColor 	= null;
 		var addForm 		= $("#add-category-form");
 		var removeForm 		= $('form#remove-category-form');
 		var urlBase 		= "category/";
 
-		refresh = function() {
-
-			$.getJSON(urlBase + 'fetchAll', function(data) {
-				var $tempList = $('<ul></ul>');
-				clear();
-				if(data.length>0){
-					$.each( data, function( key, cat ) {
-						$tempList.append(createListItem(cat['category_id'], cat['category'], cat['color']));
-						addClassTypePanel.categoryDropdown.append(createOption(cat));
-					});
-					
-				}
-				
-				$categorylist.html($tempList.html());
-				initColorPickers();
-			});
-		},
-
-		clear = function() {
-			$categorylist.empty();
-			addClassTypePanel.categoryDropdown.html('');
-		},
-
-		createOption = function (type) {
-			return($('<option></option>').val(type['category_id'])
-				.append(type['category']));			
-		},
-
-		createListItem = function(id, name, color){
-			if(id != 1){
-				return $('<li class="list-group-item"></li>')
-				.append($('<input class="pull-right" name="category_id[]" value="'+ id + '" type="checkbox">'))
-				.append($('<input>')
-					.attr({
-						type: 'hidden',
-						class: 'minicolors',
-						value: color,
-						size: 7,
-						'data-category_id': id
-					}))
-
-				.append('<span class="editable">' + name + '</span>');
-			}else{
-				return null;
-			}
-		},
 		
 		initColorPickers = function() {
 			$('INPUT.minicolors').minicolors({
@@ -98,7 +57,7 @@ $( document ).ready(function() {
 				data:  addForm.serialize(),
 				success: function(result) {
 					alert(result);
-					categoriesPanel.refresh();
+					categories.refresh();
 					categoriesPanel.resetAddForm();
 				},
 				error: function(){
@@ -135,7 +94,7 @@ $( document ).ready(function() {
 					});	
 				}else{
 					alert(result);
-					categoriesPanel.refresh();
+					categories.refresh();
 					resetAddForm();
 				}
 				
@@ -151,8 +110,8 @@ $( document ).ready(function() {
 			.done(function(result) {
 				
 				alert(result);
-				manageClassTypesPanel.refresh();
-				categoriesPanel.refresh();
+				classtypes.refresh();
+				categories.refresh();
 
 				
 			})
@@ -169,7 +128,6 @@ $( document ).ready(function() {
 		
 
 		return {
-			refresh: refresh,
 			initColorPickers: initColorPickers,
 			urlBase : urlBase, 
 			addCategory : addCategory,
@@ -178,6 +136,7 @@ $( document ).ready(function() {
 			removeForm: removeForm,
 			storename : storename,
 			resetAddForm: resetAddForm,
+			categorylist: categorylist
 		};
 
 	})();
@@ -194,7 +153,7 @@ $( document ).ready(function() {
 			.done(function( result ) { 
 				alert(result); 
 				addClassTypePanel.resetAddForm();
-				manageClassTypesPanel.refresh();
+				classtypes.refresh();
 			})
 			.fail(function( result ) { alert(result); });			
 		},
@@ -231,9 +190,9 @@ $( document ).ready(function() {
 		setupModal = function (ci, ct, cd, catid) {				
 			class_type_id.val(ci);
 			class_type.val(ct);
-			class_description.html(cd);
+			class_description.val(cd);
 			modal.modal('show');
-			category_id.html(addClassTypePanel.categoryDropdown.html());
+			category_id.html(categories.drop.html());
 			category_id.val(catid);
 		},
 
@@ -249,7 +208,7 @@ $( document ).ready(function() {
 			.done(function( data ) {
 				alert(data);
 				modal.modal('hide');
-				refresh();
+				classtypes.refresh();
 			});
 
 		},
@@ -280,94 +239,210 @@ $( document ).ready(function() {
 	
 	manageClassTypesPanel = (function() {
 		var typeTable = $('table#class-types-table tbody'); 
-		var urlBase = "class_type/";
 
-		createRow = function (type) {
-			return($('<tr data-class_type_id="' + type['class_type_id'] + '"></tr>')
-				.append('<td class="class_type">'+type['class_type'] + '</td>')
-				.append('<td class="class_description">' + type['class_description'] +'</td>')
-				.append('<td data-category_id='+ type['category_id'] +' class="category">' + type['category'] +'</td>') 
-				);			
-		},
-
-		createOption = function (type) {
-			return($('<option data-class_type_id="' + type['class_type_id'] + '">' + type['class_type'] +'</option>'));			
-		},
-
-
-		refresh = function () {
-			typeTable.empty();
-
-			$.getJSON(urlBase + 'getClassTypes', function(data) {
-				var $tempList = $('<tbody></tbody>');
-				if(data.length>0){
-					$.each( data, function( key, type ) {
-						$tempList.append(createRow(type));
-						manageAddBlockClassesPanel.classTypeDrop.append(createOption(type));
-					});
-
-				}
-				typeTable.html($tempList.html());
-
-			});
-		}
-
-		return {
-
-			refresh: refresh,
-
-		};
-
+		return {table: typeTable};
 	})();
 
-	rooms = (function() {
 
-		var urlBase = "class_type/";
-
-		return {
-
-			refresh: refresh,
-
-
-		};
-
-	})();
-
-	manageAddBlockClassesPanel = (function() {
+	
+	addBlockClassesPanel = (function() {
 
 		var form = $('#add-block-classes #add-block-classes-form');
 		var classTypeDrop = form.find('select[name=class_type_id]');
+		var roomDrop = form.find('select[name=room_id]');
 		var urlBase = "class_type/";
-
-		createRoomOption = function(){
-
-		},
-
-
 
 		sendForm = function () {
 			
-			// $.post( urlBase + 'addInstances/', form.serialize())
-			// .done(function( data ) {
-			// 	alert(data);
-			// 	modal.modal('hide');
-			// 	refresh();
-			// });
+			 $.post( urlBase + 'addInstances/', form.serialize())
+			 .done(function( data ) {
+			 	alert(data);
+			 });
 
-}
+		}
 
 return {
 
-	refresh: refresh,
-	classTypeDrop: classTypeDrop,
+	drop: classTypeDrop,
 	form: form,
+	roomDrop: roomDrop,
+	sendForm: sendForm
 
 };
 
 })();
 
-categoriesPanel.refresh();
-manageClassTypesPanel.refresh();
+	rooms = (function() {
+
+		var urlBase = "room/";
+		var rdrop = $('<select></select>')
+		
+		rcreateOption = function (room) {
+			return($('<option></option>').val(room['room_id']).append(room['room']));
+		},
+
+
+		refresh = function () {		
+			$.getJSON(urlBase + 'getRoomIDs', function(data) {
+				
+				rclear();
+				if(data.length>0){
+					$.each( data, function( key, room ) {
+						rdrop.append(rcreateOption(room));
+					});
+
+				}
+				rupdate();
+
+			});
+		},
+		
+		rclear = function() {
+			rdrop.html('');
+		},
+		
+		
+		rupdate = function () {
+			addBlockClassesPanel.roomDrop.html(rdrop.html());
+		}
+		
+		
+				
+		
+
+		return {
+
+			refresh: refresh
+
+		};
+
+	})();
+
+classtypes = (function() {
+			var cttable = $('<tbody></tbody>');
+			var ctdrop = $('<select></select>');
+
+			var urlBase = "class_type/";
+	
+			ctcreateRow = function (type) {
+				return($('<tr data-class_type_id="' + type['class_type_id'] + '"></tr>')
+					.append('<td class="class_type">'+type['class_type'] + '</td>')
+					.append('<td class="class_description">' + type['class_description'] +'</td>')
+					.append('<td data-category_id='+ type['category_id'] +' class="category">' + type['category'] +'</td>') 
+					);			
+			},
+	
+			ctcreateOption = function (type) {
+				return($('<option></option>').val(type['class_type_id']).append(type['class_type']));		
+					
+			},
+	
+	
+			refresh = function () {		
+				$.getJSON(urlBase + 'getClassTypes', function(data) {
+					
+					ctclear();
+					if(data.length>0){
+						$.each( data, function( key, type ) {
+							cttable.append(ctcreateRow(type));
+							ctdrop.append(ctcreateOption(type));
+						});
+	
+					}
+					ctupdate();
+	
+				});
+			},
+			
+			ctclear = function() {
+				cttable.empty();
+				ctdrop.html('');
+			},
+			
+			
+			ctupdate = function () {
+				manageClassTypesPanel.table.html(cttable.html());
+				addBlockClassesPanel.drop.html(ctdrop.html());
+			}
+			
+
+	return {
+		refresh: refresh,
+	};
+
+})();
+
+
+categories = (function() {
+var urlBase 		= "category/";
+var catList = $('<ul></ul>');
+var catDrop = $('<select></select>');
+
+	refresh = function () {
+		$.getJSON(urlBase + 'fetchAll', function(data) {
+				
+				catList.empty();
+				if(data.length>0){
+					$.each( data, function( key, cat ) {
+						catList.append(createListItem(cat['category_id'], cat['category'], cat['color']));
+						catDrop.append(createOption(cat));
+					});
+					
+				}
+				
+				update();
+				
+			});
+		
+		},
+		
+		createOption = function (type) {
+			return($('<option></option>').val(type['category_id'])
+				.append(type['category']));			
+		},
+
+		createListItem = function(id, name, color){
+			if(id != 1){
+				return $('<li class="list-group-item"></li>')
+				.append($('<input class="pull-right" name="category_id[]" value="'+ id + '" type="checkbox">'))
+				.append($('<input>')
+					.attr({
+						type: 'hidden',
+						class: 'minicolors',
+						value: color,
+						size: 7,
+						'data-category_id': id
+					}))
+
+				.append('<span class="editable">' + name + '</span>');
+			}else{
+				return null;
+			}
+		},
+		
+		clear = function() {
+			categoriesPanel.categorylist.empty();
+			addClassTypePanel.categoryDropdown.html('');
+		},
+		
+		update = function() {
+			categoriesPanel.categorylist.html(catList.html());
+			categoriesPanel.initColorPickers();
+			addClassTypePanel.categoryDropdown.html(catDrop.html());
+		}
+
+		return { 
+			refresh: refresh,
+			list: catList,
+			drop: catDrop
+		};
+
+	})();
+
+
+categories.refresh();
+classtypes.refresh();
+rooms.refresh();
 
 $('INPUT.minicolors-inline').minicolors({
 	theme: 'bootstrap',
@@ -378,7 +453,6 @@ $('INPUT.minicolors-inline').minicolors({
 categoriesPanel.addForm.submit(function(){ categoriesPanel.addCategory() });
 categoriesPanel.removeForm.submit(function(){ categoriesPanel.removeCategory() });
 
-
 addClassTypePanel.form.submit(function(){addClassTypePanel.sendForm()});
 
 editClassTypeModal.form.submit(function() { editClassTypeModal.sendForm() });
@@ -386,6 +460,8 @@ editClassTypeModal.removeSubmit.click(function() { editClassTypeModal.sendRemove
 $('table#class-types-table tbody').on('click','tr',function(e){
 	editClassTypeModal.setupModal($(this).data('class_type_id'), $(this).find('.class_type').html(), $(this).find('.class_description').html(), $(this).find('.category').data('category_id'));
 });
+
+addBlockClassesPanel.form.submit(function() { addBlockClassesPanel.sendForm() });
 
 
 $('#manage-categories')
