@@ -137,7 +137,7 @@
 							<div class="form-group">
 								<label for="max_attendance" class="col-sm-3 control-label">Max Capacity</label>
 								<div class="col-sm-9">
-									<input name="maximum_attendance" type="text" class="form-control" placeholder="Maximum Capacity">
+									<input name="max_attendance" type="text" class="form-control" placeholder="Maximum Capacity">
 								</div>
 							</div>
 
@@ -165,12 +165,12 @@
 									<label for="repeat" class="col-sm-3 control-label">Repeat</label>
 									<div class="col-sm-9">
 										<select name="repeat" type="dropdown" class="form-control">
-											<option>None (run once)</option>
-											<option>Hourly</option>
-											<option>Daily</option>
-											<option>Weekly</option>
-											<option>Monthly</option>
-											<option>Yearly</option>
+											<option value="0">None (run once)</option>
+											<option value="1">Hourly</option>
+											<option value="2">Daily</option>
+											<option value="3">Weekly</option>
+											<option value="4">Monthly</option>
+											<option value="5">Yearly</option>
 										</select>							
 									</div>
 								</div>

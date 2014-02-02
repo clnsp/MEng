@@ -64,13 +64,21 @@ class class_type extends CI_Controller
 	
 	/**
 	 * Add instances of a class type as classes
+	 * The following values are mapped to the repeat types
+	 *
+	 * 0 None (run once)
+	 * 1 Hourly
+	 * 2 Daily
+	 * 3 Weekly
+	 * 4 Monthly
+	 * 5 Yearly
 	 */
 	function addInstances(){
 		if($this->tank_auth->is_admin()){
 
-		if (isset($_POST['class_type_id']) && isset($_POST['maximum_attendance']) && isset($_POST['class_start_date']) && isset($_POST['class_end_date'])  && isset($_POST['room_id'])){
+		if (isset($_POST['class_type_id']) && isset($_POST['max_attendance']) && isset($_POST['class_start_date']) && isset($_POST['class_end_date'])  && isset($_POST['room_id'])){
 		
-		
+			/* validate the date formats*/
 			if($this->_validDate($_POST['class_start_date']) && $this->_validDate($_POST['class_end_date'])){
 				$start =  date('Y-m-d H:0:0', strtotime($_POST['class_start_date']));
 				$end =  date('Y-m-d H:0:0', strtotime($_POST['class_end_date']));
@@ -79,37 +87,40 @@ class class_type extends CI_Controller
 				return;
 			}
 			
-			
+			/* check start is before end date */
 			if($start > $end){
-				echo("Class start time is after the end time");
+				echo("Class start time must be before the end time");
 				return;
 			}
 		
-			
+			/* check the class type id exists */
 			if(!$this->classes->validClassType($_POST['class_type_id'])){
 				echo("Invalid class type");
 				return;
 			}
 			
+			/* check the room capacity isn't exceeded */
 			$this->load->model('rooms');
-			
-			if($this->rooms->exceedsClassTypeCapacity($_POST['room_id'], $_POST['maximum_attendance'])){
-			
+			if($this->rooms->exceedsClassTypeCapacity($_POST['room_id'], $_POST['max_attendance'])){
 				echo("Exceeds class capacity");
 				return;
 			}
-		
 			
 			$newClass = array(
 				'class_type_id' => $_POST['class_type_id'],
-				'maximum_attendance' => $_POST['maximum_attendance'],
+				'max_attendance' => $_POST['max_attendance'],
 				'class_start_date' => $_POST['class_start_date'],
 				'class_end_date' => $_POST['class_end_date'],
 				'room_id' => $_POST['room_id'],
 			);
 			
-			$this->classes->insertClass($newClass);		
-			echo("Inserted class");		
+			/* repeat once */
+			if($_POST['repeat'] ==0 || $_POST['class_type_id'] == ''){
+				$this->classes->insertClass($newClass);
+					
+			}
+
+			
 		}else{
 			echo("Missing parameters");	
 		}

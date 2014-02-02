@@ -160,6 +160,8 @@ class Classes extends CI_Model
 	 */
 	function insertClass($data){
 		$this->db->insert($this -> table_name, $data); 
+		echo($this->db->_error_message());
+		echo("Inserted class");
 	}
 	
 	/**
