@@ -80,8 +80,8 @@ class class_type extends CI_Controller
 		
 			/* validate the date formats*/
 			if($this->_validDate($_POST['class_start_date']) && $this->_validDate($_POST['class_end_date'])){
-				$start =  date('Y-m-d H:0:0', strtotime($_POST['class_start_date']));
-				$end =  date('Y-m-d H:0:0', strtotime($_POST['class_end_date']));
+				$start =  new DateTime($_POST['class_start_date']);
+				$end =  new DateTime($_POST['class_end_date']);
 			} else {
 				echo "Invalid date format";
 				return;
@@ -113,19 +113,50 @@ class class_type extends CI_Controller
 				'class_end_date' => $_POST['class_end_date'],
 				'room_id' => $_POST['room_id'],
 			);
-			
-			/* repeat once */
-			if($_POST['repeat'] ==0 || $_POST['class_type_id'] == ''){
-				$this->classes->insertClass($newClass);
-					
-			}
 
+			/* repeat once */
+			if($_POST['repeat'] == '0'){
+				$this->classes->insertClass($newClass);
+				echo("Inserted single class");
+			}else{
+				
+				$times = 0;
+				if(isset($_POST['times'])){
+					$times =intval($_POST['times']);
+				}
+			
+				$this->_repeatInsertClass($start, $end, $times, "+1 " . $_POST['repeat'], $newClass);					
+			}
 			
 		}else{
 			echo("Missing parameters");	
 		}
 	}
 }
+
+
+	/**
+	 * Repeatedly inserts a class a number of times between a certain interval
+	 * @param	int
+	 * @param	string
+	 * @param	array
+	 */
+	
+	function _repeatInsertClass($start, $end, $times = 0, $interval, $classInfo) {
+
+		for($i=0; $i < $times; $i++){
+		
+			$classInfo['class_start_date'] = $start->modify($interval)->format('Y-m-d H:0:0');
+			$classInfo['class_end_date'] = $end->modify($interval)->format('Y-m-d H:0:0');
+			
+			$this->classes->insertClass($classInfo);
+			
+		}
+		echo("Inserted classes");
+		
+
+	}
+
 
 	/**
 	 * Checks whether supplied string is a valid date
@@ -136,7 +167,7 @@ class class_type extends CI_Controller
 	function _validDate($string) {
 		$date = date_parse($string);	
 		
-		return(!($date["month"] == '' && $date["day"]=='' && $date["year"] =='' && $date["hour"] == '' && $date["minute"]=='' && $date["second"]==''));
+		return(!($date["month"] == '' && $date["day"]=='' && $date["year"] =='' && $date["hour"] == '' && $date["minute"]==''));
 
 	}
 

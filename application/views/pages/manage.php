@@ -166,14 +166,15 @@
 									<div class="col-sm-9">
 										<select name="repeat" type="dropdown" class="form-control">
 											<option value="0">None (run once)</option>
-											<option value="1">Hourly</option>
-											<option value="2">Daily</option>
-											<option value="3">Weekly</option>
-											<option value="4">Monthly</option>
-											<option value="5">Yearly</option>
+											<option value="hours">Hourly</option>
+											<option value="days">Daily</option>
+											<option value="weeks">Weekly</option>
+											<option value="months">Monthly</option>
+											<option value="years">Yearly</option>
 										</select>							
 									</div>
 								</div>
+									<input name="times" type="hidden" value="5">
 
 								<div class="form-group">
 									<label for="until" class="col-sm-3 control-label">Until</label>
