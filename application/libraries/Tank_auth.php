@@ -172,7 +172,7 @@ class Tank_auth
 	{
 		return $this->ci->session->userdata('username');
 	}
-
+	
 	/**
 	 * Create new user on the site and return some data about it:
 	 * user_id, username, password, email, new_email_key (if any).
@@ -183,13 +183,16 @@ class Tank_auth
 	 * @param	bool
 	 * @return	array
 	 */
-	function create_user($username, $email, $password, $email_activation)
+	function create_user($username, $first_name, $second_name, $home_number, $mobile_number, $email, $password, $member_type, $membership_type, $comms_preferences, $email_activation)
 	{
 		if ((strlen($username) > 0) AND !$this->ci->users->is_username_available($username)) {
 			$this->error = array('username' => 'auth_username_in_use');
 
 		} elseif (!$this->ci->users->is_email_available($email)) {
 			$this->error = array('email' => 'auth_email_in_use');
+
+		} elseif (!$this->ci->users->is_username_available($email)) {
+			$this->error = array('username' => 'auth_username_in_use');
 
 		} else {
 			// Hash password using phpass
@@ -199,9 +202,15 @@ class Tank_auth
 			$hashed_password = $hasher->HashPassword($password);
 
 			$data = array(
-				'username'	=> $username,
+				'username'	=> strtolower($username),
+				'first_name' => strtolower($first_name),
+				'second_name' => strtolower($second_name),
+				'home_number'	=> $home_number,
+				'mobile_number'	=> $mobile_number,
 				'password'	=> $hashed_password,
-				'email'		=> $email,
+				'email'		=> strtolower($email),
+				'member_type_id' => $member_type,
+				'membership_type_id' => $membership_type,
 				'last_ip'	=> $this->ci->input->ip_address(),
 			);
 

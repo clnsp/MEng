@@ -1,44 +1,62 @@
 <?php
-$id = array(
-	'name'	=> 'id',
-	'id'	=> 'id',
-	'value'	=> set_value('id',$uid),
+$username = array(
+	'name'	=> 'username',
+	'id'	=> 'username',
+	'value'	=> set_value('username',$uname),
 	'maxlength'	=> 80,
 	'size'	=> 30,
 	'class' => 'form-control',
 	'placeholder' => 'Unique ID',
-	'disabled' => 'disabled',
+	'readonly' => 'readonly',
 	);
 $firstname = array(
-	'name'	=> 'firstname',
-	'id'	=> 'firstname',
-	'value'	=> set_value('firstname',$firstname),
+	'name'	=> 'first_name',
+	'id'	=> 'first_name',
+	'value'	=> set_value('first_name',$fname),
 	'maxlength'	=> 80,
 	'size'	=> 30,
 	'class' => 'form-control',
 	'placeholder' => 'Firstname',
-	'disabled' => 'disabled',
+	'readonly' => 'readonly',
 	);
 $secondname = array(
-	'name'	=> 'secondname',
-	'id'	=> 'secondname',
-	'value'	=> set_value('secondname',$secondname),
+	'name'	=> 'second_name',
+	'id'	=> 'second_name',
+	'value'	=> set_value('second_name',$sname),
 	'maxlength'	=> 80,
 	'size'	=> 30,
 	'class' => 'form-control',
 	'placeholder' => 'Secondname',
-	'disabled' => 'disabled',
+	'readonly' => 'readonly',
 	);
 
 $email = array(
 	'name'	=> 'email',
 	'id'	=> 'email',
-	'value'	=> set_value('email',$email),
+	'value'	=> set_value('email',$mail),
 	'maxlength'	=> 80,
 	'size'	=> 30,
 	'class' => 'form-control',
 	'placeholder' => 'Email Address',
 	);
+$home_number = array(
+	'name'	=> 'home_number',
+	'id'	=> 'home_number',
+	'value'	=> set_value('home_number'),
+	'maxlength'	=> 12,
+	'size'	=> 30,
+	'class' => 'form-control',
+	'placeholder' => 'Home Number (Excluding 0)',
+);
+$mobile_number = array(
+	'name'	=> 'mobile_number',
+	'id'	=> 'mobile_number',
+	'value'	=> set_value('mobile_number'),
+	'maxlength'	=> 12,
+	'size'	=> 30,
+	'class' => 'form-control',
+	'placeholder' => 'Mobile Number (Excluding 0)',
+);
 $password = array(
 	'name'	=> 'password',
 	'id'	=> 'password',
@@ -59,11 +77,18 @@ $confirm_password = array(
 	'placeholder' => 'Confirm Password',
 	);
 $user_type = array(
-	'name' => 'user_type',
-	'id' => 'user_type',
+	'name' => 'member_type',
+	'id' => 'member_type',
 	);
 
 $user_type_options = array('1'  => 'Student','2'  => 'Staff',);
+
+$comm_prefs = array(
+	'name' => 'comms_preference',
+	'id' => 'comms_preference',
+	);
+
+$comm_prefs_options = array('1'  => 'Email only','2'  => ' Email and SMS','3'  => 'Email, SMS and Twitter',);
 	
 $captcha = array(
 	'name'	=> 'captcha',
@@ -86,11 +111,11 @@ $form = array(
 	<div class="well well-lg  div-center">
 		<?php echo form_open($this->uri->uri_string(), $form); ?>
 
-		<?php echo form_error($id['name']); ?>
+		<?php echo form_error($username['name']); ?><?php echo isset($errors[$username['name']])?$errors[$username['name']]:''; ?>
 		<div class="form-group">
-			<?php echo form_label('ID', $id['id'], $label); ?>
+			<?php echo form_label('ID', $username['id'], $label); ?>
 			<div class="col-sm-10">
-				<?php echo form_input($id); ?>
+				<?php echo form_input($username); ?>
 			</div>
 		</div>
 
@@ -112,34 +137,59 @@ $form = array(
 
 		<?php echo form_error($email['name']); ?><?php echo isset($errors[$email['name']])?$errors[$email['name']]:''; ?>
 		<div class="form-group">
-			<?php echo form_label('Email', $email['id'], $label); ?>
+			<?php echo form_label('Email *', $email['id'], $label); ?>
 			<div class="col-sm-10">
 				<?php echo form_input($email); ?>
 			</div>
 		</div>
 		
-		<?php echo form_error($password['name']); ?>
-
-
 		<div class="form-group">
-			<?php echo form_label('Password', $password['id'], $label); ?>
+			<?php echo form_label('Home Number', $home_number['id'], $label); ?>
+			<div class="col-sm-10">
+				<div class="input-group">
+				<span class="input-group-addon">+44</span>
+				<?php echo form_input($home_number); ?>
+				</div>
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<?php echo form_label('Mobile Number', $mobile_number['id'], $label); ?>
+			<div class="col-sm-10">
+				<div class="input-group">
+				<span class="input-group-addon">+44</span>
+				<?php echo form_input($mobile_number); ?>
+				</div>
+			</div>
+		</div>
+		
+		<?php echo form_error($password['name']); ?>
+		<div class="form-group">
+			<?php echo form_label('Password *', $password['id'], $label); ?>
 			<div class="col-sm-10">
 				<?php echo form_password($password); ?>
 			</div>
 		</div>
+		
 		<?php echo form_error($confirm_password['name']); ?>
-
 		<div class="form-group">
-			<?php echo form_label('Confirm Password', $confirm_password['id'], $label); ?>
+			<?php echo form_label('Confirm Password *', $confirm_password['id'], $label); ?>
 			<div class="col-sm-10">
 				<?php echo form_password($confirm_password); ?>
 			</div>
 		</div>
 		
 		<div class="form-group">
-			<?php echo form_label('User Type', $user_type['id'], $label); ?>
+			<?php echo form_label('User Type *', $user_type['id'], $label); ?>
 			<div class="col-sm-10">
 				<?php echo  form_dropdown($user_type['name'], $user_type_options, '1','class="form-control"'); ?>
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<?php echo form_label('Communication Preferences *', $comm_prefs['id'], $label); ?>
+			<div class="col-sm-10">
+				<?php echo  form_dropdown($comm_prefs['name'], $comm_prefs_options, '1','class="form-control"'); ?>
 			</div>
 		</div>
 
