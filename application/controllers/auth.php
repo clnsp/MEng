@@ -139,10 +139,10 @@ class Auth extends CI_Controller
 			$ver = verifyAssociation(); // University Association Check
 			$use_username = $this->config->item('use_username', 'tank_auth');
 			if ($use_username) {
-				$this->form_validation->set_rules('username', 'Username', 'trim|required|xss_clean|min_length['.$this->config->item('username_min_length', 'tank_auth').']|max_length['.$this->config->item('username_max_length', 'tank_auth').']|alpha_numeric');
+				//$this->form_validation->set_rules('username', 'Username', 'trim|required|xss_clean|min_length['.$this->config->item('username_min_length', 'tank_auth').']|max_length['.$this->config->item('username_max_length', 'tank_auth').']|alpha_numeric');
 			}
-			$this->form_validation->set_rules('first_name', 'First Name', 'trim|xss_clean|alpha_dash');
-			$this->form_validation->set_rules('second_name', 'Second Name', 'trim|xss_clean|alpha_dash');
+			//$this->form_validation->set_rules('first_name', 'First Name', 'trim|xss_clean|alpha_dash');
+			//$this->form_validation->set_rules('second_name', 'Second Name', 'trim|xss_clean|alpha_dash');
 			$this->form_validation->set_rules('email', 'Email', 'trim|required|xss_clean|valid_email');
 			$this->form_validation->set_rules('home_number', 'Home Number', 'trim|xss_clean|alpha_dash');
 			$this->form_validation->set_rules('mobile_number', 'Mobile Number', 'trim|xss_clean|alpha_dash');
@@ -174,7 +174,7 @@ class Auth extends CI_Controller
 					$this->form_validation->set_value('email'),
 					$this->form_validation->set_value('password'),
 					$this->form_validation->set_value('member_type'),
-					2,					
+					2,					// GUEST
 					$this->form_validation->set_value('comms_preference'),
 					$email_activation))) {									// success
 
