@@ -427,7 +427,7 @@ var catDrop = $('<select></select>');
 
 		createListItem = function(id, name, color){
 			if(id != 1){
-				return $('<li class="list-group-item"></li>')
+				return $('<li class="list-group-item"></li>').attr('data-category_id', id)
 				.append($('<input class="pull-right" name="category_id[]" value="'+ id + '" type="checkbox">'))
 				.append($('<input>')
 					.attr({
