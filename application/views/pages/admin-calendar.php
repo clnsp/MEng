@@ -88,8 +88,8 @@
 					-->					
 
 					<div id="event-member-list">
-						<form id="event-remove-member-form" method="post" action="">
-							<ul class="list-group"></ul>
+						<form class="prevent" id="event-remove-member-form" method="post" action="">
+							<ul class="list-group checkbox-group"></ul>
 						</div>
 						<button type="submit" id="event-remove-member-button" class="btn btn-sm">Remove</button>
 
@@ -100,7 +100,7 @@
 				</div>
 				<!-- event-modal-left -->
 				<div id="event-modal-right" class="col-xs-6">
-					<form class="form-inline" id="event-add-member-form" role="form">
+					<form class="form-inline prevent" id="event-add-member-form" role="form">
 						<div class="input-group input-xl">
 							<input type="hidden" id="class-booking-id" name="class_booking_id" value="" />
 							<input id="search-users" type="text" class="form-control" name="member_name" data-member-id="" placeholder="Enter name">
@@ -139,7 +139,7 @@
 			</div>
 			<div class="modal-body">
 
-				<form id="addGuestForm" class="form-horizontal" role="form">
+				<form id="addGuestForm" class="form-horizontal prevent" role="form">
 
 					<div class="form-group">
 						<label for="guest_last_name" class="col-sm-3 control-label">First Name</label>
@@ -197,3 +197,4 @@
 </div><!-- /.modal -->
 
 <div class="clearfix"></div>
+

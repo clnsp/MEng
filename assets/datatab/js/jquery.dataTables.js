@@ -2077,8 +2077,8 @@
 			// COLIN EDIT - 01/12/13			
 			var sSearchStr = oSettings.oLanguage.sSearch;
 			sSearchStr = (sSearchStr.indexOf('_INPUT_') !== -1) ?
-			  sSearchStr.replace('_INPUT_', '<input type="text" class="form-control"  placeholder="Search"/>') :
-			  sSearchStr==="" ? '<input type="text" class="form-control"  placeholder="Search"/>' : ' <input type="text" class="form-control"  placeholder="Search"/>';
+			  sSearchStr.replace('_INPUT_', '<input type="text" class="form-control"  placeholder="Search" style="padding-right: 8px;"/>') :
+			  sSearchStr==="" ? '<input type="text" class="form-control"  placeholder="Search" style="padding-right: 8px;"/>' : ' <input type="text" class="form-control"  placeholder="Search" style="padding-right: 8px;"/>';
 						
 			var nFilter = document.createElement( 'div' );
 			nFilter.className = oSettings.oClasses.sFilter;
@@ -2687,6 +2687,7 @@
 		
 		/**
 		 * Draw the table for the first time, adding all required features
+		 * MOD TO SHOW HIDDEN TABLE AND HIDE LOADING MESSAGE - COLIN - 24/01/2014
 		 *  @param {object} oSettings dataTables settings object
 		 *  @param {object} [json] JSON from the server that completed the table, if using Ajax source
 		 *    with client-side processing (optional)
@@ -2695,6 +2696,8 @@
 		function _fnInitComplete ( oSettings, json )
 		{
 			oSettings._bInitComplete = true;
+			$('#'+oSettings.sTableId).show(); // SHOW TABLE
+			$('#'+oSettings.sTableId+"-loading").hide(); // HIDE LOADING MESAGE			
 			_fnCallbackFire( oSettings, 'aoInitComplete', 'init', [oSettings, json] );
 		}
 		

@@ -1,6 +1,8 @@
 
+<?php 
 
-<div class="push"></div>
+if(!$this->tank_auth->is_admin()){ ?>
+=======
 
 <div id="footer">
 
@@ -29,31 +31,48 @@
   </div>
 
 </div><!--end footer-->
+<?php }; ?>
+
 
 <!-- Latest compiled and minified JavaScript -->
 
+     <!-- Bootstrap core JavaScript
+     ================================================== -->
+     <!-- Placed at the end of the document so the pages load faster 
+     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>-->
+     <script src="<?php echo base_url();?>assets/js/jquery-1.7.2.js"></script>
+
+     <!-- Latest compiled and minified JavaScript -->
+     <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
+     <script src="<?php echo base_url();?>assets/js/bootstrap.submodal.js"></script>
+
+     <script src="<?php echo base_url();?>assets/js/up-coming.js"></script>
+     <!-- COLIN TEST FIX-->
+     <script src="<?php echo base_url();?>assets/datatab/js/jquery.dataTables.min.js"></script>
+     <script src="<?php echo base_url();?>assets/datatab/js/DT_bootstrap.min.js"></script>
+     <script src="<?php echo base_url();?>assets/datatab/js/user_custom.js"></script>
 
 
+     <script src="<?php echo base_url();?>assets/js/jquery-ui.custom.min.js"></script>
+     <script src="<?php echo base_url();?>assets/js/jquery-ui-autocomplete.custom.min.js"></script>
+     <script src="<?php echo base_url();?>assets/cal/fullcalendar.min.js"></script>
+     <script type="text/javascript" src="<?php echo base_url();?>assets/js/booking-calendar.js"></script>
 
-      <!-- Bootstrap core JavaScript
-      ================================================== -->
-      <!-- Placed at the end of the document so the pages load faster -->
-      <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-      <!-- Latest compiled and minified JavaScript -->
-      <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
-      <script src="<?php echo base_url();?>assets/js/bootstrap.submodal.js"></script>
-      <!-- COLIN TEST FIX-->
-      <script src="<?php echo base_url();?>assets/datatab/js/jquery.dataTables.min.js"></script>
-      <script src="<?php echo base_url();?>assets/datatab/js/DT_bootstrap.min.js"></script>
-      <script src="<?php echo base_url();?>assets/datatab/js/user_custom.js"></script>
-
-
-      <script src="<?php echo base_url();?>assets/js/jquery-ui.custom.min.js"></script>
-      <script src="<?php echo base_url();?>assets/js/jquery-ui-autocomplete.custom.min.js"></script>
-      <script src="<?php echo base_url();?>assets/cal/fullcalendar.min.js"></script>
-      <script type="text/javascript" src="<?php echo base_url();?>assets/js/booking-calendar.js"></script>
-
-      <script> 
+     <!-- Admin Manage Scripts -->
+     <script type="text/javascript" src="<?php echo base_url();?>assets/js/jquery.minicolors.js"></script>
+     <script type="text/javascript" src="<?php echo base_url();?>assets/js/jquery.ui.core.js"></script>
+     <script type="text/javascript" src="<?php echo base_url();?>assets/js/jquery.ui.datepicker.js"></script>
+     <script type="text/javascript" src="<?php echo base_url();?>assets/js/jquery-ui.multidatespicker.js"></script>
+     <script type="text/javascript" src="<?php echo base_url();?>assets/js/date.js"></script>
+	<script type="text/javascript" src="<?php echo base_url();?>assets/js/manage.js"></script>
+	
+     <!-- Custom -->
+     <script type="text/javascript" src="<?php echo base_url();?>assets/js/bootbox.min.js"></script>
+    
+    <!-- Sitewide javascript -->
+     <script type="text/javascript" src="<?php echo base_url();?>assets/js/bootstrap-override.js"></script>
+    
+     <script> 
       // using JQUERY's ready method to know when all dom elements are rendered
       $( document ).ready(function () {
 
@@ -110,11 +129,11 @@
 
   });*/
 
-  function updateContent(data) {
-   if(!data){
-    return;
-  }
-  $("#page-body").html(data.content).addClass(data.title);
+function updateContent(data) {
+ if(!data){
+  return;
+}
+$("#page-body").html(data.content).addClass(data.title);
 }
 
 </script>

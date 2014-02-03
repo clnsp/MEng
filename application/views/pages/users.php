@@ -1,4 +1,12 @@
-<table cellpadding="0" cellspacing="0" border="0" class="table table-hover table-bordered dataTable display" id="member">
+<!--Basic Loading-->
+<div class="row" id="member-loading">
+<div class="col-sm-1 col-md-offset-5" style="text-align: center;">
+<i class="fa fa-spinner fa-spin fa-5x" style="display: inline-block; width: 100%;"></i><br/>
+<h3>Loading</h3>
+</div>
+</div>
+
+<table cellpadding="0" cellspacing="0" border="0" class="table table-hover table-bordered dataTable display" style="display: none;" id="member">
 	<thead>
 	  <tr>
 		<th>First Name</th>
@@ -29,7 +37,7 @@
 		<td class="email"><?php echo $usr->email;?></td>
 		<td class="type"><?php echo ucfirst($usr->type)?></td>
 		<td class="membership_type"><?php echo ucfirst($usr->membership_type);?></td>
-		<td class="last_booking"><?php echo "None";?></td>
+		<td class="last_booking"><?php echo ucfirst($usr->lastClass);?></td>
 		<td class="status"><?php if($usr->activated && $usr->banned){echo "Blocked";}else if($usr->activated){echo "Active";}else{echo "Pending";}?></td>
 	  </tr>	  
 	  <?php } ?>

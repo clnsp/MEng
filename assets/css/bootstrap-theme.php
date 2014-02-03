@@ -581,9 +581,36 @@ html, body, #booking {
 
 /* @end */
 
+/* @group Checkbox Group */
 
+/* Margin for list checkbox*/
+.checkbox-group .list-group-item input{
+  margin-right: 5px;
+}
+
+.checkbox-group .list-group-item.selected{
+	background-color: #E8E8E8;
+
+}
+.checkbox-group .list-group-item:hover,
+.checkbox-group .list-group-item:focus{
+	 background-color: #F5F5F5;
+	 cursor: pointer;
+}
+
+.checkbox-group .list-group-item .editable{
+	cursor: text;
+}
+
+/* @end */
 
 /* @group Bootstrap Overrides  */
+
+i.square{
+  font-size: 20px;
+}
+
+
 
 #booking .navbar-top{
  border-radius: 0!important;
@@ -668,6 +695,8 @@ html, body, #booking {
   font-size: 35px;
 }
 
+
+
 #booking #eventModal #cancelled-banner{
 	background-color: rgba(0, 0, 0, 0.69);
 	padding: 0 5px 0 5px;
@@ -711,12 +740,9 @@ html, body, #booking {
   overflow-y: scroll;
   margin-bottom: 25px;
 }
-#booking #eventModal #event-member-list a.list-group-item input{
-  margin-right: 5px;
-}
 
 
-#booking #eventModal #event-member-list a.list-group-item{
+#booking #eventModal #event-member-list .list-group-item{
   text-transform: capitalize;
 }
 
@@ -733,9 +759,7 @@ html, body, #booking {
 /* @group Autocomplete */
 
 ul.ui-menu .ui-menu-item:hover {
- // background-color: <?php echo $brandSecondary?>;
  cursor: pointer;
- // color: #0ff!important;
 }
 
 ul.ui-menu .ui-menu-item {
@@ -776,3 +800,13 @@ ul.ui-autocomplete.popover.dropdown-menu{
 
 
 /* @end */
+
+/* @group Manage */
+
+	.manage-panel{
+		max-height: 450px;
+		overflow-y: scroll;
+	}
+
+/* @end */
+

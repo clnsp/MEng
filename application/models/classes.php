@@ -12,6 +12,7 @@ class Classes extends CI_Model
 {
 	private $table_name			= 'class_tbl';	
 	private $class_type_tbl			= 'class_type_tbl';	
+	private $class_info_view			= 'class_info_view';	
 
 	function __construct()
 	{
@@ -22,50 +23,41 @@ class Classes extends CI_Model
 
 	}
 
+        /**
+         * Get bookings between two dates
+         *
+         * @param        date
+         * @param        date
+         * @return        object
+         */
+        function getClassessBetween($start, $end){ //getBookingsBetween used to be
+                
+                $this -> db -> where('start BETWEEN "' . $start . '" AND "' . $end . '"');
+		$this -> db -> order_by("start asc, title asc");
+                $query = $this->db->get($this -> class_info_view);
+		
 
-	/**
-	 * Get bookings between two dates
-	 *
-	 * @param	date
-	 * @param	date
-	 * @return	object
-	 */
-	function getClassessBetween($start, $end){ //getBookingsBetween used to be
-
-		$this -> db -> select('class_type AS title, class_start_date AS start, class_end_date AS end, category, class_tbl.category_id, class_id, max_attendance, room, room_tbl.room_id, color, cancelled');
-		$this -> db -> from($this -> table_name);
-		$this -> db -> where('class_start_date BETWEEN "' . $start . '" AND "' . $end . '"');
-		$this -> db -> join('room_tbl', 'room_tbl.room_id = class_tbl.room_id');
-		$this -> db -> join('category_tbl', 'category_tbl.category_id = class_tbl.category_id');
-		$this -> db -> join('class_type_tbl', 'class_type_tbl.class_type_id = class_tbl.class_type_id');
-
-		$query = $this -> db -> get();
-
-		return $query->result();
-	}
+                return $query->result();
+        }
 
 
-	/*
-	 * Fetch a rooms specific classes 
-	 */
-	function getClassesWithRoomBetween($start, $end, $room){
+        /*
+         * Fetch a rooms specific classes 
+         */
+        function getClassesWithRoomBetween($start, $end, $room){
 
-		if($room != 'allrooms'){
-			$this -> db -> select(' class_type AS title, class_start_date AS start, class_end_date AS end, category, class_tbl.category_id, class_id, max_attendance, room, room_tbl.room_id, color, cancelled');
-			$this -> db -> from($this -> table_name);
-			$this -> db -> where('class_tbl.room_id',$room, ' start BETWEEN "' . $start . '" AND "' . $end . '"');
-			$this -> db -> join('room_tbl', 'room_tbl.room_id = class_tbl.room_id');
-			$this -> db -> join('category_tbl', 'category_tbl.category_id = class_tbl.category_id');
-			$this -> db -> join('class_type_tbl', 'class_type_tbl.class_type_id = class_tbl.class_type_id');
+                if($room != 'allrooms'){
+                        $this -> db -> where('room_id',$room, ' start BETWEEN "' . $start . '" AND "' . $end . '"');
+			$this -> db -> order_by("start asc, title asc");
+                        $query = $this->db->get($this -> class_info_view);
 
-		}else{
-			return $this->getClassessBetween($start, $end);
-		}
+                }else{
+                        return $this->getClassessBetween($start, $end);
+                }
 
-		$query = $this -> db -> get();
-
-		return $query->result();
-	}
+        
+                return $query->result();
+        }
 
 
 	/**
@@ -150,6 +142,18 @@ class Classes extends CI_Model
 
 		return $this -> db -> get()->result_array();
 	}
+	
+	/**
+	 * Returns class type information
+	 * @return array
+	 */
+	function getClassTypes(){
+		$this->db->select('*');
+		$this->db->from($this -> class_type_tbl); 
+		$this->db->join('category_tbl', 'class_type_tbl.category_id = category_tbl.category_id');
+		
+		return $this -> db -> get()->result_array();
+	}
 
 	/**
 	 * Insert a new class
@@ -157,6 +161,8 @@ class Classes extends CI_Model
 	 */
 	function insertClass($data){
 		$this->db->insert($this -> table_name, $data); 
+		echo($this->db->_error_message());
+		echo("Inserted class");
 	}
 	
 	/**
@@ -177,5 +183,85 @@ class Classes extends CI_Model
 
 		return $query->row_array();
 	}
+	
+	/**
+	 * Insert a new class type
+	 * @param string
+	 * @param string
+	 */
+	function addNewClassType($class_type, $class_description, $category_id){
+		$data = array(
+			'class_type'		=>	$class_type,
+			'class_description'	=>	$class_description,
+			'category_id'		=>	$category_id,
+			);
+
+		$this->db->insert($this -> class_type_tbl, $data); 
+	}
+	
+	/**
+	 * Update a class type
+	 * @param int
+	 * @param string
+	 * @param string
+	 */
+	function updateClassType($class_type_id, $class_type, $class_description, $category_id){
+
+		$data = array(
+			'class_type'		=>	$class_type,
+			'class_description'	=>	$class_description,
+			'category_id'		=>	$category_id
+			);
+
+		$this->db->where('class_type_id', $class_type_id);
+		$this->db->update($this -> class_type_tbl, $data); 
+
+	}	
+
+	/**
+	 * Change all class types with categories to uncategorised.
+	 * @param	array
+	 */
+	function uncategoriseClassTypes($categories){
+		foreach ($categories as $cat) {
+			$this->db->where('category_id', $cat);
+			$this->db->update($this -> class_type_tbl, array('category_id' => 1)); 
+		}
+
+	}	
+
+	/**
+	 * Remove a class type
+	 * @param int
+	 */
+	function removeClassType($class_type_id){
+		$this->db->where_in('class_type_id', $class_type_id);
+		$this->db->delete($this -> class_type_tbl);
+
+		if ($this->db->_error_number()==1451){
+			header("Cannot remove",TRUE,304);
+			echo "Cannot remove class types that are assigned to classes";
+		}
+
+		return $this->db->_error_number() == 0;
+
+
+	}	
+	
+	/**
+	 * Determines whether this is a valid class type id
+	 * @param	int
+	 * @return	bool
+	 */
+	function validClassType($class_type_id){
+		$this->db->where('class_type_id', $class_type_id);
+		$this->db->from($this -> class_type_tbl);
+		$query = $this -> db -> get();
+
+		return $this->db->count_all_results() > 0;
+
+	}	
+	
+
 
 }

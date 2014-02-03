@@ -13,7 +13,6 @@ class Generate extends CI_Controller{
 		if($numberClasses > 0){
 			$this->load->model('classes');
 			$this->load->model('rooms');
-			$this->load->model('categories');
 
 		// Get all the class types
 			$classTypes = $this->classes->getClassTypeIDs();
@@ -23,9 +22,6 @@ class Generate extends CI_Controller{
 			$roomIds = $this->rooms->getRoomIDs();
 			$maxRindex = count($roomIds)-1;
 
-		//get all categories
-			$categoryIds = $this->categories->getCategoryIDs();
-			$maxCatindex = count($categoryIds)-1;
 
 			$now = time() + $offset;		
 
@@ -46,17 +42,14 @@ class Generate extends CI_Controller{
 			//select random room
 				$room_id = $roomIds[rand(0, $maxRindex)]['room_id'];
 
-			//select random category
-				$category_id = $categoryIds[rand(0, $maxCatindex)]['category_id'];
 
-				echo $i . 'Inserting: class_type_id: ' . $class_type_id . ' start: '. $class_start_date . ' end: ' .  $class_end_date  . ' room_id: ' . $room_id . ' category_id:' . $category_id . ' max_attendance: '. $max_attendance .  ' cancelled: 0' . "<br/>";
+				echo $i . 'Inserting: class_type_id: ' . $class_type_id . ' start: '. $class_start_date . ' end: ' .  $class_end_date  . ' room_id: ' . $room_id . ' max_attendance: '. $max_attendance .  ' cancelled: 0' . "<br/>";
 
 				$data = array(
 					'class_type_id' => $class_type_id ,
 					'class_start_date' => $class_start_date ,
 					'class_end_date' => $class_end_date ,
 					'room_id' => $room_id,
-					'category_id' => $category_id,
 					'max_attendance' => $max_attendance,
 					'cancelled' => 0,
 					);

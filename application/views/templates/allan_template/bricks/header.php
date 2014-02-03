@@ -1,5 +1,5 @@
   <!DOCTYPE html>
-  <html lang="en">
+  <html lang="en" class='fuelx'>
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -14,9 +14,12 @@
     <link rel="stylesheet" href="<?php echo base_url();?>assets/css/bootstrap-theme.php">
     <link rel="stylesheet" href="<?php echo base_url();?>assets/css/bootstrap.submodal.css">
     <link rel="stylesheet" href="<?php echo base_url();?>assets/css/jquery-ui-autocomplete.custom.min.css">
-    <link rel="stylesheet" href="<?php echo base_url();?>assets/datatab/css/DT_bootstrap.css"/>
+    <link rel="stylesheet" href="<?php echo base_url();?>assets/css/DT_bootstrap.css"/>
     <link rel="stylesheet" href="<?php echo base_url();?>assets/css/bootstrap-overides.css"/>
     <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/cal/fullcalendar.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/css/mdp.css">
+
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/css/jquery.minicolors.css">
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
       <!--[if lt IE 9]>
@@ -107,7 +110,13 @@
 
 
           <form class="navbar-form navbar-right" role="search">
-            <a href="register" id="register-button" class="btn btn-primary">Register</a>
+			  <div class="btn-group">
+				<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Register<span class="caret"></span></button>
+				<ul class="dropdown-menu">
+				  <li><a href="register">DS Registration</a></li>
+				  <li><a href="#">Alternative</a></li>
+				</ul>
+			</div>
           </form>
         <?php endif; ?>
 
