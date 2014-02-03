@@ -6,8 +6,8 @@
 	</div>
 	
 	<div class="row">
-			
-			<div class="col-md-6">
+
+		<div class="col-md-6">
 			<div id="manage-categories" class="panel panel-default ">
 				<div class="panel-heading"><h3 class="panel-title">Categories</h3></div>
 				<div class="panel-body">
@@ -53,50 +53,50 @@
 					
 				</div>
 			</div>
-			</div>
+		</div>
 
 
 
 		
 
-<div class="col-md-6">
-		<div id="manage-add-classes" class="">
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<h3 class="panel-title">Add New Class Type</h3>
-				</div>
-				<div class="panel-body">
-					
-					<form id="add-class-type-form" class="prevent" role="form">
-						<div class="form-group">
-							<label for="class_type">Title</label>
-							<input name="class_type" type="text" class="form-control" placeholder="Class Title">
-						</div>
-						
-						<div class="form-group">
-							<label for="class_category">Category</label>
-							<select name="category_id" type="dropdown" class="form-control"></select>
-						</div>
+		<div class="col-md-6">
+			<div id="manage-add-classes" class="">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">Add New Class Type</h3>
+					</div>
+					<div class="panel-body">
 
-						<div class="form-group">
-							<label for="class_description">Description</label>
-							<textarea name="class_description" class="form-control" rows="3"></textarea>
-						</div>
-						
-						<div class="form-group">
-							<button type="submit" class="btn btn-default">Add Class Type</button>
-						</div>
-					</form>
-					
-					
+						<form id="add-class-type-form" class="prevent" role="form">
+							<div class="form-group">
+								<label for="class_type">Title</label>
+								<input name="class_type" type="text" class="form-control" placeholder="Class Title">
+							</div>
+
+							<div class="form-group">
+								<label for="class_category">Category</label>
+								<select name="category_id" type="dropdown" class="form-control"></select>
+							</div>
+
+							<div class="form-group">
+								<label for="class_description">Description</label>
+								<textarea name="class_description" class="form-control" rows="3"></textarea>
+							</div>
+
+							<div class="form-group">
+								<button type="submit" class="btn btn-default">Add Class Type</button>
+							</div>
+						</form>
+
+
+					</div>
 				</div>
+
 			</div>
 
 		</div>
-		
-		</div>
-		</div>
-		<div class="row">
+	</div>
+	<div class="row">
 		
 		
 		<div id="manage-classes" class="">
@@ -105,16 +105,18 @@
 					<h3 class="panel-title">Manage Class Types</h3>
 				</div>
 				<div class="panel-body">						
-					
-					<div class="manage-panel">
-						<table id='class-types-table' class="table table-striped table-hover">
-							<tr>
-								<th>Title</th>
-								<th>Description</th>
-								<th>Category</th>
-							</tr>
+										
+						<table id='class-types-table' class="table table-striped table-hover scroll">
+							<thead>
+								<tr>
+									<th>Title</th>
+									<th>Description</th>
+									<th>Category</th>
+								</tr>
+							</thead>
 							
-							<tbody></tbody>
+							<tbody class="manage-panel"></tbody>
+							
 						</table>
 					</div>
 					
@@ -122,38 +124,38 @@
 			</div>
 			
 		</div>
-</div>
-<div class="row">		
 
-<div class="">
-<div id="add-block-classes" class=" ">
+	<div class="row">		
+
+		<div class="">
+			<div id="add-block-classes" class=" ">
 
 
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<h3 class="panel-title">Add Block Bookings</h3>
-				</div>
-				
-				
-				<div class="panel-body" >						
-					<div class="col-md-6">
-					
-					<form id="add-block-classes-form" class="form-horizontal prevent" role="form">
-						<div class="form-group">
-							<label for="class_type_id" class="col-sm-3 control-label">Class Type</label>
-							<div class="col-sm-9">
-								<select name="class_type_id" type="dropdown" class="form-control"></select>							</div>
-							</div>
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">Add Block Bookings</h3>
+					</div>
 
-							<div class="form-group">
-								<label for="max_attendance" class="col-sm-3 control-label">Max Capacity</label>
-								<div class="col-sm-9">
-									<input name="max_attendance" type="text" class="form-control" placeholder="Maximum Capacity">
-								</div>
-							</div>
 
-							<div class="form-group">
-								<label for="class_start_date" class="col-sm-3 control-label">Class Start</label>
+					<div class="panel-body" >						
+						<div class="col-md-6">
+
+							<form id="add-block-classes-form" class="form-horizontal prevent" role="form">
+								<div class="form-group">
+									<label for="class_type_id" class="col-sm-3 control-label">Class Type</label>
+									<div class="col-sm-9">
+										<select name="class_type_id" type="dropdown" class="form-control"></select>							</div>
+									</div>
+
+									<div class="form-group">
+										<label for="max_attendance" class="col-sm-3 control-label">Max Capacity</label>
+										<div class="col-sm-9">
+											<input name="max_attendance" type="text" class="form-control" placeholder="Maximum Capacity">
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label for="class_start_date" class="col-sm-3 control-label">Class Start</label>
 								<!--<<div class="col-sm-5">
 									<input name="class_start_date" type="date" class="form-control" >
 								</div>-->
@@ -183,7 +185,6 @@
 									<div class="col-sm-9">
 										<select name="repeat" type="dropdown" class="form-control">
 											<option value="0">None (run once)</option>
-											<option value="hours">Hourly</option>
 											<option value="days">Daily</option>
 											<option value="weeks">Weekly</option>
 											<option value="months">Monthly</option>
@@ -191,7 +192,7 @@
 										</select>							
 									</div>
 								</div>
-									<input name="times" type="hidden" value="5">
+								<input name="times" type="hidden" value="5">
 
 								<div class="form-group">
 									<label for="until" class="col-sm-3 control-label">Until</label>
@@ -205,11 +206,12 @@
 								<div class="form-group">
 									<div class="col-sm-offset-3 col-sm-9">
 										<button type="submit" class="btn btn-primary">Add Block</button>
+										<button id="clear-cal-btn" type="button" class="btn btn-default">Clear Calendar</button>
 									</div>
 								</div>
 								
-								</form>
-							</div>
+							</form>
+						</div>
 
 						
 						
@@ -219,57 +221,57 @@
 
 					</div>
 				</div>
-				</div>
-				
-				
+			</div>
 
-			</div>
-			</div>
-			
-			</div>
-			
+
 
 		</div>
+	</div>
 
-		<div id="modal-edit-class-type" class="modal fade">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-						<h4 class="modal-title">Edit Class Type</h4>
+</div>
+
+
+</div>
+
+<div id="modal-edit-class-type" class="modal fade">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">Edit Class Type</h4>
+			</div>
+			<div class="modal-body">
+				<form id="edit-class-type-form" class="prevent" role="form">
+
+					<input name="class_type_id" type="hidden" class="form-control">
+
+					<div class="form-group">
+						<label for="class_type">Title</label>
+						<input name="class_type" type="text" class="form-control">
 					</div>
-					<div class="modal-body">
-						<form id="edit-class-type-form" class="prevent" role="form">
 
-							<input name="class_type_id" type="hidden" class="form-control">
+					<div class="form-group">
+						<label for="class_category">Category</label>
+						<select name="category_id" type="dropdown" class="form-control"></select>
+					</div>
 
-							<div class="form-group">
-								<label for="class_type">Title</label>
-								<input name="class_type" type="text" class="form-control">
-							</div>
-
-							<div class="form-group">
-								<label for="class_category">Category</label>
-								<select name="category_id" type="dropdown" class="form-control"></select>
-							</div>
-
-							<div class="form-group">
-								<label for="class_description">Description</label>
-								<textarea name="class_description" class="form-control" rows="3"></textarea>
-							</div>
+					<div class="form-group">
+						<label for="class_description">Description</label>
+						<textarea name="class_description" class="form-control" rows="3"></textarea>
+					</div>
 
 
-						</div>
-						<div class="modal-footer">
-							<button id="remove-submit" type="button" class="btn btn-danger pull-left">Remove Class Type</button>
-							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-							<button type="submit" class="btn btn-primary">Save changes</button>
-						</div>
-					</form>
-				</div><!-- /.modal-content -->
-			</div><!-- /.modal-dialog -->
-		</div><!-- /.modal -->
+				</div>
+				<div class="modal-footer">
+					<button id="remove-submit" type="button" class="btn btn-danger pull-left">Remove Class Type</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="submit" class="btn btn-primary">Save changes</button>
+				</div>
+			</form>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 
-	</div><!--/container-->
+</div><!--/container-->
 

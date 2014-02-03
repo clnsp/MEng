@@ -274,27 +274,27 @@ $( document ).ready(function() {
 			else 
 				alert("No dates selected");
 			
-			});
+		});
 
 		sendForm = function () {
 			
-			 $.post( urlBase + 'addInstances/', form.serialize())
-			 .done(function( data ) {
-			 	alert(data);
-			 });
+			$.post( urlBase + 'addInstances/', form.serialize())
+			.done(function( data ) {
+				alert(data);
+			});
 
 		}
 
-return {
+		return {
 
-	drop: classTypeDrop,
-	form: form,
-	roomDrop: roomDrop,
-	sendForm: sendForm
+			drop: classTypeDrop,
+			form: form,
+			roomDrop: roomDrop,
+			sendForm: sendForm
 
-};
+		};
 
-})();
+	})();
 
 	rooms = (function() {
 
@@ -331,7 +331,7 @@ return {
 		}
 		
 		
-				
+
 		
 
 		return {
@@ -342,68 +342,68 @@ return {
 
 	})();
 
-classtypes = (function() {
-			var cttable = $('<tbody></tbody>');
-			var ctdrop = $('<select></select>');
+	classtypes = (function() {
+		var cttable = $('<tbody></tbody>');
+		var ctdrop = $('<select></select>');
 
-			var urlBase = "class_type/";
-	
-			ctcreateRow = function (type) {
-				return($('<tr data-class_type_id="' + type['class_type_id'] + '"></tr>')
-					.append('<td class="class_type">'+type['class_type'] + '</td>')
-					.append('<td class="class_description">' + type['class_description'] +'</td>')
-					.append('<td data-category_id='+ type['category_id'] +' class="category">' + type['category'] +'</td>') 
-					);			
-			},
-	
-			ctcreateOption = function (type) {
-				return($('<option></option>').val(type['class_type_id']).append(type['class_type']));		
-					
-			},
-	
-	
-			refresh = function () {		
-				$.getJSON(urlBase + 'getClassTypes', function(data) {
-					
-					ctclear();
-					if(data.length>0){
-						$.each( data, function( key, type ) {
-							cttable.append(ctcreateRow(type));
-							ctdrop.append(ctcreateOption(type));
-						});
-	
-					}
-					ctupdate();
-	
-				});
-			},
-			
-			ctclear = function() {
-				cttable.empty();
-				ctdrop.html('');
-			},
-			
-			
-			ctupdate = function () {
-				manageClassTypesPanel.table.html(cttable.html());
-				addBlockClassesPanel.drop.html(ctdrop.html());
-			}
-			
+		var urlBase = "class_type/";
 
-	return {
-		refresh: refresh,
-	};
+		ctcreateRow = function (type) {
+			return($('<tr data-class_type_id="' + type['class_type_id'] + '"></tr>')
+				.append('<td class="class_type">'+type['class_type'] + '</td>')
+				.append('<td class="class_description">' + type['class_description'] +'</td>')
+				.append('<td data-category_id='+ type['category_id'] +' class="category">' + type['category'] +'</td>') 
+				);			
+		},
 
-})();
+		ctcreateOption = function (type) {
+			return($('<option></option>').val(type['class_type_id']).append(type['class_type']));		
+
+		},
 
 
-categories = (function() {
-var urlBase 		= "category/";
-var catList = $('<ul></ul>');
-var catDrop = $('<select></select>');
+		refresh = function () {		
+			$.getJSON(urlBase + 'getClassTypes', function(data) {
 
-	refresh = function () {
-		$.getJSON(urlBase + 'fetchAll', function(data) {
+				ctclear();
+				if(data.length>0){
+					$.each( data, function( key, type ) {
+						cttable.append(ctcreateRow(type));
+						ctdrop.append(ctcreateOption(type));
+					});
+
+				}
+				ctupdate();
+
+			});
+		},
+
+		ctclear = function() {
+			cttable.empty();
+			ctdrop.html('');
+		},
+
+
+		ctupdate = function () {
+			manageClassTypesPanel.table.html(cttable.html());
+			addBlockClassesPanel.drop.html(ctdrop.html());
+		}
+
+
+		return {
+			refresh: refresh,
+		};
+
+	})();
+
+
+	categories = (function() {
+		var urlBase 		= "category/";
+		var catList = $('<ul></ul>');
+		var catDrop = $('<select></select>');
+
+		refresh = function () {
+			$.getJSON(urlBase + 'fetchAll', function(data) {
 				
 				catList.empty();
 				if(data.length>0){
@@ -417,7 +417,7 @@ var catDrop = $('<select></select>');
 				update();
 				
 			});
-		
+
 		},
 		
 		createOption = function (type) {
@@ -464,10 +464,15 @@ var catDrop = $('<select></select>');
 	})();
 	
 	var datepicker = (function() {
-	
-		var cal = $('#date-selector').multiDatesPicker();
+
+		var cal = $('#date-selector').multiDatesPicker({numberOfMonths: [2,2]});
 		var until = $('#add-block-classes input[name=until]');
 		var repeat = $('#add-block-classes select[name=repeat]');
+		var resetbtn = $('#add-block-classes #add-block-classes-form button#clear-cal-btn');
+
+		resetbtn.click(function(){
+			cal.multiDatesPicker('resetDates');
+		});
 		
 		hasDates = function() {
 			return cal.multiDatesPicker('getDates') == [];
@@ -481,10 +486,22 @@ var catDrop = $('<select></select>');
 				
 				calDates.forEach(function(entry) {
 					var day = Date.parse(entry);
-					while(day < stopDate){
-						day = day.add(7).days();
-					    newDates.push(day.clone());
-				    }
+					while(Date.compare(day, stopDate) != 1){
+
+						newDates.push(day.clone());
+
+						if(repeat.val() == 'days')
+							day.add(1).days();
+
+						else if (repeat.val() == 'weeks')
+							day.add(1).weeks();
+
+						else if (repeat.val() == 'months')
+							day.add(1).months();
+
+						else if (repeat.val() == 'years')
+							day.add(1).years();
+					}
 				});
 				
 				cal.multiDatesPicker('addDates', newDates);
@@ -502,29 +519,42 @@ var catDrop = $('<select></select>');
 	})();
 	
 	
-categories.refresh();
-classtypes.refresh();
-rooms.refresh();
+	categories.refresh();
+	classtypes.refresh();
+	rooms.refresh();
 
-$('INPUT.minicolors-inline').minicolors({ theme: 'bootstrap', control: 'wheel' });
+	$('INPUT.minicolors-inline').minicolors({ theme: 'bootstrap', control: 'wheel' });
 
-/*  */
-datepicker.repeat.change(function() {
-	if($(this).val() == '0')
-		datepicker.until.prop( "disabled", true );
-	else{
-		datepicker.until.prop( "disabled", false );
-		repeatDates();
-	}
-	
-	
-});
+	/*  */
+	datepicker.repeat.change(function() {
+		if($(this).val() == '0')
+			datepicker.until.prop( "disabled", true );
+		else{
+			datepicker.until.prop( "disabled", false );
+			repeatDates();
+		}
+	});
 
-datepicker.cal.multiDatesPicker('addDates', new Array(new Date()));
-datepicker.cal.on('click', 'tr', function() {
-	alert('update');
-});
+	datepicker.until.change(function() {
+		datepicker.repeatDates();
+	});
 
+	datepicker.cal.multiDatesPicker('addDates', new Array(new Date()));
+
+
+
+	datepicker.cal.on('click', 'td.ui-state-highlight', function(e) {
+
+		e.preventDefault();
+		e.stopImmediatePropagation();
+		//alert('deselection');
+	});
+
+
+	datepicker.cal.on('click', 'td', function(e) {
+		//alert('re-calculate');
+		datepicker.repeatDates();
+	});
 
 
 
