@@ -88,6 +88,16 @@ class Users extends CI_Model
 		return NULL;
 	}
 
+	function get_user_id_by_email($email)
+	{
+		$this->db->select('id');
+		$this->db->where('LOWER(email)=', strtolower($email));
+		
+		$query = $this->db->get($this->table_name);
+		if ($query->num_rows() == 1) return $query->row();
+		return NULL;		
+	}
+
 	/**
 	 * Check if username available for registering
 	 *

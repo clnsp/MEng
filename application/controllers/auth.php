@@ -262,6 +262,75 @@ class Auth extends CI_Controller
 			$this->_show_message($this->lang->line('auth_message_activation_failed'));
 		}
 	}
+	
+	function admin()
+	{
+	  if (!$this->tank_auth->is_logged_in()) {								// not logged in or not activated
+			redirect('/auth/login/');
+
+		} else {
+			$this->form_validation->set_rules('first_name', 'First Name', 'trim|required|xss_clean');
+			
+			$data['errors'] = array();
+
+            $this->load->Model('Members');
+            $members = $this->Members->getUserByID($this->tank_auth->get_user_id());
+            $data['member'] = $members['0']; 
+
+			if ($this->form_validation->run()) {								// validation ok
+				if ($this->tank_auth->change_password(
+					$this->form_validation->set_value('old_password'),
+						$this->form_validation->set_value('new_password'))) {	// success
+					$this->_show_message($this->lang->line('auth_message_password_changed'));
+
+				} else {														// fail
+					$errors = $this->tank_auth->get_error_message();
+					foreach ($errors as $k => $v)	$data['errors'][$k] = $this->lang->line($v);
+				}
+			}
+			//$this->load->view('auth/change_password_form', $data);
+			parse_temp('Change Password', $this->load->view('auth/account_settings', '', true) . $this->load->view('auth/detail_form', $data, true));
+		}
+	}
+	
+	function load_details()
+	{
+	  if (!$this->tank_auth->is_logged_in()) {								// not logged in or not activated
+			redirect('/auth/login/');
+
+		} else {
+			$this->form_validation->set_rules('first_name', 'First Name', 'trim|required|xss_clean');
+			$this->form_validation->set_rules('second_name', 'Surname', 'trim|required|xss_clean');
+			$this->form_validation->set_rules('home_number', 'Home Phone Number', 'trim|required|xss_clean');
+			$this->form_validation->set_rules('mobile_number', 'Mobile Phone Number', 'trim|required|xss_clean');
+			$this->form_validation->set_rules('comms_preference', 'Communications', 'trim|required|xss_clean');
+			
+			$data['errors'] = array();
+
+            $this->load->Model('Members');
+            $this->load->Model('Comms_Preference');
+            
+            $members = $this->Members->getUserByID($this->tank_auth->get_user_id());
+            $data['member'] = $members['0']; 
+            
+            $prefs = $this->Comms_Preference->getPreferences();
+            $data['comm_prefs'] = $prefs;
+
+			if ($this->form_validation->run()) {								// validation ok
+				if ($this->tank_auth->change_password(
+					$this->form_validation->set_value('old_password'),
+						$this->form_validation->set_value('new_password'))) {	// success
+					$this->_show_message($this->lang->line('auth_message_password_changed'));
+
+				} else {														// fail
+					$errors = $this->tank_auth->get_error_message();
+					foreach ($errors as $k => $v)	$data['errors'][$k] = $this->lang->line($v);
+				}
+			}
+			//$this->load->view('auth/change_password_form', $data);
+			parse_temp('Change Password', $this->load->view('auth/account_settings', '', true) . $this->load->view('auth/detail_form', $data, true));
+		}
+	}
 
 	/**
 	 * Generate reset code (to change password) and send it to user

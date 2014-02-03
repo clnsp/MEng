@@ -23,6 +23,25 @@ class Member extends CI_Controller{
 			echo $this->members->updateUser(strtolower($_POST['id']), array_map('strtolower',$_POST['changes']));
 		}
 	}
+
+	function createUserChanges()
+	{
+		$this->load->model('members');
+		$this->load->library('tank_auth');
+		
+		$new_details['first_name']       = $_POST['first_name'];
+		$new_details['second_name']      = $_POST['second_name'];
+		//$new_details['email']            = $_POST['email'];
+		$new_details['home_number']      = $_POST['home_number'];
+		$new_details['mobile_number']    = $_POST['mobile_number'];
+		$new_details['twitter']          = $_POST['twitter'];
+		$new_details['comms_preference'] = $_POST['comms_preference'];
+		
+		$_POST['changes'] = $new_details;
+		
+		echo $this->members->updateUser(strtolower($this->tank_auth->get_user_id()), array_map('strtolower',$_POST['changes']));
+		redirect('auth/load_details');
+	}
 	
 	/*
 	 * Get Memberships for User

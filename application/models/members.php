@@ -61,7 +61,6 @@ class Members extends CI_Model
    return $query;
  }
 
-
  /**
  * Get member type ids
  * @return array

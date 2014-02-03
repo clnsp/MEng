@@ -47,9 +47,9 @@ class Tank_auth
 	{
 		if ((strlen($login) > 0) AND (strlen($password) > 0)) {
 			// Only Use Email
-			$get_user_func = 'get_user_by_email';
+			if (!is_null($user = $this->ci->users->get_user_by_email($login))) {	// login ok
 
-			if (!is_null($user = $this->ci->users->$get_user_func($login))) {	// login ok
+				$userid = $this->ci->users->get_user_id_by_email($login);
 
 				// Does password match hash in database?
 				$hasher = new PasswordHash(
@@ -62,7 +62,7 @@ class Tank_auth
 
 					} else {
 						$this->ci->session->set_userdata(array(
-								'user_id'	=> $user->id,
+								'user_id'	=> $userid->id,
 								'username'	=> $user->username,
 								'userpermission'	=> $user->permission_level_id,
 								'status'	=> ($user->activated == 1) ? STATUS_ACTIVATED : STATUS_NOT_ACTIVATED,
