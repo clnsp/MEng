@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="<?php echo base_url();?>assets/datatab/css/DT_bootstrap.css"/>
     <link rel="stylesheet" href="<?php echo base_url();?>assets/css/bootstrap-overides.css"/>
     <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/cal/fullcalendar.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/css/mdp.css">
 
     <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/css/jquery.minicolors.css">
 

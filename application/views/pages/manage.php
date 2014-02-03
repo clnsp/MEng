@@ -6,10 +6,9 @@
 	</div>
 	
 	<div class="row">
-
-		<div class="col-md-6">
 			
-			<div id="manage-categories" class="panel panel-default">
+			<div class="col-md-6">
+			<div id="manage-categories" class="panel panel-default ">
 				<div class="panel-heading"><h3 class="panel-title">Categories</h3></div>
 				<div class="panel-body">
 					
@@ -54,13 +53,14 @@
 					
 				</div>
 			</div>
-			
+			</div>
 
 
 
-		</div>
+		
 
-		<div id="manage-add-classes" class="col-md-6">
+<div class="col-md-6">
+		<div id="manage-add-classes" class="">
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<h3 class="panel-title">Add New Class Type</h3>
@@ -94,8 +94,12 @@
 
 		</div>
 		
+		</div>
+		</div>
+		<div class="row">
 		
-		<div id="manage-classes" class="col-md-6">
+		
+		<div id="manage-classes" class="">
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<h3 class="panel-title">Manage Class Types</h3>
@@ -118,14 +122,21 @@
 			</div>
 			
 		</div>
+</div>
+<div class="row">		
+
+<div class="">
+<div id="add-block-classes" class=" ">
 
 
-		<div id="add-block-classes" class="col-md-6">
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<h3 class="panel-title">Add Block Bookings</h3>
 				</div>
+				
+				
 				<div class="panel-body" >						
+					<div class="col-md-6">
 					
 					<form id="add-block-classes-form" class="form-horizontal prevent" role="form">
 						<div class="form-group">
@@ -143,14 +154,20 @@
 
 							<div class="form-group">
 								<label for="class_start_date" class="col-sm-3 control-label">Class Start</label>
-								<div class="col-sm-9">
-									<input name="class_start_date" type="datetime" class="form-control" >
+								<!--<<div class="col-sm-5">
+									<input name="class_start_date" type="date" class="form-control" >
+								</div>-->
+								<div class="col-sm-4">
+									<input name="class_start_date" type="time" class="form-control" >
 								</div>
 							</div>
 							<div class="form-group">
 								<label for="class_end_date" class="col-sm-3 control-label">Class End</label>
-								<div class="col-sm-9">
-									<input name="class_end_date" type="datetime" class="form-control" >
+								<!--<div class="col-sm-5">
+									<input name="class_end_date" type="date" class="form-control" >
+								</div>-->
+								<div class="col-sm-4">
+									<input name="class_end_date" type="time" class="form-control" >
 								</div>
 							</div>
 
@@ -179,7 +196,7 @@
 								<div class="form-group">
 									<label for="until" class="col-sm-3 control-label">Until</label>
 									<div class="col-sm-9">
-										<input name="until" type="date" class="form-control" >
+										<input name="until" type="date" class="form-control" disabled>
 
 									</div>
 								</div>
@@ -190,14 +207,27 @@
 										<button type="submit" class="btn btn-primary">Add Block</button>
 									</div>
 								</div>
+								
+								</form>
 							</div>
 
-						</form>
+						
+						
+						<div class="col-md-6">
+							<div id="date-selector"></div>
+						</div>
 
 					</div>
 				</div>
+				</div>
+				
+				
 
 			</div>
+			</div>
+			
+			</div>
+			
 
 		</div>
 

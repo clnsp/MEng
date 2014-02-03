@@ -35,8 +35,10 @@ if(!$this->tank_auth->is_admin()){ ?>
 
      <!-- Bootstrap core JavaScript
      ================================================== -->
-     <!-- Placed at the end of the document so the pages load faster -->
-     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+     <!-- Placed at the end of the document so the pages load faster 
+     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>-->
+     <script src="<?php echo base_url();?>assets/js/jquery-1.7.2.js"></script>
+
      <!-- Latest compiled and minified JavaScript -->
      <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
      <script src="<?php echo base_url();?>assets/js/bootstrap.submodal.js"></script>
@@ -55,8 +57,12 @@ if(!$this->tank_auth->is_admin()){ ?>
 
      <!-- Admin Manage Scripts -->
      <script type="text/javascript" src="<?php echo base_url();?>assets/js/jquery.minicolors.js"></script>
-     <script type="text/javascript" src="<?php echo base_url();?>assets/js/manage.js"></script>
-
+     <script type="text/javascript" src="<?php echo base_url();?>assets/js/jquery.ui.core.js"></script>
+     <script type="text/javascript" src="<?php echo base_url();?>assets/js/jquery.ui.datepicker.js"></script>
+     <script type="text/javascript" src="<?php echo base_url();?>assets/js/jquery-ui.multidatespicker.js"></script>
+     <script type="text/javascript" src="<?php echo base_url();?>assets/js/date.js"></script>
+	<script type="text/javascript" src="<?php echo base_url();?>assets/js/manage.js"></script>
+	
      <!-- Custom -->
      <script type="text/javascript" src="<?php echo base_url();?>assets/js/bootbox.min.js"></script>
     
