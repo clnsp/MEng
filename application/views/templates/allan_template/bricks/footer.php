@@ -2,6 +2,8 @@
 <?php 
 
 if(!$this->tank_auth->is_admin()){ ?>
+=======
+
 <div id="footer">
 
 
@@ -30,6 +32,7 @@ if(!$this->tank_auth->is_admin()){ ?>
 
 </div><!--end footer-->
 <?php }; ?>
+
 
 <!-- Latest compiled and minified JavaScript -->
 

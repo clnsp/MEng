@@ -50,12 +50,13 @@ $route['users'] = 'pages/users';
 
 $route['member'] = 'member';
 
-$route['admin-calendar'] = 'pages/admin_calendar';
+$route['updateClasses'] = 'pages/updateClasses';
 $route['users_fetch'] = 'users_fetch';
 $route['booking'] = 'booking';
 $route['room/(:any)'] = 'pages/room/$1';
 $route['room/getRoomIDs'] = 'room/getRoomIDs';
 $route['manage'] = 'pages/manage';
+$route['admin-calendar'] = 'pages/admin_calendar';
 $route['category/(:any)'] = 'category/$1';
 
 $route['welcome'] = 'welcome';

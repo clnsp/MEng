@@ -37,22 +37,22 @@ width: 33% !important;
 
 div.list {
     overflow-x: auto;
-	overflow-y: hidden;
+    overflow-y: hidden;
     white-space: nowrap;
 }
 div.list [class*="col-"] {
     display: inline-block;
     float: none; /* Very important */
+	vertical-align:top;
 }
 
 div.classes {
 	clear:both;
     overflow-y: auto;
 	overflow-x: hidden;
+	vertical-align:top;
 	z-index: 2;
 }
-
-/*.clearfix:after{clear:both;content:".";display:block;height:0;overflow:hidden;visibility:hidden}*//*TRELLO*/
 
 /*http://stackoverflow.com/questions/3387489/make-child-visible-outside-an-overflowhidden-parent*/
 .clearfix:before,

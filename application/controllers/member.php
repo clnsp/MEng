@@ -22,6 +22,7 @@ class Member extends CI_Controller{
 		if(isset($_POST['id']) && isset($_POST['changes'])){
 			echo $this->members->updateUser(strtolower($_POST['id']), array_map('strtolower',$_POST['changes']));
 		}
+$_POST['first_name'];
 	}
 	
 	/*
@@ -34,6 +35,18 @@ class Member extends CI_Controller{
 			$this->members->getMemberships($id);
 		}
 	}
+
+	/*
+	 * User Attend Class
+	 */
+	function updateAttendance(){
+		if(isset($_POST['pid']) && isset($_POST['cid']) &&  isset($_POST['at'])){
+			$this->load->model('members');
+			$this->members->attendance($_POST['pid'],$_POST['cid'],$_POST['at']);
+		}
+	}
+
+
 	
 	/*
 	 * Update User Membership
@@ -47,6 +60,12 @@ class Member extends CI_Controller{
 	 */
 	function alterUserExistance(){
 		
+	}
+	
+	function serverTime()
+	{
+		$myTime = array('serverTime' =>  date("U"));	
+		echo json_encode($myTime);	
 	}
 	
 	/*
@@ -66,7 +85,9 @@ class Member extends CI_Controller{
 				$this->load->helper('sms');
 				$mobile_number = $this->members->getUserColumn($id, 'mobile_number');
 				// GET MOBILE NUMBER
-				echo send_sms($mobile_number[0]->mobile_number,$message);
+				if(isset($mobile_number[0])){
+					echo send_sms($mobile_number[0]->mobile_number,$message);
+				}
 				break;
 			// TWITTER
 				case "twitter":

@@ -117,5 +117,11 @@ class Members extends CI_Model
    return $query->result();
  }
 
-
+  function attendance($pid, $cid, $at)
+  {
+   $data= array('attended' => $at);
+   $this->db->where('member_id', $pid);
+   $this->db->where('class_id', $cid);
+   $this->db->update('class_booking_tbl', $data); 
+  }
 }

@@ -23,40 +23,41 @@ class Classes extends CI_Model
 
 	}
 
-
-	/**
-	 * Get bookings between two dates
-	 *
-	 * @param	date
-	 * @param	date
-	 * @return	object
-	 */
-	function getClassessBetween($start, $end){ //getBookingsBetween used to be
+        /**
+         * Get bookings between two dates
+         *
+         * @param        date
+         * @param        date
+         * @return        object
+         */
+        function getClassessBetween($start, $end){ //getBookingsBetween used to be
+                
+                $this -> db -> where('start BETWEEN "' . $start . '" AND "' . $end . '"');
+		$this -> db -> order_by("start asc, title asc");
+                $query = $this->db->get($this -> class_info_view);
 		
-		$this -> db -> where('start BETWEEN "' . $start . '" AND "' . $end . '"');
-		$query = $this->db->get($this -> class_info_view);
 
-		return $query->result();
-	}
+                return $query->result();
+        }
 
 
-	/*
-	 * Fetch a rooms specific classes 
-	 */
-	function getClassesWithRoomBetween($start, $end, $room){
+        /*
+         * Fetch a rooms specific classes 
+         */
+        function getClassesWithRoomBetween($start, $end, $room){
 
-		if($room != 'allrooms'){
-			$this -> db -> where('room_id',$room, ' start BETWEEN "' . $start . '" AND "' . $end . '"');
-			$query = $this->db->get($this -> class_info_view);
+                if($room != 'allrooms'){
+                        $this -> db -> where('room_id',$room, ' start BETWEEN "' . $start . '" AND "' . $end . '"');
+			$this -> db -> order_by("start asc, title asc");
+                        $query = $this->db->get($this -> class_info_view);
 
+                }else{
+                        return $this->getClassessBetween($start, $end);
+                }
 
-		}else{
-			return $this->getClassessBetween($start, $end);
-		}
-
-
-		return $query->result();
-	}
+        
+                return $query->result();
+        }
 
 
 	/**

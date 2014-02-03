@@ -129,19 +129,20 @@ class Bookings extends CI_Model
 
 		return $query->result();
 	}
-	
+
+
 	/**
-     * Get attendants of bookings for a specific class by name -- Colin
-     *
-     * @param	int
-     * @return	object
-     */
+	 * Get attendants of bookings for a specific class by name -- Colin
+	 *
+	 * @param	int
+	 * @return	object
+	*/
+
 	function getBookingAttendantsNames($class_id){
-		$this -> db -> select("member_id, first_name, second_name", FALSE);
+		$this -> db -> select("member_id, first_name, second_name, attended ", FALSE);
 		$this -> db -> from($this -> table_name);
 		$this -> db -> where('class_id', $class_id);
 		$this -> db -> join('users', 'users.id = class_booking_tbl.member_id');
-
 		$query = $this -> db -> get();
 
 		return $query->result();
