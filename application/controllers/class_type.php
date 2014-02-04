@@ -76,7 +76,7 @@ class class_type extends CI_Controller
 	function addInstances(){
 		if($this->tank_auth->is_admin()){
 
-		if (isset($_POST['class_type_id']) && isset($_POST['max_attendance']) && isset($_POST['class_start_date']) && isset($_POST['class_end_date'])  && isset($_POST['room_id'])){
+		if (isset($_POST['class_type_id']) && isset($_POST['max_attendance']) && isset($_POST['class_start_date']) && isset($_POST['class_end_date'])  && isset($_POST['room_id']) && isset($_POST['repeat_dates'])){
 		
 			/* validate the date formats*/
 			if($this->_validDate($_POST['class_start_date']) && $this->_validDate($_POST['class_end_date'])){
@@ -109,24 +109,39 @@ class class_type extends CI_Controller
 			$newClass = array(
 				'class_type_id' => $_POST['class_type_id'],
 				'max_attendance' => $_POST['max_attendance'],
-				'class_start_date' => $_POST['class_start_date'],
-				'class_end_date' => $_POST['class_end_date'],
 				'room_id' => $_POST['room_id'],
 			);
-
-			/* repeat once */
-			if($_POST['repeat'] == '0'){
-				$this->classes->insertClass($newClass);
-				echo("Inserted single class");
-			}else{
-				
-				$times = 0;
-				if(isset($_POST['times'])){
-					$times =intval($_POST['times']);
-				}
 			
-				$this->_repeatInsertClass($start, $end, $times, "+1 " . $_POST['repeat'], $newClass);					
+			$start_time = new DateTime($_POST['class_start_date']);
+			$start_time = $start_time->format(' H:m:00');
+			
+			$end_time = new DateTime($_POST['class_end_date']);
+			$end_time = $end_time->format(' H:m:00');
+
+			foreach ($_POST['repeat_dates'] as $key => $date) {
+				$date = new DateTime($date);
+				$date = $date->format('Y-m-d');
+								
+				$newClass['class_start_date'] = $date . $start_time;
+				$newClass['class_end_date'] = $date . $end_time;
+				
+				$this->classes->insertClass($newClass);				
+
 			}
+			
+
+			// /* repeat once */
+			// if($_POST['repeat'] == '0'){
+			// 	$this->classes->insertClass($newClass);
+			// 	echo("Inserted single class");
+			// }else{
+				
+			// 	$times = 0;
+			// 	if(isset($_POST['times'])){
+			// 		$times =intval($_POST['times']);
+			// 	}
+			// 	//$this->_repeatInsertClass($start, $end, $times, "+1 " . $_POST['repeat'], $newClass);					
+			// }
 			
 		}else{
 			echo("Missing parameters");	

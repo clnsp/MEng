@@ -44,7 +44,21 @@
 	});
 
 
+$('.time.timepicker').datetimepicker({
+	pickDate: false,
+});
 
+
+$('.date.datepicker').datetimepicker({
+	pickDate: true,
+});
+
+
+
+
+/**
+ * Custom Alert Box
+ */
  window.old_alert = window.alert;
 
  window.alert = function(message, fallback){

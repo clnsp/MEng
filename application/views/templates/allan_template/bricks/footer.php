@@ -2,7 +2,6 @@
 <?php 
 
 if(!$this->tank_auth->is_admin()){ ?>
-=======
 
 <div id="footer">
 
@@ -64,14 +63,16 @@ if(!$this->tank_auth->is_admin()){ ?>
      <script type="text/javascript" src="<?php echo base_url();?>assets/js/jquery.ui.datepicker.js"></script>
      <script type="text/javascript" src="<?php echo base_url();?>assets/js/jquery-ui.multidatespicker.js"></script>
      <script type="text/javascript" src="<?php echo base_url();?>assets/js/date.js"></script>
-	<script type="text/javascript" src="<?php echo base_url();?>assets/js/manage.js"></script>
-	
+     <script type="text/javascript" src="<?php echo base_url();?>assets/js/manage.js"></script>
+     
      <!-- Custom -->
      <script type="text/javascript" src="<?php echo base_url();?>assets/js/bootbox.min.js"></script>
-    
-    <!-- Sitewide javascript -->
+     
+     <!-- Sitewide javascript -->
+     <script type="text/javascript" src="<?php echo base_url();?>assets/js/moment.js"></script>  <!-- Time/DatePicker -->
+     <script type="text/javascript" src="<?php echo base_url();?>assets/js/bootstrap-datetimepicker.js"></script>
      <script type="text/javascript" src="<?php echo base_url();?>assets/js/bootstrap-override.js"></script>
-    
+
      <script> 
       // using JQUERY's ready method to know when all dom elements are rendered
       $( document ).ready(function () {

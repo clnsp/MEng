@@ -271,6 +271,7 @@ $( document ).ready(function() {
 		form.submit(function() { 
 			if(datepicker.hasDates())
 				addBlockClassesPanel.sendForm();
+			//alert(datepicker.cal.getJSON());
 			else 
 				alert("No dates selected");
 			
@@ -278,7 +279,13 @@ $( document ).ready(function() {
 
 		sendForm = function () {
 			
-			$.post( urlBase + 'addInstances/', form.serialize())
+			var formSz = form.serializeArray();
+			var dates = datepicker.getDates();
+			dates.forEach(function(date) {
+				formSz.push({name: 'repeat_dates[]', value: date});
+			});
+			
+			$.post( urlBase + 'addInstances/', formSz)
 			.done(function( data ) {
 				alert(data);
 			});
@@ -474,8 +481,12 @@ $( document ).ready(function() {
 			cal.multiDatesPicker('resetDates');
 		});
 		
+		getDates = function() {
+			return cal.multiDatesPicker('getDates');
+		},
+
 		hasDates = function() {
-			return cal.multiDatesPicker('getDates') == [];
+			return getDates().length != 0;
 		},
 		
 		repeatDates = function() {
@@ -506,6 +517,16 @@ $( document ).ready(function() {
 				
 				cal.multiDatesPicker('addDates', newDates);
 			}
+		},
+
+		serializeDates = function(){
+			var str='';
+			cal.multiDatesPicker('getDates').forEach(function(date){
+				str += "&repeat_dates=" + date;
+			});
+
+			return str;
+			
 		}
 
 		return { 
@@ -513,7 +534,9 @@ $( document ).ready(function() {
 			hasDates: hasDates,
 			repeat: repeat,
 			until: until,
-			repeatDates: repeatDates
+			repeatDates: repeatDates,
+			getDates : getDates,
+			serializeDates: serializeDates
 		};
 
 	})();
@@ -531,6 +554,7 @@ $( document ).ready(function() {
 			datepicker.until.prop( "disabled", true );
 		else{
 			datepicker.until.prop( "disabled", false );
+			datepicker.until.datetimepicker();
 			repeatDates();
 		}
 	});

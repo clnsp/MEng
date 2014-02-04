@@ -105,25 +105,25 @@
 					<h3 class="panel-title">Manage Class Types</h3>
 				</div>
 				<div class="panel-body">						
-										
-						<table id='class-types-table' class="table table-striped table-hover scroll">
-							<thead>
-								<tr>
-									<th>Title</th>
-									<th>Description</th>
-									<th>Category</th>
-								</tr>
-							</thead>
-							
-							<tbody class="manage-panel"></tbody>
-							
-						</table>
-					</div>
-					
+
+					<table id='class-types-table' class="table table-striped table-hover scroll">
+						<thead>
+							<tr>
+								<th>Title</th>
+								<th>Description</th>
+								<th>Category</th>
+							</tr>
+						</thead>
+
+						<tbody class="manage-panel"></tbody>
+
+					</table>
 				</div>
+
 			</div>
-			
 		</div>
+
+	</div>
 
 	<div class="row">		
 
@@ -155,80 +155,94 @@
 									</div>
 
 									<div class="form-group">
-										<label for="class_start_date" class="col-sm-3 control-label">Class Start</label>
-								<!--<<div class="col-sm-5">
-									<input name="class_start_date" type="date" class="form-control" >
-								</div>-->
-								<div class="col-sm-4">
-									<input name="class_start_date" type="time" class="form-control" >
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="class_end_date" class="col-sm-3 control-label">Class End</label>
-								<!--<div class="col-sm-5">
-									<input name="class_end_date" type="date" class="form-control" >
-								</div>-->
-								<div class="col-sm-4">
-									<input name="class_end_date" type="time" class="form-control" >
-								</div>
-							</div>
+										<label for="class_start_date" class="col-sm-3 control-label">Class End</label>
 
-							<div class="form-group">
-								<label for="room_id" class="col-sm-3 control-label">Room</label>
-								<div class="col-sm-9">
-									<select name="room_id" type="dropdown" class="form-control"></select>							</div>
+										<div class="col-sm-4">
+											<div class='input-group time timepicker'>
+												<input name="class_start_date" type='text' class="form-control" placeholder="00:00"/>
+												<span class="input-group-addon btn-default"><span class="glyphicon glyphicon-time"></span>
+											</span>
+										</div>
+									</div>
 								</div>
 
 
 								<div class="form-group">
-									<label for="repeat" class="col-sm-3 control-label">Repeat</label>
+									<label for="class_end_date" class="col-sm-3 control-label">Class End</label>
+
+									<div class="col-sm-4">
+										<div class='input-group time timepicker'>
+											<input name="class_end_date" type='text' class="form-control" placeholder="00:00" />
+											<span class="input-group-addon btn-default"><span class="glyphicon glyphicon-time"></span></span>
+										</div>
+
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label for="room_id" class="col-sm-3 control-label">Room</label>
 									<div class="col-sm-9">
-										<select name="repeat" type="dropdown" class="form-control">
-											<option value="0">None (run once)</option>
-											<option value="days">Daily</option>
-											<option value="weeks">Weekly</option>
-											<option value="months">Monthly</option>
-											<option value="years">Yearly</option>
-										</select>							
+										<select name="room_id" type="dropdown" class="form-control"></select>							</div>
 									</div>
-								</div>
-								<input name="times" type="hidden" value="5">
 
-								<div class="form-group">
-									<label for="until" class="col-sm-3 control-label">Until</label>
-									<div class="col-sm-9">
-										<input name="until" type="date" class="form-control" disabled>
 
+									<div class="form-group">
+										<label for="repeat" class="col-sm-3 control-label">Repeat</label>
+										<div class="col-sm-9">
+											<select name="repeat" type="dropdown" class="form-control">
+												<option value="0">None (run once)</option>
+												<option value="days">Daily</option>
+												<option value="weeks">Weekly</option>
+												<option value="months">Monthly</option>
+												<option value="years">Yearly</option>
+											</select>							
+										</div>
 									</div>
-								</div>
+									<input name="times" type="hidden" value="5">
 
-
-								<div class="form-group">
-									<div class="col-sm-offset-3 col-sm-9">
-										<button type="submit" class="btn btn-primary">Add Block</button>
-										<button id="clear-cal-btn" type="button" class="btn btn-default">Clear Calendar</button>
+									<div class="form-group">
+										<label for="until" class="col-sm-3 control-label">Until</label>
+										
+										<div class="col-sm-9">
+											<div class="input-group date datepicker">
+												<input name="until" type="text" class="form-control" placeholder="DD/MM/YYYY" disabled>
+												<span class="input-group-addon btn-default"><span class="glyphicon glyphicon-calendar"></span></span>
+											</div>
+										</div>
 									</div>
-								</div>
-								
-							</form>
+									
+<div class='input-group date datepicker'>
+                    <input type='text' class="form-control" />
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+
+									<div class="form-group">
+										<div class="col-sm-offset-3 col-sm-9">
+											<button type="submit" class="btn btn-primary">Add Block</button>
+											<button id="clear-cal-btn" type="button" class="btn btn-default">Clear Calendar</button>
+										</div>
+									</div>
+
+								</form>
+							</div>
+
+
+
+							<div class="col-md-6">
+								<div id="date-selector"></div>
+							</div>
+
 						</div>
-
-						
-						
-						<div class="col-md-6">
-							<div id="date-selector"></div>
-						</div>
-
 					</div>
 				</div>
+
+
+
 			</div>
-
-
-
 		</div>
-	</div>
 
-</div>
+	</div>
 
 
 </div>
