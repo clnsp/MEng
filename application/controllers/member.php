@@ -22,7 +22,6 @@ class Member extends CI_Controller{
 		if(isset($_POST['id']) && isset($_POST['changes'])){
 			echo $this->members->updateUser(strtolower($_POST['id']), array_map('strtolower',$_POST['changes']));
 		}
-$_POST['first_name'];
 	}
 
 	function createUserChanges()
@@ -71,14 +70,18 @@ $_POST['first_name'];
 	 * Update User Membership
 	 */
 	function updateUserMembership(){
-		
+
 	}
 	
 	/*
-	 * Block / unBlock / Delete
+	 * Delete
 	 */
-	function alterUserExistance(){
-		
+	function deleteUser(){
+		if(isset($_POST['id']) && isset($_POST['reason'])){
+			$this->load->model('members');
+			$user = $this->members->getUserByID($_POST['id']);
+			$this->members->deleteUserAccount($_POST['id']);			
+		}
 	}
 	
 	function serverTime()

@@ -1,4 +1,4 @@
-<div id="mySubModal" class="modal-content sub-modal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index:4;">
+<div id="SubMemberDetails" class="modal-content sub-modal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index:4;">
     <div class="modal-content">
         <div class="modal-body">
 		<div class="row">
