@@ -196,7 +196,32 @@ $( document ).ready(function() {
 		var urlBase = "class_type/";
 		
 		form.submit(function() { editClassTypeModal.sendForm() });
-		removeSubmit.click(function() { editClassTypeModal.sendRemoveForm() });
+		removeSubmit.click(function() { 
+
+			bootbox.dialog({
+				message: "Removing class types will also remove any associated classes that have been added to the system under this class type. Are you sure you want to continue?",
+				title: "Warning",
+				buttons: {
+					main: {
+						label: "Cancel",
+						className: "btn-default",
+						callback: function() {}
+					},
+
+					danger: {
+						label: "Confirm",
+						className: "btn-danger",
+						callback: function() {
+							editClassTypeModal.sendRemoveForm() 
+
+						}
+					}
+					
+					
+				}
+			});
+
+		});
 		
 		$('table#class-types-table tbody').on('click','tr',function(e){
 			editClassTypeModal.setupModal($(this).data('class_type_id'), $(this).find('.class_type').html(), $(this).find('.class_description').html(), $(this).find('.category').data('category_id'));
