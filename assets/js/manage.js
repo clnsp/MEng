@@ -275,8 +275,12 @@ $( document ).ready(function() {
 		var repeatBtn = container.find('#apply-repeat-btn');
 
 		form.submit(function() { 
-			if(datepicker.hasDates())
-				addBlockClassesPanel.sendForm();
+			if(datepicker.hasDates()){
+				bootbox.confirm("<h4 class='modal-title'>Confirmation</h2><p>Are you sure you want to add new bookable classes? You will add classes to the following dates:</p>" + datepicker.getDates().toString(), function(result) {
+					if(result)
+						addBlockClassesPanel.sendForm();
+				}); 
+			}
 			else 
 				alert("No dates selected");
 			
@@ -535,7 +539,8 @@ $( document ).ready(function() {
 					}
 				});
 
-				cal.multiDatesPicker('addDates', newDates);
+				if(newDates.length > 0)
+					cal.multiDatesPicker('addDates', newDates);
 			}
 		}
 
@@ -556,30 +561,5 @@ $( document ).ready(function() {
 	rooms.refresh();
 
 	$('INPUT.minicolors-inline').minicolors({ theme: 'bootstrap', control: 'wheel' });
-
-
-
-	// datepicker.until.change(function() {
-	// 	datepicker.repeatDates();
-	// });
-
-datepicker.cal.multiDatesPicker('addDates', new Array(new Date()));
-
-
-
-	// datepicker.cal.on('click', 'td.ui-state-highlight', function(e) {
-
-	// 	e.preventDefault();
-	// 	e.stopImmediatePropagation();
-	// 	//alert('deselection');
-	// });
-
-
-	// datepicker.cal.on('click', 'td', function(e) {
-	// 	//alert('re-calculate');
-	// 	datepicker.repeatDates();
-	// });
-
-
 
 });
