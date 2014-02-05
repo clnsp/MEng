@@ -44,14 +44,10 @@
 	});
 
 
-$('.time.timepicker').datetimepicker({
-	pickDate: false,
-});
+ $('.time.timepicker').datetimepicker({	pickDate: false });
 
 
-$('.date.datepicker').datetimepicker({
-	pickDate: true,
-});
+ $('.date.datepicker').datetimepicker({ pickTime:false });
 
 
 

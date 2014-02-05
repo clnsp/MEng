@@ -39,7 +39,8 @@ if(!$this->tank_auth->is_admin()){ ?>
      ================================================== -->
      <!-- Placed at the end of the document so the pages load faster 
      <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>-->
-     <script src="<?php echo base_url();?>assets/js/jquery-1.7.2.js"></script>
+     <!--     <script src="<?php echo base_url();?>assets/js/jquery-1.7.2.js"></script-->
+     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 
      <!-- Latest compiled and minified JavaScript -->
      <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>

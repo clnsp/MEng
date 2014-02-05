@@ -10,7 +10,7 @@ $( document ).ready(function() {
 		e.stopImmediatePropagation(); //prevent clicking the row when selecting color swatch
 	});
 	
-	var categoriesPanel, addClassTypePanel, manageClassTypesPanel, editClassTypeModal, addBlockClassesPanel, categories, classtypes;
+	var categoriesPanel, addClassTypePanel, manageClassTypesPanel, editClassTypeModal, addBlockClassesPanel, categories, classtypes, datepicker;
 
 
 
@@ -262,29 +262,56 @@ $( document ).ready(function() {
 
 	
 	addBlockClassesPanel = (function() {
-
-		var form = $('#add-block-classes #add-block-classes-form');
+		var container = $('#add-block-classes');
+		var form = container.find('#add-block-classes-form');
 		var classTypeDrop = form.find('select[name=class_type_id]');
 		var roomDrop = form.find('select[name=room_id]');
 		var urlBase = "class_type/";
-		
+
+		var until = form.find('input[name=until]');
+		var repeat = form.find('select[name=repeat]');
+
+		var resetbtn = form.find('button#clear-cal-btn');
+		var repeatBtn = container.find('#apply-repeat-btn');
+
 		form.submit(function() { 
 			if(datepicker.hasDates())
 				addBlockClassesPanel.sendForm();
-			//alert(datepicker.cal.getJSON());
 			else 
 				alert("No dates selected");
 			
 		});
 
+		repeatBtn.click(function(){
+			datepicker.repeatDates(repeat.val(), until.val());
+		});
+
+		resetbtn.click(function(){
+			datepicker.cal.multiDatesPicker('resetDates');
+		});
+
+		repeat.change(function() {
+			if($(this).val() == '0'){
+				until.prop( "disabled", true );
+				resetbtn.addClass('disabled');
+				repeatBtn.addClass('disabled');
+			}
+			else{
+				until.prop( "disabled", false );
+				resetbtn.removeClass('disabled');
+				repeatBtn.removeClass('disabled');
+
+			}
+		});
+
 		sendForm = function () {
-			
+
 			var formSz = form.serializeArray();
 			var dates = datepicker.getDates();
 			dates.forEach(function(date) {
 				formSz.push({name: 'repeat_dates[]', value: date});
 			});
-			
+
 			$.post( urlBase + 'addInstances/', formSz)
 			.done(function( data ) {
 				alert(data);
@@ -307,7 +334,7 @@ $( document ).ready(function() {
 
 		var urlBase = "room/";
 		var rdrop = $('<select></select>')
-		
+
 		rcreateOption = function (room) {
 			return($('<option></option>').val(room['room_id']).append(room['room']));
 		},
@@ -315,7 +342,7 @@ $( document ).ready(function() {
 
 		refresh = function () {		
 			$.getJSON(urlBase + 'getRoomIDs', function(data) {
-				
+
 				rclear();
 				if(data.length>0){
 					$.each( data, function( key, room ) {
@@ -327,19 +354,19 @@ $( document ).ready(function() {
 
 			});
 		},
-		
+
 		rclear = function() {
 			rdrop.html('');
 		},
-		
-		
+
+
 		rupdate = function () {
 			addBlockClassesPanel.roomDrop.html(rdrop.html());
 		}
-		
-		
 
-		
+
+
+
 
 		return {
 
@@ -411,22 +438,22 @@ $( document ).ready(function() {
 
 		refresh = function () {
 			$.getJSON(urlBase + 'fetchAll', function(data) {
-				
+
 				catList.empty();
 				if(data.length>0){
 					$.each( data, function( key, cat ) {
 						catList.append(createListItem(cat['category_id'], cat['category'], cat['color']));
 						catDrop.append(createOption(cat));
 					});
-					
+
 				}
-				
+
 				update();
-				
+
 			});
 
 		},
-		
+
 		createOption = function (type) {
 			return($('<option></option>').val(type['category_id'])
 				.append(type['category']));			
@@ -450,12 +477,12 @@ $( document ).ready(function() {
 				return null;
 			}
 		},
-		
+
 		clear = function() {
 			categoriesPanel.categorylist.empty();
 			addClassTypePanel.categoryDropdown.html('');
 		},
-		
+
 		update = function() {
 			categoriesPanel.categorylist.html(catList.html());
 			categoriesPanel.initColorPickers();
@@ -469,18 +496,11 @@ $( document ).ready(function() {
 		};
 
 	})();
-	
-	var datepicker = (function() {
+
+	datepicker = (function() {
 
 		var cal = $('#date-selector').multiDatesPicker({numberOfMonths: [2,2]});
-		var until = $('#add-block-classes input[name=until]');
-		var repeat = $('#add-block-classes select[name=repeat]');
-		var resetbtn = $('#add-block-classes #add-block-classes-form button#clear-cal-btn');
 
-		resetbtn.click(function(){
-			cal.multiDatesPicker('resetDates');
-		});
-		
 		getDates = function() {
 			return cal.multiDatesPicker('getDates');
 		},
@@ -488,97 +508,77 @@ $( document ).ready(function() {
 		hasDates = function() {
 			return getDates().length != 0;
 		},
-		
-		repeatDates = function() {
-			if(until.val() != ''){
+
+		repeatDates = function(repeatType, stop) {
+			if(stop != ''){
 				var calDates = cal.multiDatesPicker('getDates');
 				var newDates = new Array();
-				var stopDate = Date.parse(until.val());
-				
+				var stopDate = Date.parse(stop);
+
 				calDates.forEach(function(entry) {
 					var day = Date.parse(entry);
 					while(Date.compare(day, stopDate) != 1){
 
 						newDates.push(day.clone());
 
-						if(repeat.val() == 'days')
+						if(repeatType == 'days')
 							day.add(1).days();
 
-						else if (repeat.val() == 'weeks')
+						else if (repeatType == 'weeks')
 							day.add(1).weeks();
 
-						else if (repeat.val() == 'months')
+						else if (repeatType == 'months')
 							day.add(1).months();
 
-						else if (repeat.val() == 'years')
+						else if (repeatType == 'years')
 							day.add(1).years();
 					}
 				});
-				
+
 				cal.multiDatesPicker('addDates', newDates);
 			}
-		},
-
-		serializeDates = function(){
-			var str='';
-			cal.multiDatesPicker('getDates').forEach(function(date){
-				str += "&repeat_dates=" + date;
-			});
-
-			return str;
-			
 		}
+
+
 
 		return { 
 			cal:cal,
 			hasDates: hasDates,
-			repeat: repeat,
-			until: until,
 			repeatDates: repeatDates,
 			getDates : getDates,
-			serializeDates: serializeDates
 		};
 
 	})();
-	
-	
+
+
 	categories.refresh();
 	classtypes.refresh();
 	rooms.refresh();
 
 	$('INPUT.minicolors-inline').minicolors({ theme: 'bootstrap', control: 'wheel' });
 
-	/*  */
-	datepicker.repeat.change(function() {
-		if($(this).val() == '0')
-			datepicker.until.prop( "disabled", true );
-		else{
-			datepicker.until.prop( "disabled", false );
-			datepicker.until.datetimepicker();
-			repeatDates();
-		}
-	});
 
-	datepicker.until.change(function() {
-		datepicker.repeatDates();
-	});
 
-	datepicker.cal.multiDatesPicker('addDates', new Array(new Date()));
+	// datepicker.until.change(function() {
+	// 	datepicker.repeatDates();
+	// });
+
+datepicker.cal.multiDatesPicker('addDates', new Array(new Date()));
 
 
 
-	datepicker.cal.on('click', 'td.ui-state-highlight', function(e) {
+	// datepicker.cal.on('click', 'td.ui-state-highlight', function(e) {
 
-		e.preventDefault();
-		e.stopImmediatePropagation();
-		//alert('deselection');
-	});
+	// 	e.preventDefault();
+	// 	e.stopImmediatePropagation();
+	// 	//alert('deselection');
+	// });
 
 
-	datepicker.cal.on('click', 'td', function(e) {
-		//alert('re-calculate');
-		datepicker.repeatDates();
-	});
+	// datepicker.cal.on('click', 'td', function(e) {
+	// 	//alert('re-calculate');
+	// 	datepicker.repeatDates();
+	// });
 
 
 
