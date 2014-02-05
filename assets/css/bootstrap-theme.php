@@ -471,7 +471,8 @@ $linkColor = "#555555";
 
  body{
   background-color: rgba(226, 226, 226, 0.65);
-}
+  padding-top: 70px; //for fixed nav
+ }
 
 .div-center{
 	margin-left: auto;

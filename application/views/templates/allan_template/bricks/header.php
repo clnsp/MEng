@@ -35,7 +35,7 @@
         <div id="booking">
           <div id="page-wrapper">
 
-           <div class="navbar navbar-default navbar-inverse navbar-top" role="navigation">
+           <div class="navbar navbar-default navbar-inverse navbar-top navbar-fixed-top" role="navigation">
              <div class="container">
 
               <a class="navbar-brand" href="<?php echo base_url();?>"> <img class="displayed" src="<?php echo base_url();?>/assets/img/menu-logo-small.jpg" alt="Strathclyde University CSR"></a>

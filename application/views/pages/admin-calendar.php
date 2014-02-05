@@ -1,17 +1,6 @@
-<div class="navbar">
-
-	<!--
-	<div class="col-xs-3 pull-right input-group input-group-sm">
-		<span class="input-group-addon">
-			<span class="glyphicon glyphicon-search"></span>
-		</span>
-		<input type="text" class="form-control" placeholder="Search calendar...">
-	</div>
--->
-
 
 <div id="category-dropdown" class="dropdown pull-right">
-	<button class="btn dropdown-toggle" type="button" id="category-dropdown-btn" data-toggle="dropdown">Categories
+	<button class="btn btn-default dropdown-toggle btn-sm" type="button" id="category-dropdown-btn" data-toggle="dropdown">Categories
 		<span class="caret"></span>
 	</button>
 
@@ -23,14 +12,18 @@
 </ul>
 </div>
 
-<ul id="bookingCalTabs" class="nav nav-tabs">
-	<li class="active">
-		<a href="allrooms">All Rooms</a>
-	</li>
-	<?php foreach($rooms as $room): ?>
-	<li><a href="<?php echo $room['room_id'] ?>"><?php echo $room['room'] ?></a></li>
+<div id="rooms-dropdown" class="dropdown pull-left">
+	<button class="btn btn-default dropdown-toggle btn-sm" type="button" id="category-dropdown-btn" data-toggle="dropdown">Rooms
+		<span class="caret"></span>
+	</button>
+	<ul id="bookingCalTabs" class="dropdown-menu" role="menu">
+		<li class="active">
+			<a href="allrooms">All Rooms</a>
+		</li>
+		<?php foreach($rooms as $room): ?>
+		<li><a href="<?php echo $room['room_id'] ?>"><?php echo $room['room'] ?></a></li>
 
-<?php endforeach; ?>
+	<?php endforeach; ?>
 </ul>
 </div>
 

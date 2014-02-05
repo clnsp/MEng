@@ -35,7 +35,6 @@ var activeEvent, addGuestModal;
  	});
  }
 
-
 /**
  * Add member to the member list
  */
@@ -234,10 +233,17 @@ $('#calendar').fullCalendar({
 					view.calendar.changeView('agendaDay');
 				}
 
-			}
+			},
+      windowResize: function(view) {
+        resizeCalendar();
+      }
 
-		});
+    });
 
+
+
+$('#calendar .fc-header .fc-header-center').after($('#category-dropdown').remove());
+$('#calendar .fc-header .fc-header-center').before($('#rooms-dropdown').remove());
 
 /**
  * Render the room
@@ -335,19 +341,17 @@ $('#calendar').fullCalendar({
    /* 
     *Fetch room associated calendar view
     */
-    $('#bookingCalTabs a').each(function(){	
+    $('#bookingCalTabs').on('click', 'li', function(e){
+      e.preventDefault();
 
-    	var $this = $(this);
-    	$this.click(function (e) {
-    		e.preventDefault();
-    		$this.tab('show');
-    		$('#calendar').fullCalendar( 'refetchEvents' );
+      $(this).siblings('.active').each(function(key, val){
+        $(val).removeClass('active');
+      });
 
-    	});
+      $(this).addClass('active');
+      $('#calendar').fullCalendar( 'refetchEvents' );
 
     });
-
-
 
 
   /**
@@ -562,7 +566,10 @@ eventModal.on("click", ".open-Model-button", function () {
 
 });
 
+resizeCalendar();
+function resizeCalendar(){
+  $('#calendar').fullCalendar('option', 'height', $(window).height() - 70);
+}
+
 
 });
-
-
