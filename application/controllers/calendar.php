@@ -90,7 +90,7 @@ class Calendar extends CI_Controller{
         if(!$this->isClassBookedOut($b) && !$this->isClassInPast($b)){
           $this->bookings->addMember($b, $m);
           $this->_emailMemberAddedToClass($m, $b);
-          echo "Added";
+          echo "Member added";
 
         }
       }       

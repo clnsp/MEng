@@ -116,15 +116,15 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				<button id="event-cancel-class-btn" data-target="#cancelClassModal" data-title="Cancel Class" data-toggle='modal' type="button" class="btn btn-primary open-Model-button">Cancel Class</button>
-				<button id="event-uncancel-class-btn" data-target="#cancelClassModal" data-title="Reopen Class" data-toggle='modal' type="button" class="btn btn-primary open-Model-button">Reopen Class</button>
+				<button id="event-cancel-class-btn" data-target="#cancelClassModal" data-title="Cancel Class" type="button" class="btn btn-primary open-Model-button">Cancel Class</button>
+				<button id="event-uncancel-class-btn" data-target="#cancelClassModal" data-title="Reopen Class" type="button" class="btn btn-primary open-Model-button">Reopen Class</button>
 				
 			</div>
 		</div><!-- /.modal-content -->
 	</div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<div class="modal fade submodal" id="addGuestModal" tabindex="-1" role="dialog" aria-labelledby="addGuestModalLabel" aria-hidden="true">
+<div class="modal fade submodal" id="addGuestModal" tabindex="-1" data-backdrop="static" role="dialog" aria-labelledby="addGuestModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header ">

@@ -670,6 +670,11 @@ i.square{
 
 /* @group Calendar */
 
+
+#booking #calendar .fc-header-title{
+  padding: 0 15px;
+}
+
 #booking #calendar .fc-view tbody{
   background-color: #fff;
 }
