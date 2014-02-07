@@ -1,10 +1,8 @@
 $( document ).ready(function() {
 
+	if($('#booking').is('.manage')){
 
-	/* prevent forms submitting */
-	$('form.prevent').submit(function(e) {
-		e.preventDefault();
-	});
+
 
 	$('#page-body').on('click', '.minicolors-swatch-color', function(e) {
 		e.stopImmediatePropagation(); //prevent clicking the row when selecting color swatch
@@ -585,6 +583,6 @@ $( document ).ready(function() {
 	classtypes.refresh();
 	rooms.refresh();
 
-	$('INPUT.minicolors-inline').minicolors({ theme: 'bootstrap', control: 'wheel' });
-
+	
+}
 });

@@ -11,7 +11,7 @@
     <link rel="shortcut icon" href="<?php echo base_url();?>assets/img/favicon">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
-    <link rel="stylesheet" href="<?php echo base_url();?>assets/css/bootstrap-theme.php">
+    <link rel="stylesheet" class="bootstraptheme" href="<?php echo base_url();?>index.php/bootstraptheme">
     <link rel="stylesheet" href="<?php echo base_url();?>assets/css/bootstrap.submodal.css">
     <link rel="stylesheet" href="<?php echo base_url();?>assets/css/jquery-ui-autocomplete.custom.min.css">
     <link rel="stylesheet" href="<?php echo base_url();?>assets/css/DT_bootstrap.css"/>
@@ -32,7 +32,7 @@
 
       <body>
 
-        <div id="booking">
+        <div id="booking" class='{page_title}'>
           <div id="page-wrapper">
 
            <div class="navbar navbar-default navbar-inverse navbar-top navbar-fixed-top" role="navigation">

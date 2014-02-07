@@ -85,14 +85,23 @@ class Calendar extends CI_Controller{
       if (isset($_POST['member_id']) && isset($_POST['class_booking_id'])){
         $m = strtolower($_POST['member_id']);
         $b = strtolower($_POST['class_booking_id']);
-        echo "Member id " . $m . ' class id ' . $b; 
 
-        if(!$this->isClassBookedOut($b) && !$this->isClassInPast($b)){
-          $this->bookings->addMember($b, $m);
-          $this->_emailMemberAddedToClass($m, $b);
-          echo "Member added";
 
+        if($this->isClassBookedOut($b)){
+          echo "This class is booked out";
+          return;
         }
+
+        if($this->isClassInPast($b)){
+          echo "This class is past";
+          return;
+        }
+
+        $this->bookings->addMember($b, $m);
+        $this->_emailMemberAddedToClass($m, $b);
+        echo "Member added";
+
+        
       }       
     }
 

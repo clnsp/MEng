@@ -69,8 +69,28 @@
 
  jQuery.fn.exists = function(){return this.length>0;}
 
-
+ $('INPUT.minicolors-inline').minicolors({ theme: 'bootstrap', control: 'wheel' });
  
+ /* prevent forms submitting */
+ $('form.prevent').submit(function(e) {
+ 	e.preventDefault();
+ });
+
+/**
+ * Forces a reload of all stylesheets by appending a unique query string
+ * to each stylesheet URL.
+ * http://stackoverflow.com/a/2024618
+ */
+ function reloadStylesheets(classname) {
+
+ 	var queryString = '?reload=' + new Date().getTime();
+ 	$('link[rel="stylesheet"]').each(function () {
+ 		if($(this).is('.' + classname)){
+ 			this.href = this.href.replace(/\?.*|$/, queryString);
+ 		}
+ 	});
+ }
+
 // swapMode = function ($it) {
 //    if ($it.html() != "Overview") {
 //        $("label.editable").replaceWith(function () {

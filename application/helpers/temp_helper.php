@@ -1,29 +1,28 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-if ( ! function_exists('parse_temp'))
-{
+if ( ! function_exists('parse_temp')){
 
 	/**
 	 * Function for parsing template aspects
 	 */
-    function parse_temp($page = 'home', $page_body) {
-
-        $ci = get_instance();
-        $session_data = $ci->session->userdata('logged_in');
+	function parse_temp($page = 'home', $page_body) {
+		
+		$ci = get_instance();
+		$session_data = $ci->session->userdata('logged_in');
 
     	$data['page_title'] = $page; //title should be more descriptive eg. "Sports Hall Bookings"
-	$data['page_slug'] = $page; //slug should uniquely id a page eg "sports_hall_bookings"
-	$data['page_body'] = $page_body;
+		$data['page_slug'] = $page; //slug should uniquely id a page eg "sports_hall_bookings"
+		$data['page_body'] = $page_body;
 
-        $data['logged_in'] = $ci->tank_auth->is_logged_in(); 
-        $data['user'] = $ci->tank_auth->is_admin();
+		$data['logged_in'] = $ci->tank_auth->is_logged_in(); 
+		$data['user'] = $ci->tank_auth->is_admin();
 
-        $data['email'] = $session_data['email'];  
-        $data['user_type'] = $ci->tank_auth->get_user_permissions();
-        $data['user_name'] = $ci->tank_auth->get_username();
-        
-        $ci->parser->parse(template_url(), $data);
-    }
+		$data['email'] = $session_data['email'];  
+		$data['user_type'] = $ci->tank_auth->get_user_permissions();
+		$data['user_name'] = $ci->tank_auth->get_username();
+
+		$ci->parser->parse(template_url(), $data);
+	}
 
     /**
 	 * Function for getting the default template url
@@ -38,15 +37,15 @@ if ( ! function_exists('parse_temp'))
     * @return bool
     */
     function check_admin(){
-        $ci = get_instance();
-        if(!$ci->tank_auth->is_logged_in() || !$ci->tank_auth->is_admin()){
+    	$ci = get_instance();
+    	if(!$ci->tank_auth->is_logged_in() || !$ci->tank_auth->is_admin()){
             //If no session, redirect to login page
-            $data['user_type'] = 'guest';
-            redirect('login', 'refresh');
-            return false;
-        }
+    		$data['user_type'] = 'guest';
+    		redirect('login', 'refresh');
+    		return false;
+    	}
 
-        return true;
+    	return true;
 
     }
 
@@ -58,7 +57,7 @@ if ( ! function_exists('parse_temp'))
 	 */ 
 
 	function getNextClasses($st=1,$ft=1){
-		 $ci = get_instance();
+		$ci = get_instance();
 		if(check_admin()){				
 			$h = gmdate('H');				
 			$s = gmdate('Y-m-d ').($h-$st). ':00:00'; // GET FOR CURRENT TIME  
@@ -85,8 +84,8 @@ if ( ! function_exists('parse_temp'))
 	 *
 	 *
 	 */
-	 
-	 function verifyAssociation(){
+
+	function verifyAssociation(){
 		# We start off with loading a file which registers the simpleSAMLphp classes with the autoloader.
 		require_once('/usr/share/simplesamlphp/lib/_autoload.php');
 
@@ -100,6 +99,6 @@ if ( ! function_exists('parse_temp'))
 		# And as a test we print the attributes:
 		$attributes = $as->getAttributes();
 		return $attributes;	 
-	 }
+	}
 
 }

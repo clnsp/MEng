@@ -70,21 +70,21 @@
 		 	if(check_admin()){
 		 		$data['user'] = $this->tank_auth->is_admin();
 		 		$this->load->Model('members');
-				$this->load->Model('dbviews');
+		 		$this->load->Model('dbviews');
 				// Get all Users
 		 		$data['users'] = $this->members->getAllUsers();
-				foreach($data['users']as $user){
-					$attended = $this->dbviews->getUserLastAttendance($user->id);
-					if(isset($attended[0]->member_id))
-					{
-						$date = new DateTime($attended[0]->class_start_date);
-						$user->lastClass = $attended[0]->class_type . " " . $date->format('d/m/y');
-					}
-					else
-					{
-						$user->lastClass = "None";
-					}
-				}
+		 		foreach($data['users']as $user){
+		 			$attended = $this->dbviews->getUserLastAttendance($user->id);
+		 			if(isset($attended[0]->member_id))
+		 			{
+		 				$date = new DateTime($attended[0]->class_start_date);
+		 				$user->lastClass = $attended[0]->class_type . " " . $date->format('d/m/y');
+		 			}
+		 			else
+		 			{
+		 				$user->lastClass = "None";
+		 			}
+		 		}
 				// Twitter Enabled
 		 		$data['twitter'] = $this->config->item('twitter_allow');
 				// SMS Enabled
@@ -149,13 +149,14 @@
 			if(check_admin()){
 				$this->load->Model('Categories');
 				$this->load->Model('classes');
-					
+
 				$data['categories'] = $this->Categories->getCategories();
 				$data['class_types'] = $this->classes->getClassTypes();
-							
+
 				parse_temp($page, $this->load->view('pages/'.$page, $data, true));
 			}
-		}
+		}	
+
 	}
 
 	?>

@@ -54,6 +54,7 @@ $('#booking').on('click', '#event-cancel-class-btn, #event-uncancel-class-btn', 
 });
 });
 
+
 /*
  * Load the attendants of this event
  * @param bool
@@ -443,12 +444,13 @@ $('#calendar .fc-header .fc-header-center').before($('#rooms-dropdown').remove()
     url: "calendar/addMember",
     type: "POST",
     data: { 'member_id': mid, 'class_booking_id':eventid  },
-    success: function() {
-     memberinputbox.attr('data-member-id', '').val('');
-     load_event_attendants();
+    success: function(res) {
+      alert(res);
+      memberinputbox.attr('data-member-id', '').val('');
+      load_event_attendants();
 
-   },
-   error: function(){
+    },
+    error: function(){
      show_error('User already exists');
      memberinputbox.attr('data-member-id', '').val('');
 
@@ -490,7 +492,7 @@ $('#calendar .fc-header .fc-header-center').before($('#rooms-dropdown').remove()
  * Autocomplete  
  **************************************************************
  */
- var noResultsLabel = "No members found Add guest?";
+ var noResultsLabel = "No Results. Add guest?";
 
  var autocomplete = $("#search-users").autocomplete({
  	source: "calendar/getUsers",
@@ -594,7 +596,7 @@ eventModal.on("click", ".open-Model-button", function () {
  resizeCalendar();
  function resizeCalendar(){
   $('#calendar').fullCalendar('option', 'height', $(window).height() - 70);
-}
+} 
 
 
 });

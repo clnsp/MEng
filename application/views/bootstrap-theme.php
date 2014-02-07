@@ -1,9 +1,10 @@
 <?php
 header("Content-type: text/css; charset: UTF-8");
 
-$brandPrimary = "#002b5c";
-$brandSecondary = "#002045";
-$linkColor = "#555555";
+
+$brandPrimary = $primary_color;
+$brandSecondary = $secondary_color;
+
 ?>
 
 /*!

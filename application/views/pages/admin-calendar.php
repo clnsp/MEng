@@ -103,7 +103,10 @@
 						</div>
 						<!-- /input-group -->
 					</form>
-					<button data-toggle="modal" data-target="#addGuestModal" class="btn btn-default" id="btn-add-guest-member" type="submit">Add Guest</button>
+					<div class="button-group">
+						<button data-toggle="modal" data-target="#addGuestModal" class="btn btn-default" id="btn-add-guest-member" type="submit"><i class="glyphicon glyphicon-user"></i> Add Guest</button>
+						<button data-toggle="modal" data-target="#addGuestModal" class="btn btn-default" id="btn-add-guest-member" type="submit"><i class="glyphicon glyphicon-list-alt"></i> Waiting List</button>
+					</div>
 				</div>
 				
 				
@@ -116,8 +119,8 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				<button id="event-cancel-class-btn" data-target="#cancelClassModal" data-title="Cancel Class" type="button" class="btn btn-primary open-Model-button">Cancel Class</button>
-				<button id="event-uncancel-class-btn" data-target="#cancelClassModal" data-title="Reopen Class" type="button" class="btn btn-primary open-Model-button">Reopen Class</button>
+				<button id="event-cancel-class-btn" type="button" class="btn btn-danger">Cancel Class</button>
+				<button id="event-uncancel-class-btn"  type="button" class="btn btn-success">Reopen Class</button>
 				
 			</div>
 		</div><!-- /.modal-content -->
