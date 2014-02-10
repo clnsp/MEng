@@ -143,6 +143,11 @@ class Tank_auth
 		return $this->ci->session->userdata('userpermission') > 1;
 	}
 
+	function is_member()
+	{
+		return $this->ci->session->userdata('userpermission') == 1;
+	}
+
 	/**
 	 * Get user_id
 	 *

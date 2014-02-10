@@ -46,12 +46,20 @@ if(!$this->tank_auth->is_admin()){ ?>
      <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
      <script src="<?php echo base_url();?>assets/js/bootstrap.submodal.js"></script>
 
+     <?php if($page_title=="home"){ ?>
      <script src="<?php echo base_url();?>assets/js/up-coming.js"></script>
+     <?php }?>
      <!-- COLIN TEST FIX-->
+
+     <script type="text/javascript" src="<?php echo base_url();?>assets/js/jquery.ui.core.js"></script>
+     <script type="text/javascript" src="<?php echo base_url();?>assets/js/jquery.ui.datepicker.js"></script>
+     <script type="text/javascript" src="<?php echo base_url();?>assets/js/jquery-ui.multidatespicker.js"></script>
+	 
+     <?php if($page_title=="users"){ ?>
      <script src="<?php echo base_url();?>assets/datatab/js/jquery.dataTables.min.js"></script>
      <script src="<?php echo base_url();?>assets/datatab/js/DT_bootstrap.min.js"></script>
      <script src="<?php echo base_url();?>assets/datatab/js/user_custom.js"></script>
-
+     <?php }?>
 
      <script src="<?php echo base_url();?>assets/js/jquery-ui.custom.min.js"></script>
      <script src="<?php echo base_url();?>assets/js/jquery-ui-autocomplete.custom.min.js"></script>
@@ -60,9 +68,7 @@ if(!$this->tank_auth->is_admin()){ ?>
 
      <!-- Admin Manage Scripts -->
      <script type="text/javascript" src="<?php echo base_url();?>assets/js/jquery.minicolors.js"></script>
-     <script type="text/javascript" src="<?php echo base_url();?>assets/js/jquery.ui.core.js"></script>
-     <script type="text/javascript" src="<?php echo base_url();?>assets/js/jquery.ui.datepicker.js"></script>
-     <script type="text/javascript" src="<?php echo base_url();?>assets/js/jquery-ui.multidatespicker.js"></script>
+
      <script type="text/javascript" src="<?php echo base_url();?>assets/js/date.js"></script>
      <script type="text/javascript" src="<?php echo base_url();?>assets/js/manage.js"></script>
      

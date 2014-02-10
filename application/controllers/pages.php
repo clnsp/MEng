@@ -46,7 +46,6 @@
 					$this->load->view('pages/'.$page, $data);
 				}
 			}
-
 		}
 
 		/**

@@ -10,10 +10,10 @@
                 <!-- Sub-Modal -->
 		<?php $this->load->view('templates/allan_template/bricks/staff/staff_member_sub_model'); ?>
                 <!--End Sub-Modal -->
-                <div id="mainContent" style="z-index:2;">
+                <div id="mainContent" class="row" style="z-index:2;">
                     <div class="panel panel-primary col-lg-6" style="padding:0px;">
                         <div class="panel-heading">
-                            <h3 class="panel-title">Account Details</h3>
+                            <h3 class="panel-title views">Account Details <i class="fa fa-pencil fa-fw pull-right"></i></h3>
                         </div>
                         <div class="panel-body hidden-xs">
                             <!--LEFT-->
@@ -36,7 +36,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label">Membership:</label>
-                                    <label id="member">13 - 14</label>
+                                    <label id="membership_type">13 - 14</label>
                                 </div>
                             </div>
                         </div>
@@ -68,7 +68,7 @@
                     </div>
                     <div class="panel panel-primary col-lg-6" style="padding:0px;">
                         <div class="panel-heading">
-                            <h3 class="panel-title">Contact Details</h3>
+                            <h3 class="panel-title views">Contact Details <i class="fa fa-pencil fa-fw pull-right"></i></h3>
                         </div>
                         <div class="panel-body hidden-xs">
                             <!--LEFT-->
@@ -120,7 +120,64 @@
                         </div>
                     </div>
                 </div>
-                <button type="button" class="btn btn-success btn-sm" id="views"><i class="fa fa-pencil fa-fw"></i>  Edit</i></button>
+				<!--COLIN TEST --> <!--COLIN TEST--> 
+				                <div id="mainContent" class="row" style="z-index:2;">
+                    <div class="panel panel-primary col-lg-6" style="padding:0px;">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Bookings</h3>
+                        </div>
+                        <div class="panel-body">
+<div class="panel-group" id="accordion">
+</div>
+                        </div>
+                    </div>
+                    <div class="panel panel-primary col-lg-6" style="padding:0px;">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Attendance</h3>
+                        </div>
+                        <div class="panel-body">
+						<div class="row">
+							<div class="col-md-6"><span>Class Bookings:  <strong>10</strong></span><br/><br/><span>Popular Class:  <strong>Zumba</strong></span><br/></div>
+							<div class="col-md-6"><span>Class Attendance: <strong>50%</strong></span><br/><br/><span>Popular Time:  <strong>Tuesday, 5:00</strong></span><br/></div>
+						</div>
+                        </div>
+						
+</div>
+                        </div>	
+			<!--COLIN TEST --><!--COLIN TEST -->
+			<div class="row">
+			                    <div class="panel panel-primary col-lg-6" style="padding:0px;">
+                        <div class="panel-heading">
+                            <h3 class="panel-title views">Change Membership</h3>
+                        </div>
+                        <div class="panel-body">
+							<span>Current Membership: <span class="pull-right"><span id="memType">Student</span> <span id="memShipType">13/14</span></span></span><br/>
+							
+							<div class="row">
+								<div class="col-md-4">Validity:</div>
+								<div class="col-md-8 text-right">From: <strong>01/02/03</strong> To: <strong>06/07/08</strong></div>
+							</div>
+							<form role="form">
+								<div class="form-group">
+									<label for="memberships">Avaliable Membership Types:</label>
+									<select id="membershipSelect"class="form-control"></select>
+								</div>
+                        </div>
+						</div>
+			            <div class="panel panel-primary col-lg-6" style="padding:0px;">
+                        <div class="panel-heading">
+                            <h3 class="panel-title views">Custom Membership </h3>
+                        </div>
+                        <div class="panel-body">
+							<div id="date-selector"></div>
+						</div>
+			</div>
+			
+			
+			
+			
+			
+			
             </div>
             <!-- FOOTER-->
             <div class="modal-footer">
@@ -133,39 +190,32 @@
                                 <i class="fa fa-user fa-fw"></i> Contact <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu" role="menu">
-                                <li id="email" class="message"><a href="#mySubModal" data-toggle="submodal"><i class="fa fa-envelope fa-fw"></i>  Email</a></li>
+                                <li id="email" class="message"><a href="#SubMemberDetails" data-toggle="submodal"><i class="fa fa-envelope fa-fw"></i>  Email</a></li>
 								<?php if($twitter) {?>
 								<li class="divider tweet"></li>
-                                <li id="tweet" class="message tweet"><a href="#mySubModal" data-toggle="submodal"><i class="fa fa-twitter fa-fw"></i>  Tweet</a></li>
+                                <li id="tweet" class="message tweet"><a href="#SubMemberDetails" data-toggle="submodal"><i class="fa fa-twitter fa-fw"></i>  Tweet</a></li>
 								<?php }?>
 								<?php if($sms) {?>
                                 <li class="divider sms"></li>
-                                <li id="sms" class="message sms"><a href="#mySubModal" data-toggle="submodal"><i class="fa fa-mobile fa-fw"></i>  SMS</a></li>
+                                <li id="sms" class="message sms"><a href="#SubMemberDetails" data-toggle="submodal"><i class="fa fa-mobile fa-fw"></i>  SMS</a></li>
 								<?php }?>
                             </ul>
                         </div>
                         <!-- Single button -->
-                        <div class="btn-group">
                             <button type="button" class="btn btn-warning btn-sm dropdown-toggle" data-toggle="dropdown">
-                                <i class="fa fa-search"></i> View <span class="caret"></span>
+                                <i class="fa fa-search"></i> Attendance</span>
                             </button>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="#"><i class="fa fa-calendar-o fa-fw"></i>  Bookings</a></li>
-                                <li class="divider"></li>
-                                <li><a href="#"><i class="fa fa-check-square-o"></i>  Attendance</a></li>
-                            </ul>
-                        </div>
                         <!-- Single button -->
                         <div class="btn-group">
                             <button type="button" class="btn btn-danger btn-sm dropdown-toggle" data-toggle="dropdown">
                                 <i class="fa fa-cogs"></i>  Options <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="#mySubModal" data-toggle="submodal"><i class="fa fa-users"></i>  Update Membership</a></li>
+                                <li><a href="#SubMemberDetails" data-toggle="submodal"><i class="fa fa-users"></i>  Update Membership</a></li>
                                 <li class="divider"></li>
-                                <li class="status"><a href="#mySubModal" data-toggle="submodal"><i class="fa fa-ban fa-fw"></i>  Change Status</a></li>
+                                <li class="status"><a href="#SubMemberDetails" data-toggle="submodal"><i class="fa fa-ban fa-fw"></i>  Change Status</a></li>
                                 <li class="divider"></li>
-                                <li class="delete"><a href="#mySubModal" data-toggle="submodal"><i class="fa fa-trash-o fa-fw"></i>  Delete</a></li>
+                                <li class="delete"><a href="#SubMemberDetails" data-toggle="submodal"><i class="fa fa-trash-o fa-fw"></i>  Delete</a></li>
                             </ul>
                         </div>
                     </div>
