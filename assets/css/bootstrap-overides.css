@@ -46,6 +46,8 @@ div.list [class*="col-"] {
 	vertical-align:top;
 }
 
+
+
 div.classes {
 	clear:both;
     overflow-y: auto;
@@ -72,3 +74,45 @@ h2.time {
 	margin-top: -10px;
 	margin-bottom: 0px;
 }
+
+h2.gtime {
+  font-size: 30px;
+  line-height: 1;
+  color: #000;
+  margin-top: -10px;
+  margin-bottom: 0px;
+}
+
+@media print {
+
+  h2.time {
+    font-size: 30px;
+    line-height: 1;
+    color: #999;
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }
+
+  .page-break {
+    float: none !important;
+    display: block;
+    margin-top: 0px;
+    page-break-after: always;
+  }
+
+  div.list {
+    float: none;
+    white-space: nowrap;
+    height: 100% !important;
+    width: 100%;
+  }
+  div.list [class*="col-"] {
+    float: none; /* Very important */
+    vertical-align:top;
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+  }
+}
+
+

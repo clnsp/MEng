@@ -2,37 +2,37 @@
 
 class Members extends CI_Model
 {
-	private $table_name			    = 'users';			// user accounts
-	private $profile_table_name	= 'user_profiles';	// user profiles
+  private $table_name         = 'users';      // user accounts
+  private $profile_table_name = 'user_profiles';  // user profiles
 
-	function __construct()
-	{
-		parent::__construct();
+  function __construct()
+  {
+    parent::__construct();
 
-		$ci =& get_instance();
-		$this -> table_name			    = $ci -> config -> item('db_table_prefix', 'tank_auth').$this -> table_name;
-		$this -> profile_table_name	= $ci -> config -> item('db_table_prefix', 'tank_auth').$this -> profile_table_name;
-	}
+    $ci =& get_instance();
+    $this -> table_name         = $ci -> config -> item('db_table_prefix', 'tank_auth').$this -> table_name;
+    $this -> profile_table_name = $ci -> config -> item('db_table_prefix', 'tank_auth').$this -> profile_table_name;
+  }
 
-	/**
-	 * Get list of members
-	 *
-	 * @param	int
-	 * @param	bool
-	 * @return	object
-	 */
-	function getAllUsers() //was get_all_user()
-	{
-		$this->db->select($this->table_name.'.id,first_name,second_name,email,activated,banned,type,membership_type');  // CHANGE
-		$this -> db -> from($this -> table_name);
-		$this->db->join('member_type_tbl', $this->table_name.'.member_type_id = member_type_tbl.id');
-		$this->db->join('membership_type_tbl', $this->table_name.'.membership_type_id = membership_type_tbl.id');
-		
-		$query = $this->db->get();
-		return $query -> result();
-	}
-	
-	/*
+  /**
+   * Get list of members
+   *
+   * @param int
+   * @param bool
+   * @return  object
+   */
+  function getAllUsers() //was get_all_user()
+  {
+    $this->db->select($this->table_name.'.id,first_name,second_name,email,activated,banned,type,membership_type');  // CHANGE
+    $this -> db -> from($this -> table_name);
+    $this->db->join('member_type_tbl', $this->table_name.'.member_type_id = member_type_tbl.id');
+    $this->db->join('membership_type_tbl', $this->table_name.'.membership_type_id = membership_type_tbl.id');
+    
+    $query = $this->db->get();
+    return $query -> result();
+  }
+  
+  /*
    * Fetch users details
    */
   function getUserByID($id) //was fetchUser($id)
