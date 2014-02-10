@@ -47,7 +47,7 @@ if ( ! function_exists('parse_temp')){
     		parse_temp('home', $ci->load->view('pages/member/home', '', true));
     		return false;
     	}
-    	return $ci->tank_auth->is_admin;
+    	return $ci->tank_auth->is_admin();
     }
 
     function check_member(){
