@@ -1,9 +1,9 @@
 <?php
 header("Content-type: text/css; charset: UTF-8");
+$this->config->load('theme');
 
-
-$brandPrimary = $primary_color;
-$brandSecondary = $secondary_color;
+$brandPrimary = $this->config->item('primary_color');
+$brandSecondary = $this->config->item('secondary_color');
 
 ?>
 

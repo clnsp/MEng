@@ -39,7 +39,7 @@ class theme extends CI_Controller
 	*/
 	public function css(){
 
-		$this->load->view('bootstrap-theme', $this->_getProperties());
+		$this->load->view('bootstrap-theme', '');
 		
 	}
 
