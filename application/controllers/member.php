@@ -22,10 +22,9 @@ class Member extends CI_Controller{
 		if(isset($_POST['id']) && isset($_POST['changes'])){
 			echo $this->members->updateUser(strtolower($_POST['id']), array_map('strtolower',$_POST['changes']));
 		}
-<<<<<<< HEAD
+
 		$_POST['first_name'];
-=======
->>>>>>> fcbadf5fb58da7e26d1054573732a57a0886b318
+
 	}
 	
 

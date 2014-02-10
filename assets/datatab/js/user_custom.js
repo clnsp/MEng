@@ -1,48 +1,53 @@
-$.member = (function(){
-	$member=false;
-	$modal="MemberDetails";
-	$subModal ="#SubMemberDetails";
-	/*Controllers*/
-	$baseUrl ={member:'member/'};
-	/*Functions*/
-	$functionUrl={getUser:'getUserDetails/',updateUser:'updateUserDetails',contactUser:'contactUser',deleteUser:'deleteUser',userMembership:'getMembershipOptions',getAttendance:'getAttendance/', getBookings:'getBookings/'};
-	$warnClass={text:{e:"text-danger",s:"text-success",w:"text-warning"},form:{e:"has-error",s:"has-success",w:"has-warning"}};
-	
-	var footer = '<button class="btn btn-sm" data-dismiss="submodal" aria-hidden="true">Cancel</button><button id="submitState" class="btn btn-sm btn-danger submit" data-dismiss="submodal">Submit</button>';
-	
+	if($('#booking').is('.users')){
+		$('#member').dataTable( {
+			"sDom": "<'row'<'col-md-6'l><'col-md-6'f>r>t<'row'<'col-md-6'i><'col-md-6'p>>"
+		} );
+
+		$.member = (function(){
+			$member=false;
+			$modal="MemberDetails";
+			$subModal ="#SubMemberDetails";
+			/*Controllers*/
+			$baseUrl ={member:'member/'};
+			/*Functions*/
+			$functionUrl={getUser:'getUserDetails/',updateUser:'updateUserDetails',contactUser:'contactUser',deleteUser:'deleteUser',userMembership:'getMembershipOptions',getAttendance:'getAttendance/', getBookings:'getBookings/'};
+			$warnClass={text:{e:"text-danger",s:"text-success",w:"text-warning"},form:{e:"has-error",s:"has-success",w:"has-warning"}};
+			
+			var footer = '<button class="btn btn-sm" data-dismiss="submodal" aria-hidden="true">Cancel</button><button id="submitState" class="btn btn-sm btn-danger submit" data-dismiss="submodal">Submit</button>';
+			
 	// Load Member to Modal
 	load = function ($id){ 		
-	if(!$member || $member.id!=$id){
-        $.getJSON($baseUrl.member+$functionUrl.getUser+'?id=' + $id, function (data) {
-            if (data.length > 0) {
-				$member = data[0];
-                $('.modal-title').html(cFirst($member.first_name) + " " + cFirst($member.second_name));
-                $.each($member, function (key, mem) { $('#' + key).html(cFirst(mem)); });
-				if($member.comms_preference == 3){$(".sms , .tweet").show();}else if($member.comms_preference == 2){$(".sms").show();$(".tweet").hide();}else {$(".sms ,.tweet").hide();}
-				if($member.activated == 1 && $member.banned == 0){$(".mem-status").html('<span class="text-success">Active</span>');}else if ($member.activated == 0){$(".mem-status").html('<span class="text-warning" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Email not Verified">Pending</span>'); $('.mem-status span').tooltip();} 
-				else{$('.mem-status').html('<span class="text-danger" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="'+$member.ban_reason+'">Blocked</span>');$('.mem-status span').tooltip();}
-				
-				
-				$('#membership_type').removeClass('text-warning text-danger text-success');
-				$('#membership_type').attr({'data-toggle':'tooltip','data-placement':'bottom'});
-				if($member.end_date == "0000-00-00"){$('#membership_type').addClass('text-warning'); $('#membership_type').attr('data-original-title', '');}else{var ex = new Date($member.end_date); if(ex<Date.now()){$('#membership_type').addClass('text-danger'); $('#membership_type').attr('data-original-title','Expired on: ' + formatedDate(ex));}else{$('#membership_type').addClass('text-success'); $('#membership_type').attr('data-original-title', 'Valid until:  '+ formatedDate(ex));} $('#membership_type').tooltip();}
+		if(!$member || $member.id!=$id){
+			$.getJSON($baseUrl.member+$functionUrl.getUser+'?id=' + $id, function (data) {
+				if (data.length > 0) {
+					$member = data[0];
+					$('.modal-title').html(cFirst($member.first_name) + " " + cFirst($member.second_name));
+					$.each($member, function (key, mem) { $('#' + key).html(cFirst(mem)); });
+					if($member.comms_preference == 3){$(".sms , .tweet").show();}else if($member.comms_preference == 2){$(".sms").show();$(".tweet").hide();}else {$(".sms ,.tweet").hide();}
+					if($member.activated == 1 && $member.banned == 0){$(".mem-status").html('<span class="text-success">Active</span>');}else if ($member.activated == 0){$(".mem-status").html('<span class="text-warning" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Email not Verified">Pending</span>'); $('.mem-status span').tooltip();} 
+					else{$('.mem-status').html('<span class="text-danger" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="'+$member.ban_reason+'">Blocked</span>');$('.mem-status span').tooltip();}
+					
+					
+					$('#membership_type').removeClass('text-warning text-danger text-success');
+					$('#membership_type').attr({'data-toggle':'tooltip','data-placement':'bottom'});
+					if($member.end_date == "0000-00-00"){$('#membership_type').addClass('text-warning'); $('#membership_type').attr('data-original-title', '');}else{var ex = new Date($member.end_date); if(ex<Date.now()){$('#membership_type').addClass('text-danger'); $('#membership_type').attr('data-original-title','Expired on: ' + formatedDate(ex));}else{$('#membership_type').addClass('text-success'); $('#membership_type').attr('data-original-title', 'Valid until:  '+ formatedDate(ex));} $('#membership_type').tooltip();}
 
 		//TO MOVE
-$('#memType').html(cFirst($member.type));
-$('#memShipType').html(cFirst($member.membership_type));
+		$('#memType').html(cFirst($member.type));
+		$('#memShipType').html(cFirst($member.membership_type));
 
 			//memFrom
 			//memTo
 
 		//END TO MOVE
 
-                $changes = false;
+		$changes = false;
 				$('#'+$modal).modal('show'); // only show are parsing complete
-            } else { alert("Member No Longer Exist"); }
+			} else { alert("Member No Longer Exist"); }
 			
-        });
+		});
 		} else { $('#'+$modal).modal('show'); } // Data already stored
-    },
+	},
 	
 	// Swap Modes
 	swapMode = function () {
@@ -59,7 +64,7 @@ $('#memShipType').html(cFirst($member.membership_type));
 	
 	// Capitalize First Letter
 	cFirst = function (s) {
-		 if (s != null) { return s.substr(0, 1).toUpperCase() + s.substr(1).toLowerCase(); } else { return s; } 
+		if (s != null) { return s.substr(0, 1).toUpperCase() + s.substr(1).toLowerCase(); } else { return s; } 
 	},
 	
 	// Get Value from Input or Label
@@ -83,8 +88,8 @@ $('#memShipType').html(cFirst($member.membership_type));
 	
 	/*
 		Internal Modules
-	*/
-	
+		*/
+		
 	// EDITING A MEMBERS DETAILS
 	editMemberMod = (function () {
 		$changes = false;
@@ -134,10 +139,10 @@ $('#memShipType').html(cFirst($member.membership_type));
 			type = temp;
 			$($subModal + " .submit").on( "click", function() {send(); });
 			if (type == 'tweet') { $("#message").attr('maxlength', 140) }
-			$($subModal + " .modal-content").on('keyup keydown', $message, function () {
-				$('#length').html($message.val().length);
-				if (type == 'tweet') { twitter(); } else if (type == 'sms') { sms(); } else { email(); }
-			});
+				$($subModal + " .modal-content").on('keyup keydown', $message, function () {
+					$('#length').html($message.val().length);
+					if (type == 'tweet') { twitter(); } else if (type == 'sms') { sms(); } else { email(); }
+				});
 		},
 
 		// TWITTER
@@ -164,7 +169,7 @@ $('#memShipType').html(cFirst($member.membership_type));
 		},
 		// SEND MESSAGE
 		send = function () {  
-			 $.post($baseUrl.member+$functionUrl.contactUser, { id: $member.id, service: type, message: $message.val() }, function (data) {        });
+			$.post($baseUrl.member+$functionUrl.contactUser, { id: $member.id, service: type, message: $message.val() }, function (data) {        });
 		},
 		// Start Point
 		$selector.on("click", function () { generateUI($(this).attr('id')); });
@@ -180,12 +185,12 @@ $('#memShipType').html(cFirst($member.membership_type));
 	
 	// Update Members Status
 	updateStatusMod = (function () {
-			var accountBody = '<div class="row"><div class="col-sm-6"><span>Status: <strong class="mem-status"><span class="text-success">Active</span></strong></span></div><div class="col-sm-6"><form class="form-horizontal"><div id="mem-options"  style="padding-right: 12px;" class="form-group pull-right" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Change Status"><div id="status-choice" class="btn-group" data-toggle="buttons"><label class="btn btn-success btn-xs" id="active-btn"><input type="radio" name="options"> Active</label><label class="btn btn-warning btn-xs" id="pending-label"><input type="radio" name="options" id="pending-btn"> Pending</label><label class="btn btn-danger btn-xs" id="banned-btn"><input type="radio" name="options"> Banned</label></div></div></div></div><form class="form-horizontal"><div class="form-group"><label class="control-label" for="banReason">Reason for Blocking: </label><textarea id="bad_reason" class="form-control" rows="3" disabled>N/A: Account is still Active</textarea></div></form>';
+		var accountBody = '<div class="row"><div class="col-sm-6"><span>Status: <strong class="mem-status"><span class="text-success">Active</span></strong></span></div><div class="col-sm-6"><form class="form-horizontal"><div id="mem-options"  style="padding-right: 12px;" class="form-group pull-right" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Change Status"><div id="status-choice" class="btn-group" data-toggle="buttons"><label class="btn btn-success btn-xs" id="active-btn"><input type="radio" name="options"> Active</label><label class="btn btn-warning btn-xs" id="pending-label"><input type="radio" name="options" id="pending-btn"> Pending</label><label class="btn btn-danger btn-xs" id="banned-btn"><input type="radio" name="options"> Banned</label></div></div></div></div><form class="form-horizontal"><div class="form-group"><label class="control-label" for="banReason">Reason for Blocking: </label><textarea id="bad_reason" class="form-control" rows="3" disabled>N/A: Account is still Active</textarea></div></form>';
 
 		loadStatusEditor = function()
 		{
 			$statusChange = false;
-		    $($subModal + " .modal-content").children('.modal-body').html(accountBody);
+			$($subModal + " .modal-content").children('.modal-body').html(accountBody);
 			$($subModal + " .modal-content").children('.modal-footer').html(footer);
 			// Listener
 			$message = $('#message'); // Point to New Element
@@ -225,36 +230,36 @@ $('#memShipType').html(cFirst($member.membership_type));
 			{
 				if($statusChange['banned'] == 1) {$statusChange['ban_reason'] = $('#bad_reason').val();} else {$statusChange['ban_reason'] = "";}
 				$.post($baseUrl.member+'updateUserDetails', { id: $member.id, changes: $statusChange }, function (data) {
-			    if (data == "4:Success") {
+					if (data == "4:Success") {
 						$member.banned = $statusChange['banned'];
 						$member.ban_reason = $statusChange['ban_reason'];
 						if($member.activated == 1 && $member.banned == 0){$(".mem-status").html('<span class="text-success">Active</span>'); $('#'+$member.id).children('.status').html('Active');}else if ($member.activated == 0){$(".mem-status").html('<span class="text-warning" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Email not Verified">Pending</span>'); $('.mem-status span').tooltip();} 
 						else{$('.mem-status').html('<span class="text-danger" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="'+$member.ban_reason+'">Blocked</span>');$('.mem-status span').tooltip(); $('#'+$member.id).children('.status').html('Blocked');}				
 					}
-			});
+				});
 			}
 			$statusChange = false;
 		}
 		$('.status').on("click", function () { loadStatusEditor(); });
 	})(),
-		
+	
 	// DELETING A MEMBER
 	DeleteMemberMod = (function () {
-	    var deleteBody = '<div class="row"><div class="col-sm-12"><span>Delete: <strong id="mem-name">Default</strong></span></div></div><form class="form-horizontal"><div class="form-group"><label class="control-label" for="banReason">Members Full Name: </label><input type="email" class="form-control dcap third" id="full-name" placeholder="{Firstname} {Secondname}"></div><div class="form-group"><label class="control-label" for="banReason">Reason for Deleting: </label><textarea id="delete_reason" class="form-control" rows="3" disabled>N/A: Please confirm the complete members name</textarea></div></form>';
+		var deleteBody = '<div class="row"><div class="col-sm-12"><span>Delete: <strong id="mem-name">Default</strong></span></div></div><form class="form-horizontal"><div class="form-group"><label class="control-label" for="banReason">Members Full Name: </label><input type="email" class="form-control dcap third" id="full-name" placeholder="{Firstname} {Secondname}"></div><div class="form-group"><label class="control-label" for="banReason">Reason for Deleting: </label><textarea id="delete_reason" class="form-control" rows="3" disabled>N/A: Please confirm the complete members name</textarea></div></form>';
 
-	loadDelete = function(){
-		$($subModal + " .modal-content").children('.modal-body').html(deleteBody);
-		$($subModal + " .modal-content").children('.modal-footer').html(footer);
-		$member.fullname = (($member.first_name.toLowerCase().trim()) + " " + ($member.second_name.toLowerCase().trim())).trim();		
-		$('#mem-name').html(cFirst($member.first_name) + " " + cFirst($member.second_name));
-		$('#full-name').on('keyup keydown', function () { validate($(this)); });
+		loadDelete = function(){
+			$($subModal + " .modal-content").children('.modal-body').html(deleteBody);
+			$($subModal + " .modal-content").children('.modal-footer').html(footer);
+			$member.fullname = (($member.first_name.toLowerCase().trim()) + " " + ($member.second_name.toLowerCase().trim())).trim();		
+			$('#mem-name').html(cFirst($member.first_name) + " " + cFirst($member.second_name));
+			$('#full-name').on('keyup keydown', function () { validate($(this)); });
 		// http://stackoverflow.com/questions/1226574/disable-copy-paste-into-html-form-using-javascript
 		$('input.dcap').bind('copy paste', function (e) { e.preventDefault(); });
 		$($subModal + " .submit").on( "click", function() {send(); });
 	},
 	
 	validate = function($name) {
-	
+		
 		var temp = $name.val().toLowerCase().trim();
 		if(temp == $member.fullname)
 		{
@@ -299,9 +304,9 @@ $('#memShipType').html(cFirst($member.membership_type));
 	},
 	
 	$('.delete').on("click", function () { loadDelete(); });
-	})();
-	
-	
+})();
+
+
 	// UPDATING A MEMBERS MEMBERSHIP
 	updateMembershipMod = (function () { 
 		
@@ -309,13 +314,13 @@ $('#memShipType').html(cFirst($member.membership_type));
 			$.getJSON($baseUrl.member+$functionUrl.userMembership, {id: $id}, function (data){
 				$('#membershipSelect').empty();
 				for(var i=0;i<data.length;i++) {
-				var option = $('<option/>'); 								
-				option.attr({ 'value': data[i].id }).text(cFirst(data[i].membership_type));
-				option.attr('data-toggle','tooltip');
-				option.attr('data-placement','left');
-				option.attr('data-original-title','Valid until: ' + formatedDate(new Date(data[i].end_date)));
-				option.tooltip();
-				$('#membershipSelect').append(option);
+					var option = $('<option/>'); 								
+					option.attr({ 'value': data[i].id }).text(cFirst(data[i].membership_type));
+					option.attr('data-toggle','tooltip');
+					option.attr('data-placement','left');
+					option.attr('data-original-title','Valid until: ' + formatedDate(new Date(data[i].end_date)));
+					option.tooltip();
+					$('#membershipSelect').append(option);
 				}
 				$('#membershipSelect').tooltip();
 			});
@@ -323,7 +328,7 @@ $('#memShipType').html(cFirst($member.membership_type));
 
 		getBookings = function ($id) {
 			$.get($baseUrl.member+$functionUrl.getBookings,{id:$id},function (data){
-			
+				
 				$('#accordion').html(data);
 			});	
 		},
@@ -414,10 +419,11 @@ $('#memShipType').html(cFirst($member.membership_type));
 		});
 		// Notify of data edit
 		$('#'+$modal).on("change", ":input.editable", function () { recordChanges($(this).attr('id')); 
-		});
+	});
 		
 	},		
 	
 	this.uiConnections();
 
 })();
+}

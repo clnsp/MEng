@@ -50,18 +50,19 @@ if(!$this->tank_auth->is_admin()){ ?>
      <script src="<?php echo base_url();?>assets/js/up-coming.js"></script>
      <?php }?>
      <!-- COLIN TEST FIX-->
+     <script src="<?php echo base_url();?>assets/js/jquery-ui.custom.min.js"></script>
+
 
      <script type="text/javascript" src="<?php echo base_url();?>assets/js/jquery.ui.core.js"></script>
      <script type="text/javascript" src="<?php echo base_url();?>assets/js/jquery.ui.datepicker.js"></script>
      <script type="text/javascript" src="<?php echo base_url();?>assets/js/jquery-ui.multidatespicker.js"></script>
-	 
+     
      <?php if($page_title=="users"){ ?>
      <script src="<?php echo base_url();?>assets/datatab/js/jquery.dataTables.min.js"></script>
      <script src="<?php echo base_url();?>assets/datatab/js/DT_bootstrap.min.js"></script>
      <script src="<?php echo base_url();?>assets/datatab/js/user_custom.js"></script>
      <?php }?>
 
-     <script src="<?php echo base_url();?>assets/js/jquery-ui.custom.min.js"></script>
      <script src="<?php echo base_url();?>assets/js/jquery-ui-autocomplete.custom.min.js"></script>
      <script src="<?php echo base_url();?>assets/cal/fullcalendar.min.js"></script>
      <script type="text/javascript" src="<?php echo base_url();?>assets/js/booking-calendar.js"></script>
@@ -113,12 +114,8 @@ if(!$this->tank_auth->is_admin()){ ?>
       });
 
       */
-	  // COLIN TEST
-	  $('#member').dataTable( {
-     "sDom": "<'row'<'col-md-6'l><'col-md-6'f>r>t<'row'<'col-md-6'i><'col-md-6'p>>"
-   } );
-// END COLIN
-});
+
+    });
 
   // Store the initial content so we can revisit it later
   history.replaceState({

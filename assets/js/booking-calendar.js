@@ -1,3 +1,6 @@
+
+  if($('#booking').is('.admin-calendar')){
+
 function exists(variable){
 	if(typeof variable == 'undefined' || variable == null){
 		return false;
@@ -600,3 +603,5 @@ eventModal.on("click", ".open-Model-button", function () {
 
 
 });
+
+}
