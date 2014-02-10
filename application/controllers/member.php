@@ -23,6 +23,8 @@ class Member extends CI_Controller{
 			echo $this->members->updateUser(strtolower($_POST['id']), array_map('strtolower',$_POST['changes']));
 		}
 	}
+	
+
 
 	function createUserChanges()
 	{
@@ -46,11 +48,10 @@ class Member extends CI_Controller{
 	/*
 	 * Get Memberships for User
 	 */
-	function getUserMemberships(){
-		if(isset($_POST['id']))
-		{
+	function getMembershipOptions(){
+		if(isset($_GET['id'])){
 			$this->load->model('members');
-			$this->members->getMemberships($id);
+			echo json_encode($this->members->getMembershipTypes($_GET['id']));
 		}
 	}
 
@@ -63,8 +64,39 @@ class Member extends CI_Controller{
 			$this->members->attendance($_POST['pid'],$_POST['cid'],$_POST['at']);
 		}
 	}
-
-
+	/*
+	 * Get User Attendance Record
+	 */
+	function getAttendance(){
+		if(isset($_GET['id']))
+		{
+			$this->load->Model('Bookings');
+			$vals['show'] = $this->Bookings->countMemberAttendance($_GET['id']);
+			$vals['fail'] = $this->Bookings->countMemberAttendance($_GET['id'],0);
+			echo json_encode($vals);
+		}
+	}
+	
+	/*
+	 * Get User Bookings
+	 */
+	
+	function getBookings($page = 'class_booking_view'){
+		if(isset($_GET['id']))
+		{
+			$this->load->Model('Categories');
+			/*$this->load->Model('classes');
+			$this->load->Model('Bookings');
+			
+			$vals['bookings'] = $this->Bookings->getBookingByMember($_GET['id']);*/
+			$data['categories'] = $this->Categories->getCategories();
+			
+			/*foreach ($vals['bookings'] as $book){ 
+				$book->cla = $this->classes->getClassInformation($book->class_id)
+			}*/
+		$this->load->view('pages/'.$page, $data);
+		}
+	}
 	
 	/*
 	 * Update User Membership
@@ -114,8 +146,7 @@ class Member extends CI_Controller{
 			// TWITTER
 				case "twitter":
 				$twitter_name = $this->members->getUserColumn($id, 'twitter'); 
-				if(!$this->config->item('twitter_allow')) 
-				{
+				if(!$this->config->item('twitter_allow')){
 					echo "Service Disabled";
 				}
 				break;

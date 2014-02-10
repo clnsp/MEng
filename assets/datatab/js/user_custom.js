@@ -2,12 +2,18 @@ $.member = (function(){
 	$member=false;
 	$modal="MemberDetails";
 	$subModal ="#SubMemberDetails";
+	/*Controllers*/
+	$baseUrl ={member:'member/'};
+	/*Functions*/
+	$functionUrl={getUser:'getUserDetails/',updateUser:'updateUserDetails',contactUser:'contactUser',deleteUser:'deleteUser',userMembership:'getMembershipOptions',getAttendance:'getAttendance/', getBookings:'getBookings/'};
+	$warnClass={text:{e:"text-danger",s:"text-success",w:"text-warning"},form:{e:"has-error",s:"has-success",w:"has-warning"}};
+	
 	var footer = '<button class="btn btn-sm" data-dismiss="submodal" aria-hidden="true">Cancel</button><button id="submitState" class="btn btn-sm btn-danger submit" data-dismiss="submodal">Submit</button>';
 	
 	// Load Member to Modal
 	load = function ($id){ 		
 	if(!$member || $member.id!=$id){
-        $.getJSON('member/getUserDetails/?id=' + $id, function (data) {
+        $.getJSON($baseUrl.member+$functionUrl.getUser+'?id=' + $id, function (data) {
             if (data.length > 0) {
 				$member = data[0];
                 $('.modal-title').html(cFirst($member.first_name) + " " + cFirst($member.second_name));
@@ -15,9 +21,25 @@ $.member = (function(){
 				if($member.comms_preference == 3){$(".sms , .tweet").show();}else if($member.comms_preference == 2){$(".sms").show();$(".tweet").hide();}else {$(".sms ,.tweet").hide();}
 				if($member.activated == 1 && $member.banned == 0){$(".mem-status").html('<span class="text-success">Active</span>');}else if ($member.activated == 0){$(".mem-status").html('<span class="text-warning" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Email not Verified">Pending</span>'); $('.mem-status span').tooltip();} 
 				else{$('.mem-status').html('<span class="text-danger" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="'+$member.ban_reason+'">Blocked</span>');$('.mem-status span').tooltip();}
+				
+				
+				$('#membership_type').removeClass('text-warning text-danger text-success');
+				$('#membership_type').attr({'data-toggle':'tooltip','data-placement':'bottom'});
+				if($member.end_date == "0000-00-00"){$('#membership_type').addClass('text-warning'); $('#membership_type').attr('data-original-title', '');}else{var ex = new Date($member.end_date); if(ex<Date.now()){$('#membership_type').addClass('text-danger'); $('#membership_type').attr('data-original-title','Expired on: ' + formatedDate(ex));}else{$('#membership_type').addClass('text-success'); $('#membership_type').attr('data-original-title', 'Valid until:  '+ formatedDate(ex));} $('#membership_type').tooltip();}
+
+		//TO MOVE
+$('#memType').html(cFirst($member.type));
+$('#memShipType').html(cFirst($member.membership_type));
+
+			//memFrom
+			//memTo
+
+		//END TO MOVE
+
                 $changes = false;
 				$('#'+$modal).modal('show'); // only show are parsing complete
             } else { alert("Member No Longer Exist"); }
+			
         });
 		} else { $('#'+$modal).modal('show'); } // Data already stored
     },
@@ -44,17 +66,19 @@ $.member = (function(){
 	getVal = function (v) {
 		if (v.is("input")) { return v.val(); } else { return v.html(); }
 	},
+
+	formatedDate = function (d){ return d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear();},
 	
 	// Add Form Error
-	addError = function (element,type,message) {
-		element.parent('.form-group').addClass(type);
-		element.siblings('.help-block').children('#warning-message').html(message);
+	addFormError = function (element,type,message) {
+		$(element).parent('.form-group').addClass(type);
+		$(element).siblings('.help-block').children('#warning-message').html(message);
 	},
 	
 	// Remove Form Error
-	removeError = function (element,type,message) {
-		element.parent('.form-group').removeClass(type);
-		element.siblings('.help-block').children('#warning-message').html("");
+	removeFormError = function (element,type) {
+		$(element).parent('.form-group').removeClass(type);
+		$(element).siblings('.help-block').children('#warning-message').html("");
 	},	
 	
 	/*
@@ -70,7 +94,7 @@ $.member = (function(){
 				$query = {};
 				$id = $('#id').val();
 				$.each($changes, function (index, value) { $query[value] = getVal($('#' + value)); });
-				$.post('member/updateUserDetails', { id: $member.id, changes: $query }, function (data) {
+				$.post($baseUrl.member+$functionUrl.updateUser, { id: $member.id, changes: $query }, function (data) {
 					if (data == "4:Success") {
 						$changes = false;
 						// Local Changes ??
@@ -139,8 +163,8 @@ $.member = (function(){
 		   // Validation -- Max Length
 		},
 		// SEND MESSAGE
-		send = function () {
-			 $.post('member/contactUser', { id: $member.id, service: type, message: $message.val() }, function (data) {        });
+		send = function () {  
+			 $.post($baseUrl.member+$functionUrl.contactUser, { id: $member.id, service: type, message: $message.val() }, function (data) {        });
 		},
 		// Start Point
 		$selector.on("click", function () { generateUI($(this).attr('id')); });
@@ -200,7 +224,7 @@ $.member = (function(){
 			if($statusChange && $statusChange != {})
 			{
 				if($statusChange['banned'] == 1) {$statusChange['ban_reason'] = $('#bad_reason').val();} else {$statusChange['ban_reason'] = "";}
-				$.post('member/updateUserDetails', { id: $member.id, changes: $statusChange }, function (data) {
+				$.post($baseUrl.member+'updateUserDetails', { id: $member.id, changes: $statusChange }, function (data) {
 			    if (data == "4:Success") {
 						$member.banned = $statusChange['banned'];
 						$member.ban_reason = $statusChange['ban_reason'];
@@ -236,21 +260,26 @@ $.member = (function(){
 		{
 			$('#delete_reason').removeAttr("disabled");
 			$('#delete_reason').val("");
-			$('#full-name').parent('.form-group').removeClass('has-error has-warning');
-			$('#full-name').parent('.form-group').addClass('has-success');
-			
+			//$('#full-name').parent('.form-group').removeClass('has-error has-warning'); 
+			//$('#full-name').parent('.form-group').addClass('has-success'); 
+			removeFormError('#full-name',$warnClass.form.e+' ' +$warnClass.form.w);
+			addFormError('#full-name',$warnClass.form.s,"");
 		}
 		else if(temp == $member.fullname.substring(temp.length))
 		{
-			$('#full-name').parent('.form-group').removeClass('has-error has-success');
-			$('#full-name').parent('.form-group').addClass('has-warning');
+			//$('#full-name').parent('.form-group').removeClass('has-error has-success');
+			//$('#full-name').parent('.form-group').addClass('has-warning');
+			removeFormError('#full-name',$warnClass.form.e+' ' +$warnClass.form.s);
+			addFormError('#full-name',$warnClass.form.w,"");
 		}
 		else if(!$('#delete_reason').attr('disabled'))
 		{
 			$('#delete_reason').attr("disabled", "disabled");
 			$('#delete_reason').val("N/A: Please confirm the complete members name");
 			$('#full-name').parent('.form-group').removeClass('has-success has-warning');
-			$('#full-name').parent('.form-group').addClass('has-error');
+			$('#full-name').parent('.form-group').addClass('has-error'); 
+			removeFormError('#full-name',$warnClass.form.s+' ' +$warnClass.form.w);
+			addFormError('#full-name',$warnClass.form.e,"");
 		}
 		else
 		{
@@ -263,7 +292,7 @@ $.member = (function(){
 		var temp = $('#full-name').val().toLowerCase().trim();
 		if(temp == $member.fullname && $('#delete_reason').val() != "")
 		{
-			$.post('member/deleteUser', { id: $member.id, reason: $('#delete_reason').val() }, function (data) {
+			$.post($baseUrl.member+$functionUrl.deleteUser, { id: $member.id, reason: $('#delete_reason').val() }, function (data) {
 				$('#member').dataTable().fnDeleteRow(document.getElementById($member.id));
 			});
 		}
@@ -272,13 +301,97 @@ $.member = (function(){
 	$('.delete').on("click", function () { loadDelete(); });
 	})();
 	
-	/*
+	
 	// UPDATING A MEMBERS MEMBERSHIP
-	updateMembershipMod = (function () {
-	
-	
+	updateMembershipMod = (function () { 
+		
+		getPossibleType = function ($id) {
+			$.getJSON($baseUrl.member+$functionUrl.userMembership, {id: $id}, function (data){
+				$('#membershipSelect').empty();
+				for(var i=0;i<data.length;i++) {
+				var option = $('<option/>'); 								
+				option.attr({ 'value': data[i].id }).text(cFirst(data[i].membership_type));
+				option.attr('data-toggle','tooltip');
+				option.attr('data-placement','left');
+				option.attr('data-original-title','Valid until: ' + formatedDate(new Date(data[i].end_date)));
+				option.tooltip();
+				$('#membershipSelect').append(option);
+				}
+				$('#membershipSelect').tooltip();
+			});
+		},
+
+		getBookings = function ($id) {
+			$.get($baseUrl.member+$functionUrl.getBookings,{id:$id},function (data){
+			
+				$('#accordion').html(data);
+			});	
+		},
+		
+		
+		updateMembershipType = function () {
+
+		},	
+
+
+		getPossibleType(883);
+		getBookings(2);
 	})();
-	*/
+	
+	datepicker = (function() {
+
+		var cal = $('#date-selector').multiDatesPicker({numberOfMonths: 2});
+
+		getDates = function() {
+			return cal.multiDatesPicker('getDates');
+		},
+
+		hasDates = function() {
+			return getDates().length != 0;
+		},
+
+		repeatDates = function(repeatType, stop) {
+			if(stop != ''){
+				var calDates = cal.multiDatesPicker('getDates');
+				var newDates = new Array();
+				var stopDate = Date.parse(stop);
+
+				calDates.forEach(function(entry) {
+					var day = Date.parse(entry);
+					while(Date.compare(day, stopDate) != 1){
+
+						newDates.push(day.clone());
+
+						if(repeatType == 'days')
+							day.add(1).days();
+
+						else if (repeatType == 'weeks')
+							day.add(1).weeks();
+
+						else if (repeatType == 'months')
+							day.add(1).months();
+
+						else if (repeatType == 'years')
+							day.add(1).years();
+					}
+				});
+
+				if(newDates.length > 0)
+					cal.multiDatesPicker('addDates', newDates);
+			}
+		}
+
+
+
+		return { 
+			cal:cal,
+			hasDates: hasDates,
+			repeatDates: repeatDates,
+			getDates : getDates,
+		};
+
+	})();
+	
 	
 	// USER INTERFACE CONNECTIONS
 	
