@@ -6,7 +6,7 @@ if ( ! function_exists('parse_temp')){
 	 * Function for parsing template aspects
 	 */
 	function parse_temp($page = 'home', $page_body) {
-		
+
 		$ci = get_instance();
 		$session_data = $ci->session->userdata('logged_in');
 
@@ -38,16 +38,28 @@ if ( ! function_exists('parse_temp')){
     */
     function check_admin(){
     	$ci = get_instance();
-    	if(!$ci->tank_auth->is_logged_in() || !$ci->tank_auth->is_admin()){
+    	if(!$ci->tank_auth->is_logged_in()){
             //If no session, redirect to login page
-    		$data['user_type'] = 'guest';
     		redirect('login', 'refresh');
     		return false;
     	}
-
-    	return true;
-
+    	elseif($ci->tank_auth->is_member()){
+    		parse_temp('home', $ci->load->view('pages/member/home', '', true));
+    		return false;
+    	}
+    	return $ci->tank_auth->is_admin;
     }
+
+    function check_member(){
+    	$ci = get_instance();
+    	if(!$ci->tank_auth->is_member()){
+    		//If no session, redirect to login page
+    		redirect('login', 'refresh');
+    		return false;
+    	}
+    	return $ci->tank_auth->is_member();
+    }
+
 
 	/*
 	 * Returns all class information in one array

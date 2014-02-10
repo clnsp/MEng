@@ -4,6 +4,7 @@
 	session_start();
 
 	class Pages extends CI_Controller {
+		private $route = 'pages/admin/';
 
 		public function __construct(){
 			parent::__construct();
@@ -14,23 +15,20 @@
 		 */
 		public function view($page = 'home'){
 
-			if ( ! file_exists('application/views/pages/'.$page.'.php')){
-				// Whoops, we don't have a page for that!
-				show_404();
-			}	
+			
+			if(check_admin()){
 
-			if(!$this->tank_auth->is_logged_in()){
-			  //If no session, redirect to login page
-				$data['user_type'] = 'guest';
-				redirect('login', 'refresh');
-			}else if(check_admin()){
+				if ( ! file_exists('application/views/'.$this->route .$page.'.php'))
+					show_404();
+				
+
 				$data =  getNextClasses(1,1);
 				if($data!=null){
 					$data['user'] = $this->tank_auth->is_admin();	
 					$h = gmdate('H');
 					$data['cDate'] = gmdate('l, dS F'); // "Wednesday 29th, Januaray";
 					$data['cTimespan'] = "$h:00 - ".($h+1).":00";
-					parse_temp($page, $this->load->view('pages/'.$page, $data, true));
+					parse_temp($page, $this->load->view($this->route.$page, $data, true));
 				}
 			}
 		}
@@ -43,7 +41,7 @@
 			if(check_admin()){	
 				$data = getNextClasses(1,2); // Get Class (1hour before current and 2hours after current)	
 				if($data!=null){		
-					$this->load->view('pages/'.$page, $data);
+					$this->load->view($this->route.$page, $data);
 				}
 			}
 		}
@@ -89,7 +87,7 @@
 				// SMS Enabled
 		 		$data['sms'] = $this->config->item('sms_allow');
 
-		 		parse_temp($page, $this->load->view('pages/'.$page, $data, true));
+		 		parse_temp($page, $this->load->view($this->route.$page, $data, true));
 		 	}
 		 }
 
@@ -106,7 +104,7 @@
 				$data['rooms'] = $this->Rooms->getRooms();
 				$data['categories'] = $this->Categories->getCategories();
 				
-				parse_temp($page, $this->load->view('pages/'.$page, $data, true));
+				parse_temp($page, $this->load->view($this->route.$page, $data, true));
 			}
 		}
 
@@ -152,7 +150,7 @@
 				$data['categories'] = $this->Categories->getCategories();
 				$data['class_types'] = $this->classes->getClassTypes();
 
-				parse_temp($page, $this->load->view('pages/'.$page, $data, true));
+				parse_temp($page, $this->load->view($this->route.$page, $data, true));
 			}
 		}	
 

@@ -48,6 +48,8 @@ $route['register'] = 'auth/register';
 $route['404_override'] = 'pages/view/page-not-found';
 $route['users'] = 'pages/users';
 
+//$route['pages/admin/'] = 'pages/users';
+
 $route['member'] = 'member';
 
 $route['updateClasses'] = 'pages/updateClasses';
