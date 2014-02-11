@@ -47,9 +47,9 @@ class Tank_auth
 	{
 		if ((strlen($login) > 0) AND (strlen($password) > 0)) {
 			// Only Use Email
-			$get_user_func = 'get_user_by_email';
+			if (!is_null($user = $this->ci->users->get_user_by_email($login))) {	// login ok
 
-			if (!is_null($user = $this->ci->users->$get_user_func($login))) {	// login ok
+				$userid = $this->ci->users->get_user_id_by_email($login);
 
 				// Does password match hash in database?
 				$hasher = new PasswordHash(
@@ -62,7 +62,7 @@ class Tank_auth
 
 					} else {
 						$this->ci->session->set_userdata(array(
-								'user_id'	=> $user->id,
+								'user_id'	=> $userid->id,
 								'username'	=> $user->username,
 								'userpermission'	=> $user->permission_level_id,
 								'status'	=> ($user->activated == 1) ? STATUS_ACTIVATED : STATUS_NOT_ACTIVATED,
@@ -143,6 +143,11 @@ class Tank_auth
 		return $this->ci->session->userdata('userpermission') > 1;
 	}
 
+	function is_member()
+	{
+		return $this->ci->session->userdata('userpermission') == 1;
+	}
+
 	/**
 	 * Get user_id
 	 *
@@ -154,6 +159,16 @@ class Tank_auth
 	}
 
 	/**
+	 * Get user permission level
+	 *
+	 * @return	string
+	 */
+	function get_user_permissions()
+	{
+		return $this->ci->session->userdata('userpermission');
+	}
+
+	/**
 	 * Get username
 	 *
 	 * @return	string
@@ -162,7 +177,7 @@ class Tank_auth
 	{
 		return $this->ci->session->userdata('username');
 	}
-
+	
 	/**
 	 * Create new user on the site and return some data about it:
 	 * user_id, username, password, email, new_email_key (if any).
@@ -173,13 +188,16 @@ class Tank_auth
 	 * @param	bool
 	 * @return	array
 	 */
-	function create_user($username, $email, $password, $email_activation)
+	function create_user($username, $first_name, $second_name, $home_number, $mobile_number, $email, $password, $member_type, $membership_type, $comms_preferences, $email_activation)
 	{
 		if ((strlen($username) > 0) AND !$this->ci->users->is_username_available($username)) {
 			$this->error = array('username' => 'auth_username_in_use');
 
 		} elseif (!$this->ci->users->is_email_available($email)) {
 			$this->error = array('email' => 'auth_email_in_use');
+
+		} elseif (!$this->ci->users->is_username_available($email)) {
+			$this->error = array('username' => 'auth_username_in_use');
 
 		} else {
 			// Hash password using phpass
@@ -189,9 +207,15 @@ class Tank_auth
 			$hashed_password = $hasher->HashPassword($password);
 
 			$data = array(
-				'username'	=> $username,
+				'username'	=> strtolower($username),
+				'first_name' => strtolower($first_name),
+				'second_name' => strtolower($second_name),
+				'home_number'	=> $home_number,
+				'mobile_number'	=> $mobile_number,
 				'password'	=> $hashed_password,
-				'email'		=> $email,
+				'email'		=> strtolower($email),
+				'member_type_id' => $member_type,
+				'membership_type_id' => $membership_type,
 				'last_ip'	=> $this->ci->input->ip_address(),
 			);
 

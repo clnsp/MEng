@@ -19,7 +19,7 @@ Link doesn't work? Copy the following link to your browser address bar:<br />
 Please verify your email within <?php echo $activation_period; ?> hours, otherwise your registration will become invalid and you will have to register again.<br />
 <br />
 <br />
-<?php if (strlen($username) > 0) { ?>Your username: <?php echo $username; ?><br /><?php } ?>
+<?php if (strlen($username) > 0) { /*?>Your username: <?php echo $username; ?><br /><?php */} ?>
 Your email address: <?php echo $email; ?><br />
 <?php if (isset($password)) { /* ?>Your password: <?php echo $password; ?><br /><?php */ } ?>
 <br />

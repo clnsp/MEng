@@ -37,7 +37,7 @@
 		<td class="email"><?php echo $usr->email;?></td>
 		<td class="type"><?php echo ucfirst($usr->type)?></td>
 		<td class="membership_type"><?php echo ucfirst($usr->membership_type);?></td>
-		<td class="last_booking"><?php echo "None";?></td>
+		<td class="last_booking"><?php echo ucfirst($usr->lastClass);?></td>
 		<td class="status"><?php if($usr->activated && $usr->banned){echo "Blocked";}else if($usr->activated){echo "Active";}else{echo "Pending";}?></td>
 	  </tr>	  
 	  <?php } ?>

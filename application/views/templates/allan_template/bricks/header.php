@@ -1,5 +1,5 @@
   <!DOCTYPE html>
-  <html lang="en">
+  <html lang="en" class='fuelx'>
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,15 +11,16 @@
     <link rel="shortcut icon" href="<?php echo base_url();?>assets/img/favicon">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
-    <link rel="stylesheet" href="<?php echo base_url();?>assets/css/bootstrap-theme.php">
+    <link rel="stylesheet" class="bootstraptheme" href="<?php echo base_url();?>index.php/bootstraptheme">
     <link rel="stylesheet" href="<?php echo base_url();?>assets/css/bootstrap.submodal.css">
     <link rel="stylesheet" href="<?php echo base_url();?>assets/css/jquery-ui-autocomplete.custom.min.css">
-    <link rel="stylesheet" href="<?php echo base_url();?>assets/datatab/css/DT_bootstrap.css"/>
+    <link rel="stylesheet" href="<?php echo base_url();?>assets/css/DT_bootstrap.css"/>
     <link rel="stylesheet" href="<?php echo base_url();?>assets/css/bootstrap-overides.css"/>
     <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/cal/fullcalendar.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/css/jquery-ui-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/css/bootstrap-datetimepicker.min.css">
 
     <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/css/jquery.minicolors.css">
-
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
       <!--[if lt IE 9]>
@@ -31,10 +32,10 @@
 
       <body>
 
-        <div id="booking">
+        <div id="booking" class='{page_title}'>
           <div id="page-wrapper">
 
-           <div class="navbar navbar-default navbar-inverse navbar-top" role="navigation">
+           <div class="navbar navbar-default navbar-inverse navbar-top navbar-fixed-top" role="navigation">
              <div class="container">
 
               <a class="navbar-brand" href="<?php echo base_url();?>"> <img class="displayed" src="<?php echo base_url();?>/assets/img/menu-logo-small.jpg" alt="Strathclyde University CSR"></a>
@@ -111,7 +112,13 @@ echo($user);
 
 
           <form class="navbar-form navbar-right" role="search">
-            <a href="register" id="register-button" class="btn btn-primary">Register</a>
+			  <div class="btn-group">
+				<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Register<span class="caret"></span></button>
+				<ul class="dropdown-menu">
+				  <li><a href="register">DS Registration</a></li>
+				  <li><a href="#">Alternative</a></li>
+				</ul>
+			</div>
           </form>
         <?php endif; ?>
 

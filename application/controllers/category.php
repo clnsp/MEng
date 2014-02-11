@@ -23,21 +23,20 @@ class Category extends CI_Controller
 	function setColor(){
 		
 		if($this->tank_auth->is_admin()){
-			
 			if (isset($_POST['category_id']) && isset($_POST['color'])){
-			
-				$this->categories->setColor($_POST['category_id'], $_POST['color']);
-				echo 'success';
+				if($_POST['category_id'] != 1){
+					$this->categories->setColor($_POST['category_id'], $_POST['color']);
+					echo 'Color changed';
+				}else{
+					echo 'Cannot alter "Uncategorised" category';
+				}
+			}else{
+				echo "Missing post values";
 			}
 			
-			else{
-				echo 'post values not set';
-				print_r($_POST);
-			}
 		}else{
-		
+
 			echo 'not admin';
-			print_r($_POST);
 		}
 	}
 	
@@ -48,11 +47,26 @@ class Category extends CI_Controller
 		if($this->tank_auth->is_admin()){
 			if (isset($_POST['category']) && isset($_POST['color'])){
 				$this->categories->addCategory($_POST['category'], $_POST['color']);
+				echo "Category Added";
 			}else{
-				echo "No post values";
+				echo "No values supplied";
 			}
-		
+
 		}
+	}
+
+	/**
+	* Determines whether an array of categories has any uncategorised
+	* @param 	array
+	* @param 	array - cleansed array
+	*/
+	function _cleanseUncategorised($categories){
+		if(in_array(1, $categories)){
+			echo("You cannot remove the uncategorized category");
+			return $categories = array_diff( $categories, array(1)); 
+		}
+
+		return $categories;
 	}
 	
 	/**
@@ -60,13 +74,53 @@ class Category extends CI_Controller
 	*/
 	function removeCategories(){
 		if($this->tank_auth->is_admin()){
-		
+
 			if (isset($_POST['category_id'])){
-				$this->categories->removeCategories($_POST['category_id']);
-			}else{
-				echo "No post values";
+
+				$_POST['category_id'] = $this->_cleanseUncategorised($_POST['category_id']);
+				
+				if(sizeof($_POST['category_id']) > 0){					
+					if($this->categories->removeCategories($_POST['category_id']))
+						echo("Categories removed");
+					else{
+						echo "Error removing categories";
+					}
+				}else{
+					echo("No categories were removed");
+				}
+				
 			}
-		
+
+		}
+	}
+
+	/**
+	* Force remove categories even if assigned to class types.
+	* 
+	*/
+	function forceRemoveCategories(){
+		if($this->tank_auth->is_admin()){
+
+			if (isset($_POST['category_id'])){
+				$this->load->model('classes');
+
+				$_POST['category_id'] = $this->_cleanseUncategorised($_POST['category_id']);
+				
+				if(sizeof($_POST['category_id']) > 0){
+
+					$this->classes->uncategoriseClassTypes($_POST['category_id']);
+
+					if($this->categories->removeCategories($_POST['category_id']))
+						echo("Categories removed");
+					else{
+						echo "Error removing categories";
+					}
+				}else{
+					echo("No categories were removed");
+				}
+				
+			}
+
 		}
 	}
 	
@@ -75,17 +129,23 @@ class Category extends CI_Controller
 	*/
 	function setName(){
 		if($this->tank_auth->is_admin()){
-		
 			if (isset($_POST['category_id']) && isset($_POST['category'])){
-				$this->categories->setName($_POST['category_id'], $_POST['category']);
+				if($_POST['category_id'] != 1){
+					$this->categories->setName($_POST['category_id'], $_POST['category']);
+					echo "Category name changed";
+				}else{
+					echo "Cannot change name of uncategorized category";
+					return false;
+				}
+
 			}else{
-				echo "No post values";
+				echo "No values entered";
 			}
-		
+
 		}
 	}
-	
+
 }
 
-	/* End of file welcome.php */
+/* End of file welcome.php */
 /* Location: ./application/controllers/categories.php */

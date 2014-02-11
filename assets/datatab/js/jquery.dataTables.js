@@ -2077,8 +2077,8 @@
 			// COLIN EDIT - 01/12/13			
 			var sSearchStr = oSettings.oLanguage.sSearch;
 			sSearchStr = (sSearchStr.indexOf('_INPUT_') !== -1) ?
-			  sSearchStr.replace('_INPUT_', '<input type="text" class="form-control"  placeholder="Search"/>') :
-			  sSearchStr==="" ? '<input type="text" class="form-control"  placeholder="Search"/>' : ' <input type="text" class="form-control"  placeholder="Search"/>';
+			  sSearchStr.replace('_INPUT_', '<input type="text" class="form-control"  placeholder="Search" style="padding-right: 8px;"/>') :
+			  sSearchStr==="" ? '<input type="text" class="form-control"  placeholder="Search" style="padding-right: 8px;"/>' : ' <input type="text" class="form-control"  placeholder="Search" style="padding-right: 8px;"/>';
 						
 			var nFilter = document.createElement( 'div' );
 			nFilter.className = oSettings.oClasses.sFilter;

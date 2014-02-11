@@ -4,6 +4,7 @@
 	session_start();
 
 	class Pages extends CI_Controller {
+		private $route = 'pages/admin/';
 
 		public function __construct(){
 			parent::__construct();
@@ -14,45 +15,35 @@
 		 */
 		public function view($page = 'home'){
 
-			if ( ! file_exists('application/views/pages/'.$page.'.php')){
-				// Whoops, we don't have a page for that!
-				show_404();
-			}
-	
-
-			if(!$this->tank_auth->is_logged_in()){
-			  //If no session, redirect to login page
-				$data['user_type'] = 'guest';
-				redirect('login', 'refresh');
-			}else{
-				$data['user'] = $this->tank_auth->is_admin();
-			}
-
+			
 			if(check_admin()){
-		 		$data['user'] = $this->tank_auth->is_admin();
-				
-				$h = gmdate('H');
-				$s = gmdate("Y-m-d H:i:s", 1390176000); // GET FOR CURRENT TIME  date('Y-m-d H:') . ':00:00';
-				$e = gmdate("Y-m-d H:i:s", 1390780800);
-				
-				//$s = gmdate('Y-m-d ').($h-1). ':00:00'; // GET FOR CURRENT TIME  
-				//$e = gmdate('Y-m-d ').($h+1). ':00:00'; 
-				
-				$this->load->Model('Rooms');
-				$this->load->Model('Categories');
-				$this->load->Model('classes');
-				
-				$data['rooms'] = $this->Rooms->getRooms();
-				$data['categories'] = $this->Categories->getCategories();
-				$data['classes'] = $this->classes->getClassesWithRoomBetween($s, $e, 'allrooms');
-				
-				$data['cDate'] = gmdate('l, dS F'); // "Wednesday 29th, Januaray";
-				
-				$data['cTimespan'] = "$h:00 - ".($h+1).":00";
-				
-				parse_temp($page, $this->load->view('pages/'.$page, $data, true));
-			}
 
+				if ( ! file_exists('application/views/'.$this->route .$page.'.php'))
+					show_404();
+				
+
+				$data =  getNextClasses(1,1);
+				if($data!=null){
+					$data['user'] = $this->tank_auth->is_admin();	
+					$h = gmdate('H');
+					$data['cDate'] = gmdate('l, dS F'); // "Wednesday 29th, Januaray";
+					$data['cTimespan'] = "$h:00 - ".($h+1).":00";
+					parse_temp($page, $this->load->view($this->route.$page, $data, true));
+				}
+			}
+		}
+
+		/**
+		 * Get new updated body for up and coming classes
+		 */
+		public function updateClasses($page = 'class-list')
+		{
+			if(check_admin()){	
+				$data = getNextClasses(1,2); // Get Class (1hour before current and 2hours after current)	
+				if($data!=null){		
+					$this->load->view($this->route.$page, $data);
+				}
+			}
 		}
 
 		/**
@@ -76,14 +67,27 @@
 		 	if(check_admin()){
 		 		$data['user'] = $this->tank_auth->is_admin();
 		 		$this->load->Model('members');
+		 		$this->load->Model('dbviews');
 				// Get all Users
 		 		$data['users'] = $this->members->getAllUsers();
+		 		foreach($data['users']as $user){
+		 			$attended = $this->dbviews->getUserLastAttendance($user->id);
+		 			if(isset($attended[0]->member_id))
+		 			{
+		 				$date = new DateTime($attended[0]->class_start_date);
+		 				$user->lastClass = $attended[0]->class_type . " " . $date->format('d/m/y');
+		 			}
+		 			else
+		 			{
+		 				$user->lastClass = "None";
+		 			}
+		 		}
 				// Twitter Enabled
 		 		$data['twitter'] = $this->config->item('twitter_allow');
 				// SMS Enabled
 		 		$data['sms'] = $this->config->item('sms_allow');
 
-		 		parse_temp($page, $this->load->view('pages/'.$page, $data, true));
+		 		parse_temp($page, $this->load->view($this->route.$page, $data, true));
 		 	}
 		 }
 
@@ -100,7 +104,7 @@
 				$data['rooms'] = $this->Rooms->getRooms();
 				$data['categories'] = $this->Categories->getCategories();
 				
-				parse_temp($page, $this->load->view('pages/'.$page, $data, true));
+				parse_temp($page, $this->load->view($this->route.$page, $data, true));
 			}
 		}
 
@@ -130,7 +134,7 @@
 		public function room($id=1){
 			$data['room_id'] = $id;
 
-			parse_temp('room', $this->load->view('pages/room', $data, true));
+			parse_temp('room', $this->load->view($route.'room', $data, true));
 
 		}
 
@@ -147,7 +151,7 @@
 			$data['room'] = $this->facilities->retrieve_titles();
 			$data['description'] = $this->facilities->retrieve_descriptions();
 
-*/			parse_temp($page, $this->load->view('pages/rooms', $data, true));
+*/			parse_temp('room', $this->load->view('pages/member/rooms', $data, true));
 
 		}
 
@@ -160,7 +164,7 @@
 			
 			$data['links'] = $this->links->get_all();
 
-			parse_temp($page, $this->load->view('pages/user-links', $data, true));
+			parse_temp($page, $this->load->view($route.'user-links', $data, true));
 
 
 		}
@@ -188,18 +192,19 @@
 			if(check_admin()){
 				$this->load->Model('Categories');
 				$this->load->Model('classes');
+
+
 				$this->load->Model('facilities');
 
 				$data['user'] = $this->tank_auth->is_admin();
-	
+
+
 				$data['categories'] = $this->Categories->getCategories();
 				$data['class_types'] = $this->classes->getClassTypes();
-							
-				parse_temp($page, $this->load->view('pages/'.$page, $data, true));
-			}
-		}
-		
 
+				parse_temp($page, $this->load->view($this->route.$page, $data, true));
+			}
+		}	
 
 	}
 

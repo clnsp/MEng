@@ -1,7 +1,7 @@
 <h1>Account Settings</h1>
 
 <ul class="primary nav nav-pills">
-	<li class=""><a href="#">Information</a></li>
+	<li class=""><a href="load_details">Information</a></li>
 	<li><a href="change_password">Password</a></li>
 	<li><a href="change_email">Email</a></li>
 	<li><a href="unregister">Unregister</a></li>
