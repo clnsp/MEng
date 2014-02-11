@@ -575,6 +575,10 @@ eventModal.on("click", ".open-Model-button", function () {
  	$('#calendar').fullCalendar('rerenderEvents');
  });
 
+ $('#btn-view-waiting-list').click(function(){
+  //pull in waiting list results
+
+ });
 
  $('form#addGuestForm').submit(function(e){
   e.preventDefault();

@@ -105,7 +105,7 @@
 					</form>
 					<div class="button-group">
 						<button data-toggle="modal" data-target="#addGuestModal" class="btn btn-default" id="btn-add-guest-member" type="submit"><i class="glyphicon glyphicon-user"></i> Add Guest</button>
-						<button data-toggle="modal" data-target="#addGuestModal" class="btn btn-default" id="btn-add-guest-member" type="submit"><i class="glyphicon glyphicon-list-alt"></i> Waiting List</button>
+						<button class="btn btn-default" id="btn-view-waiting-list" type="submit"><i class="glyphicon glyphicon-list-alt"></i> Waiting List</button>
 					</div>
 				</div>
 				
