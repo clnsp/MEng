@@ -206,13 +206,13 @@ $linkColor = "#555555";
 .dropdown-menu > .active > a,
 .dropdown-menu > .active > a:hover,
 .dropdown-menu > .active > a:focus {
-  background-color: #357ebd;
+ /* background-color: #357ebd;
   background-image: -webkit-gradient(linear, left 0%, left 100%, from(<?php echo $brandSecondary;?>), to(#357ebd));
   background-image: -webkit-linear-gradient(top, <?php echo $brandSecondary;?> 0%, #357ebd 100%);
   background-image: -moz-linear-gradient(top, <?php echo $brandSecondary;?> 0%, #357ebd 100%);
   background-image: linear-gradient(to bottom, <?php echo $brandSecondary;?> 0%, #357ebd 100%);
   background-repeat: repeat-x;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff41807B', endColorstr='#ff357ebd', GradientType=0);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff41807B', endColorstr='#ff357ebd', GradientType=0);*/
 }
 
 .navbar-default {
@@ -471,7 +471,8 @@ $linkColor = "#555555";
 
  body{
   background-color: rgba(226, 226, 226, 0.65);
-}
+  padding-top: 70px; //for fixed nav
+ }
 
 .div-center{
 	margin-left: auto;
@@ -668,6 +669,11 @@ i.square{
 
 
 /* @group Calendar */
+
+
+#booking #calendar .fc-header-title{
+  padding: 0 15px;
+}
 
 #booking #calendar .fc-view tbody{
   background-color: #fff;

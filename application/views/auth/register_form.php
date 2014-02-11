@@ -1,14 +1,4 @@
 <?php
-$username = array(
-	'name'	=> 'username',
-	'id'	=> 'username',
-	'value'	=> set_value('username',$uname),
-	'maxlength'	=> 80,
-	'size'	=> 30,
-	'class' => 'form-control',
-	'placeholder' => 'Unique ID',
-	'readonly' => 'readonly',
-	);
 $firstname = array(
 	'name'	=> 'first_name',
 	'id'	=> 'first_name',
@@ -110,15 +100,6 @@ $form = array(
 	<p>Lorem ipsum dolor sit amet, feugiat apeirian contentiones ut ius, ius probatus rationibus repudiandae ad. Ad sed vero periculis. An posse delectus philosophia vel. Ne ius pertinax consectetuer, eam ex mundi aeterno dissentiunt. Saepe ancillae assueverit vis et, eam rebum delenit deterruisset cu.</p>
 	<div class="well well-lg  div-center">
 		<?php echo form_open($this->uri->uri_string(), $form); ?>
-
-		<?php echo form_error($username['name']); ?><?php echo isset($errors[$username['name']])?$errors[$username['name']]:''; ?>
-		<div class="form-group">
-			<?php echo form_label('ID', $username['id'], $label); ?>
-			<div class="col-sm-10">
-				<?php echo form_input($username); ?>
-			</div>
-		</div>
-
 		<?php echo form_error($firstname['name']); ?>
 		<div class="form-group">
 			<?php echo form_label('First Name', $firstname['id'], $label); ?>

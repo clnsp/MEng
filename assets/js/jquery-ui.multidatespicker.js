@@ -106,9 +106,10 @@
 								.datepicker("option", "minDate", min_date)
 								.datepicker("option", "maxDate", max_date);
 						} else {
-							$this
-								.datepicker("option", "minDate", this.multiDatesPicker.minDate)
-								.datepicker("option", "maxDate", this.multiDatesPicker.maxDate);
+							/* removed to prevent jumping calendar */
+							//$this
+							//	.datepicker("option", "minDate", this.multiDatesPicker.minDate)
+							//	.datepicker("option", "maxDate", this.multiDatesPicker.maxDate);
 						}
 						
 						if(this.tagName == 'INPUT') { // for inputs

@@ -2,45 +2,46 @@
 
 class Members extends CI_Model
 {
-	private $table_name			    = 'users';			// user accounts
-	private $profile_table_name	= 'user_profiles';	// user profiles
+  private $table_name         = 'users';      // user accounts
+  private $profile_table_name = 'user_profiles';  // user profiles
 
-	function __construct()
-	{
-		parent::__construct();
+  function __construct()
+  {
+    parent::__construct();
 
-		$ci =& get_instance();
-		$this -> table_name			    = $ci -> config -> item('db_table_prefix', 'tank_auth').$this -> table_name;
-		$this -> profile_table_name	= $ci -> config -> item('db_table_prefix', 'tank_auth').$this -> profile_table_name;
-	}
+    $ci =& get_instance();
+    $this -> table_name         = $ci -> config -> item('db_table_prefix', 'tank_auth').$this -> table_name;
+    $this -> profile_table_name = $ci -> config -> item('db_table_prefix', 'tank_auth').$this -> profile_table_name;
+  }
 
-	/**
-	 * Get list of members
-	 *
-	 * @param	int
-	 * @param	bool
-	 * @return	object
-	 */
-	function getAllUsers() //was get_all_user()
-	{
-		$this->db->select($this->table_name.'.id,first_name,second_name,email,activated,banned,type,membership_type');  // CHANGE
-		$this -> db -> from($this -> table_name);
-		$this->db->join('member_type_tbl', $this->table_name.'.member_type_id = member_type_tbl.id');
-		$this->db->join('membership_type_tbl', $this->table_name.'.membership_type_id = membership_type_tbl.id');
-		
-		$query = $this->db->get();
-		return $query -> result();
-	}
-	
-	/*
+  /**
+   * Get list of members
+   *
+   * @param int
+   * @param bool
+   * @return  object
+   */
+  function getAllUsers() //was get_all_user()
+  {
+    $this->db->select($this->table_name.'.id,first_name,second_name,email,activated,banned,type,membership_type');  // CHANGE
+    $this -> db -> from($this -> table_name);
+    $this->db->join('member_type_tbl', $this->table_name.'.member_type_id = member_type_tbl.id');
+    $this->db->join('membership_type_tbl', $this->table_name.'.membership_type_id = membership_type_tbl.id');
+    
+    $query = $this->db->get();
+    return $query -> result();
+  }
+  
+  /*
    * Fetch users details
    */
   function getUserByID($id) //was fetchUser($id)
   {
-  	$this -> db -> select($this -> table_name.'.id, first_name, second_name, email, home_number, mobile_number, twitter, comms_preference, activated, banned, ban_reason, membership_type');
+  	$this -> db -> select($this -> table_name.'.id, first_name, second_name, email, home_number, mobile_number, twitter, comms_preference, activated, banned, ban_reason, membership_type, end_date , type');
   	$this -> db -> from($this -> table_name);
   	$this -> db -> where($this -> table_name.'.id', $id);
-   $this->db->join('membership_type_tbl', 'membership_type_tbl.id = '.$this -> table_name.'.membership_type_id');
+   	$this->db->join('membership_type_tbl', 'membership_type_tbl.id = '.$this -> table_name.'.membership_type_id');
+    $this->db->join('member_type_tbl', 'member_type_tbl.id = '.$this -> table_name.'.member_type_id');
 
    $query = $this -> db -> get();   
    return $query->result();
@@ -60,16 +61,20 @@ class Members extends CI_Model
 
    return $query;
  }
+ 
+ 
+ function deleteUserAccount($id){
+	return $this->db->delete($this -> table_name, array('id' => $id)); 
+ }
 
  /**
  * Get member type ids
  * @return array
  */
- function getMembershipTypes() {
-   $this -> db -> select('id');
-   $query = $this -> db -> get('membership_type_tbl');
-
-   return $query->result_array();
+ function getMembershipTypes($id) {
+	$sql = "SELECT  membership_type_tbl.id as id, membership_type, start_date, end_date FROM users, member_membership_tbl, membership_type_tbl WHERE users.id = ? AND member_membership_tbl.member_type_id = users.member_type_id AND membership_type_tbl.id = member_membership_tbl.membership_type_id AND end_date > CURDATE( )";
+    $query = $this->db->query($sql, $id);
+	return $query->result();
  }
 
  /**

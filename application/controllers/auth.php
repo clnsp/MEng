@@ -215,7 +215,6 @@ class Auth extends CI_Controller
 			$data['use_recaptcha'] = $use_recaptcha;
 			if($ver)
 			{
-				$data['uname'] = $ver['uid'][0];
 				$data['fname'] = $ver['givenName'][0];
 				$data['sname'] = $ver['sn'][0];
 				$data['mail'] = $ver['mail'][0];

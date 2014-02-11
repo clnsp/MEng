@@ -2,76 +2,65 @@
 <?php 
 
 if(!$this->tank_auth->is_admin()){ ?>
-=======
 
 <div id="footer">
 
-
-  <hr/>
-
-  <div class="row">
-    <div class="col-md-3 col-md-offset-1" style="text-align:center">Recent Tweets</div>
-    <div class="col-md-4" style="text-align:center">Contact Us</div>
-    <div class="col-md-4" style="text-align:center">Useful Links</div>
-  </div>
-
-  <div  class="center-block">
-    <span class="fa-stack fa-lg">
-      <i class="fa fa-circle fa-stack-2x fa-inverse"></i>
-      <i class="fa fa-twitter fa-stack-1x"></i>
-    </span>
-    <span class="fa-stack fa-lg">
-      <i class="fa fa-circle fa-stack-2x fa-inverse"></i>
-      <i class="fa fa-facebook fa-stack-1x"></i>
-    </span>
-    <span class="fa-stack fa-lg">
-      <i class="fa fa-circle fa-stack-2x fa-inverse"></i>
-      <i class="fa fa-google-plus fa-stack-1x"></i>
-    </span>
-  </div>
+  <?php  $this->load->view('templates/allan_template/bricks/footer_content'); ?>
 
 </div><!--end footer-->
 <?php }; ?>
-
-
-<!-- Latest compiled and minified JavaScript -->
 
      <!-- Bootstrap core JavaScript
      ================================================== -->
      <!-- Placed at the end of the document so the pages load faster 
      <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>-->
-     <script src="<?php echo base_url();?>assets/js/jquery-1.7.2.js"></script>
+     <!--     <script src="<?php echo base_url();?>assets/js/jquery-1.7.2.js"></script-->
+     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 
      <!-- Latest compiled and minified JavaScript -->
      <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
      <script src="<?php echo base_url();?>assets/js/bootstrap.submodal.js"></script>
 
+     <?php if($page_title=="home"){ ?>
      <script src="<?php echo base_url();?>assets/js/up-coming.js"></script>
+     <?php }?>
      <!-- COLIN TEST FIX-->
+     <script src="<?php echo base_url();?>assets/js/jquery-ui.custom.min.js"></script>
+
+
+     <script type="text/javascript" src="<?php echo base_url();?>assets/js/jquery.ui.core.js"></script>
+     <script type="text/javascript" src="<?php echo base_url();?>assets/js/jquery.ui.datepicker.js"></script>
+     <script type="text/javascript" src="<?php echo base_url();?>assets/js/jquery-ui.multidatespicker.js"></script>
+     
+     <?php if($page_title=="users"){ ?>
      <script src="<?php echo base_url();?>assets/datatab/js/jquery.dataTables.min.js"></script>
      <script src="<?php echo base_url();?>assets/datatab/js/DT_bootstrap.min.js"></script>
      <script src="<?php echo base_url();?>assets/datatab/js/user_custom.js"></script>
+     <?php }?>
 
-
-     <script src="<?php echo base_url();?>assets/js/jquery-ui.custom.min.js"></script>
      <script src="<?php echo base_url();?>assets/js/jquery-ui-autocomplete.custom.min.js"></script>
      <script src="<?php echo base_url();?>assets/cal/fullcalendar.min.js"></script>
      <script type="text/javascript" src="<?php echo base_url();?>assets/js/booking-calendar.js"></script>
 
      <!-- Admin Manage Scripts -->
      <script type="text/javascript" src="<?php echo base_url();?>assets/js/jquery.minicolors.js"></script>
-     <script type="text/javascript" src="<?php echo base_url();?>assets/js/jquery.ui.core.js"></script>
-     <script type="text/javascript" src="<?php echo base_url();?>assets/js/jquery.ui.datepicker.js"></script>
-     <script type="text/javascript" src="<?php echo base_url();?>assets/js/jquery-ui.multidatespicker.js"></script>
+
      <script type="text/javascript" src="<?php echo base_url();?>assets/js/date.js"></script>
-	<script type="text/javascript" src="<?php echo base_url();?>assets/js/manage.js"></script>
-	
+     <script type="text/javascript" src="<?php echo base_url();?>assets/js/manage.js"></script>
+     
      <!-- Custom -->
      <script type="text/javascript" src="<?php echo base_url();?>assets/js/bootbox.min.js"></script>
-    
-    <!-- Sitewide javascript -->
+     
+     <!-- Sitewide javascript -->
+     <script type="text/javascript" src="<?php echo base_url();?>assets/js/moment.js"></script>  <!-- Time/DatePicker -->
+     <script type="text/javascript" src="<?php echo base_url();?>assets/js/bootstrap-datetimepicker.js"></script>
      <script type="text/javascript" src="<?php echo base_url();?>assets/js/bootstrap-override.js"></script>
-    
+     <script type="text/javascript" src="<?php echo base_url();?>assets/js/theme.js"></script>
+
+   <?php if($page_title=="manage-sports-hall"){ ?>
+     <script type="text/javascript" src="<?php echo base_url();?>assets/js/manage-sports-hall.js"></script>
+   <?php } ?>
+
      <script> 
       // using JQUERY's ready method to know when all dom elements are rendered
       $( document ).ready(function () {
@@ -103,12 +92,8 @@ if(!$this->tank_auth->is_admin()){ ?>
       });
 
       */
-	  // COLIN TEST
-	  $('#member').dataTable( {
-     "sDom": "<'row'<'col-md-6'l><'col-md-6'f>r>t<'row'<'col-md-6'i><'col-md-6'p>>"
-   } );
-// END COLIN
-});
+
+    });
 
   // Store the initial content so we can revisit it later
   history.replaceState({

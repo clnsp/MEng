@@ -4,32 +4,40 @@ Class Rooms extends CI_Model{
 
 	private $table_name = 'room_tbl';
 
+
 	function retrieve_descriptions(){  
 		$this->db->select('description'); 
+
 		$this -> db -> from($this -> table_name); 
 
 		$query = $this -> db ->get();
-		
-		return $query->result_array();  
-	}             
+
+                return $query->result_array();  
+            }             
+             
 
 	function retrieve_titles(){  
 		$this->db->select('room'); 
+
 		$this -> db -> from($this -> table_name); 
 
 		$query = $this -> db ->get();
-		
-		return $query->result_array();  
-	} 
+
+                return $query->result_array();  
+            } 
+
 
 	function retrieve_ids(){  
 		$this->db->select('room_id'); 
+
 		$this -> db -> from($this -> table_name); 
 
 		$query = $this -> db ->get();
 		
-		return $query->result_array();  
-	}          
+
+                return $query->result_array();  
+            }          
+
 
 	/**
 	 * Function for fetching all rooms 

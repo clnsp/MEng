@@ -22,8 +22,12 @@ class Member extends CI_Controller{
 		if(isset($_POST['id']) && isset($_POST['changes'])){
 			echo $this->members->updateUser(strtolower($_POST['id']), array_map('strtolower',$_POST['changes']));
 		}
-$_POST['first_name'];
+
+		$_POST['first_name'];
+
 	}
+	
+
 
 	function createUserChanges()
 	{
@@ -47,11 +51,10 @@ $_POST['first_name'];
 	/*
 	 * Get Memberships for User
 	 */
-	function getUserMemberships(){
-		if(isset($_POST['id']))
-		{
+	function getMembershipOptions(){
+		if(isset($_GET['id'])){
 			$this->load->model('members');
-			$this->members->getMemberships($id);
+			echo json_encode($this->members->getMembershipTypes($_GET['id']));
 		}
 	}
 
@@ -64,21 +67,56 @@ $_POST['first_name'];
 			$this->members->attendance($_POST['pid'],$_POST['cid'],$_POST['at']);
 		}
 	}
-
-
+	/*
+	 * Get User Attendance Record
+	 */
+	function getAttendance(){
+		if(isset($_GET['id']))
+		{
+			$this->load->Model('Bookings');
+			$vals['show'] = $this->Bookings->countMemberAttendance($_GET['id']);
+			$vals['fail'] = $this->Bookings->countMemberAttendance($_GET['id'],0);
+			echo json_encode($vals);
+		}
+	}
+	
+	/*
+	 * Get User Bookings
+	 */
+	
+	function getBookings($page = 'class_booking_view'){
+		if(isset($_GET['id']))
+		{
+			$this->load->Model('Categories');
+			/*$this->load->Model('classes');
+			$this->load->Model('Bookings');
+			
+			$vals['bookings'] = $this->Bookings->getBookingByMember($_GET['id']);*/
+			$data['categories'] = $this->Categories->getCategories();
+			
+			/*foreach ($vals['bookings'] as $book){ 
+				$book->cla = $this->classes->getClassInformation($book->class_id)
+			}*/
+		$this->load->view('pages/'.$page, $data);
+		}
+	}
 	
 	/*
 	 * Update User Membership
 	 */
 	function updateUserMembership(){
-		
+
 	}
 	
 	/*
-	 * Block / unBlock / Delete
+	 * Delete
 	 */
-	function alterUserExistance(){
-		
+	function deleteUser(){
+		if(isset($_POST['id']) && isset($_POST['reason'])){
+			$this->load->model('members');
+			$user = $this->members->getUserByID($_POST['id']);
+			$this->members->deleteUserAccount($_POST['id']);			
+		}
 	}
 	
 	function serverTime()
@@ -111,8 +149,7 @@ $_POST['first_name'];
 			// TWITTER
 				case "twitter":
 				$twitter_name = $this->members->getUserColumn($id, 'twitter'); 
-				if(!$this->config->item('twitter_allow')) 
-				{
+				if(!$this->config->item('twitter_allow')){
 					echo "Service Disabled";
 				}
 				break;

@@ -1,16 +1,14 @@
 $( document ).ready(function() {
 
+	if($('#booking').is('.manage')){
 
-	/* prevent forms submitting */
-	$('form.prevent').submit(function(e) {
-		e.preventDefault();
-	});
+
 
 	$('#page-body').on('click', '.minicolors-swatch-color', function(e) {
 		e.stopImmediatePropagation(); //prevent clicking the row when selecting color swatch
 	});
 	
-	var categoriesPanel, addClassTypePanel, manageClassTypesPanel, editClassTypeModal, addBlockClassesPanel, categories, classtypes;
+	var categoriesPanel, addClassTypePanel, manageClassTypesPanel, editClassTypeModal, addBlockClassesPanel, categories, classtypes, datepicker;
 
 
 
@@ -196,7 +194,32 @@ $( document ).ready(function() {
 		var urlBase = "class_type/";
 		
 		form.submit(function() { editClassTypeModal.sendForm() });
-		removeSubmit.click(function() { editClassTypeModal.sendRemoveForm() });
+		removeSubmit.click(function() { 
+
+			bootbox.dialog({
+				message: "Removing class types will also remove any associated classes that have been added to the system under this class type. Are you sure you want to continue?",
+				title: "Warning",
+				buttons: {
+					main: {
+						label: "Cancel",
+						className: "btn-default",
+						callback: function() {}
+					},
+
+					danger: {
+						label: "Confirm",
+						className: "btn-danger",
+						callback: function() {
+							editClassTypeModal.sendRemoveForm() 
+
+						}
+					}
+					
+					
+				}
+			});
+
+		});
 		
 		$('table#class-types-table tbody').on('click','tr',function(e){
 			editClassTypeModal.setupModal($(this).data('class_type_id'), $(this).find('.class_type').html(), $(this).find('.class_description').html(), $(this).find('.category').data('category_id'));
@@ -262,45 +285,83 @@ $( document ).ready(function() {
 
 	
 	addBlockClassesPanel = (function() {
-
-		var form = $('#add-block-classes #add-block-classes-form');
+		var container = $('#add-block-classes');
+		var form = container.find('#add-block-classes-form');
 		var classTypeDrop = form.find('select[name=class_type_id]');
 		var roomDrop = form.find('select[name=room_id]');
 		var urlBase = "class_type/";
-		
+
+		var until = form.find('input[name=until]');
+		var repeat = form.find('select[name=repeat]');
+
+		var resetbtn = form.find('button#clear-cal-btn');
+		var repeatBtn = container.find('#apply-repeat-btn');
+
 		form.submit(function() { 
-			if(datepicker.hasDates())
-				addBlockClassesPanel.sendForm();
+			if(datepicker.hasDates()){
+				bootbox.confirm("<h4 class='modal-title'>Confirmation</h2><p>Are you sure you want to add new bookable classes? You will add classes to the following dates:</p>" + datepicker.getDates().toString(), function(result) {
+					if(result)
+						addBlockClassesPanel.sendForm();
+				}); 
+			}
 			else 
 				alert("No dates selected");
 			
-			});
+		});
+
+		repeatBtn.click(function(){
+			datepicker.repeatDates(repeat.val(), until.val());
+		});
+
+		resetbtn.click(function(){
+			datepicker.cal.multiDatesPicker('resetDates');
+		});
+
+		repeat.change(function() {
+			if($(this).val() == '0'){
+				until.prop( "disabled", true );
+				resetbtn.addClass('disabled');
+				repeatBtn.addClass('disabled');
+			}
+			else{
+				until.prop( "disabled", false );
+				resetbtn.removeClass('disabled');
+				repeatBtn.removeClass('disabled');
+
+			}
+		});
 
 		sendForm = function () {
-			
-			 $.post( urlBase + 'addInstances/', form.serialize())
-			 .done(function( data ) {
-			 	alert(data);
-			 });
+
+			var formSz = form.serializeArray();
+			var dates = datepicker.getDates();
+			dates.forEach(function(date) {
+				formSz.push({name: 'repeat_dates[]', value: date});
+			});
+
+			$.post( urlBase + 'addInstances/', formSz)
+			.done(function( data ) {
+				alert(data);
+			});
 
 		}
 
-return {
+		return {
 
-	drop: classTypeDrop,
-	form: form,
-	roomDrop: roomDrop,
-	sendForm: sendForm
+			drop: classTypeDrop,
+			form: form,
+			roomDrop: roomDrop,
+			sendForm: sendForm
 
-};
+		};
 
-})();
+	})();
 
 	rooms = (function() {
 
 		var urlBase = "room/";
 		var rdrop = $('<select></select>')
-		
+
 		rcreateOption = function (room) {
 			return($('<option></option>').val(room['room_id']).append(room['room']));
 		},
@@ -308,7 +369,7 @@ return {
 
 		refresh = function () {		
 			$.getJSON(urlBase + 'getRoomIDs', function(data) {
-				
+
 				rclear();
 				if(data.length>0){
 					$.each( data, function( key, room ) {
@@ -320,19 +381,19 @@ return {
 
 			});
 		},
-		
+
 		rclear = function() {
 			rdrop.html('');
 		},
-		
-		
+
+
 		rupdate = function () {
 			addBlockClassesPanel.roomDrop.html(rdrop.html());
 		}
-		
-		
-				
-		
+
+
+
+
 
 		return {
 
@@ -342,84 +403,84 @@ return {
 
 	})();
 
-classtypes = (function() {
-			var cttable = $('<tbody></tbody>');
-			var ctdrop = $('<select></select>');
+	classtypes = (function() {
+		var cttable = $('<tbody></tbody>');
+		var ctdrop = $('<select></select>');
 
-			var urlBase = "class_type/";
-	
-			ctcreateRow = function (type) {
-				return($('<tr data-class_type_id="' + type['class_type_id'] + '"></tr>')
-					.append('<td class="class_type">'+type['class_type'] + '</td>')
-					.append('<td class="class_description">' + type['class_description'] +'</td>')
-					.append('<td data-category_id='+ type['category_id'] +' class="category">' + type['category'] +'</td>') 
-					);			
-			},
-	
-			ctcreateOption = function (type) {
-				return($('<option></option>').val(type['class_type_id']).append(type['class_type']));		
-					
-			},
-	
-	
-			refresh = function () {		
-				$.getJSON(urlBase + 'getClassTypes', function(data) {
-					
-					ctclear();
-					if(data.length>0){
-						$.each( data, function( key, type ) {
-							cttable.append(ctcreateRow(type));
-							ctdrop.append(ctcreateOption(type));
-						});
-	
-					}
-					ctupdate();
-	
-				});
-			},
-			
-			ctclear = function() {
-				cttable.empty();
-				ctdrop.html('');
-			},
-			
-			
-			ctupdate = function () {
-				manageClassTypesPanel.table.html(cttable.html());
-				addBlockClassesPanel.drop.html(ctdrop.html());
-			}
-			
+		var urlBase = "class_type/";
 
-	return {
-		refresh: refresh,
-	};
+		ctcreateRow = function (type) {
+			return($('<tr data-class_type_id="' + type['class_type_id'] + '"></tr>')
+				.append('<td class="class_type">'+type['class_type'] + '</td>')
+				.append('<td class="class_description">' + type['class_description'] +'</td>')
+				.append('<td data-category_id='+ type['category_id'] +' class="category">' + type['category'] +'</td>') 
+				);			
+		},
 
-})();
+		ctcreateOption = function (type) {
+			return($('<option></option>').val(type['class_type_id']).append(type['class_type']));		
+
+		},
 
 
-categories = (function() {
-var urlBase 		= "category/";
-var catList = $('<ul></ul>');
-var catDrop = $('<select></select>');
+		refresh = function () {		
+			$.getJSON(urlBase + 'getClassTypes', function(data) {
 
-	refresh = function () {
-		$.getJSON(urlBase + 'fetchAll', function(data) {
-				
+				ctclear();
+				if(data.length>0){
+					$.each( data, function( key, type ) {
+						cttable.append(ctcreateRow(type));
+						ctdrop.append(ctcreateOption(type));
+					});
+
+				}
+				ctupdate();
+
+			});
+		},
+
+		ctclear = function() {
+			cttable.empty();
+			ctdrop.html('');
+		},
+
+
+		ctupdate = function () {
+			manageClassTypesPanel.table.html(cttable.html());
+			addBlockClassesPanel.drop.html(ctdrop.html());
+		}
+
+
+		return {
+			refresh: refresh,
+		};
+
+	})();
+
+
+	categories = (function() {
+		var urlBase 		= "category/";
+		var catList = $('<ul></ul>');
+		var catDrop = $('<select></select>');
+
+		refresh = function () {
+			$.getJSON(urlBase + 'fetchAll', function(data) {
+
 				catList.empty();
 				if(data.length>0){
 					$.each( data, function( key, cat ) {
 						catList.append(createListItem(cat['category_id'], cat['category'], cat['color']));
 						catDrop.append(createOption(cat));
 					});
-					
+
 				}
-				
+
 				update();
-				
+
 			});
-		
+
 		},
-		
+
 		createOption = function (type) {
 			return($('<option></option>').val(type['category_id'])
 				.append(type['category']));			
@@ -443,12 +504,12 @@ var catDrop = $('<select></select>');
 				return null;
 			}
 		},
-		
+
 		clear = function() {
 			categoriesPanel.categorylist.empty();
 			addClassTypePanel.categoryDropdown.html('');
 		},
-		
+
 		update = function() {
 			categoriesPanel.categorylist.html(catList.html());
 			categoriesPanel.initColorPickers();
@@ -462,70 +523,66 @@ var catDrop = $('<select></select>');
 		};
 
 	})();
-	
-	var datepicker = (function() {
-	
-		var cal = $('#date-selector').multiDatesPicker();
-		var until = $('#add-block-classes input[name=until]');
-		var repeat = $('#add-block-classes select[name=repeat]');
-		
-		hasDates = function() {
-			return cal.multiDatesPicker('getDates') == [];
+
+	datepicker = (function() {
+
+		var cal = $('#date-selector').multiDatesPicker({numberOfMonths: [2,2]});
+
+		getDates = function() {
+			return cal.multiDatesPicker('getDates');
 		},
-		
-		repeatDates = function() {
-			if(until.val() != ''){
+
+		hasDates = function() {
+			return getDates().length != 0;
+		},
+
+		repeatDates = function(repeatType, stop) {
+			if(stop != ''){
 				var calDates = cal.multiDatesPicker('getDates');
 				var newDates = new Array();
-				var stopDate = Date.parse(until.val());
-				
+				var stopDate = Date.parse(stop);
+
 				calDates.forEach(function(entry) {
 					var day = Date.parse(entry);
-					while(day < stopDate){
-						day = day.add(7).days();
-					    newDates.push(day.clone());
-				    }
+					while(Date.compare(day, stopDate) != 1){
+
+						newDates.push(day.clone());
+
+						if(repeatType == 'days')
+							day.add(1).days();
+
+						else if (repeatType == 'weeks')
+							day.add(1).weeks();
+
+						else if (repeatType == 'months')
+							day.add(1).months();
+
+						else if (repeatType == 'years')
+							day.add(1).years();
+					}
 				});
-				
-				cal.multiDatesPicker('addDates', newDates);
+
+				if(newDates.length > 0)
+					cal.multiDatesPicker('addDates', newDates);
 			}
 		}
+
+
 
 		return { 
 			cal:cal,
 			hasDates: hasDates,
-			repeat: repeat,
-			until: until,
-			repeatDates: repeatDates
+			repeatDates: repeatDates,
+			getDates : getDates,
 		};
 
 	})();
+
+
+	categories.refresh();
+	classtypes.refresh();
+	rooms.refresh();
+
 	
-	
-categories.refresh();
-classtypes.refresh();
-rooms.refresh();
-
-$('INPUT.minicolors-inline').minicolors({ theme: 'bootstrap', control: 'wheel' });
-
-/*  */
-datepicker.repeat.change(function() {
-	if($(this).val() == '0')
-		datepicker.until.prop( "disabled", true );
-	else{
-		datepicker.until.prop( "disabled", false );
-		repeatDates();
-	}
-	
-	
-});
-
-datepicker.cal.multiDatesPicker('addDates', new Array(new Date()));
-datepicker.cal.on('click', 'tr', function() {
-	alert('update');
-});
-
-
-
-
+}
 });

@@ -2,6 +2,7 @@
 <div class="col-xs-12 col-sm-6 col-md-3 <?php echo strtolower(str_replace(' ', '_', $class->room)) . ' ' . strtolower(str_replace(' ', '_', $class->category)) ?>"><!--CLASS-->
 <div id="<?php echo $class->class_id ?>" class="panel" style="border-color: <?php echo $class->color?>;">
         <!-- Default panel contents -->
+<div class="row"><div class="col-xs-12 col-sm-6"><h2 class="gtime"><small class="current-date pull-left"><?php echo $cDate ?></small></h2></div></div>
         <div class="panel-heading" style="background-color: <?php echo $class->color?>; color: rgb(255,255,255);"><span>Class: <?php echo $class->title ?><span><span class="pull-right">S: <?php echo date("H:i",strtotime($class->start)) ?></span><br/><span>Room: <?php echo $class->room ?><span><span class="pull-right">F: <?php echo date("H:i",strtotime($class->end)) ?></span></div>
 		<div class="classes">
 <?php if(count($class->attendees) > 0) {?>       
@@ -12,6 +13,7 @@
               <th>#</th>
               <th>First Name</th>
               <th>Last Name</th>
+              <th>Attended?</th>
             </tr>
           </thead>
           <tbody>
@@ -20,6 +22,7 @@
               <td><?php echo($i); ?></td>
               <td><?php echo(ucfirst($attendee->first_name)); ?></td>
               <td><?php echo(ucfirst($attendee->second_name)); ?></td>
+              <td><>
             </tr>
 <?php $i++;	}?>
           </tbody>
