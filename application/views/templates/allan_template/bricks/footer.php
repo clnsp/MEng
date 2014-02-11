@@ -1,8 +1,8 @@
 
 
-<div id="includedcontent">
+<div id="footer">
 
-
+<?php  $this->load->view('templates/allan_template/bricks/footer_content'); ?>
 
 </div><!--end footer-->
 
@@ -37,9 +37,9 @@
       <script type="text/javascript" src="<?php echo base_url();?>assets/js/manage.js"></script>
 
 	<script> 
-	$(function() {
-		$("#includedcontent").load("footer.html"); 
-		}); 
+	//$(function() {
+	//	$("#footer").load("footer_content"); 
+	//	}); 
 	</script> 
 
       <script> 

@@ -49,6 +49,7 @@ $route['404_override'] = 'pages/view/page-not-found';
 $route['users'] = 'pages/users';
 $route['rooms'] = 'pages/rooms';
 $route['links'] = 'pages/links';
+//$route['footer'] = 'pages/footer';
 
 $route['member'] = 'member';
 

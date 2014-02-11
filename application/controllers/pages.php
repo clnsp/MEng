@@ -162,20 +162,23 @@
 
 			parse_temp($page, $this->load->view('pages/user-links', $data, true));
 
+
 		}
 
 		/**
 		 * Footer
 		 */
-		public function links1(){
+		public function footer(){
 
-			$this->load->Model($page = 'footer');
+			$this->load->Model($page = 'links');
 			
 			$data['links'] = $this->links->get_all();
 
-			parse_temp($page, $this->load->view('pages/footer', $data, true));
+			$this->load->view('pages/footer_content', $data, true);
 
 		}
+
+
 		
 		/**
 		 * Admin calendar booking page
