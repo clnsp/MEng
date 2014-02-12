@@ -1,11 +1,11 @@
 
-  if($('#booking').is('.admin-calendar')){
+if($('#booking').is('.admin-calendar')){
 
-function exists(variable){
-	if(typeof variable == 'undefined' || variable == null){
-		return false;
-	}
-	return true;
+  function exists(variable){
+   if(typeof variable == 'undefined' || variable == null){
+    return false;
+  }
+  return true;
 }
 
 var eventModal, eventTitle, eventdate1, eventdate2, eventSpacesMax, eventSpacesTaken, eventColor, eventLocation, eventMembers, eventid;
@@ -576,9 +576,32 @@ eventModal.on("click", ".open-Model-button", function () {
  });
 
  $('#btn-view-waiting-list').click(function(){
-  //pull in waiting list results
 
+  $.ajax({
+    url: "waiting_list/getWaiting/" + eventid,
+    type: "POST",
+    data:  '',
+    success: function(result) {
+      bootbox.dialog({
+        message: result,
+        title: "View Waiting List",
+        buttons: {
+          main: {
+            label: "Close",
+            className: "btn-default",
+            callback: function() {  }
+          }
+        }
+      });
+    },
+    error: function(){
+     alert('Error occurred');
+   },
  });
+
+
+
+});
 
  $('form#addGuestForm').submit(function(e){
   e.preventDefault();

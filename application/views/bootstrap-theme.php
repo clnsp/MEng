@@ -782,7 +782,7 @@ ul.ui-autocomplete.popover.dropdown-menu{
 
 /* @group Add Guest Modal */
 
-#eventModal #btn-add-guest-member{
+#eventModal .button-group{
   margin-top: 20px;
 }
 
