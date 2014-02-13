@@ -271,6 +271,29 @@ $brandSecondary = $this->config->item('secondary_color');
   border-radius: 0;
 }
 
+.navbar .navbar-user{
+
+  box-sizing: border-box;
+  color: #333;
+  display: block;
+  float: right;
+  font-size: 13.63636302947998px;
+  height: 38.89204406738281px;
+  line-height: 18.18181800842285px;
+  margin-bottom: 8px;
+ // margin-right: 15px;
+  margin-top: 8px;
+  padding-bottom: 9px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 9px;
+  position: relative;
+}
+
+.navbar-user a{
+  color: #999;
+}
+
 .alert {
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.2);
   -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25), 0 1px 2px rgba(0, 0, 0, 0.05);
