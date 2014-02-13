@@ -4,10 +4,10 @@
 <div id="<?php echo $class->class_id ?>" class="panel  page-break" style="border-color: <?php echo $class->color?>;">
         <!-- Default panel contents -->
         <div class="panel-heading" style="background-color: <?php echo $class->color?>; color: rgb(255,255,255);"><span>Class: <?php echo $class->title ?><span><span class="pull-right">S: <?php echo date("H:i",strtotime($class->start)) ?></span><br/><span>Room: <?php echo $class->room ?><span><span class="pull-right">F: <?php echo date("H:i",strtotime($class->end)) ?></span></div>
-		<div>
+		<div class="classes">
 <?php if(count($class->attendees) > 0) {?>       
  <!-- Table -->
-        <table class="table">
+        <table class="table" style="margin-bottom: 0px !important;">
           <thead>
             <tr>
               <th>#</th>

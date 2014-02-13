@@ -120,5 +120,13 @@ h2.gtime {
     width: 100% !important;
     height: 100% !important;
   }
+  
+  div.classes {
+	vertical-align:top;
+	overflow-y: visible!important;
+	width: 100% !important;
+	max-height: 100% !important;
+    height: 100% !important;
+}
 }
 

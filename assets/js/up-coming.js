@@ -63,7 +63,7 @@ $.pageManager = (function () {
 		$( window ).on("resize", function() {resize()});
 		$(".classes td").on("dblclick", function(){attendee($(this).parent("tr"));});
 		$(".list").on('selectstart', function (event) {event.preventDefault();});
-		$(".dropdown-menu li").on('click',  function() { console.log($(this)); $('.'+$(this).attr('id')).toggle();});
+		$(".dropdown-menu li").on('click',  function() { console.log($(this)); $('.'+$(this).attr('id')).toggle(); $('.'+$(this).attr('id')).children().toggle();});
 		setTimer();
 	},
 

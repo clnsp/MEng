@@ -6,31 +6,33 @@ class Member extends CI_Controller{
 	 * Get user details for editing
 	 */
 	function getUserDetails(){
+	if(check_admin()){
 		$this->load->model('members');
 
 		if (isset($_GET['id'])){
 			$q = strtolower($_GET['id']);
 			echo json_encode($this->members->getUserByID($q));                
-		}                
+		}      
+}		
 	}
 	
 	/*
 	 * Update User details
 	 */
 	function updateUserDetails(){
+	if(check_admin()){
 		$this->load->model('members');
 		if(isset($_POST['id']) && isset($_POST['changes'])){
 			echo $this->members->updateUser(strtolower($_POST['id']), array_map('strtolower',$_POST['changes']));
 		}
-
-		$_POST['first_name'];
+		}
 
 	}
 	
 
 
-	function createUserChanges()
-	{
+	function createUserChanges(){
+	if(check_admin()){
 		$this->load->model('members');
 		$this->load->library('tank_auth');
 		
@@ -46,15 +48,18 @@ class Member extends CI_Controller{
 		
 		echo $this->members->updateUser(strtolower($this->tank_auth->get_user_id()), array_map('strtolower',$_POST['changes']));
 		redirect('auth/load_details');
+		}
 	}
 	
 	/*
 	 * Get Memberships for User
 	 */
 	function getMembershipOptions(){
+	if(check_admin()){
 		if(isset($_GET['id'])){
 			$this->load->model('members');
 			echo json_encode($this->members->getMembershipTypes($_GET['id']));
+		}
 		}
 	}
 
@@ -62,21 +67,25 @@ class Member extends CI_Controller{
 	 * User Attend Class
 	 */
 	function updateAttendance(){
+	if(check_admin()){
 		if(isset($_POST['pid']) && isset($_POST['cid']) &&  isset($_POST['at'])){
 			$this->load->model('members');
 			$this->members->attendance($_POST['pid'],$_POST['cid'],$_POST['at']);
+		}
 		}
 	}
 	/*
 	 * Get User Attendance Record
 	 */
 	function getAttendance(){
+	if(check_admin()){
 		if(isset($_GET['id']))
 		{
 			$this->load->Model('Bookings');
 			$vals['show'] = $this->Bookings->countMemberAttendance($_GET['id']);
 			$vals['fail'] = $this->Bookings->countMemberAttendance($_GET['id'],0);
 			echo json_encode($vals);
+		}
 		}
 	}
 	
@@ -85,6 +94,7 @@ class Member extends CI_Controller{
 	 */
 	
 	function getBookings($page = 'class_booking_view'){
+	if(check_admin()){
 		if(isset($_GET['id']))
 		{
 			$this->load->Model('Categories');
@@ -97,7 +107,8 @@ class Member extends CI_Controller{
 			/*foreach ($vals['bookings'] as $book){ 
 				$book->cla = $this->classes->getClassInformation($book->class_id)
 			}*/
-		$this->load->view('pages/'.$page, $data);
+		$this->load->view('pages/admin/'.$page, $data);
+		}
 		}
 	}
 	
@@ -112,10 +123,12 @@ class Member extends CI_Controller{
 	 * Delete
 	 */
 	function deleteUser(){
+	if(check_admin()){
 		if(isset($_POST['id']) && isset($_POST['reason'])){
 			$this->load->model('members');
 			$user = $this->members->getUserByID($_POST['id']);
 			$this->members->deleteUserAccount($_POST['id']);			
+		}
 		}
 	}
 	
@@ -129,6 +142,7 @@ class Member extends CI_Controller{
 	 * Contact User
 	 */
 	function contactUser() {
+	if(check_admin()){
 		$this->load->model('members');
 		if(isset($_POST['id']) && isset($_POST['service']) && isset($_POST['message']))
 		{
@@ -167,6 +181,7 @@ class Member extends CI_Controller{
 		{
 			echo "Incomplete";
 		}
+	}
 	}
 }
 

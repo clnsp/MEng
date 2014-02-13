@@ -55,7 +55,6 @@
                 <ul class="nav navbar-nav ">
 
                  <?php
-echo($user);
                  if($logged_in){ 
                   if(isset($user)){
                     if($user){ $this->load->view('templates/allan_template/bricks/staff/staff_header_menu'); }
