@@ -12,9 +12,9 @@ Class Rooms extends CI_Model{
 
 		$query = $this -> db ->get();
 
-                return $query->result_array();  
-            }             
-             
+		return $query->result_array();  
+	}             
+	
 
 	function retrieve_titles(){  
 		$this->db->select('room'); 
@@ -23,8 +23,8 @@ Class Rooms extends CI_Model{
 
 		$query = $this -> db ->get();
 
-                return $query->result_array();  
-            } 
+		return $query->result_array();  
+	} 
 
 
 	function retrieve_ids(){  
@@ -35,8 +35,8 @@ Class Rooms extends CI_Model{
 		$query = $this -> db ->get();
 		
 
-                return $query->result_array();  
-            }          
+		return $query->result_array();  
+	}          
 
 
 	/**
@@ -86,7 +86,7 @@ Class Rooms extends CI_Model{
 		$this->db->from($this -> table_name);
 
 		return $numberOfMembers > $query[0]['max_capacity'];
-	
+		
 	}	
 	
 }

@@ -281,7 +281,7 @@ $brandSecondary = $this->config->item('secondary_color');
   height: 38.89204406738281px;
   line-height: 18.18181800842285px;
   margin-bottom: 8px;
- // margin-right: 15px;
+  // margin-right: 15px;
   margin-top: 8px;
   padding-bottom: 9px;
   padding-left: 10px;

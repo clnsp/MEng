@@ -193,9 +193,6 @@
 				$this->load->Model('Categories');
 				$this->load->Model('classes');
 
-
-				$this->load->Model('facilities');
-
 				$data['user'] = $this->tank_auth->is_admin();
 
 
