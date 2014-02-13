@@ -215,7 +215,8 @@ var rooms = (function() {
 
 		return {
 
-			refresh: refresh
+			refresh: refresh,
+			drop: rdrop
 
 		};
 

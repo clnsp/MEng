@@ -3,6 +3,7 @@
 Class Rooms extends CI_Model{
 
 	private $table_name = 'room_tbl';
+	private $divisible_rooms_tbl = 'divisible_rooms_tbl';
 
 
 	function retrieve_descriptions(){  
@@ -36,7 +37,16 @@ Class Rooms extends CI_Model{
 		
 
 		return $query->result_array();  
-	}          
+	}
+
+	/**
+	* Retrieve the divisible room information
+	* @return array
+	*/
+	function getDivisibleRooms(){
+		$this -> db -> from($this -> divisible_rooms_tbl); 
+		return $this -> db ->get()->result_array();  
+	}
 
 
 	/**

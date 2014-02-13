@@ -1,6 +1,12 @@
 <?php
 header("Content-type: text/css; charset: UTF-8");
 
+/**
+****************************************
+** MOVED TO VIEWS/bootstrap-theme.php
+** ******************************************
+**/
+
 $brandPrimary = "#002b5c";
 $brandSecondary = "#002045";
 $linkColor = "#555555";
