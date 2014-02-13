@@ -19,7 +19,7 @@ $.pageManager = (function () {
 		}
 	},
 	
-	retreive = function(){ $.get('index.php/updateClasses' , function(data){ $(".row.list").html(data); });},
+	retreive = function(){ $.get('index.php/updateClasses' , function(data){ $(".row.list").html(data); $('tr').tooltip();});},
 	
 	nextHour = function(){
 		retreive(); // CHANGE TO ??:30
@@ -63,8 +63,9 @@ $.pageManager = (function () {
 		$( window ).on("resize", function() {resize()});
 		$(".classes td").on("dblclick", function(){attendee($(this).parent("tr"));});
 		$(".list").on('selectstart', function (event) {event.preventDefault();});
-		$(".dropdown-menu li").on('click',  function() { console.log($(this)); $('.'+$(this).attr('id')).toggle(); $('.'+$(this).attr('id')).children().toggle();});
+		$(".dropdown-menu li").on('click',  function() { console.log($(this)); $('.'+$(this).attr('id')).toggleClass('hidden');});
 		setTimer();
+		$('tr').tooltip();
 	},
 
 	resize();

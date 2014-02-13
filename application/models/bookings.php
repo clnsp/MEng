@@ -28,12 +28,13 @@ class Bookings extends CI_Model
 	 * @param	bool
 	 * @return	object
 	 */
-	function getBookingByID($booking_id) // was get_booking_by_id
-	{
+	function getBookingByID($booking_id){// was get_booking_by_id
+	if(check_admin()){
 		$this->db->where('class_booking_id', $booking_id);
 
 		$query = $this -> db -> get($this -> table_name);
 		return $query -> result();  
+		}
 	}
 
 	/**
@@ -43,12 +44,13 @@ class Bookings extends CI_Model
 	 * @param	bool
 	 * @return	object
 	 */
-	function getBookingByMember($member_id) // was get_booking_by_member
-	{
+	function getBookingByMember($member_id){ // was get_booking_by_member
+	if(check_admin()){
 		$this -> db -> where('member_id', $member_id);
 
 		$query = $this -> db -> get($this -> table_name);
 		return $query -> result();
+		}
 	}
 
 	/**
@@ -58,12 +60,13 @@ class Bookings extends CI_Model
 	 * @param	bool
 	 * @return	object
 	 */
-	function getBookingByClassID($class_id)
-	{
+	function getBookingByClassID($class_id){
+	if(check_admin()){
 		$this->db->where('class_id', $class_id);
 
 		$query = $this -> db -> get($this -> table_name);
 		return $query -> result();
+		}
 	}
 	
 	/**
@@ -71,8 +74,8 @@ class Bookings extends CI_Model
 	 * @param int
 	 * @param int 
 	 */
-	function addMember($class_booking_id, $member_id) // was add_member
-	{
+	function addMember($class_booking_id, $member_id){ // was add_member
+	if(check_admin()){
 		$data = array(
 			'member_id' => $member_id,
 			'class_id' => $class_booking_id,
@@ -81,6 +84,7 @@ class Bookings extends CI_Model
 			);
 		echo ('inserting');
 		$this->db->insert($this -> table_name, $data); 	
+		}
 	}
 	
 	/**
@@ -88,13 +92,14 @@ class Bookings extends CI_Model
 	 * @param int
 	 * @param int
 	 */
-	function removeMember($class_booking_id, $member_id) // was remove_member
-	{
+	function removeMember($class_booking_id, $member_id){ // was remove_member
+	if(check_admin()){
 		$data = array(
 			'member_id' => $member_id,
 			'class_id' => $class_booking_id,				   
 			);
 		$this->db->delete($this -> table_name, $data); 	
+		}
 	}
 
 
@@ -105,11 +110,13 @@ class Bookings extends CI_Model
 	 * @return	int
 	 */
 	function countBookingAttendants($class_id){ 
+	if(check_admin()){
 		$this -> db -> select("member_id");
 		$this -> db -> from($this -> table_name);
 		$this -> db -> where('class_id', $class_id);
 
 		return $this->db->count_all_results();
+		}
 	}
 	
 	/**
@@ -119,13 +126,15 @@ class Bookings extends CI_Model
 	 * @param	int
 	 * @return	int
 	 */
-	function countMemberAttendance($member_id, $att=1){ 
+	function countMemberAttendance($member_id, $att=1){
+	if(check_admin()){	
 		$this -> db -> select("class_id");
 		$this -> db -> from($this -> table_name);
 		$this -> db -> where('member_id', $member_id);
 		$this -> db -> where('attended', $att);
 		
 		return $this->db->count_all_results();
+		}
 	}
 
 	/**
@@ -135,6 +144,7 @@ class Bookings extends CI_Model
 	 * @return	object
 	 */
 	function getBookingAttendants($class_id){
+	if(check_admin()){
 		$this -> db -> select("member_id, CONCAT_WS(' ', first_name, second_name) AS username", FALSE);
 		$this -> db -> from($this -> table_name);
 		$this -> db -> where('class_id', $class_id);
@@ -143,6 +153,7 @@ class Bookings extends CI_Model
 		$query = $this -> db -> get();
 
 		return $query->result();
+		}
 	}
 
 	/**
@@ -153,13 +164,15 @@ class Bookings extends CI_Model
 	*/
 
 	function getBookingAttendantsNames($class_id){
-		$this -> db -> select("member_id, first_name, second_name, attended ", FALSE);
+	if(check_admin()){
+		$this -> db -> select("member_id, first_name, second_name, attended, email ", FALSE);
 		$this -> db -> from($this -> table_name);
 		$this -> db -> where('class_id', $class_id);
 		$this -> db -> join('users', 'users.id = class_booking_tbl.member_id');
 		$query = $this -> db -> get();
 
 		return $query->result();
+		}
 	}
 
 	/**
@@ -169,6 +182,7 @@ class Bookings extends CI_Model
 	 * @return	array
 	 */
 	function getBookingEmails($class_id){
+	if(check_admin()){
 		$this -> db -> select("email");
 		$this -> db -> from($this -> table_name);
 		$this -> db -> where('class_id', $class_id);
@@ -177,6 +191,7 @@ class Bookings extends CI_Model
 		$query = $this -> db -> get();
 
 		return $query->result_array();
+		}
 	}
 
 
