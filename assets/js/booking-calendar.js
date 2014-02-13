@@ -560,22 +560,14 @@ eventModal.on("click", ".open-Model-button", function () {
 });
 
 
- /* 
- * Control the multiselect dropdown list
- */
- $('.dropdown-menu.multi-select li').click(function(e){	
- 	e.preventDefault();
- 	e.stopPropagation();
- 	$(this).toggleClass('selected');
- 	
- });
- 
- /* Full Calendar refresh*/
- $('#category-dropdown .dropdown-menu.multi-select li').click(function () {
- 	$('#calendar').fullCalendar('rerenderEvents');
- });
 
- $('#btn-view-waiting-list').click(function(){
+
+/* Full Calendar refresh*/
+$('#category-dropdown .dropdown-menu.multi-select li').click(function () {
+  $('#calendar').fullCalendar('rerenderEvents');
+});
+
+$('#btn-view-waiting-list').click(function(){
 
   $.ajax({
     url: "waiting_list/getWaiting/" + eventid,
@@ -603,7 +595,7 @@ eventModal.on("click", ".open-Model-button", function () {
 
 });
 
- $('form#addGuestForm').submit(function(e){
+$('form#addGuestForm').submit(function(e){
   e.preventDefault();
   var postdata = $(this).serialize() + '';
   $.ajax({
@@ -623,8 +615,8 @@ eventModal.on("click", ".open-Model-button", function () {
 
 });
 
- resizeCalendar();
- function resizeCalendar(){
+resizeCalendar();
+function resizeCalendar(){
   $('#calendar').fullCalendar('option', 'height', $(window).height() - 70);
 } 
 

@@ -17,6 +17,12 @@
 
  })
 
+ .on('click', '.dropdown-menu.multi-select li', function(e) {
+ 	e.preventDefault();
+ 	e.stopPropagation();
+ 	$(this).toggleClass('selected');
+ })
+
  /* when checked add selected to the list item */
  .on('click', '.checkbox-group.list-group .list-group-item input[type=checkbox]', function() {
  	$(this).parent('.list-group-item').toggleClass('selected');

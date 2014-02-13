@@ -54,7 +54,7 @@
                   <span class="icon-bar"></span>
                 </button>
 
-                <div class="pull-right dropdown navbar-user">
+                <div class="pull-right dropdown navbar-user no-margin-btm">
 
                   <a href="#" class="dropdown-toggle username" data-toggle="dropdown">{user_name} <span class="glyphicon glyphicon-user"><span class="caret"></span></a>            
 
