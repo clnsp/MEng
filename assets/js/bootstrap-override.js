@@ -292,3 +292,46 @@ var rooms = (function() {
 		};
 
 	})();
+
+	var divisiblerooms = (function() {
+
+		var drdrop = $('<select></select>');
+		var urlBase = 'facilities/';
+
+
+		refresh = function () {
+			$.getJSON(urlBase + 'getDivisibleRooms', function(data) {
+
+				drdrop.empty();
+				if(data.length>0){
+					$.each( data, function( key, cat ) {
+						drdrop.append(createOption(cat));
+					});
+
+				}
+
+				update();
+
+			});
+
+		},
+
+		createOption = function (type) {
+			return($('<option></option>').val(type['room_id'])
+				.append(type['room']));			
+		},
+
+
+		update = function() {
+			$.event.trigger({
+				type: "divisibleroomsRefreshed",
+				time: new Date()
+			});
+		}
+
+		return { 
+			refresh: refresh,
+			drop: drdrop
+		};
+
+	})();

@@ -1,5 +1,5 @@
 
-var assignDivPanel, roomDivider, divisibleRoomPanel, manage_rooms, manage_sports;
+var assignDivPanel, roomDivider, divisibleRoomPanel, manage_rooms, manage_sports
 
 
 roomDivider = function () {
@@ -102,6 +102,7 @@ divisibleRoomPanel = (function() {
 				manage_rooms.rows = 1;
 			}
 			manage_rooms.regenerate();
+			divisiblerooms.refresh();
 		});
 	});
 
@@ -115,12 +116,13 @@ divisibleRoomPanel = (function() {
 assignDivPanel = (function() {
 
 	var ctdrop = $('#add-possible-sport-form select[name=class_type_id]');
-
+	var divdrop = $('#select-divisible-room select[name=room_id]');
 	manage_sports  = new roomDivider();
 	manage_sports.init($('#add-sports-to-room'), true);
 
 	return { 
-		drop:ctdrop
+		drop:ctdrop,
+		divdrop:divdrop
 	};
 
 })();
@@ -135,10 +137,15 @@ $(function(){
 
 	.on("roomsRefreshed", function(){
 		divisibleRoomPanel.drop.html(rooms.drop.html());
+	})
+
+	.on("divisibleroomsRefreshed", function(){
+		assignDivPanel.divdrop.html(divisiblerooms.drop.html());
 	});
 
 	classtypes.refresh();
 	rooms.refresh();
+	divisiblerooms.refresh();
 
 	
 });

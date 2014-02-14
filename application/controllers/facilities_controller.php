@@ -28,6 +28,16 @@ class facilities_controller extends CI_Controller {
         }
     }
 
+
+    /**
+    * Retrieve all the divisible rooms
+    */
+    function getDivisibleRooms(){
+        if(check_admin()){  
+            echo json_encode($this->rooms->getDivisibleRooms());
+        }
+    }
+
     /**
     * Save a divisible room
     */

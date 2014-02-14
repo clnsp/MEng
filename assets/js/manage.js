@@ -4,148 +4,148 @@ $( document ).ready(function() {
 
 
 
-	$('#page-body').on('click', '.minicolors-swatch-color', function(e) {
+		$('#page-body').on('click', '.minicolors-swatch-color', function(e) {
 		e.stopImmediatePropagation(); //prevent clicking the row when selecting color swatch
 	});
-	
-	var categoriesPanel, addClassTypePanel, manageClassTypesPanel, editClassTypeModal, addBlockClassesPanel, categories, classtypes, datepicker;
+		
+		var categoriesPanel, addClassTypePanel, manageClassTypesPanel, editClassTypeModal, addBlockClassesPanel, categories, classtypes, datepicker;
 
 
 
-	categoriesPanel = (function() {
+		categoriesPanel = (function() {
 
-		var categorylist 	= $("#class-categories-list");
-		var currentColor 	= null;
-		var addForm 		= $("#add-category-form");
-		var removeForm 		= $('form#remove-category-form');
-		var urlBase 		= "category/";
+			var categorylist 	= $("#class-categories-list");
+			var currentColor 	= null;
+			var addForm 		= $("#add-category-form");
+			var removeForm 		= $('form#remove-category-form');
+			var urlBase 		= "category/";
 
 
-		addForm.submit(function(){ categoriesPanel.addCategory() });
-		removeForm.submit(function(){ categoriesPanel.removeCategory() });
-		
-		/* Select anywhere along a checkbox-group row  */
-		$('#manage-categories').on('blur', 'input.editable', function(e) {
-			if($(this).val() != $(this).data('previous'))
-				categoriesPanel.storename($(this).parent('.list-group-item').data('category_id'), this.value );
-		});
-		
-		initColorPickers = function() {
-			$('INPUT.minicolors').minicolors({
-				hide: saveColor,
-				show: storeColor,
-			});
-		},
-		
-		storeColor = function() {
-			currentColor = this.value;
-		},
-		
-		saveColor = function() {
-			if(this.value != currentColor){
-				$.post( urlBase + 'setColor', { category_id: $(this).data('category_id'), color: this.value })
-				.done(function( result ) {
-					alert(result);
-				});
-			}
-		},
-		
-		resetAddForm = function() {
-			addForm[0].reset();
-		},
-		
-		addCategory = function() {
-			$.ajax({
-				url: urlBase + "addCategory/",
-				type: "POST",
-				data:  addForm.serialize(),
-				success: function(result) {
-					alert(result);
-					categories.refresh();
-					categoriesPanel.resetAddForm();
-				},
-				error: function(){
-					alert('Error occurred');
-				},
+			addForm.submit(function(){ categoriesPanel.addCategory() });
+			removeForm.submit(function(){ categoriesPanel.removeCategory() });
+			
+			/* Select anywhere along a checkbox-group row  */
+			$('#manage-categories').on('blur', 'input.editable', function(e) {
+				if($(this).val() != $(this).data('previous'))
+					categoriesPanel.storename($(this).parent('.list-group-item').data('category_id'), this.value );
 			});
 			
-		},
-		removeCategory = function() {
-
-			$.post( urlBase + "removeCategories/", removeForm.serialize())
-			.done(function(result, textStatus, jqXHR) {
-				if(jqXHR.status == 304){
-					bootbox.dialog({
-						message: "<p><b>Not all classes were removed. You cannot remove categories that are already assigned to class types.</b></p><p>You should reassign class types with this category or you can continue and assign the class types as uncategorised.</p>",
-						title: "Class Type Category Conflict",
-						buttons: {
-							success: {
-								label: "Cancel",
-								className: "btn-default",
-								callback: function() {
-									bootbox.hideAll();
-								}
-							},
-							danger: {
-								label: "Uncategorise Classes",
-								className: "btn-danger",
-								callback: function() {
-									this.forceRemoveCategories();
-								}
-							}
-							
-						}
-					});	
-				}else{
-					alert(result);
-					categories.refresh();
-					resetAddForm();
+			initColorPickers = function() {
+				$('INPUT.minicolors').minicolors({
+					hide: saveColor,
+					show: storeColor,
+				});
+			},
+			
+			storeColor = function() {
+				currentColor = this.value;
+			},
+			
+			saveColor = function() {
+				if(this.value != currentColor){
+					$.post( urlBase + 'setColor', { category_id: $(this).data('category_id'), color: this.value })
+					.done(function( result ) {
+						alert(result);
+					});
 				}
+			},
+			
+			resetAddForm = function() {
+				addForm[0].reset();
+			},
+			
+			addCategory = function() {
+				$.ajax({
+					url: urlBase + "addCategory/",
+					type: "POST",
+					data:  addForm.serialize(),
+					success: function(result) {
+						alert(result);
+						categories.refresh();
+						categoriesPanel.resetAddForm();
+					},
+					error: function(){
+						alert('Error occurred');
+					},
+				});
 				
-			})
-			.fail(function(result) {
-				alert("Error: " + result );
-			});
+			},
+			removeCategory = function() {
 
-		},
+				$.post( urlBase + "removeCategories/", removeForm.serialize())
+				.done(function(result, textStatus, jqXHR) {
+					if(jqXHR.status == 304){
+						bootbox.dialog({
+							message: "<p><b>Not all classes were removed. You cannot remove categories that are already assigned to class types.</b></p><p>You should reassign class types with this category or you can continue and assign the class types as uncategorised.</p>",
+							title: "Class Type Category Conflict",
+							buttons: {
+								success: {
+									label: "Cancel",
+									className: "btn-default",
+									callback: function() {
+										bootbox.hideAll();
+									}
+								},
+								danger: {
+									label: "Uncategorise Classes",
+									className: "btn-danger",
+									callback: function() {
+										this.forceRemoveCategories();
+									}
+								}
+								
+							}
+						});	
+					}else{
+						alert(result);
+						categories.refresh();
+						resetAddForm();
+					}
+					
+				})
+				.fail(function(result) {
+					alert("Error: " + result );
+				});
 
-		forceRemoveCategories = function(){
-			$.post( urlBase + "forceRemoveCategories/", removeForm.serialize())
-			.done(function(result) {
-				
-				alert(result);
-				classtypes.refresh();
-				categories.refresh();
+			},
 
-				
-			})
-			.fail(function(result) {
-				alert("Error: " + result );
-			});
-		},
+			forceRemoveCategories = function(){
+				$.post( urlBase + "forceRemoveCategories/", removeForm.serialize())
+				.done(function(result) {
+					
+					alert(result);
+					classtypes.refresh();
+					categories.refresh();
 
-		storename = function(category_id, category){
-			$.post( categoriesPanel.urlBase + 'setName', { category_id: category_id, category: category })
-			.done(function( result ) { alert(result); })
-			.fail(function( result ) { alert(result); });
-		}
+					
+				})
+				.fail(function(result) {
+					alert("Error: " + result );
+				});
+			},
+
+			storename = function(category_id, category){
+				$.post( categoriesPanel.urlBase + 'setName', { category_id: category_id, category: category })
+				.done(function( result ) { alert(result); })
+				.fail(function( result ) { alert(result); });
+			}
+			
+
+			return {
+				initColorPickers: initColorPickers,
+				urlBase : urlBase, 
+				addCategory : addCategory,
+				removeCategory : removeCategory,  
+				addForm: addForm, 
+				removeForm: removeForm,
+				storename : storename,
+				resetAddForm: resetAddForm,
+				categorylist: categorylist
+			};
+
+		})();
 		
-
-		return {
-			initColorPickers: initColorPickers,
-			urlBase : urlBase, 
-			addCategory : addCategory,
-			removeCategory : removeCategory,  
-			addForm: addForm, 
-			removeForm: removeForm,
-			storename : storename,
-			resetAddForm: resetAddForm,
-			categorylist: categorylist
-		};
-
-	})();
-	
-	addClassTypePanel = (function() {
+		addClassTypePanel = (function() {
 		//var $classTypeList = $( "#class-type-list" );
 		var urlBase = "class_type/";
 		var form = $('form#add-class-type-form');
@@ -391,15 +391,7 @@ $( document ).ready(function() {
 			addBlockClassesPanel.roomDrop.html(rdrop.html());
 		}
 
-
-
-
-
-		return {
-
-			refresh: refresh
-
-		};
+		return { refresh: refresh };
 
 	})();
 

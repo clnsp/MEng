@@ -24,7 +24,7 @@
 
 							</div>
 							<div class="col-xs-4 no-pad-right no-pad-left">
-								<button type="submit" class="btn btn-default">Make Divisible</button>
+								<button type="submit" class="btn btn-default">Save Setup</button>
 							</div>
 
 						</form>
@@ -97,17 +97,35 @@
 
 				</div>
 
+
+
 			<!-- 	<div class="form-group">
 					<div class="col-sm-offset-3 col-sm-9">
 
 					</div>
 				</div> -->
 			</form>
+
+			<div class="form-group">
+				<form id="select-divisible-room" class="form-horizontal prevent" role="form">
+
+					<div class="col-xs-8">
+						<select name="room_id" type="dropdown" class="form-control"></select>
+
+					</div>
+
+				</form>
+
+			</div>
 		</div>
+
+
 
 		<div class="col-sm-6">
 			<div id="add-sports-to-room"></div>
 		</div>
+
+
 
 	</div>
 </div>

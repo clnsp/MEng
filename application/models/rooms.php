@@ -88,7 +88,9 @@ Class Rooms extends CI_Model{
 	* @return array
 	*/
 	function getDivisibleRooms(){
-		$this->db->from($this -> divisible_rooms_tbl); 
+		$this->db->select('room_tbl.room_id, cols, rows, room_tbl.room');
+		$this->db->from($this -> divisible_rooms_tbl);
+		$this->db->join('room_tbl', 'room_tbl.room_id = divisible_rooms_tbl.room_id');
 
 		return $this->db->get()->result_array();  
 	}
