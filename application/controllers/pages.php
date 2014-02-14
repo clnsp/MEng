@@ -22,7 +22,7 @@
 					show_404();
 				
 
-				$data =  getNextClasses(1,2);
+				$data =  getNextClasses(1,8);
 				if($data!=null){
 					$data['user'] = $this->tank_auth->is_admin();	
 					$h = gmdate('H');
