@@ -8,6 +8,8 @@ roomDivider = function () {
 
     this.rows = 2;
     this.cols = 2;
+    var min = 1;
+    var max = 10;
 
     /*
         INITIALIZE
@@ -36,13 +38,23 @@ roomDivider = function () {
     }
 
     this.updateRows = function(num){
-    	this.rows += num;
-    	this.regenerate();
+    	var temp = this.rows;
+    	temp += num;
+    	if(temp >= min && temp <= max){
+    		this.rows =temp;
+    		this.regenerate();
+    	}
+    	
     }
 
     this.updateCols = function(num){
-    	this.cols += num;
-    	this.regenerate();
+    	var temp = this.cols;
+    	temp += num;
+    	if(temp >= min && temp <= max){
+    		this.cols = temp;
+    		this.regenerate();
+    	}
+    	
     }
 
     this.create = function(){
@@ -80,7 +92,11 @@ divisibleRoomPanel = (function() {
 		$.post( urlBase + "saveDivisibleRoom", { 
 			room_id: rdrop.val(),
 			rows: manage_rooms.rows,
-			cols: manage_rooms.cols }).done(function( result ) { alert(result)});
+			cols: manage_rooms.cols })
+		.done(function( result ) {
+			alert(result);
+			divisiblerooms.refresh();
+		});
 	});
 
 	manage_rooms  = new roomDivider();

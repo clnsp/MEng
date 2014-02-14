@@ -129,6 +129,13 @@ Class Rooms extends CI_Model{
 	}
 
 	/**
+	* Updates a divisible room properties
+	*/
+	function removeDivisibleRoom($room_id){
+		$this->db->delete($this -> divisible_rooms_tbl, array('room_id' => $room_id)); 
+	}
+
+	/**
 	* Insert divisible room
 	*/
 	function insertDivisibleRoom($room_id, $rows, $cols){

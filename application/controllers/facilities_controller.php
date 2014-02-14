@@ -45,10 +45,18 @@ class facilities_controller extends CI_Controller {
         if(check_admin()){
             if(isset($_POST['room_id']) && isset($_POST['rows']) && isset($_POST['cols'])){
                 if($this->rooms->isDivisible($_POST['room_id'])){
-                    $this->rooms->updateDivisibleRoom($_POST['room_id'], $_POST['rows'], $_POST['cols']);
+                    /* If creating a single division, it's no longer divisible */
+                    if($_POST['rows'] == '1' && $_POST['cols'] == '1'){
+                        $this->rooms->removeDivisibleRoom($_POST['room_id']);
+                        echo "Room restored to a <b>non divisible</b> room.";
+                    }else{
+                        $this->rooms->updateDivisibleRoom($_POST['room_id'], $_POST['rows'], $_POST['cols']);
+                        echo "Room updated";
+                    }
                 }
                 else{
                     $this->rooms->insertDivisibleRoom($_POST['room_id'], $_POST['rows'], $_POST['cols']);
+                    echo "New divisible room created";
                 }
             }
 
