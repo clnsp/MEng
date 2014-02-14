@@ -63,16 +63,16 @@
  */
  window.old_alert = window.alert;
 
- window.alert = function(message, fallback){
- 	if(!message){
+ window.alert = function(msg, fallback){
+ 	if(!msg){
  		return;
  	}
  	if(fallback){
- 		old_alert(message);
+ 		old_alert(msg);
  		return;
  	}
 
- 	bootbox.alert(message, null);
+ 	bootbox.alert({message: msg, className: 'alert' });
 
  };
 

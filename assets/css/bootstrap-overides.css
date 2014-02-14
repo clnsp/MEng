@@ -126,3 +126,13 @@ h2.gtime {
 .no-margin-btm{
   margin-bottom: 0!important;
 }
+
+
+@media (min-width:768px) {
+  
+      /* Override for making bootbox alerts to small modals*/
+      .bootbox.alert .modal-dialog {
+        width: 300px
+    }
+
+}
