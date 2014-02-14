@@ -118,8 +118,14 @@
 var classtypes = (function() {
 	var cttable = $('<tbody></tbody>');
 	var ctdrop = $('<select></select>');
+	var ctlist = $('<ul></ul>');
 
 	var urlBase = "class_type/";
+
+	createListItem = function(type){
+			return $('<li data-class_type_id="' + type['class_type_id'] + '" class="list-group-item">' + type['class_type'] + '</li>');
+	
+	},
 
 	ctcreateRow = function (type) {
 		return($('<tr data-class_type_id="' + type['class_type_id'] + '"></tr>')
@@ -143,6 +149,7 @@ var classtypes = (function() {
 				$.each( data, function( key, type ) {
 					cttable.append(ctcreateRow(type));
 					ctdrop.append(ctcreateOption(type));
+					ctlist.append(createListItem(type));
 				});
 
 			}
@@ -169,7 +176,8 @@ var classtypes = (function() {
 	return {
 		refresh: refresh,
 		drop: ctdrop,
-		table: cttable
+		table: cttable,
+		list: ctlist
 	};
 
 })();

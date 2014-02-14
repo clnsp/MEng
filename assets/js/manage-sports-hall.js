@@ -131,14 +131,15 @@ divisibleRoomPanel = (function() {
 
 assignDivPanel = (function() {
 
-	var ctdrop = $('#add-possible-sport-form select[name=class_type_id]');
+	var sportlist = $('#sports-list');
 	var divdrop = $('#select-divisible-room select[name=room_id]');
+
 	manage_sports  = new roomDivider();
 	manage_sports.init($('#add-sports-to-room'), true);
 
 	return { 
-		drop:ctdrop,
-		divdrop:divdrop
+		drop:divdrop,
+		list:sportlist
 	};
 
 })();
@@ -148,7 +149,7 @@ $(function(){
 
 	$(document)
 	.on("classtypesRefreshed", function(){
-		assignDivPanel.drop.html(classtypes.drop.html());
+		assignDivPanel.list.html(classtypes.list.html());
 	})
 
 	.on("roomsRefreshed", function(){
@@ -156,7 +157,7 @@ $(function(){
 	})
 
 	.on("divisibleroomsRefreshed", function(){
-		assignDivPanel.divdrop.html(divisiblerooms.drop.html());
+		assignDivPanel.drop.html(divisiblerooms.drop.html());
 	});
 
 	classtypes.refresh();
