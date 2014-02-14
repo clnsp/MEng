@@ -8,9 +8,7 @@ Class Rooms extends CI_Model{
 
 	function retrieve_descriptions(){  
 		$this->db->select('description'); 
-
 		$this -> db -> from($this -> table_name); 
-
 		$query = $this -> db ->get();
 
 		return $query->result_array();  
@@ -19,9 +17,7 @@ Class Rooms extends CI_Model{
 
 	function retrieve_titles(){  
 		$this->db->select('room'); 
-
 		$this -> db -> from($this -> table_name); 
-
 		$query = $this -> db ->get();
 
 		return $query->result_array();  
@@ -30,22 +26,10 @@ Class Rooms extends CI_Model{
 
 	function retrieve_ids(){  
 		$this->db->select('room_id'); 
-
 		$this -> db -> from($this -> table_name); 
-
 		$query = $this -> db ->get();
 		
-
 		return $query->result_array();  
-	}
-
-	/**
-	* Retrieve the divisible room information
-	* @return array
-	*/
-	function getDivisibleRooms(){
-		$this -> db -> from($this -> divisible_rooms_tbl); 
-		return $this -> db ->get()->result_array();  
 	}
 
 
@@ -98,6 +82,62 @@ Class Rooms extends CI_Model{
 		return $numberOfMembers > $query[0]['max_capacity'];
 		
 	}	
+
+	/**
+	* Retrieve information about all divisible rooms
+	* @return array
+	*/
+	function getDivisibleRooms(){
+		$this->db->from($this -> divisible_rooms_tbl); 
+
+		return $this->db->get()->result_array();  
+	}
+
+	/**
+	* Retrieve the divisible room information
+	* @return array
+	*/
+	function getDivisibleRoom($room_id){
+		$this->db->from($this -> divisible_rooms_tbl);
+		$this->db->where('room_id', $room_id);
+
+		return $this->db->get()->result_array();  
+	}
+	
+	/**
+	* Determines whether a room is already divisible
+	* @return bool
+	*/
+	function isDivisible($room_id){
+		$this->db->select('room_id');
+		$this->db->from($this -> divisible_rooms_tbl); 
+		$this->db->where('room_id', $room_id);
+
+		return ($this->db->get()->num_rows() > 0);
+	}
+
+	/**
+	* Updates a divisible room properties
+	*/
+	function updateDivisibleRoom($room_id, $rows, $cols){
+		$data = array('rows' => $rows, 'cols' => $cols);
+		$this->db->where('room_id', $room_id);
+
+		$this->db->update($this -> divisible_rooms_tbl, $data); 
+	}
+
+	/**
+	* Insert divisible room
+	*/
+	function insertDivisibleRoom($room_id, $rows, $cols){
+		$data = array(
+			'room_id' => $room_id,
+			'rows' => $rows,
+			'cols' => $cols
+			);
+
+		$this->db->insert($this -> divisible_rooms_tbl, $data); 
+	}
 	
 }
 ?>

@@ -1,13 +1,13 @@
 
-var assignDivPanel, roomDivider, setupRoomPanel, manage_rooms, manage_sports;
+var assignDivPanel, roomDivider, divisibleRoomPanel, manage_rooms, manage_sports;
 
 
 roomDivider = function () {
     //assign _root and config private variables
     var _root = this;
 
-    var rows = 2;
-    var cols = 3;
+    this.rows = 2;
+    this.cols = 2;
 
     /*
         INITIALIZE
@@ -36,26 +36,26 @@ roomDivider = function () {
     }
 
     this.updateRows = function(num){
-    	rows += num;
+    	this.rows += num;
     	this.regenerate();
     }
 
     this.updateCols = function(num){
-    	cols += num;
+    	this.cols += num;
     	this.regenerate();
     }
 
     this.create = function(){
-    	var height = 100/rows;
-    	var width = 100/cols;
+    	var height = 100/this.rows;
+    	var width = 100/this.cols;
 
 		var box = $('<div class="box"></div>');//.width(width+'%');
 
 
-		for (var r = 0; r < rows; r++) {
+		for (var r = 0; r < this.rows; r++) {
 			var tr = $('<div class="tr">');//.height(height+'%');
 
-			for (var c = 0; c < cols; c++) {
+			for (var c = 0; c < this.cols; c++) {
 				tr.append(box.clone().addClass('r'+r + ' c'+c)); 
 
 				this.container.append(tr);
@@ -66,22 +66,44 @@ roomDivider = function () {
 		this.container.empty();
 		this.create();
 	}
-
-
 };
 
 
-
-
-
-setupRoomPanel = (function() {
+divisibleRoomPanel = (function() {
 
 	var rdrop = $('#manage-divisible-room select[name=room_id]');
+	var urlBase = 'facilities/';
+	var divisibleForm = $('#manage-divisible-room-form');
+
+	divisibleForm.submit(function(){
+
+		$.post( urlBase + "saveDivisibleRoom", { 
+			room_id: rdrop.val(),
+			rows: manage_rooms.rows,
+			cols: manage_rooms.cols }).done(function( result ) { alert(result)});
+	});
+
+	manage_rooms  = new roomDivider();
+	manage_rooms.init($('#divisible-room'), false);
 
 	$('#add-row').click(function(){ manage_rooms.updateRows(1) });
 	$('#add-col').click(function(){ manage_rooms.updateCols(1) });
 	$('#del-row').click(function(){ manage_rooms.updateRows(-1) });
 	$('#del-col').click(function(){ manage_rooms.updateCols(-1) });
+
+	rdrop.change(function(){
+
+		$.getJSON(urlBase + 'getDivisibleRoom/' + $(this).val(), function(data) {
+			if(data.length>0){
+				manage_rooms.cols = parseInt(data[0].cols);
+				manage_rooms.rows = parseInt(data[0].rows);
+			}else{
+				manage_rooms.cols = 1;
+				manage_rooms.rows = 1;
+			}
+			manage_rooms.regenerate();
+		});
+	});
 
 	return { 
 		drop:rdrop
@@ -94,8 +116,8 @@ assignDivPanel = (function() {
 
 	var ctdrop = $('#add-possible-sport-form select[name=class_type_id]');
 
-
-
+	manage_sports  = new roomDivider();
+	manage_sports.init($('#add-sports-to-room'), true);
 
 	return { 
 		drop:ctdrop
@@ -112,19 +134,12 @@ $(function(){
 	})
 
 	.on("roomsRefreshed", function(){
-		setupRoomPanel.drop.html(rooms.drop.html());
-	})
-
-	;
+		divisibleRoomPanel.drop.html(rooms.drop.html());
+	});
 
 	classtypes.refresh();
 	rooms.refresh();
 
-	manage_rooms  = new roomDivider();
-	manage_rooms.init($('#divisible-room'), false);
 	
-	manage_sports  = new roomDivider();
-	manage_sports.init($('#add-sports-to-room'), true);
-
 });
 

@@ -23,7 +23,27 @@ class facilities_controller extends CI_Controller {
     * Retrieve information on whether a room is divisible
     */
     function getDivisibleRoom($room_id){
-        
+        if(check_admin()){  
+            echo json_encode($this->rooms->getDivisibleRoom($room_id));
+        }
+    }
+
+    /**
+    * Save a divisible room
+    */
+    function saveDivisibleRoom(){
+        if(check_admin()){
+            if(isset($_POST['room_id']) && isset($_POST['rows']) && isset($_POST['cols'])){
+                if($this->rooms->isDivisible($_POST['room_id'])){
+                    $this->rooms->updateDivisibleRoom($_POST['room_id'], $_POST['rows'], $_POST['cols']);
+                }
+                else{
+                    $this->rooms->insertDivisibleRoom($_POST['room_id'], $_POST['rows'], $_POST['cols']);
+                }
+            }
+
+        }
+
     }
 
 }  

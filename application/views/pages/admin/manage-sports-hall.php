@@ -24,7 +24,7 @@
 
 							</div>
 							<div class="col-xs-4 no-pad-right no-pad-left">
-								<button type="submit" class="btn btn-default">Save</button>
+								<button type="submit" class="btn btn-default">Make Divisible</button>
 							</div>
 
 						</form>

@@ -64,6 +64,9 @@
  window.old_alert = window.alert;
 
  window.alert = function(message, fallback){
+ 	if(!message){
+ 		return;
+ 	}
  	if(fallback){
  		old_alert(message);
  		return;
