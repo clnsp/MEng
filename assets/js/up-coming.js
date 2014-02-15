@@ -24,20 +24,21 @@ $.pageManager = (function () {
 	},
 	
 	nextHour = function(){
-		setTimer();
-		newTime(0);
+		newTime();
+		setTimer(0);
+		console.log("HOUR");
 	},
 
 	nextReg = function(){
 		var now = new Date();
 		var minutes = now.getMinutes();
 		
-		if(!((minutes > 20 || minutes > 50) && (minutes < 10 || minutes < 40)))
+		if(!((minutes > 21 && minutes < 39) || (minutes < 9 || minutes > 51)))
 		{
 			console.log("UPDATE");
 			retreive();
-			setTimer(2);
 		}
+		setTimer(2);
 	},
 	
 	newTime = function(){
@@ -81,7 +82,8 @@ $.pageManager = (function () {
 		$(".classes td").on("dblclick", function(){attendee($(this).parent("tr"));});
 		$(".list").on('selectstart', function (event) {event.preventDefault();});
 		$(".dropdown-menu li").on('click',  function() { console.log($(this)); $('.'+$(this).attr('id')).toggleClass('hidden');});
-		setTimer();
+		setTimer(0);
+		setTimer(2);
 		$('tr').tooltip();
 	},
 
