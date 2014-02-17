@@ -92,6 +92,10 @@ h2.gtime {
 
 @media print {
 
+  body {
+    padding-top: 0px !important;
+  }
+
   h2.time {
     font-size: 30px;
     line-height: 1;
@@ -117,11 +121,20 @@ h2.gtime {
     height: 100% !important;
     width: 100%;
   }
+  
   div.list [class*="col-"] {
     float: none; /* Very important */
     vertical-align:top;
     display: block !important;
     width: 100% !important;
+    height: 100% !important;
+  }
+  
+  div.classes {
+	  vertical-align:top;
+	  overflow-y: visible!important;
+	  width: 100% !important;
+	  max-height: 100% !important;
     height: 100% !important;
   }
 }

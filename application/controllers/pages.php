@@ -21,7 +21,6 @@
 				if ( ! file_exists('application/views/'.$this->route .$page.'.php'))
 					show_404();
 				
-
 				$data =  getNextClasses(1,2);
 				if($data!=null){
 					$data['user'] = $this->tank_auth->is_admin();	
