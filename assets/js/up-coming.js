@@ -19,12 +19,25 @@ $.pageManager = (function () {
 		}
 	},
 	
-	retreive = function(){ $.get('index.php/updateClasses' , function(data){ $(".row.list").html(data); });},
+	retreive = function(){ $.get('index.php/updateClasses' , function(data){
+	 $(".row.list").html(data); $('tr').tooltip();});$(".classes td").on("dblclick", function(){attendee($(this).parent("tr"));});
+	},
 	
 	nextHour = function(){
-		retreive(); // CHANGE TO ??:30
 		setTimer();
-		newTime();
+		newTime(0);
+	},
+
+	nextReg = function(){
+		var now = new Date();
+		var minutes = now.getMinutes();
+		
+		if(!((minutes > 20 || minutes > 50) && (minutes < 10 || minutes < 40)))
+		{
+			console.log("UPDATE");
+			retreive();
+			setTimer(2);
+		}
 	},
 	
 	newTime = function(){
@@ -51,20 +64,25 @@ $.pageManager = (function () {
 		});	
 	},
 	
-	setTimer = function(){
+	setTimer = function(i){
 		//http://www.angelsystems.net/Beyond/Wizard/InfoTech/Quest.aspx?wizMode=View&FileID=27&FileTitle=Refresh+A+Page+Every+30+Minutes+On+Hour+Or+Half+An+Hour&FileCategory=JavaScript&HwizMode=SEARCH&wizCategoryID=204&wizKeywords=0&iCurrentListPage=1
 		var now = new Date();
 		var minutes = now.getMinutes();
 		var seconds = now.getSeconds();
-		setTimeout('nextHour()',(((60 - (minutes % 60) - ((seconds>0)?1:0)) * 60) + (60 - seconds)) * 1000);
+		if(i==0){
+		setTimeout('nextHour()',(((60 - (minutes % 60) - ((seconds>0)?1:0)) * 60) + (60 - seconds)) * 1000); // Every Hour
+		}else{
+		setTimeout('nextReg()',(((10 - (minutes % 10) - ((seconds>0)?1:0)) * 60) + (60 - seconds)) * 1000); // Every 10 Min
+		}
 	},
 	
 	uiControls = function() {
 		$( window ).on("resize", function() {resize()});
 		$(".classes td").on("dblclick", function(){attendee($(this).parent("tr"));});
 		$(".list").on('selectstart', function (event) {event.preventDefault();});
-		$(".dropdown-menu li").on('click',  function() { console.log($(this)); $('.'+$(this).attr('id')).toggle();});
+		$(".dropdown-menu li").on('click',  function() { console.log($(this)); $('.'+$(this).attr('id')).toggleClass('hidden');});
 		setTimer();
+		$('tr').tooltip();
 	},
 
 	resize();
