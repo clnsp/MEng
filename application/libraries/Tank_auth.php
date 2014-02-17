@@ -63,7 +63,8 @@ class Tank_auth
 					} else {
 						$this->ci->session->set_userdata(array(
 								'user_id'	=> $userid->id,
-								'username'	=> $user->username,
+								'username'	=> ucwords(substr($user->first_name, 0, 1)).".".ucfirst($user->second_name),
+								'usertype'	=> $user->member_type_id,
 								'userpermission'	=> $user->permission_level_id,
 								'status'	=> ($user->activated == 1) ? STATUS_ACTIVATED : STATUS_NOT_ACTIVATED,
 						));

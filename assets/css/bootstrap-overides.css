@@ -100,10 +100,14 @@ h2.gtime {
     margin-bottom: 0px;
   }
 
+  body{
+      padding-top: 0px;
+  }
+  
   .page-break {
     float: none !important;
     display: block;
-    margin-top: 0px;
+
     page-break-after: always;
   }
 
@@ -121,4 +125,3 @@ h2.gtime {
     height: 100% !important;
   }
 }
-
