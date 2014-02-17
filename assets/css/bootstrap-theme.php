@@ -3,7 +3,9 @@ header("Content-type: text/css; charset: UTF-8");
 
 /**
 ****************************************
-** MOVED TO VIEWS/bootstrap-theme.php
+*
+* !!! MOVED TO VIEWS/bootstrap-theme.php !!!
+*
 ** ******************************************
 **/
 
