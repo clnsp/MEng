@@ -204,14 +204,16 @@
 										<label for="until" class="col-sm-3 control-label">Until</label>
 										
 										<div class="col-sm-9">
-											<div class="col-xs-7 no-pad-left input-group date datepicker">
+										<div class="col-xs-6 no-pad-right no-pad-left pull-right">
+											<button id="apply-repeat-btn" type="button" class="btn btn-default disabled">Apply</button>
+											<button id="clear-cal-btn" type="button" class="btn btn-default">Clear</button>
+										</div>
+										
+											<div class="col-xs-5 no-pad-left input-group date datepicker">
 												<input name="until" type="text" class="form-control" placeholder="DD/MM/YYYY" disabled>
 												<span class="input-group-addon btn-default"><span class="glyphicon glyphicon-calendar"></span></span>
 											</div>
-											<div class="col-xs-5 no-pad-right no-pad-left">
-												<button id="apply-repeat-btn" type="button" class="btn btn-default disabled">Apply</button>
-												<button id="clear-cal-btn" type="button" class="btn btn-default">Clear</button>
-											</div>
+											
 										</div>
 										<div class="col-sm-3">
 											

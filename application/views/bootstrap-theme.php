@@ -875,7 +875,8 @@ opacity: 0.5;
 background-color: #90CAFF;
 } 
 
-.box-divider .box.multiselect{
+.box-divider .box.multiselect,
+.box-divider .box.ui-selected{
 background-color: #97DD8D;
 border-color: #97DD8D;
 } 

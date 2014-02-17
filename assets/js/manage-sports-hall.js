@@ -19,6 +19,11 @@ roomDivider = function () {
         this.container = $(cont).addClass('box-divider');
 
         if(clickable){
+        	//this.container.selectable();
+        	this.container.bind("mousedown", function(e) {
+        	  e.metaKey = true;
+        	}).selectable({ filter: ".box" });
+        	
         	this.container.on('click', '.box', function(e){
         		if(e.shiftKey)
         			$(this).toggleClass('multiselect').removeClass('selected');
@@ -130,12 +135,35 @@ divisibleRoomPanel = (function() {
 
 
 assignDivPanel = (function() {
-
+	var container = $('#possible-sports');
 	var sportlist = $('#sports-list');
 	var divdrop = $('#select-divisible-room select[name=room_id]');
+	var urlBase = 'facilities/';
+	
+	container.on('click', 'a.list-group-item', function(e){
+		e.preventDefault();
+		$(this).siblings('.active').removeClass('active');
+		$(this).addClass('active');
+	});
+	
+	divdrop.change(function(){
+	
+			$.getJSON(urlBase + 'getDivisibleRoom/' + $(this).val(), function(data) {
+				if(data.length>0){
+					manage_sports.cols = parseInt(data[0].cols);
+					manage_sports.rows = parseInt(data[0].rows);
+				}else{
+					alert('Error: room may not be divisivble please refresh.')
+				}
+				manage_sports.regenerate();
+			});
+		});
+	
 
 	manage_sports  = new roomDivider();
 	manage_sports.init($('#add-sports-to-room'), true);
+	
+	$()
 
 	return { 
 		drop:divdrop,

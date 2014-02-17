@@ -122,8 +122,8 @@ var classtypes = (function() {
 
 	var urlBase = "class_type/";
 
-	createListItem = function(type){
-			return $('<li data-class_type_id="' + type['class_type_id'] + '" class="list-group-item">' + type['class_type'] + '</li>');
+	ctcreateListItem = function(type){
+			return $('<a href="#" data-class_type_id="' + type['class_type_id'] + '" class="list-group-item">' + type['class_type'] + '</a>');
 	
 	},
 
@@ -149,7 +149,7 @@ var classtypes = (function() {
 				$.each( data, function( key, type ) {
 					cttable.append(ctcreateRow(type));
 					ctdrop.append(ctcreateOption(type));
-					ctlist.append(createListItem(type));
+					ctlist.append(ctcreateListItem(type));
 				});
 
 			}
@@ -324,7 +324,7 @@ var rooms = (function() {
 
 		},
 
-		createOption = function (type) {
+		this.createOption = function (type) {
 			return($('<option></option>').val(type['room_id'])
 				.append(type['room']));			
 		},
