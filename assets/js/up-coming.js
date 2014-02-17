@@ -81,7 +81,11 @@ $.pageManager = (function () {
 		$( window ).on("resize", function() {resize()});
 		$(".classes td").on("dblclick", function(){attendee($(this).parent("tr"));});
 		$(".list").on('selectstart', function (event) {event.preventDefault();});
-		$(".dropdown-menu li").on('click',  function() { console.log($(this)); $('.'+$(this).attr('id')).toggleClass('hidden');});
+		$(".dropdown-menu li").on('click',  function() {
+			$('.'+$(this).attr('id')).toggleClass('hidden');
+			$('.'+$(this).attr('id')).children('.row').toggleClass('visible-print').toggleClass('hidden-print');
+			$('.'+$(this).attr('id')).children('.panel').toggleClass('hidden-print')
+		});
 		setTimer(0);
 		setTimer(2);
 		$('tr').tooltip();

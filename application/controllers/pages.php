@@ -22,7 +22,7 @@
 					show_404();
 				
 
-				$data =  getNextClasses(1,8);
+				$data =  getNextClasses(1,2);
 				if($data!=null){
 					$data['user'] = $this->tank_auth->is_admin();	
 					$h = gmdate('H');
@@ -41,6 +41,7 @@
 			if(check_admin()){	
 				$data = getNextClasses(1,2); // Get Class (1hour before current and 2hours after current)	
 				if($data!=null){		
+					$data['cDate'] = gmdate('l, dS F'); // "Wednesday 29th, Januaray";
 					$this->load->view($this->route.$page, $data);
 				}
 			}
