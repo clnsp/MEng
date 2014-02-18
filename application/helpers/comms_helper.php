@@ -1,4 +1,5 @@
-<?php
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+
 if (!function_exists('contact_user'))
 {
 	function contact_user($id,$message,$service=[]){
@@ -33,9 +34,11 @@ if (!function_exists('contact_user_sms')) // MAX NUMBER OF MESSAGES
 		$ci =& get_instance();
 		$ci->load->helper('sms');
 		$mobile_number = $ci->members->getUserColumn($id, 'mobile_number');
-		// GET MOBILE NUMBER
-		if(isset($mobile_number[0])){
-			echo send_sms($mobile_number[0]->mobile_number,$message);
+		if(!$ci->config->item('sms_allow')){
+			// GET MOBILE NUMBER
+			if(isset($mobile_number[0])){
+				echo send_sms($mobile_number[0]->mobile_number,$message);
+			}
 		}
 	}
 }
@@ -44,11 +47,14 @@ if (!function_exists('contact_user_twitter'))
 {
 	function contact_user_twitter($id,$message){
 		$ci =& get_instance();
+		$ci->load->helper('twitter');
 		$twitter_name = $ci->members->getUserColumn($id, 'twitter'); 
 		if(!$ci->config->item('twitter_allow')){
-			echo "Service Disabled";
+			if(isset($mobile_number[0])){
+				echo send_tweet($twitter_name[0]->twitter,$message);
+			}
+
 		}
-	
 	}
 }
 
