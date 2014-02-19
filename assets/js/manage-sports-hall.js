@@ -1,5 +1,75 @@
 
-var assignDivPanel, roomDivider, divisibleRoomPanel, manage_rooms, manage_sports
+var assignDivPanel, roomDivider, divisibleRoomPanel, manage_rooms, manage_sports, roomDivider, placedSports;
+
+
+placedSports = function () {
+    //assign _root and config private variables
+    var _root = this;
+    this.directory = new Array();
+
+    /* add a sport to the directory */
+    this.addSport = function(sport_id){
+    	this.directory[sport_id] = new Array();
+    }
+
+    /**
+    * Assign divisions to a sport takes string and array
+    */
+    this.assignDivisons = function(sport_id, divs){
+    	if(!sport_id){
+    		alert('Please select a sport to assign');
+    		return;
+    	}
+
+    	if(!this.directory[sport_id]){
+    		this.addSport(sport_id);
+    	}else{
+    		if(compareDivs(this.directory[sport_id], divs)){
+    			alert("Courts already added");
+    			return;
+    		}
+    	}
+
+    	this.directory[sport_id].push(divs);
+
+
+    	$.event.trigger({
+    		type: "divisionAdded",
+    		message: "Hello World!",
+    		time: new Date()
+    	});	
+
+    	
+    }
+
+    compareDivs = function(directory, divs){
+    	var found = false;
+    	$.each(directory, function(index, value){
+    		if($(value).not(divs).length == 0 && $(divs).not(value).length == 0)
+    			found = true;
+    	});
+    	return found;
+    }
+
+
+    this.getDivisions = function(sport_id) {
+    	var cont = $('<ul>');
+    	$.each(this.directory[sport_id], function(index, value) {
+
+    		var li = $('<li></li>').html("Court");
+    		$.each(value, function(j, v) {
+    			li.append(v + ", ");
+    		});    
+    		cont.append(li);  
+    	}); 
+
+    	return cont.html();
+
+    }
+};
+
+
+var ps = new placedSports();
 
 
 roomDivider = function () {
@@ -19,11 +89,21 @@ roomDivider = function () {
         this.container = $(cont).addClass('box-divider');
 
         if(clickable){
-        	//this.container.selectable();
-        	this.container.bind("mousedown", function(e) {
-        	  e.metaKey = true;
-        	}).selectable({ filter: ".box" });
-        	
+        	this.container.selectable({ 
+        		filter: ".box",
+        		stop: function( event, ui ) {
+        			var floater = $('<div class="floater" style="width:100%;height:100%; background-color:red; opacity:0.5">');
+
+        			var courts = new Array();
+        			$(event.target).find('.box.ui-selected').each(function(){
+        				courts.push($(this).data('court_id'));
+        			});
+
+        			ps.assignDivisons(assignDivPanel.getSelectedSport(), courts);
+        		}
+        	});
+
+
         	this.container.on('click', '.box', function(e){
         		if(e.shiftKey)
         			$(this).toggleClass('multiselect').removeClass('selected');
@@ -49,7 +129,7 @@ roomDivider = function () {
     		this.rows =temp;
     		this.regenerate();
     	}
-    	
+
     }
 
     this.updateCols = function(num){
@@ -59,23 +139,23 @@ roomDivider = function () {
     		this.cols = temp;
     		this.regenerate();
     	}
-    	
+
     }
 
     this.create = function(){
     	var height = 100/this.rows;
     	var width = 100/this.cols;
 
-		var box = $('<div class="box"></div>');//.width(width+'%');
+		var box = $('<div class="box"></div>').height(height+'%').width(width+'%');//.width(width+'%');
 
 
 		for (var r = 0; r < this.rows; r++) {
-			var tr = $('<div class="tr">');//.height(height+'%');
+			//var tr = $('<div class="tr">');//.height(height+'%');
 
 			for (var c = 0; c < this.cols; c++) {
-				tr.append(box.clone().addClass('r'+r + ' c'+c)); 
-
-				this.container.append(tr);
+				//tr.append(); 
+				var court_id = c+(r*this.cols)+1;
+				this.container.append(box.clone().addClass('r'+r+' c'+c).html(court_id).attr('data-court_id', court_id));
 			}
 		}
 	}
@@ -139,35 +219,45 @@ assignDivPanel = (function() {
 	var sportlist = $('#sports-list');
 	var divdrop = $('#select-divisible-room select[name=room_id]');
 	var urlBase = 'facilities/';
+	var divisions = $('#sports-divisions');
 	
-	container.on('click', 'a.list-group-item', function(e){
+	sportlist.on('click', 'a.list-group-item', function(e){
 		e.preventDefault();
 		$(this).siblings('.active').removeClass('active');
 		$(this).addClass('active');
 	});
+
+
 	
 	divdrop.change(function(){
-	
-			$.getJSON(urlBase + 'getDivisibleRoom/' + $(this).val(), function(data) {
-				if(data.length>0){
-					manage_sports.cols = parseInt(data[0].cols);
-					manage_sports.rows = parseInt(data[0].rows);
-				}else{
-					alert('Error: room may not be divisivble please refresh.')
-				}
-				manage_sports.regenerate();
-			});
+
+		$.getJSON(urlBase + 'getDivisibleRoom/' + $(this).val(), function(data) {
+			if(data.length>0){
+				manage_sports.cols = parseInt(data[0].cols);
+				manage_sports.rows = parseInt(data[0].rows);
+			}else{
+				alert('Error: room may not be divisivble please refresh.')
+			}
+			manage_sports.regenerate();
 		});
+	});
 	
 
 	manage_sports  = new roomDivider();
 	manage_sports.init($('#add-sports-to-room'), true);
-	
-	$()
+
+
+	getSelectedSport = function(){
+		return sportlist.find('.active').data('class_type_id');
+	}
+
+
 
 	return { 
 		drop:divdrop,
-		list:sportlist
+		list:sportlist,
+		getSelectedSport: getSelectedSport,
+		divisions: divisions
 	};
 
 })();
@@ -186,6 +276,14 @@ $(function(){
 
 	.on("divisibleroomsRefreshed", function(){
 		assignDivPanel.drop.html(divisiblerooms.drop.html());
+	})
+
+	.on("divisionAdded", function(){
+		var sport = assignDivPanel.getSelectedSport();
+		if(sport){
+			assignDivPanel.divisions.html(ps.getDivisions(sport));
+
+		}
 	});
 
 	classtypes.refresh();

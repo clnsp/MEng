@@ -123,8 +123,8 @@ var classtypes = (function() {
 	var urlBase = "class_type/";
 
 	ctcreateListItem = function(type){
-			return $('<a href="#" data-class_type_id="' + type['class_type_id'] + '" class="list-group-item">' + type['class_type'] + '</a>');
-	
+		return $('<a href="#" data-class_type_id="' + type['class_type_id'] + '" class="list-group-item">' + type['class_type'] + '</a>');
+		
 	},
 
 	ctcreateRow = function (type) {
@@ -218,128 +218,125 @@ var rooms = (function() {
 			type: "roomsRefreshed",
 			message: "Hello World!",
 			time: new Date()
-		});	}
+		});	
+	}
 
+	return {
 
+		refresh: refresh,
+		drop: rdrop
 
+	};
 
+})();
 
-		return {
+var categories = (function() {
+	var urlBase 		= "category/";
+	var catList = $('<ul></ul>');
+	var catDrop = $('<select></select>');
 
-			refresh: refresh,
-			drop: rdrop
+	refresh = function () {
+		$.getJSON(urlBase + 'fetchAll', function(data) {
 
-		};
+			catList.empty();
+			if(data.length>0){
+				$.each( data, function( key, cat ) {
+					catList.append(createListItem(cat['category_id'], cat['category'], cat['color']));
+					catDrop.append(createOption(cat));
+				});
 
-	})();
-
-	var categories = (function() {
-		var urlBase 		= "category/";
-		var catList = $('<ul></ul>');
-		var catDrop = $('<select></select>');
-
-		refresh = function () {
-			$.getJSON(urlBase + 'fetchAll', function(data) {
-
-				catList.empty();
-				if(data.length>0){
-					$.each( data, function( key, cat ) {
-						catList.append(createListItem(cat['category_id'], cat['category'], cat['color']));
-						catDrop.append(createOption(cat));
-					});
-
-				}
-
-				update();
-
-			});
-
-		},
-
-		createOption = function (type) {
-			return($('<option></option>').val(type['category_id'])
-				.append(type['category']));			
-		},
-
-		createListItem = function(id, name, color){
-			if(id != 1){
-				return $('<li class="list-group-item"></li>')
-				.append($('<input class="pull-right" name="category_id[]" value="'+ id + '" type="checkbox">'))
-				.append($('<input>')
-					.attr({
-						type: 'hidden',
-						class: 'minicolors',
-						value: color,
-						size: 7,
-						'data-category_id': id
-					}))
-
-				.append('<span class="editable">' + name + '</span>');
-			}else{
-				return null;
 			}
-		},
 
-		clear = function() {
-			categoriesPanel.categorylist.empty();
-			addClassTypePanel.categoryDropdown.html('');
-		},
+			update();
 
-		update = function() {
-			$.event.trigger({
-				type: "categoriesRefreshed",
-				message: "Hello World!",
-				time: new Date()
-			});
+		});
+
+	},
+
+	createOption = function (type) {
+		return($('<option></option>').val(type['category_id'])
+			.append(type['category']));			
+	},
+
+	createListItem = function(id, name, color){
+		if(id != 1){
+			return $('<li class="list-group-item"></li>')
+			.append($('<input class="pull-right" name="category_id[]" value="'+ id + '" type="checkbox">'))
+			.append($('<input>')
+				.attr({
+					type: 'hidden',
+					class: 'minicolors',
+					value: color,
+					size: 7,
+					'data-category_id': id
+				}))
+
+			.append('<span class="editable">' + name + '</span>');
+		}else{
+			return null;
 		}
+	},
 
-		return { 
-			refresh: refresh,
-			list: catList,
-			drop: catDrop
-		};
+	clear = function() {
+		categoriesPanel.categorylist.empty();
+		addClassTypePanel.categoryDropdown.html('');
+	},
 
-	})();
+	update = function() {
+		$.event.trigger({
+			type: "categoriesRefreshed",
+			message: "Hello World!",
+			time: new Date()
+		});
+	}
 
-	var divisiblerooms = (function() {
+	return { 
+		refresh: refresh,
+		list: catList,
+		drop: catDrop
+	};
 
-		var drdrop = $('<select></select>');
-		var urlBase = 'facilities/';
+})();
 
+var divisiblerooms = (function() {
 
-		refresh = function () {
-			$.getJSON(urlBase + 'getDivisibleRooms', function(data) {
-
-				drdrop.empty();
-				if(data.length>0){
-					$.each( data, function( key, cat ) {
-						drdrop.append(createOption(cat));
-					});
-
-				}
-
-				update();
-
-			});
-
-		},
-
-		this.createOption = function (type) {
-			return($('<option></option>').val(type['room_id'])
-				.append(type['room']));			
-		},
+	var drdrop = $('<select></select>');
+	var urlBase = 'facilities/';
 
 
-		update = function() {
-			$.event.trigger({
-				type: "divisibleroomsRefreshed",
-				time: new Date()
-			});
-		}
+	refresh = function () {
+		$.getJSON(urlBase + 'getDivisibleRooms', function(data) {
 
-		return { 
-			refresh: refresh,
-			drop: drdrop
-		};
+			drdrop.empty();
+			if(data.length>0){
+				$.each( data, function( key, cat ) {
+					drdrop.append(createOption(cat));
+				});
 
-	})();
+			}
+
+			update();
+
+		});
+
+	},
+
+	this.createOption = function (type) {
+		return($('<option></option>').val(type['room_id'])
+			.append(type['room']));			
+	},
+
+
+	update = function() {
+		$.event.trigger({
+			type: "divisibleroomsRefreshed",
+			time: new Date()
+		});
+	}
+
+	return { 
+		refresh: refresh,
+		drop: drdrop
+	};
+
+})();
