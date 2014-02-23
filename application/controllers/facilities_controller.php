@@ -43,6 +43,8 @@ class facilities_controller extends CI_Controller {
     */
     function saveDivisibleRoom(){
         if(check_admin()){
+       		
+       		$this->load->model('courts'); 
             if(isset($_POST['room_id']) && isset($_POST['rows']) && isset($_POST['cols'])){
                 if($this->rooms->isDivisible($_POST['room_id'])){
                     /* If creating a single division, it's no longer divisible */
@@ -55,9 +57,18 @@ class facilities_controller extends CI_Controller {
                     }
                 }
                 else{
-                    $this->rooms->insertDivisibleRoom($_POST['room_id'], $_POST['rows'], $_POST['cols']);
+                    $this->rooms->insertDivisibleRoom($_POST['room_id'], $_POST['rows'], $_POST['rows']);
+
                     echo "New divisible room created";
                 }
+                
+                
+                $courts = intval($_POST['rows']) * intval($_POST['rows']);
+                echo("<br>Saving ". $courts. " courts");
+                for($i=0; $i< $courts; $i++){
+                	$this->courts->addCourt($_POST['room_id'], $i+1);
+                }
+                
             }
 
         }

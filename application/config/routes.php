@@ -67,6 +67,7 @@ $route['category/(:any)'] = 'category/$1';
 $route['class_type/(:any)'] = 'class_type/$1';
 $route['waiting_list/(:any)'] = 'waiting_list/$1';
 $route['facilities/(:any)'] = 'facilities_controller/$1';
+$route['court/(:any)'] = 'court/$1';
 
 $route['theme'] = 'theme/index';
 $route['bootstraptheme'] = 'theme/css';

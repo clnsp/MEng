@@ -87,7 +87,7 @@
 							
 						<div class="col-xs-8 no-pad-right no-pad-left">
 						
-							<button type="submit" class="btn btn-default">Assign to Courts </button>
+							<button id="assign-sports-to-courts" type="submit" class="btn btn-default">Assign to Courts </button>
 						</div>
 
 				</div>

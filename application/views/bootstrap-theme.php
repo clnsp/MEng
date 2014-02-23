@@ -859,7 +859,6 @@ ul.ui-autocomplete.popover.dropdown-menu{
 	background: #FFDB49;
 	border: 5px solid #FFF;
 	float:left;
-	line-height: 100px;
 	vertical-align: middle;
 	text-align: center;
 	font-size: 25px;

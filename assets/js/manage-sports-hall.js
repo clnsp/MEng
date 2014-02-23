@@ -5,11 +5,16 @@ var assignDivPanel, roomDivider, divisibleRoomPanel, manage_rooms, manage_sports
 placedSports = function () {
     //assign _root and config private variables
     var _root = this;
-    this.directory = new Array();
+    directory = new Array();
 
     /* add a sport to the directory */
     this.addSport = function(sport_id){
-    	this.directory[sport_id] = new Array();
+    	directory[sport_id] = new Array();
+    }
+    
+    /* is a sport in the directory */
+    this.hasSport = function(sport_id){
+    	return (directory[sport_id])
     }
 
     /**
@@ -21,16 +26,16 @@ placedSports = function () {
     		return;
     	}
 
-    	if(!this.directory[sport_id]){
+    	if(!this.hasSport(sport_id)){
     		this.addSport(sport_id);
     	}else{
-    		if(compareDivs(this.directory[sport_id], divs)){
+    		if(compareDivs(directory[sport_id], divs)){
     			alert("Courts already added");
     			return;
     		}
     	}
 
-    	this.directory[sport_id].push(divs);
+    	directory[sport_id].push(divs);
 
 
     	$.event.trigger({
@@ -54,9 +59,9 @@ placedSports = function () {
 
     this.getDivisions = function(sport_id) {
     	var cont = $('<ul>');
-    	$.each(this.directory[sport_id], function(index, value) {
+    	$.each(directory[sport_id], function(index, value) {
 
-    		var li = $('<li></li>').html("Court");
+    		var li = $('<li class="list-group-item"></li>').html("Court");
     		$.each(value, function(j, v) {
     			li.append(v + ", ");
     		});    
@@ -66,10 +71,30 @@ placedSports = function () {
     	return cont.html();
 
     }
+    
+    getDir = function(json) {
+   
+    	directory = json;
+    	
+    	$.event.trigger({
+    		type: "courtDirectoryRefreshed",
+    		message: "Court directory refreshed",
+    		time: new Date()
+    	});
+    }
+    
+    this.refresh = function(room_id) {
+    	var $this = this;
+		$.getJSON('court/getCourtDirectory/'+room_id, function(json){
+			getDir(json);
+		});
+
+    }
 };
 
 
 var ps = new placedSports();
+
 
 
 roomDivider = function () {
@@ -218,20 +243,38 @@ assignDivPanel = (function() {
 	var container = $('#possible-sports');
 	var sportlist = $('#sports-list');
 	var divdrop = $('#select-divisible-room select[name=room_id]');
-	var urlBase = 'facilities/';
+	var urlBase = 'court/';
 	var divisions = $('#sports-divisions');
-	
+		
 	sportlist.on('click', 'a.list-group-item', function(e){
 		e.preventDefault();
 		$(this).siblings('.active').removeClass('active');
 		$(this).addClass('active');
+		
+		var sport = assignDivPanel.getSelectedSport();
+		if(sport){
+			divisions.html(ps.getDivisions(sport));
+		}
+		
+		
 	});
-
-
+	
+	
+	container.find('#assign-sports-to-courts').click(function(){
+	
+		$.post( urlBase + "assignSports", { 
+			data: directory,
+			room_id: divdrop.val()
+		})
+		.done(function( result ) {
+			alert(result);
+			
+		});
+	});
 	
 	divdrop.change(function(){
 
-		$.getJSON(urlBase + 'getDivisibleRoom/' + $(this).val(), function(data) {
+		$.getJSON('facilities/getDivisibleRoom/' + $(this).val(), function(data) {
 			if(data.length>0){
 				manage_sports.cols = parseInt(data[0].cols);
 				manage_sports.rows = parseInt(data[0].rows);
@@ -240,6 +283,8 @@ assignDivPanel = (function() {
 			}
 			manage_sports.regenerate();
 		});
+		
+		
 	});
 	
 
@@ -257,7 +302,7 @@ assignDivPanel = (function() {
 		drop:divdrop,
 		list:sportlist,
 		getSelectedSport: getSelectedSport,
-		divisions: divisions
+		divisions: divisions, 
 	};
 
 })();
@@ -272,6 +317,7 @@ $(function(){
 
 	.on("roomsRefreshed", function(){
 		divisibleRoomPanel.drop.html(rooms.drop.html());
+		ps.refresh(assignDivPanel.drop.val());
 	})
 
 	.on("divisibleroomsRefreshed", function(){
@@ -282,9 +328,16 @@ $(function(){
 		var sport = assignDivPanel.getSelectedSport();
 		if(sport){
 			assignDivPanel.divisions.html(ps.getDivisions(sport));
-
 		}
-	});
+	})
+	.on("courtDirectoryRefreshed", function(){
+		var sport = assignDivPanel.getSelectedSport();
+		if(sport){
+			assignDivPanel.divisions.html(ps.getDivisions(sport));
+		}
+	})
+	
+	;
 
 	classtypes.refresh();
 	rooms.refresh();
