@@ -1,3 +1,4 @@
+
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 /**
@@ -279,9 +280,67 @@ class Classes extends CI_Model{
 
 
         }	
+	function getClassesWithTypeAndStartTime($class_type, $start, $end)
+	{
+		
+
+	$this -> db -> select('class_type, class_start_date, class_end_date, room, class_id');
+	$this -> db -> from($this -> table_name);
+	$this -> db -> where('class_type', $class_type);
+	$this -> db -> where('class_start_date BETWEEN "' . $start . '" AND "' . $end . '"');
+	$this -> db -> join('class_type_tbl', 'class_type_tbl.class_type_id = class_tbl.class_type_id');
+	$this -> db -> join('room_tbl', 'room_tbl.room_id = class_tbl.room_id');
+
+	$query = $this -> db -> get();
 
 
+return $query->result_array();
+
+	}
+
+function getClassesWithTypeAndDate($class_type, $date)
+	{
+		
+
+	$this -> db -> select('class_type, class_start_date, class_end_date, room, class_id');
+	$this -> db -> from($this -> table_name);
+	$this -> db -> where('class_type', $class_type);
+	$this -> db -> where('class_start_date', $date); 
+	$this -> db -> join('class_type_tbl', 'class_type_tbl.class_type_id = class_tbl.class_type_id');
+	$this -> db -> join('room_tbl', 'room_tbl.room_id = class_tbl.room_id');
+
+	$query = $this -> db -> get();
+
+
+	return $query->result_array();
+
+	}
+	/**
+	 * Get booking by Class Type
+	 *
+	 * @param	int
+	 * @param	bool
+	 * @return	object
+	 */
+	function getClassesWithType($class_type)
+	{
+		
+
+$this -> db -> select('class_type, class_start_date, class_end_date, room, class_id');
+$this -> db -> from($this -> table_name);
+$this -> db -> where('class_type', $class_type);
+$this -> db -> join('class_type_tbl', 'class_type_tbl.class_type_id = class_tbl.class_type_id');
+$this -> db -> join('room_tbl', 'room_tbl.room_id = class_tbl.room_id');
+
+$query = $this -> db -> get();
+
+
+return $query->result_array();
+
+	}
+	
 
     }
+
 
 

@@ -60,11 +60,12 @@ $autoload['libraries'] =  array('database','session', 'parser', 'Tank_auth');
 |  Auto-load Helper Files
 | -------------------------------------------------------------------
 | Prototype:
-|
+| ***Patrick-- Added form helper needs to be here.
 |	$autoload['helper'] = array('url', 'file');
 */
 
-$autoload['helper'] = array('url', 'temp_helper');
+$autoload['helper'] = array('url', 'temp_helper', 'form_helper');
+
 
 
 /*

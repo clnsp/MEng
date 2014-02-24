@@ -47,6 +47,11 @@ if(!$this->tank_auth->is_admin()){ ?>
 
      <script type="text/javascript" src="<?php echo base_url();?>assets/js/date.js"></script>
      <script type="text/javascript" src="<?php echo base_url();?>assets/js/manage.js"></script>
+	 
+	 
+		<!-- Patrick Test Scripts -->
+	   <script type="text/javascript" src="<?php echo base_url();?>assets/js/bootstrap-timepicker.js"></script>
+	   <script type="text/javascript" src="<?php echo base_url();?>assets/js/bootstrap-timepicker.js"></script>
      
      <!-- Custom -->
      <script type="text/javascript" src="<?php echo base_url();?>assets/js/bootbox.min.js"></script>
@@ -120,6 +125,9 @@ function updateContent(data) {
 }
 $("#page-body").html(data.content).addClass(data.title);
 }
+
+
+
 
 </script>
 

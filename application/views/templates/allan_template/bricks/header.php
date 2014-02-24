@@ -1,10 +1,10 @@
-  <!DOCTYPE html>
-  <html lang="en" class='fuelx'>
+
+  <html lang="en">
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="author" content="Patrick McCall CSM2009" >
 
     <title>{page_title}</title>
 
@@ -16,10 +16,18 @@
     <link rel="stylesheet" href="<?php echo base_url();?>assets/css/jquery-ui-autocomplete.custom.min.css">
     <link rel="stylesheet" href="<?php echo base_url();?>assets/css/DT_bootstrap.css"/>
     <link rel="stylesheet" href="<?php echo base_url();?>assets/css/bootstrap-overides.css"/>
+
     <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/cal/fullcalendar.css">
     <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/css/jquery-ui-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/css/bootstrap-datetimepicker.min.css">
 
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/cal/fullcalendar.css"/>
+	<link rel="stylesheet" href="<?php echo base_url();?>assets/css/datepicker.css" >
+	<link rel="stylesheet" href="<?php echo base_url();?>assets/css/bootstrap-timepicker.min.css" />
+	<link rel="stylesheet" href="<?php echo base_url();?>assets/css/bootstrap-timepicker.css" />
+	<link rel="stylesheet" href="<?php echo base_url();?>assets/css/bootstrap-combobox.css" />
+	<link rel="stylesheet" href="<?php echo base_url();?>assets/css/select2.css" >
+	
     <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/css/jquery.minicolors.css">
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
