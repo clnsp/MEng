@@ -7,12 +7,6 @@ Class Courts extends CI_Model{
 	private $sports_to_divisions_view = 'sports_to_divisions_view';
 	private $sports_playing_area_tbl = 'sports_playing_area_tbl';
 
-
-//id	int(11)			No	None	AUTO_INCREMENT	 Change Change	 Drop Drop	 More Show more actions
-// 2	room_id	int(11)			No	None		 Change Change	 Drop Drop	 More Show more actions
-// 3	class_type_id	int(11)			No	None		 Change Change	 Drop Drop	 More Show more actions
-// 4	description
- 
  	/**
  	* Add a new possible sport to the databasepossible_sports_tbl
  	* @param array
@@ -116,6 +110,22 @@ Class Courts extends CI_Model{
 		$this->db->insert($this->sports_divisions_tbl, $data); 
 		
 		echo $this->db->_error_message();
+		
+	}
+
+	/**
+ 	* Add a new possible sport to the databasepossible_sports_tbl
+ 	* @param array
+ 	* @return int - new id
+ 	*/
+	function removeSports($division_number, $class_type_id, $room_id) {
+		
+		$this->db->select('sport_number');
+		$this -> db -> where('division_number', $division_number);
+		$this -> db -> where('class_type_id', $class_type_id);
+		$this -> db -> where('room_id', $room_id);
+		
+		return $this->db->from($this->sports_to_divisions_view)->count_all_results();
 		
 	}
 	

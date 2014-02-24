@@ -61,10 +61,12 @@ placedSports = function () {
 
     	var cont = $('<ul>');
     	if(directory[sport_id]){
-    	$.each(directory[sport_id], function(index, value) {
+
+
+    	$.each(Object.keys(directory[sport_id]), function(index, value) {
 
     		var li = $('<li class="list-group-item"></li>').html("Court");
-    		$.each(value, function(j, v) {
+    		$.each(directory[sport_id][value], function(j, v) {
     			li.append(v + ", ");
     		});    
     		cont.append(li);  
@@ -233,6 +235,8 @@ divisibleRoomPanel = (function() {
 			manage_rooms.regenerate();
 			divisiblerooms.refresh();
 		});
+
+		ps.refresh($(this).val());
 	});
 
 	return { 
@@ -320,7 +324,7 @@ $(function(){
 
 	.on("roomsRefreshed", function(){
 		divisibleRoomPanel.drop.html(rooms.drop.html());
-		ps.refresh(assignDivPanel.drop.val());
+		ps.refresh(rooms.drop.first().val());
 	})
 
 	.on("divisibleroomsRefreshed", function(){

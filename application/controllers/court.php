@@ -10,7 +10,7 @@ class Court extends CI_Controller{
 	/**
 	* Assigns sports to divisions
 	* Expect post data in the form:
-	* [sport_id]
+	* [sport_number]
 	* 	=> [division sets] 
 	*		=> [1, 2]
 	*		=> [1]
@@ -20,25 +20,27 @@ class Court extends CI_Controller{
 		if(isset($_POST['data']) && isset($_POST['room_id'])){
 			echo("Room: " . $_POST['room_id'] . '<br>');
 			
-			foreach ($_POST['data'] as $sport_id => $div_set) {
+
+
+			foreach ($_POST['data'] as $sport_number => $div_set) {
 				if(!empty($div_set)){
-					echo ("Sport: " . $sport_id);
+					echo ("Sport: " . $sport_number);
 					
 					$possibleSport = array(
-					   'class_type_id' => $sport_id,
-					   'room_id' => $_POST['room_id']
-					);
+						'class_type_id' => $sport_number,
+						'room_id' => $_POST['room_id']
+						);
 					
 					foreach ($div_set as $key => $divs) {
 						echo("<br>");
 						
-						$possibleSport['sport_id'] = $key;
+						$possibleSport['sport_number'] = $key;
 						$sportID = $this->courts->addPossibleSport($possibleSport);
 
 						foreach ($divs as $key => $div) {
 							echo(" ".$div);
 							$div_num = $this->courts->getDivision($_POST['room_id'], $div);
-							$this->courts->assignSportToCourt($sportID, $div_num);
+							$this->courts->assignSportToCourt($sportID, $div_num);						
 						}
 						
 					}
@@ -53,30 +55,30 @@ class Court extends CI_Controller{
 	* Creates an xml document
 	*/
 	function getCourtDirectory($room_id=''){
-	      if($this->tank_auth->is_admin()){
+		if($this->tank_auth->is_admin()){
 			if($room_id!=''){
-			
-			$dir = array();
-			
+				
+				$dir = array();
+				
 			//fetch the possible sports
-			$rows = $this->courts->getSportsToDivisions($room_id);
-			
-			foreach ($rows as $key => $row) {
-			
-				if(isset($dir[$row['class_type_id']])){
-					if(isset($dir[$row['class_type_id']][$row['sport_id']])){
-						array_push($dir[$row['class_type_id']][$row['sport_id']], $row['division_number']);
+				$rows = $this->courts->getSportsToDivisions($room_id);
+				
+				foreach ($rows as $key => $row) {
+					
+					if(isset($dir[$row['class_type_id']])){
+						if(isset($dir[$row['class_type_id']][$row['sport_number']])){
+							array_push($dir[$row['class_type_id']][$row['sport_number']], $row['division_number']);
+						}else{
+							$dir[$row['class_type_id']][$row['sport_number']] = array($row['division_number']);
+						}
 					}else{
-						$dir[$row['class_type_id']][$row['sport_id']] = array($row['division_number']);
+						$dir[$row['class_type_id']] = array();
 					}
-				}else{
-					$dir[$row['class_type_id']] = array();
+					
 				}
 				
-			}
-			
 			//print_r($dir);
-			echo(json_encode($dir, true));
+				echo(json_encode($dir, true));
 			}else{
 				echo("Please supply a room id");
 			}
