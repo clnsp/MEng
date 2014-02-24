@@ -56,9 +56,7 @@ class Court extends CI_Controller{
 	      if($this->tank_auth->is_admin()){
 			if($room_id!=''){
 			
-			$dir = array(
-			
-			);
+			$dir = array();
 			
 			//fetch the possible sports
 			$rows = $this->courts->getSportsToDivisions($room_id);
@@ -78,7 +76,7 @@ class Court extends CI_Controller{
 			}
 			
 			//print_r($dir);
-			echo(json_encode($dir));
+			echo(json_encode($dir, true));
 			}else{
 				echo("Please supply a room id");
 			}

@@ -35,7 +35,7 @@ placedSports = function () {
     		}
     	}
 
-    	directory[sport_id].push(divs);
+    	directory[sport_id][Object.keys(directory[sport_id]).length+1] = divs;
 
 
     	$.event.trigger({
@@ -58,7 +58,9 @@ placedSports = function () {
 
 
     this.getDivisions = function(sport_id) {
+
     	var cont = $('<ul>');
+    	if(directory[sport_id]){
     	$.each(directory[sport_id], function(index, value) {
 
     		var li = $('<li class="list-group-item"></li>').html("Court");
@@ -67,9 +69,10 @@ placedSports = function () {
     		});    
     		cont.append(li);  
     	}); 
-
     	return cont.html();
-
+}
+    	
+	return "No assigned courts";
     }
     
     getDir = function(json) {
@@ -121,7 +124,7 @@ roomDivider = function () {
 
         			var courts = new Array();
         			$(event.target).find('.box.ui-selected').each(function(){
-        				courts.push($(this).data('court_id'));
+        				courts.push(''+$(this).data('court_id'));
         			});
 
         			ps.assignDivisons(assignDivPanel.getSelectedSport(), courts);
