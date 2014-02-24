@@ -18,19 +18,34 @@ if (!function_exists('contact_user'))
 			else
 			// Fetch User Preference
 			{
-			
-			
-			
-			
-			
+				$pref = $ci->members->getUserColumn($id, 'comms_preference');
+				// ALL MESSAGES
+				if($pref == 2){
+					contact_user_twitter($id,$message);
+					contact_user_sms($id,$message);
+					contact_user_email($id,$message);
+				// SMS AND EMAIL ONLY
+				}else if($pref == 1){
+					contact_user_sms($id,$message);
+					contact_user_email($id,$message);
+				}
+				// EMAIL ONLY
+				else{
+					contact_user_email($id,$message);
+				}			
 			}
 		}
 	}
 }
-
+/*
+ * SEND SMS Message
+ * @access private
+ * @param ID
+ * @param message
+ */
 if (!function_exists('contact_user_sms')) // MAX NUMBER OF MESSAGES
 {
-	function contact_user_sms($id,$message){
+	private function contact_user_sms($id,$message){
 		$ci =& get_instance();
 		$ci->load->helper('sms');
 		$mobile_number = $ci->members->getUserColumn($id, 'mobile_number');
@@ -43,24 +58,35 @@ if (!function_exists('contact_user_sms')) // MAX NUMBER OF MESSAGES
 	}
 }
 
+/*
+ * SEND Twitter 
+ * @access private
+ * @param ID
+ * @param message
+ */
 if (!function_exists('contact_user_twitter'))
 {
-	function contact_user_twitter($id,$message){
+	private function contact_user_twitter($id,$message){
 		$ci =& get_instance();
 		$ci->load->helper('twitter');
 		$twitter_name = $ci->members->getUserColumn($id, 'twitter'); 
 		if(!$ci->config->item('twitter_allow')){
-			if(isset($mobile_number[0])){
+			if(isset($twitter_name[0])){
 				echo send_tweet($twitter_name[0]->twitter,$message);
 			}
-
 		}
 	}
 }
 
+/*
+ * SEND EMAIL
+ * @access private
+ * @param ID
+ * @param message
+ */
 if (!function_exists('contact_user_email'))
 {
-	function contact_user_email($id,$message){
+	private function contact_user_email($id,$message){
 		$ci =& get_instance();
 		$query = $ci->members->getUserColumn($id, 'email'); 
 		if(count($query[0]) == 1){
@@ -69,7 +95,6 @@ if (!function_exists('contact_user_email'))
 			$ci->load->helper('email');
 			send_email($query[0]->email, 'Gym Message', $message);				
 		}
-	
 	}
 }
 ?>

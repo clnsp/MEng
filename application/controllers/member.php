@@ -118,7 +118,11 @@ class Member extends CI_Controller{
 	function updateUserMembership(){
 		$this->load->helper('twitter');
 		//send_tweet("Graeme_Clark", "Did it work ?");
-		print_r (user_following("StrathCSR"));//("shadowbeam_"));//("Graeme_Clark"));
+		//print_r(api_requests());
+		print_r(user_following('mengers2013',array("Graeme_Clark","StrathCSR","shadowbeam_")));
+		///print_r(api_requests());
+		//echo (check_user_following("Graeme_Clark")); //"StrathCSR"));//("shadowbeam_"));
+		//print_r (update_account_following('mengers2013'));
 	}
 	
 	/*
