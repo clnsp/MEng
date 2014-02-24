@@ -64,6 +64,7 @@ $route['manage'] = 'pages/manage';
 $route['manage-sports-hall'] = 'pages/view/manage-sports-hall';
 $route['admin-calendar'] = 'pages/admin_calendar';
 $route['category/(:any)'] = 'category/$1';
+
 $route['class_type/(:any)'] = 'class_type/$1';
 $route['waiting_list/(:any)'] = 'waiting_list/$1';
 $route['facilities/(:any)'] = 'facilities_controller/$1';
@@ -73,7 +74,12 @@ $route['theme'] = 'theme/index';
 $route['bootstraptheme'] = 'theme/css';
 $route['bootstraptheme/(:any)'] = 'theme/$1';
 
+
+$route['user_booking'] = 'pages/user_booking';
+$route['search_results'] = 'searchclass';
+
 $route['welcome'] = 'welcome';
+$route['class_list'] = 'pages/class_list';
 
 //$route['(:any)'] = 'pages/view/$1';
 $route['default_controller'] = 'pages/view';
