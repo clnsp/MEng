@@ -1,5 +1,5 @@
 
-var assignDivPanel, roomDivider, divisibleRoomPanel, manage_rooms, manage_sports, roomDivider, placedSports;
+var assignDivPanel, roomDivider, divisibleRoomPanel, manage_rooms, manage_sports, roomDivider, placedSports, sport_id_to_remove;
 
 
 placedSports = function () {
@@ -8,13 +8,28 @@ placedSports = function () {
     directory = new Array();
 
     /* add a sport to the directory */
-    this.addSport = function(sport_id){
-    	directory[sport_id] = new Array();
+    this.addSport = function(class_type_id){
+    	directory[class_type_id] = new Array();
     }
     
     /* is a sport in the directory */
-    this.hasSport = function(sport_id){
-    	return (directory[sport_id])
+    this.hasSport = function(class_type_id){
+    	return (directory[class_type_id]);
+    }
+
+    /* remove divisions from sport */
+    this.removeDivisions = function(room_id, class_type_id, sport_id){
+    	$.getJSON('court/removeSportInstance/'+room_id+'/'+class_type_id+'/'+sport_id, function(result){
+    		if(result == 1){
+    			delete directory[class_type_id][sport_id];
+    			$.event.trigger({
+    				type: "divisionAdded",
+    				message: "Division Added",
+    				time: new Date()
+    			});	
+    		}
+    	});
+    	
     }
 
     /**
@@ -63,22 +78,23 @@ placedSports = function () {
     	if(directory[sport_id]){
 
 
-    	$.each(Object.keys(directory[sport_id]), function(index, value) {
+    		$.each(Object.keys(directory[sport_id]), function(index, value) {
 
-    		var li = $('<li class="list-group-item"></li>').html("Court");
-    		$.each(directory[sport_id][value], function(j, v) {
-    			li.append(v + ", ");
-    		});    
-    		cont.append(li);  
-    	}); 
-    	return cont.html();
-}
+    			var li = $('<li class="list-group-item"></li>').html("Court");
+    			li.append($('<button class="remove-court-btn btn btn-xs pull-right btn-danger"><i class="glyphicon glyphicon-remove"></i></button>').attr('data-sport_id', value));
+    			$.each(directory[sport_id][value], function(j, v) {
+    				li.append(v + ", ");
+    			});    
+    			cont.append(li);  
+    		}); 
+    		return cont.html();
+    	}
     	
-	return "No assigned courts";
+    	return "No assigned courts";
     }
     
     getDir = function(json) {
-   
+
     	directory = json;
     	
     	$.event.trigger({
@@ -90,9 +106,9 @@ placedSports = function () {
     
     this.refresh = function(room_id) {
     	var $this = this;
-		$.getJSON('court/getCourtDirectory/'+room_id, function(json){
-			getDir(json);
-		});
+    	$.getJSON('court/getCourtDirectory/'+room_id, function(json){
+    		getDir(json);
+    	});
 
     }
 };
@@ -252,7 +268,7 @@ assignDivPanel = (function() {
 	var divdrop = $('#select-divisible-room select[name=room_id]');
 	var urlBase = 'court/';
 	var divisions = $('#sports-divisions');
-		
+
 	sportlist.on('click', 'a.list-group-item', function(e){
 		e.preventDefault();
 		$(this).siblings('.active').removeClass('active');
@@ -263,12 +279,20 @@ assignDivPanel = (function() {
 			divisions.html(ps.getDivisions(sport));
 		}
 		
-		
 	});
 	
+
+	container.on('click', 'button.remove-court-btn', function(){
+		sport_id_to_remove = $(this).data('sport_id');
+		bootbox.confirm("Are you sure you want to remove this court assignment?", function(result) {
+			if(result){
+				ps.removeDivisions(divisibleRoomPanel.drop.val(), assignDivPanel.getSelectedSport(), sport_id_to_remove);
+			}
+		}); 
+	});
 	
 	container.find('#assign-sports-to-courts').click(function(){
-	
+
 		$.post( urlBase + "assignSports", { 
 			data: directory,
 			room_id: divdrop.val()

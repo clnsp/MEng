@@ -3,20 +3,20 @@
  * Bootstrap Overrides
  */
  
-img.displayed {
-    display: block;
-    margin-left: auto;
-    margin-right: auto 
+ img.displayed {
+  display: block;
+  margin-left: auto;
+  margin-right: auto 
 }
 
 .form-control.editable{
-width: auto !important;
-display:inline-block !important;
+  width: auto !important;
+  display:inline-block !important;
 
 }
 
 label.editable{
-padding-top: 7px
+  padding-top: 7px
 }
 
 .tooltip{
@@ -26,32 +26,32 @@ padding-top: 7px
 /*Colin Modal*/
 
 #MemberDetails .modal-dialog{
-width: 80% !important;
+  width: 80% !important;
 }
 
 .third{
-width: 33% !important;
+  width: 33% !important;
 }
 
 div.list {
-    overflow-x: auto;
-    overflow-y: hidden;
-    white-space: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
 }
 div.list [class*="col-"] {
-    display: inline-block;
-    float: none; /* Very important */
-	vertical-align:top;
+  display: inline-block;
+  float: none; /* Very important */
+  vertical-align:top;
 }
 
 
 
 div.classes {
 	clear:both;
-    overflow-y: auto;
-	overflow-x: hidden;
-	vertical-align:top;
-	z-index: 2;
+  overflow-y: auto;
+  overflow-x: hidden;
+  vertical-align:top;
+  z-index: 2;
 }
 
 /*http://stackoverflow.com/questions/3387489/make-child-visible-outside-an-overflowhidden-parent*/
@@ -105,7 +105,7 @@ h2.gtime {
   }
 
   body{
-      padding-top: 0px;
+    padding-top: 0px;
   }
   
   .page-break {
@@ -131,12 +131,12 @@ h2.gtime {
   }
   
   div.classes {
-	  vertical-align:top;
-	  overflow-y: visible!important;
-	  width: 100% !important;
-	  max-height: 100% !important;
-    height: 100% !important;
-  }
+   vertical-align:top;
+   overflow-y: visible!important;
+   width: 100% !important;
+   max-height: 100% !important;
+   height: 100% !important;
+ }
 }
 
 .no-margin-btm{
@@ -145,10 +145,11 @@ h2.gtime {
 
 
 @media (min-width:768px) {
-  
-      /* Override for making bootbox alerts to small modals*/
-      .bootbox.alert .modal-dialog {
-        width: 300px
-    }
+
+  /* Override for making bootbox alerts to small modals*/
+  .bootbox.alert .modal-dialog,
+  .bootbox-confirm .modal-dialog {
+    width: 300px
+  }
 
 }

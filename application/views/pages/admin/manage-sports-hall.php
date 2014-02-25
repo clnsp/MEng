@@ -79,18 +79,17 @@
 
 			<div  class="col-sm-6">
 
-				<div class="form-group">
 
-							<ul id="sports-list" class="list-group col-xs-6"></ul>
-		
-							<div id="sports-divisions" class="well well-sm col-xs-6"><b class="">Assigned Divisions</b></div>
-							
-						<div class="col-xs-8 no-pad-right no-pad-left">
-						
-							<button id="assign-sports-to-courts" type="submit" class="btn btn-default">Assign to Courts </button>
-						</div>
+				<ul id="sports-list" class="list-group col-xs-6"></ul>
 
+				<div id="sports-divisions" class="well well-sm col-xs-6"><b class="">Assigned Divisions</b></div>
+
+				<div class="col-xs-8 no-pad-right no-pad-left">
+					<button id="assign-sports-to-courts" type="submit" class="btn btn-default">Assign to Courts </button>
 				</div>
+
+				<div class="clearfix"></div>
+
 			</div>
 
 

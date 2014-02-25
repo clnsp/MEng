@@ -11,17 +11,17 @@ Class Courts extends CI_Model{
  	* Add a new possible sport to the databasepossible_sports_tbl
  	* @param array
  	*/
-	function addPossibleSport($data) {
-	
-		$this->db->insert($this->possible_sports_tbl, $data); 
-		return $this->db->insert_id();
-	}
-	
+ 	function addPossibleSport($data) {
+
+ 		$this->db->insert($this->possible_sports_tbl, $data); 
+ 		return $this->db->insert_id();
+ 	}
+
 	/**
 	* Add a new division for a room
 	* @param int
 	* @param int
-	* @param int
+	* @return int
 	*/
 	function addCourt($room_id, $division_number) {
 		$this->db->insert($this->sports_playing_area_tbl, array('room_id'=>$room_id, 'division_number'=>$division_number )); 
@@ -30,16 +30,34 @@ Class Courts extends CI_Model{
 	
 	/**
 	* Get a division id for a room
-	* @param array
+	* @param int
+	* @param int
+	* @return int
 	*/
 	function getDivision($room_id, $division_number) {
-	
+
 		$this->db->select('id');
 		$this -> db -> where('division_number', $division_number);
 		$theid = $this->db->get($this->sports_playing_area_tbl)->row('id');
-		echo "The id for division_numer ". $division_number ." is ". $theid;
+		//echo "The id for division_numer ". $division_number ." is ". $theid;
 		return $theid;
 
+	}
+
+	/**
+	* Removes a sport instance on a room
+	* @param int
+	* @param int
+	* @param int
+	* @return bool
+	*/
+	function removeSportInstance($room_id, $class_type_id, $sport_number) {
+		$this->db->where('room_id', $room_id);
+		$this->db->where('class_type_id', $class_type_id);
+		$this->db->where('sport_number', $sport_number);
+
+		$this->db->delete('allan_sports'); 
+		return $this->db->affected_rows() > 0;
 	}
 	
 	/**
@@ -47,7 +65,7 @@ Class Courts extends CI_Model{
 	* @param array
 	*/
 	function getPossibleSports($room_id) {
-	
+
 		$this->db->select('id, class_type_id');
 		$this -> db -> where('room_id', $room_id);
 		
@@ -60,10 +78,11 @@ Class Courts extends CI_Model{
 	* @param array
 	*/
 	function getSportsToDivisions($room_id) {
-	
+
 		$this -> db -> where('room_id', $room_id);
 		
-		return $this->db->get($this->sports_to_divisions_view)->result_array();
+		//return $this->db->get($this->sports_to_divisions_view)->result_array();
+		return $this->db->get('allan_sports')->result_array();
 
 	}	
 	/**
@@ -71,7 +90,7 @@ Class Courts extends CI_Model{
 	* @param array
 	*/
 	function getDivisions($room_id) {
-	
+
 		$this->db->select('id');
 		$this -> db -> where('room_id', $room_id);
 		
@@ -85,11 +104,11 @@ Class Courts extends CI_Model{
 	* @return int - new id
 	*/
 	function removeSportToCourt($possible_sports_id, $sports_playing_area_id) {
-	echo "Assigning [" .$possible_sports_id ."] [".  $sports_playing_area_id. "] <br>";
+		echo "Assigning [" .$possible_sports_id ."] [".  $sports_playing_area_id. "] <br>";
 		$data = array(
 			'possible_sports_id'=>$possible_sports_id, 
 			'sports_playing_area_id'=>$sports_playing_area_id
-		);
+			);
 		$this->db->insert($this->sports_divisions_tbl, $data); 
 		
 		echo $this->db->_error_message();
@@ -101,35 +120,47 @@ Class Courts extends CI_Model{
  	* @param array
  	* @return int - new id
  	*/
-	function assignSportToCourt($possible_sports_id, $sports_playing_area_id) {
-	echo "Assigning [" .$possible_sports_id ."] [".  $sports_playing_area_id. "] <br>";
-		$data = array(
-			'possible_sports_id'=>$possible_sports_id, 
-			'sports_playing_area_id'=>$sports_playing_area_id
-		);
-		$this->db->insert($this->sports_divisions_tbl, $data); 
-		
-		echo $this->db->_error_message();
-		
-	}
+ //	function assignSportToCourt($possible_sports_id, $sports_playing_area_id) {
+	// echo "Assigning [" .$possible_sports_id ."] [".  $sports_playing_area_id. "] <br>";
+	// 	$data = array(
+	// 		'possible_sports_id'=>$possible_sports_id, 
+	// 		'sports_playing_area_id'=>$sports_playing_area_id
+	// 	);
+	// 	$this->db->insert($this->sports_divisions_tbl, $data); 
+
+	// 	echo $this->db->_error_message();
+
+ 	function assignSportToCourt($room_id, $division_number, $class_type_id, $sport_number) {
+
+ 		$data = array(
+ 			'room_id'=>$room_id, 
+ 			'division_number'=>$division_number,
+ 			'class_type_id'=>$class_type_id,
+ 			'sport_number'=>$sport_number,
+ 			);
+ 		$this->db->insert('allan_sports', $data); 
+
+ 		echo $this->db->_error_message();
+
+ 	}
 
 	/**
  	* Add a new possible sport to the databasepossible_sports_tbl
  	* @param array
  	* @return int - new id
  	*/
-	function removeSports($division_number, $class_type_id, $room_id) {
-		
-		$this->db->select('sport_number');
-		$this -> db -> where('division_number', $division_number);
-		$this -> db -> where('class_type_id', $class_type_id);
-		$this -> db -> where('room_id', $room_id);
-		
-		return $this->db->from($this->sports_to_divisions_view)->count_all_results();
-		
-	}
-	
+ 	function removeSports($division_number, $class_type_id, $room_id) {
+
+ 		$this->db->select('sport_number');
+ 		$this -> db -> where('division_number', $division_number);
+ 		$this -> db -> where('class_type_id', $class_type_id);
+ 		$this -> db -> where('room_id', $room_id);
+
+ 		return $this->db->from($this->sports_to_divisions_view)->count_all_results();
+
+ 	}
 
 
-}
-?>
+
+ }
+ ?>

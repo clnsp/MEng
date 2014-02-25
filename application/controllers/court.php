@@ -19,28 +19,26 @@ class Court extends CI_Controller{
 	function assignSports(){  
 		if(isset($_POST['data']) && isset($_POST['room_id'])){
 			echo("Room: " . $_POST['room_id'] . '<br>');
-			
-
-
-			foreach ($_POST['data'] as $sport_number => $div_set) {
+			foreach ($_POST['data'] as $class_type_id => $div_set) {
 				if(!empty($div_set)){
-					echo ("Sport: " . $sport_number);
+					echo ("Sport: " . $class_type_id);
 					
 					$possibleSport = array(
-						'class_type_id' => $sport_number,
+						'class_type_id' => $class_type_id,
 						'room_id' => $_POST['room_id']
 						);
 					
-					foreach ($div_set as $key => $divs) {
-						echo("<br>");
-						
-						$possibleSport['sport_number'] = $key;
-						$sportID = $this->courts->addPossibleSport($possibleSport);
+					foreach ($div_set as $sport_number => $divs) {
 
-						foreach ($divs as $key => $div) {
-							echo(" ".$div);
-							$div_num = $this->courts->getDivision($_POST['room_id'], $div);
-							$this->courts->assignSportToCourt($sportID, $div_num);						
+					//	$sport_number['sport_number'] = $key;
+					//	$sportID = $this->courts->addPossibleSport($possibleSport);
+
+						if(is_array($divs)){
+							foreach ($divs as $key => $div) {
+								echo(" ".$div);
+							//$div_num = $this->courts->getDivision($_POST['room_id'], $div);
+								$this->courts->assignSportToCourt($_POST['room_id'], $div, $class_type_id, $sport_number);						
+							}
 						}
 						
 					}
@@ -57,32 +55,41 @@ class Court extends CI_Controller{
 	function getCourtDirectory($room_id=''){
 		if($this->tank_auth->is_admin()){
 			if($room_id!=''){
-				
+
 				$dir = array();
-				
+
 			//fetch the possible sports
 				$rows = $this->courts->getSportsToDivisions($room_id);
-				
+				//echo(json_encode($rows));
 				foreach ($rows as $key => $row) {
-					
-					if(isset($dir[$row['class_type_id']])){
-						if(isset($dir[$row['class_type_id']][$row['sport_number']])){
-							array_push($dir[$row['class_type_id']][$row['sport_number']], $row['division_number']);
-						}else{
-							$dir[$row['class_type_id']][$row['sport_number']] = array($row['division_number']);
-						}
-					}else{
+
+
+					if(!isset($dir[$row['class_type_id']])){
 						$dir[$row['class_type_id']] = array();
 					}
 					
+					if(!isset($dir[$row['class_type_id']][$row['sport_number']])){
+						$dir[$row['class_type_id']][$row['sport_number']] = array();
+					}
+
+					array_push($dir[$row['class_type_id']][$row['sport_number']], $row['division_number']);
 				}
-				
-			//print_r($dir);
+
 				echo(json_encode($dir, true));
 			}else{
 				echo("Please supply a room id");
 			}
 		}
+	}
+
+	/**
+	* Removes a sport instance on a room
+	* @param int
+	* @param int
+	* @param int
+	*/
+	function removeSportInstance($room_id, $class_type_id, $sport_number) {
+		echo $this->courts->removeSportInstance($room_id, $class_type_id, $sport_number);
 	}
 	
 }
