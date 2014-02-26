@@ -43,37 +43,50 @@ class facilities_controller extends CI_Controller {
     */
     function saveDivisibleRoom(){
         if(check_admin()){
-       		
-       		$this->load->model('courts'); 
+
+            $this->load->model('courts'); 
+
             if(isset($_POST['room_id']) && isset($_POST['rows']) && isset($_POST['cols'])){
-                if($this->rooms->isDivisible($_POST['room_id'])){
-                    /* If creating a single division, it's no longer divisible */
-                    if($_POST['rows'] == '1' && $_POST['cols'] == '1'){
-                        $this->rooms->removeDivisibleRoom($_POST['room_id']);
-                        echo "Room restored to a <b>non divisible</b> room.";
-                    }else{
+
+                $number_courts =intval($_POST['rows']) * intval($_POST['rows']);
+
+                if($number_courts == 1){
+                    $this->_singleDivision();
+                    return;
+                } else{
+                    if($this->rooms->isDivisible($_POST['room_id'])){
+
                         $this->rooms->updateDivisibleRoom($_POST['room_id'], $_POST['rows'], $_POST['cols']);
+                        $this->courts->clearDivisions($_POST['room_id']);
+
                         echo "Room updated";
+                    } else{
+                        $this->rooms->insertDivisibleRoom($_POST['room_id'], $_POST['rows'], $_POST['rows']);
+                        echo "New divisible room created";
+                    }
+
+                    for($i=1;  $i < $number_courts +1; $i++){
+                        $this->courts->addDivision($_POST['room_id'], $i);
                     }
                 }
-                else{
-                    $this->rooms->insertDivisibleRoom($_POST['room_id'], $_POST['rows'], $_POST['rows']);
-
-                    echo "New divisible room created";
-                }
-                
-                
-                $courts = intval($_POST['rows']) * intval($_POST['rows']);
-                echo("<br>Saving ". $courts. " courts");
-                for($i=0; $i< $courts; $i++){
-                	$this->courts->addCourt($_POST['room_id'], $i+1);
-                }
-                
             }
 
         }
 
     }
+
+/**
+* Creation or modification of a single court
+*/
+function _singleDivision(){
+
+    if($this->rooms->isDivisible($_POST['room_id'])){
+        $this->rooms->removeDivisibleRoom($_POST['room_id']);
+        echo "Room restored to a <b>non divisible</b> room.";
+    }else{
+        echo "Cannot divide a room with one division";
+    }
+}
 
 }  
 ?>

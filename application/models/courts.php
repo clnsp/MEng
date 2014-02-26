@@ -6,6 +6,7 @@ Class Courts extends CI_Model{
 	private $sports_divisions_tbl = 'sports_divisions_tbl';
 	private $sports_to_divisions_view = 'sports_to_divisions_view';
 	private $sports_playing_area_tbl = 'sports_playing_area_tbl';
+	private $sports_to_divisions_tbl = 'sports_to_divisions_tbl';
 
  	/**
  	* Add a new possible sport to the databasepossible_sports_tbl
@@ -23,9 +24,19 @@ Class Courts extends CI_Model{
 	* @param int
 	* @return int
 	*/
-	function addCourt($room_id, $division_number) {
+	function addDivision($room_id, $division_number) {
 		$this->db->insert($this->sports_playing_area_tbl, array('room_id'=>$room_id, 'division_number'=>$division_number )); 
 		return $this->db->insert_id();
+	}
+
+	/**
+	* Clear divisions associated with a room
+	* @param int
+	*/
+	function clearDivisions($room_id){
+		$this->db->where('room_id', $room_id);
+
+		$this->db->delete($this->sports_playing_area_tbl); 
 	}
 	
 	/**
@@ -56,7 +67,10 @@ Class Courts extends CI_Model{
 		$this->db->where('class_type_id', $class_type_id);
 		$this->db->where('sport_number', $sport_number);
 
-		$this->db->delete('allan_sports'); 
+		echo $room_id . " " . $class_type_id . " " . $sport_number;
+
+		$this->db->delete($this->sports_to_divisions_tbl); 
+		echo $this->db->_error_message();
 		return $this->db->affected_rows() > 0;
 	}
 	
@@ -82,7 +96,7 @@ Class Courts extends CI_Model{
 		$this -> db -> where('room_id', $room_id);
 		
 		//return $this->db->get($this->sports_to_divisions_view)->result_array();
-		return $this->db->get('allan_sports')->result_array();
+		return $this->db->get($this->sports_to_divisions_tbl)->result_array();
 
 	}	
 	/**
@@ -138,9 +152,9 @@ Class Courts extends CI_Model{
  			'class_type_id'=>$class_type_id,
  			'sport_number'=>$sport_number,
  			);
- 		$this->db->insert('allan_sports', $data); 
+ 		$this->db->insert($this->sports_to_divisions_tbl, $data); 
 
- 		echo $this->db->_error_message();
+ 		return ($this->db->_error_number() == 1062);
 
  	}
 

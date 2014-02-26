@@ -18,10 +18,8 @@ class Court extends CI_Controller{
 	*/
 	function assignSports(){  
 		if(isset($_POST['data']) && isset($_POST['room_id'])){
-			echo("Room: " . $_POST['room_id'] . '<br>');
 			foreach ($_POST['data'] as $class_type_id => $div_set) {
 				if(!empty($div_set)){
-					echo ("Sport: " . $class_type_id);
 					
 					$possibleSport = array(
 						'class_type_id' => $class_type_id,
@@ -35,15 +33,18 @@ class Court extends CI_Controller{
 
 						if(is_array($divs)){
 							foreach ($divs as $key => $div) {
-								echo(" ".$div);
+								//echo(" ".$div);
 							//$div_num = $this->courts->getDivision($_POST['room_id'], $div);
-								$this->courts->assignSportToCourt($_POST['room_id'], $div, $class_type_id, $sport_number);						
+								if($this->courts->assignSportToCourt($_POST['room_id'], $div, $class_type_id, $sport_number));
+													
 							}
 						}
 						
 					}
 				}
 			}
+
+			echo "Saved courts";
 			
 		}
 	} 
@@ -62,7 +63,6 @@ class Court extends CI_Controller{
 				$rows = $this->courts->getSportsToDivisions($room_id);
 				//echo(json_encode($rows));
 				foreach ($rows as $key => $row) {
-
 
 					if(!isset($dir[$row['class_type_id']])){
 						$dir[$row['class_type_id']] = array();
@@ -84,14 +84,20 @@ class Court extends CI_Controller{
 
 	/**
 	* Removes a sport instance on a room
-	* @param int
-	* @param int
-	* @param int
 	*/
-	function removeSportInstance($room_id, $class_type_id, $sport_number) {
-		echo $this->courts->removeSportInstance($room_id, $class_type_id, $sport_number);
+	function removeSportInstance() {
+		if($this->tank_auth->is_admin()){
+			if(isset($_POST['room_id']) && isset($_POST['class_type_id']) && isset($_POST['sport_number'])){
+				$this->courts->removeSportInstance($_POST['room_id'], $_POST['class_type_id'], $_POST['sport_number']);
+				echo $this->db->_error_message();
+			}
+		}
+		
 	}
-	
+
+
+
+
 }
 
 /* End of file room.php */

@@ -1,11 +1,12 @@
 
-var assignDivPanel, roomDivider, divisibleRoomPanel, manage_rooms, manage_sports, roomDivider, placedSports, sport_id_to_remove;
+var assignDivPanel, roomDivider, divisibleRoomPanel, manage_rooms, manage_sports, roomDivider, sport_id_to_remove;
 
 
-placedSports = function () {
+var placedSports = function () {
     //assign _root and config private variables
     var _root = this;
     directory = new Array();
+    var used_keys = new Array();
 
     /* add a sport to the directory */
     this.addSport = function(class_type_id){
@@ -18,19 +19,29 @@ placedSports = function () {
     }
 
     /* remove divisions from sport */
-    this.removeDivisions = function(room_id, class_type_id, sport_id){
-    	$.getJSON('court/removeSportInstance/'+room_id+'/'+class_type_id+'/'+sport_id, function(result){
-    		if(result == 1){
-    			delete directory[class_type_id][sport_id];
-    			$.event.trigger({
-    				type: "divisionAdded",
-    				message: "Division Added",
-    				time: new Date()
-    			});	
-    		}
-    	});
-    	
+    this.removeDivisions = function(room_id, class_type_id, sport_number){
+
+        $.post( 'court/removeSportInstance/', { 
+            room_id: room_id, 
+            class_type_id: class_type_id,
+            sport_number: sport_number
+        })
+        .done(function( result ) {
+            delete directory[class_type_id][sport_number];
+            used_keys.push(sport_number);
+
+            notifyDivisionsChange();
+        });
     }
+
+    notifyDivisionsChange = function(){
+        $.event.trigger({
+            type: "divisionChanged",
+            message: "Division Changed",
+            time: new Date()
+        }); 
+    }
+
 
     /**
     * Assign divisions to a sport takes string and array
@@ -50,16 +61,19 @@ placedSports = function () {
     		}
     	}
 
-    	directory[sport_id][Object.keys(directory[sport_id]).length+1] = divs;
+        if(used_keys.length>0){
+            directory[sport_id][used_keys.pop()] = divs;
+        }else{
+            var i = Object.keys(directory[sport_id]).length+1;
+            while(directory[sport_id][i]){
+                i++;
+            }
+            directory[sport_id][i] = divs;
+            
+        }
 
+        notifyDivisionsChange();
 
-    	$.event.trigger({
-    		type: "divisionAdded",
-    		message: "Hello World!",
-    		time: new Date()
-    	});	
-
-    	
     }
 
     compareDivs = function(directory, divs){
@@ -106,9 +120,10 @@ placedSports = function () {
     
     this.refresh = function(room_id) {
     	var $this = this;
-    	$.getJSON('court/getCourtDirectory/'+room_id, function(json){
-    		getDir(json);
-    	});
+        used_keys = new Array();
+        $.getJSON('court/getCourtDirectory/'+room_id, function(json){
+            getDir(json);
+        });
 
     }
 };
@@ -253,6 +268,7 @@ divisibleRoomPanel = (function() {
 		});
 
 		ps.refresh($(this).val());
+        console.log($(this).val());
 	});
 
 	return { 
@@ -282,11 +298,12 @@ assignDivPanel = (function() {
 	});
 	
 
+
 	container.on('click', 'button.remove-court-btn', function(){
 		sport_id_to_remove = $(this).data('sport_id');
 		bootbox.confirm("Are you sure you want to remove this court assignment?", function(result) {
 			if(result){
-				ps.removeDivisions(divisibleRoomPanel.drop.val(), assignDivPanel.getSelectedSport(), sport_id_to_remove);
+				ps.removeDivisions(getSelectedDivRoom(), assignDivPanel.getSelectedSport(), sport_id_to_remove);
 			}
 		}); 
 	});
@@ -313,7 +330,9 @@ assignDivPanel = (function() {
 				alert('Error: room may not be divisivble please refresh.')
 			}
 			manage_sports.regenerate();
-		});
+            ps.refresh(divdrop.val());
+            divisions.html(ps.getDivisions(divdrop.val()));
+        });
 		
 		
 	});
@@ -327,6 +346,9 @@ assignDivPanel = (function() {
 		return sportlist.find('.active').data('class_type_id');
 	}
 
+    getSelectedDivRoom = function(){
+        return divdrop.val();
+    }
 
 
 	return { 
@@ -355,7 +377,7 @@ $(function(){
 		assignDivPanel.drop.html(divisiblerooms.drop.html());
 	})
 
-	.on("divisionAdded", function(){
+	.on("divisionChanged", function(){
 		var sport = assignDivPanel.getSelectedSport();
 		if(sport){
 			assignDivPanel.divisions.html(ps.getDivisions(sport));
