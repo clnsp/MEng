@@ -115,14 +115,11 @@ class Member extends CI_Controller{
 	/*
 	 * Update User Membership
 	 */
-	function updateUserMembership(){
-		$this->load->helper('twitter');
-		//send_tweet("Graeme_Clark", "Did it work ?");
-		//print_r(api_requests());
-		print_r(user_following('mengers2013',array("Graeme_Clark","StrathCSR","shadowbeam_")));
-		///print_r(api_requests());
-		//echo (check_user_following("Graeme_Clark")); //"StrathCSR"));//("shadowbeam_"));
-		//print_r (update_account_following('mengers2013'));
+	function updateUserMembership(){		
+		$this->load->helper('comms');
+		print_r(contact_user(array(2,2),"THIS IS A TEST MESSAGE !!!"));//THIS IS A TEST MESSAGE !!! THIS IS A TEST MESSAGE !!! THIS IS A TEST MESSAGE !!! THIS IS A TEST MESSAGE !!! THIS IS A TEST MESSAGE !!! THIS IS A TEST MESSAGE !!!"));		
+		//$this->load->helper('sms');
+		//print_r(send_sms_message(array('447773005300'),"TEST"));
 	}
 	
 	/*

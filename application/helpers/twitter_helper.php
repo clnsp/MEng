@@ -36,11 +36,32 @@ if (!function_exists('send_dm'))
 		if(!is_array($username)){$username = array($username);}
 		create_session();
 		$ci =& get_instance();
-		foreach($username as $un)
+		$message = message_length($message);
+		$username = user_following('mengers2013',$username);
+		$sent = array(array(),array());
+		foreach($username as $name => $follow)
 		{
-			$ci->twitteroauth->post('direct_messages/new', array('user' => $un, 'text' => $message));
+			if($follow){
+				$ci->twitteroauth->post('direct_messages/new', array('user' => $name, 'text' => $message));
+				$sent[1][] = $name;
+			}
+			else{
+				$sent[0][] = $name;
+			}
 		}
-		return 1;
+		return $sent;
+	}
+}
+
+if (!function_exists('message_length'))
+{
+	function message_length($message)
+	{
+		if(strlen($message) > 140)
+		{
+			$message = substr($message,0,137);
+		}
+		return $message;
 	}
 }
 
@@ -88,7 +109,7 @@ if(!function_exists('api_requests'))
  * @param string
  * @return bool
  */
-if(!function_exists('are_users_following'))
+if(!function_exists('users_following'))
 {
 	function user_following($sys_user, $username){
 		create_session();
@@ -112,7 +133,7 @@ if(!function_exists('are_users_following'))
 			}
 			else
 			{
-				// CHECK OLDER COPY
+				// CHECK OLDER COPY -- DB
 			}
 		}
 		return $is_following;
@@ -134,12 +155,11 @@ if(!function_exists('check_user_following'))
 		$ci =& get_instance();
 		$return = $ci->twitteroauth->get('friendships/lookup', array('screen_name' => $username));
 		$return = $return[0]; // Get First and Only Element
-		print_r($return);
 		if(isset($return->connections))
 		{
-			return in_array('followed_by',$return->connections); // Is the user following 
+			return array($username=>in_array('followed_by',$return->connections)); // Is the user following 
 		}
-		return false; // Failure False
+		return array($username=>false); // Failure False
 	}
 }
 

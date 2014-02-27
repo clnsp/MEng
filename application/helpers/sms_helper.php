@@ -15,72 +15,106 @@ if ( ! function_exists('valid_uk_number'))
 }
 
 /**
- * Send an SMS
  *
- * @access	public
- * @return	bool
+ *
+ *
+ *
  */
-if ( ! function_exists('send_sms'))
+if (!function_exists('createObject'))
 {
-	function send_sms($numbers, $message)
+	function createObject()
 	{
-		$CI =& get_instance();
-		
-		if(!$CI->config->item('sms_allow'))
-		{
-			return "Error: SMS Disabled";
-		}
-		else if(!empty($numbers) && !empty($message))
-		{
-			if($CI->config->item('sms_txtlocal_sms')) {	return _txtLocal($numbers, $message);}
-			else {return "Error: No SMS Provider Selected";}
-		}
-		else {
-			return "Error: Invalid Number or Message";
+		$ci =& get_instance();
+		$param = array('username' => $ci->config->item('sms_txtlocal_username'),'hash' => $ci->config->item('sms_txtlocal_hash'));
+		$ci->load->library('Textlocal', $param);
+	}
+}
+
+/**
+ *
+ *
+ *
+ *
+ */
+if (!function_exists('getBalance'))
+{
+	function getBalance()
+	{
+		createObject();
+		$ci =& get_instance();
+
+		try {
+			$result = $ci->textlocal->getBalance();
+			return $result['sms'];
+		} catch (Exception $e) {
+			die('Error: ' . $e->getMessage());
 		}
 	}
 }
 
 /**
- * Use Text Local API
- * http://www.textlocal.com/
  *
- * @access private
- * @return bool
+ *
+ *
+ *
  */
-
-/*
-|--------------------------------------------------------------------------
-| Text Local: http://www.textlocal.com/
-|
-| Use Text Local to SMS (Requires an Account)
-|--------------------------------------------------------------------------
-*/
-
-function _txtLocal($numbers, $message)
+ if (!function_exists('send_sms_message'))
 {
-	$CI =& get_instance();
-	
-	// Textlocal account details
-	$username = $CI->config->item('sms_txtlocal_username');
-	$hash = $CI->config->item('sms_txtlocal_hash');
-	
-	// Message details
-	$sender = $CI->config->item('sms_sender');
- 
-	// Prepare data for POST request
-	$data = array('username' => $username, 'hash' => $hash, 'numbers' => $numbers, "sender" => $sender, "message" => $message);
- 
-	// Send the POST request with cURL
-	$ch = curl_init('https://api.txtlocal.com/send/');
-	curl_setopt($ch, CURLOPT_POST, true);
-	curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-	$response = curl_exec($ch);
-	curl_close($ch);
-	
-	// Process your response here
-	return $response;
+	function send_sms_message($numbers, $message)
+	{
+		createObject();
+		$ci =& get_instance();
+		if(!is_array($numbers)){$numbers = array($numbers);}
+		$message = message_length($message, $ci->config->item('sms_limit'));
+		// CHECK CREDITS
+		if(cost_est(strlen($message),count($numbers))){
+			$sender = $ci->config->item('comms_name');
+			try {
+				// INSERT 1000 Limit Per Cycle
+				$result = $ci->textlocal->sendSms($numbers, $message, $sender);
+				return ($result);
+			} catch (Exception $e) {
+				return ('Error: ' . $e->getMessage());
+				//die('Error: ' . $e->getMessage());
+			}
+		}else{
+			return "Not Enough Credits";
+		}
+	}
 }
 
+/**
+ *
+ *
+ *
+ *
+ */
+if (!function_exists('message_length'))
+{
+	function message_length($message,$lim=1)
+	{
+		$lim=$lim*160;
+		if(strlen($message) > $lim)
+		{
+			$message = substr($message,0,$lim);
+		}
+		return $message;
+	}
+}
+
+/**
+ *
+ *
+ *
+ *
+ */
+if (!function_exists('cost_est'))
+{
+	function cost_est($len, $numbers)
+	{
+		$len = ceil($len/160);
+		$total = $len*$numbers;
+		return (getBalance()-$total>=0);
+	}
+}
 ?>

@@ -2,57 +2,64 @@
 
 if (!function_exists('contact_user'))
 {
-	function contact_user($id,$message,$service=[]){
+	function contact_user($id,$message,$service=""){
+		if(!is_array($id)){$id = array($id);}
+		if(!is_array($message)){$message =  array('email'=>$message,'sms'=>$message,'twitter'=>$message);}
 		$ci =& get_instance();
 		if(check_admin()){
 			$ci->load->model('members');
-			
 			//Admin Override
-			if($service!=[])
+			if($service!="")
 			{
 				$service = array_map('strtolower', $service);
-				if(in_array('sms',$service)){contact_user_sms($id,$message);}
-				if(in_array('twitter',$service)){contact_user_twitter($id,$message);}
-				if(in_array('email',$service)){contact_user_email($id,$message);}
+				//if(in_array('sms',$service)){contact_user_sms($id,$message);}
+				//if(in_array('twitter',$service)){contact_user_twitter($id,$message);}
+				//if(in_array('email',$service)){contact_user_email($id,$message);}
 			}
 			else
-			// Fetch User Preference
 			{
-				$pref = $ci->members->getUserColumn($id, 'comms_preference');
-				// ALL MESSAGES
-				if($pref == 2){
-					contact_user_twitter($id,$message);
-					contact_user_sms($id,$message);
-					contact_user_email($id,$message);
-				// SMS AND EMAIL ONLY
-				}else if($pref == 1){
-					contact_user_sms($id,$message);
-					contact_user_email($id,$message);
-				}
-				// EMAIL ONLY
-				else{
-					contact_user_email($id,$message);
+				// Fetch User Preference
+				$list = array('email'=>array(),'sms'=>array(),'twitter'=>array());
+				foreach($id as $i)
+				{
+					$prefD = $ci->members->getUserColumn($i, array('comms_preference','email','twitter','mobile_number'));
+					$prefD = $prefD[0];
+
+					if($prefD->comms_preference> 2){
+						$list['twitter'][] = $prefD->twitter; 
+					}
+					
+					if($prefD->comms_preference> 1){
+						$list['sms'][] = $prefD->mobile_number; 
+					}
+					$list['email'][] = $prefD->email; 
 				}			
-			}
+				
+				if($ci->config->item('twitter_allow') &&  isset($message['twitter'])) {contact_twitter($list['twitter'],$message['twitter']);}
+				if($ci->config->item('sms_allow') &&  isset($message['sms'])) {contact_sms($list['sms'],$message['sms']);}
+				if(isset($message['email'])){contact_email($list['email'],$message['email']);};
+
+				//return $list;				
+			}			
 		}
 	}
 }
+
 /*
  * SEND SMS Message
  * @access private
  * @param ID
  * @param message
  */
-if (!function_exists('contact_user_sms')) // MAX NUMBER OF MESSAGES
+if (!function_exists('contact_sms')) // MAX NUMBER OF MESSAGES
 {
-	private function contact_user_sms($id,$message){
+	function contact_sms($nums,$message){
 		$ci =& get_instance();
 		$ci->load->helper('sms');
-		$mobile_number = $ci->members->getUserColumn($id, 'mobile_number');
-		if(!$ci->config->item('sms_allow')){
+		if($ci->config->item('sms_allow')){
 			// GET MOBILE NUMBER
-			if(isset($mobile_number[0])){
-				echo send_sms($mobile_number[0]->mobile_number,$message);
+			if(isset($nums)){
+				return send_sms_message($nums,$message);
 			}
 		}
 	}
@@ -64,15 +71,14 @@ if (!function_exists('contact_user_sms')) // MAX NUMBER OF MESSAGES
  * @param ID
  * @param message
  */
-if (!function_exists('contact_user_twitter'))
+if (!function_exists('contact_twitter'))
 {
-	private function contact_user_twitter($id,$message){
+	function contact_twitter($ids,$message){
 		$ci =& get_instance();
 		$ci->load->helper('twitter');
-		$twitter_name = $ci->members->getUserColumn($id, 'twitter'); 
-		if(!$ci->config->item('twitter_allow')){
-			if(isset($twitter_name[0])){
-				echo send_tweet($twitter_name[0]->twitter,$message);
+		if($ci->config->item('twitter_allow')){
+			if(isset($ids)){
+				echo send_dm($ids,$message);
 			}
 		}
 	}
@@ -84,17 +90,18 @@ if (!function_exists('contact_user_twitter'))
  * @param ID
  * @param message
  */
-if (!function_exists('contact_user_email'))
+if (!function_exists('contact_email'))
 {
-	private function contact_user_email($id,$message){
+	function contact_email($ids,$message){
 		$ci =& get_instance();
-		$query = $ci->members->getUserColumn($id, 'email'); 
-		if(count($query[0]) == 1){
-			// HEADER / BODY / FOOTER
-			//$email_message = 		
-			$ci->load->helper('email');
-			send_email($query[0]->email, 'Gym Message', $message);				
-		}
+		if(!is_array($ids)){$ids = array($ids);}
+		// HEADER / BODY / FOOTER
+		//$email_message = 		
+		$ci->load->helper('email');
+		foreach($ids as $id)
+		{
+			send_email($id, 'Gym Message', $message);
+		}			
 	}
 }
 ?>

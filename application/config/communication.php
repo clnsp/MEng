@@ -28,7 +28,7 @@ $config['email_footer'] = "THIS IS A FOOTER \r\n Regards CSR";
 | These details are used when allowing and sending SMS
 |--------------------------------------------------------------------------
 */
-$config['sms_limit'] = 2; // Max Number of texts per Message
+$config['sms_limit'] = 1; // Max Number of texts per Message
 $config['sms_allow'] = TRUE;
 
 /*
@@ -40,7 +40,7 @@ $config['sms_allow'] = TRUE;
 */
 $config['sms_txtlocal_sms'] = TRUE;
 $config['sms_txtlocal_username'] = 'colin.espie@strath.ac.uk';
-$config['sms_txtlocal_hash'] = '79c9c60054b672eb9543c572cbb1adf12178f0d3';
+$config['sms_txtlocal_hash'] = '644803d2f1c4678d8dc453eb437ac7a95d4269dc';
 
 /*
 |--------------------------------------------------------------------------
