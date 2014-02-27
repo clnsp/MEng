@@ -840,7 +840,6 @@ ul.ui-autocomplete.popover.dropdown-menu{
 
 #booking.manage-sports-hall #divisible-room{
 	height:250px;
-	background-color: #AFAFAF;
 	margin-bottom: 15px;
 
 }
@@ -851,7 +850,7 @@ ul.ui-autocomplete.popover.dropdown-menu{
 	height:100%;
 	display: table;
 	height:250px;
-	background-color: #AFAFAF;
+
 	margin-bottom: 15px;
 }
 

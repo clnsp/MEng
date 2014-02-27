@@ -28,17 +28,12 @@ class Court extends CI_Controller{
 					
 					foreach ($div_set as $sport_number => $divs) {
 
-					//	$sport_number['sport_number'] = $key;
-					//	$sportID = $this->courts->addPossibleSport($possibleSport);
-
 						if(is_array($divs)){
 							foreach ($divs as $key => $div) {
-								//echo(" ".$div);
-							//$div_num = $this->courts->getDivision($_POST['room_id'], $div);
 								if(!$this->courts->assignSportToCourt($_POST['room_id'], $div, $class_type_id, $sport_number)){
 									echo "<br>Not added<br>";
 								}
-													
+
 							}
 						}
 						
@@ -63,7 +58,6 @@ class Court extends CI_Controller{
 
 			//fetch the possible sports
 				$rows = $this->courts->getSportsToDivisions($room_id);
-				//echo(json_encode($rows));
 				foreach ($rows as $key => $row) {
 
 					if(!isset($dir[$row['class_type_id']])){
@@ -103,4 +97,4 @@ class Court extends CI_Controller{
 }
 
 /* End of file room.php */
-/* Location: ./application/controllers/room.php */
+/* Location: ./application/controllers/court.php */

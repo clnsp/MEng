@@ -94,7 +94,7 @@ var placedSports = function () {
 
     		$.each(Object.keys(directory[sport_id]), function(index, value) {
 
-    			var li = $('<li class="list-group-item"></li>').html("Court");
+    			var li = $('<li class="list-group-item"></li>').html("Court ");
     			li.append($('<button class="remove-court-btn btn btn-xs pull-right btn-danger"><i class="glyphicon glyphicon-remove"></i></button>').attr('data-sport_id', value));
     			$.each(directory[sport_id][value], function(j, v) {
     				li.append(v + ", ");
