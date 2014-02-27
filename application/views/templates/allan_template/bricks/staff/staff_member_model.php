@@ -185,22 +185,9 @@
                     <div class="col-md-8" style="text-align: left;">
                         <!-- LEFT-->
                         <!-- Single button -->
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown">
-                                <i class="fa fa-user fa-fw"></i> Contact <span class="caret"></span>
+                            <button type="button" id="contact "class="btn btn-info btn-sm" href="#SubMemberDetails" data-toggle="submodal">
+                                <i class="fa fa-user fa-fw"></i> Contact </span>
                             </button>
-                            <ul class="dropdown-menu" role="menu">
-                                <li id="email" class="message"><a href="#SubMemberDetails" data-toggle="submodal"><i class="fa fa-envelope fa-fw"></i>  Email</a></li>
-								<?php if($twitter) {?>
-								<li class="divider tweet"></li>
-                                <li id="tweet" class="message tweet"><a href="#SubMemberDetails" data-toggle="submodal"><i class="fa fa-twitter fa-fw"></i>  Tweet</a></li>
-								<?php }?>
-								<?php if($sms) {?>
-                                <li class="divider sms"></li>
-                                <li id="sms" class="message sms"><a href="#SubMemberDetails" data-toggle="submodal"><i class="fa fa-mobile fa-fw"></i>  SMS</a></li>
-								<?php }?>
-                            </ul>
-                        </div>
                         <!-- Single button -->
                             <button type="button" class="btn btn-warning btn-sm dropdown-toggle" data-toggle="dropdown">
                                 <i class="fa fa-search"></i> Attendance</span>

@@ -37,7 +37,7 @@ if (!function_exists('send_dm'))
 		create_session();
 		$ci =& get_instance();
 		$message = message_length($message);
-		$username = user_following('mengers2013',$username);
+		$username = user_following($username);
 		$sent = array(array(),array());
 		foreach($username as $name => $follow)
 		{
@@ -111,9 +111,10 @@ if(!function_exists('api_requests'))
  */
 if(!function_exists('users_following'))
 {
-	function user_following($sys_user, $username){
+	function user_following($username){
 		create_session();
 		$ci =& get_instance();
+		$sys_user = $ci->config->item('twitter_username');
 		$rates = api_requests();
 		if(!is_array($username)){$username = array($username);}
 		$is_following=array();

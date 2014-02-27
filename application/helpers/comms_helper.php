@@ -34,12 +34,12 @@ if (!function_exists('contact_user'))
 					}
 					$list['email'][] = $prefD->email; 
 				}			
-				
-				if($ci->config->item('twitter_allow') &&  isset($message['twitter'])) {contact_twitter($list['twitter'],$message['twitter']);}
-				if($ci->config->item('sms_allow') &&  isset($message['sms'])) {contact_sms($list['sms'],$message['sms']);}
-				if(isset($message['email'])){contact_email($list['email'],$message['email']);};
+				$status=array();
+				if($ci->config->item('twitter_allow') &&  isset($message['twitter'])) {$status['twitter'] = contact_twitter(array_unique($list['twitter']),$message['twitter']);}
+				if($ci->config->item('sms_allow') &&  isset($message['sms'])) {$status['sms'] = contact_sms(array_unique($list['sms']),$message['sms']);}
+				if(isset($message['email'])){$status['email'] = contact_email(array_unique($list['email']),$message['email']);};
 
-				//return $list;				
+				return $status;				
 			}			
 		}
 	}
@@ -78,7 +78,7 @@ if (!function_exists('contact_twitter'))
 		$ci->load->helper('twitter');
 		if($ci->config->item('twitter_allow')){
 			if(isset($ids)){
-				echo send_dm($ids,$message);
+				return send_dm($ids,$message);
 			}
 		}
 	}
@@ -98,10 +98,13 @@ if (!function_exists('contact_email'))
 		// HEADER / BODY / FOOTER
 		//$email_message = 		
 		$ci->load->helper('email');
-		foreach($ids as $id)
-		{
-			send_email($id, 'Gym Message', $message);
-		}			
+		$fail=array();
+		foreach($ids as $id){
+			if(!send_email($id, 'Gym Message', $message)){
+				$fail[]=$id;
+			}
+		}
+		return $fail;
 	}
 }
 ?>
