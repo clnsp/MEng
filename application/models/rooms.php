@@ -121,22 +121,12 @@ Class Rooms extends CI_Model{
 	/**
 	* Updates a divisible room properties
 	*/
-	function updateDivisibleRoom($room_id, $rows, $cols){
-		$data = array('rows' => $rows, 'cols' => $cols);
-		$this->db->where('room_id', $room_id);
-
-		$this->db->update($this -> divisible_rooms_tbl, $data); 
-	}
-
-	/**
-	* Updates a divisible room properties
-	*/
 	function removeDivisibleRoom($room_id){
 		$this->db->delete($this -> divisible_rooms_tbl, array('room_id' => $room_id)); 
 	}
 
 	/**
-	* Insert divisible room
+	* Insert or update divisible room
 	*/
 	function insertDivisibleRoom($room_id, $rows, $cols){
 		$data = array(
@@ -145,7 +135,10 @@ Class Rooms extends CI_Model{
 			'cols' => $cols
 			);
 
-		$this->db->insert($this -> divisible_rooms_tbl, $data); 
+		$sql = $this->db->insert_string($this -> divisible_rooms_tbl, $data) . ' ON DUPLICATE KEY UPDATE rows='.$rows.', cols='.$cols;
+
+		$result = $this->db->query($sql);
+		
 	}
 	
 }

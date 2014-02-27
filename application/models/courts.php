@@ -118,14 +118,12 @@ Class Courts extends CI_Model{
 	* @return int - new id
 	*/
 	function removeSportToCourt($possible_sports_id, $sports_playing_area_id) {
-		echo "Assigning [" .$possible_sports_id ."] [".  $sports_playing_area_id. "] <br>";
 		$data = array(
 			'possible_sports_id'=>$possible_sports_id, 
 			'sports_playing_area_id'=>$sports_playing_area_id
 			);
 		$this->db->insert($this->sports_divisions_tbl, $data); 
 		
-		echo $this->db->_error_message();
 		
 	}
 	
@@ -152,9 +150,13 @@ Class Courts extends CI_Model{
  			'class_type_id'=>$class_type_id,
  			'sport_number'=>$sport_number,
  			);
- 		$this->db->insert($this->sports_to_divisions_tbl, $data); 
+ 		echo 'room_id'. $room_id. 			'division_number' . $division_number.
+ 		'class_type_id'.$class_type_id.
+ 		'sport_number'.$sport_number.'<br>';
 
- 		return ($this->db->_error_number() == 1062);
+ 		$this->db->insert($this->sports_to_divisions_tbl, $data); 
+ 		echo $this->db->_error_message();
+ 		return ($this->db->_error_number() != 1062);
 
  	}
 
@@ -173,8 +175,15 @@ Class Courts extends CI_Model{
  		return $this->db->from($this->sports_to_divisions_view)->count_all_results();
 
  	}
+ 	/**
+ 	* Remove any divisions that are outwith this range
+ 	*/
+ 	function clearExcessDivisions($room_id, $max_court){
+ 		$this->db->where('room_id', $room_id);
+ 		$this->db->where('division_number >', $max_court);
 
-
+ 		$this->db->delete($this->sports_playing_area_tbl); 
+ 	}
 
  }
  ?>

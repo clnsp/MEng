@@ -235,15 +235,20 @@ divisibleRoomPanel = (function() {
 
 	divisibleForm.submit(function(){
 
-		$.post( urlBase + "saveDivisibleRoom", { 
-			room_id: rdrop.val(),
-			rows: manage_rooms.rows,
-			cols: manage_rooms.cols })
-		.done(function( result ) {
-			alert(result);
-			divisiblerooms.refresh();
-		});
-	});
+        bootbox.confirm("Are you sure you wish to save this setup? <p>If sports have been assigned to divisions that don't exist in the new setupm, they will be removed.</p>", function(result) {
+            if(result){
+                $.post( urlBase + "saveDivisibleRoom", { 
+                    room_id: rdrop.val(),
+                    rows: manage_rooms.rows,
+                    cols: manage_rooms.cols })
+                .done(function( result ) {
+                    alert(result);
+                    divisiblerooms.refresh();
+                });            
+            }
+        }); 
+        
+    });
 
 	manage_rooms  = new roomDivider();
 	manage_rooms.init($('#divisible-room'), false);
@@ -269,7 +274,7 @@ divisibleRoomPanel = (function() {
 
 		ps.refresh($(this).val());
         console.log($(this).val());
-	});
+    });
 
 	return { 
 		drop:rdrop
@@ -297,7 +302,6 @@ assignDivPanel = (function() {
 		
 	});
 	
-
 
 	container.on('click', 'button.remove-court-btn', function(){
 		sport_id_to_remove = $(this).data('sport_id');
@@ -351,12 +355,12 @@ assignDivPanel = (function() {
     }
 
 
-	return { 
-		drop:divdrop,
-		list:sportlist,
-		getSelectedSport: getSelectedSport,
-		divisions: divisions, 
-	};
+    return { 
+      drop:divdrop,
+      list:sportlist,
+      getSelectedSport: getSelectedSport,
+      divisions: divisions, 
+  };
 
 })();
 

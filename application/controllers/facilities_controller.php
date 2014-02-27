@@ -48,26 +48,22 @@ class facilities_controller extends CI_Controller {
 
             if(isset($_POST['room_id']) && isset($_POST['rows']) && isset($_POST['cols'])){
 
-                $number_courts =intval($_POST['rows']) * intval($_POST['rows']);
+                $number_courts =intval($_POST['rows']) * intval($_POST['cols']);
 
                 if($number_courts == 1){
                     $this->_singleDivision();
                     return;
                 } else{
-                    if($this->rooms->isDivisible($_POST['room_id'])){
+                    $this->rooms->insertDivisibleRoom($_POST['room_id'], $_POST['rows'], $_POST['cols']);
+                    echo "Divisible room saved";
 
-                        $this->rooms->updateDivisibleRoom($_POST['room_id'], $_POST['rows'], $_POST['cols']);
-                        $this->courts->clearDivisions($_POST['room_id']);
 
-                        echo "Room updated";
-                    } else{
-                        $this->rooms->insertDivisibleRoom($_POST['room_id'], $_POST['rows'], $_POST['rows']);
-                        echo "New divisible room created";
-                    }
-
-                    for($i=1;  $i < $number_courts +1; $i++){
+                    for($i=1;  $i <= $number_courts; $i++){
                         $this->courts->addDivision($_POST['room_id'], $i);
                     }
+
+                    //clear any divisions still hanging about
+                    $this->courts->clearExcessDivisions($_POST['room_id'], $number_courts);              
                 }
             }
 
