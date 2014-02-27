@@ -873,8 +873,8 @@ ul.ui-autocomplete.popover.dropdown-menu{
 	cursor: default;
 }
 
-.box-divider .box.selected{
-	background-color: #90CAFF;
+.box-divider .box.hover{
+	background-color: #90CAFF!important;
 } 
 
 .box-divider .box.ui-selecting{

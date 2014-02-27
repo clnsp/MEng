@@ -137,8 +137,8 @@ roomDivider = function () {
     //assign _root and config private variables
     var _root = this;
 
-    this.rows = 2;
-    this.cols = 2;
+    this.rows = 1;
+    this.cols = 1;
     var min = 1;
     var max = 10;
 
@@ -244,6 +244,7 @@ divisibleRoomPanel = (function() {
                 .done(function( result ) {
                     alert(result);
                     divisiblerooms.refresh();
+                    ps.refresh();
                 });            
             }
         }); 
@@ -290,77 +291,93 @@ assignDivPanel = (function() {
 	var urlBase = 'court/';
 	var divisions = $('#sports-divisions');
 
-	sportlist.on('click', 'a.list-group-item', function(e){
-		e.preventDefault();
-		$(this).siblings('.active').removeClass('active');
-		$(this).addClass('active');
-		
-		var sport = assignDivPanel.getSelectedSport();
-		if(sport){
-			divisions.html(ps.getDivisions(sport));
-		}
-		
-	});
-	
+    manage_sports  = new roomDivider();
+    manage_sports.init($('#add-sports-to-room'), true);
 
-	container.on('click', 'button.remove-court-btn', function(){
-		sport_id_to_remove = $(this).data('sport_id');
-		bootbox.confirm("Are you sure you want to remove this court assignment?", function(result) {
-			if(result){
-				ps.removeDivisions(getSelectedDivRoom(), assignDivPanel.getSelectedSport(), sport_id_to_remove);
-			}
-		}); 
-	});
-	
-	container.find('#assign-sports-to-courts').click(function(){
+    divisions.on('mouseenter', 'li.list-group-item', function(e){
+        var si = $(this).find('button').data('sport_id');
 
-		$.post( urlBase + "assignSports", { 
-			data: directory,
-			room_id: divdrop.val()
-		})
-		.done(function( result ) {
-			alert(result);
-			
-		});
-	});
-	
-	divdrop.change(function(){
+        var courts = directory[getSelectedSport()][si];
 
-		$.getJSON('facilities/getDivisibleRoom/' + $(this).val(), function(data) {
-			if(data.length>0){
-				manage_sports.cols = parseInt(data[0].cols);
-				manage_sports.rows = parseInt(data[0].rows);
-			}else{
-				alert('Error: room may not be divisivble please refresh.')
-			}
-			manage_sports.regenerate();
-            ps.refresh(divdrop.val());
-            divisions.html(ps.getDivisions(divdrop.val()));
-        });
-		
-		
-	});
-	
+        for (var key in courts) {
+            $('#add-sports-to-room .box[data-court_id='+ courts[key] +']').addClass('hover');
+        }
 
-	manage_sports  = new roomDivider();
-	manage_sports.init($('#add-sports-to-room'), true);
+    }).on('mouseleave', 'li.list-group-item', function(e){
+        $('#add-sports-to-room .box.hover').removeClass('hover');
 
+    });
 
-	getSelectedSport = function(){
-		return sportlist.find('.active').data('class_type_id');
-	}
+    sportlist.on('click', 'a.list-group-item', function(e){
+      e.preventDefault();
+      $(this).siblings('.active').removeClass('active');
+      $(this).addClass('active');
 
-    getSelectedDivRoom = function(){
-        return divdrop.val();
+      var sport = assignDivPanel.getSelectedSport();
+      if(sport){
+        divisions.html(ps.getDivisions(sport));
     }
 
+});
 
-    return { 
-      drop:divdrop,
-      list:sportlist,
-      getSelectedSport: getSelectedSport,
-      divisions: divisions, 
-  };
+
+    container.on('click', 'button.remove-court-btn', function(){
+      sport_id_to_remove = $(this).data('sport_id');
+      bootbox.confirm("Are you sure you want to remove this court assignment?", function(result) {
+        if(result){
+            ps.removeDivisions(getSelectedDivRoom(), assignDivPanel.getSelectedSport(), sport_id_to_remove);
+        }
+    }); 
+  });
+
+    container.find('#assign-sports-to-courts').click(function(){
+
+      $.post( urlBase + "assignSports", { 
+        data: directory,
+        room_id: divdrop.val()
+    })
+      .done(function( result ) {
+       alert(result);
+
+   });
+  });
+
+    divdrop.change(function(){
+
+      $.getJSON('facilities/getDivisibleRoom/' + $(this).val(), function(data) {
+       if(data.length>0){
+        manage_sports.cols = parseInt(data[0].cols);
+        manage_sports.rows = parseInt(data[0].rows);
+    }else{
+        alert('Error: room may not be divisivble please refresh.')
+    }
+    manage_sports.regenerate();
+    ps.refresh(divdrop.val());
+    divisions.html(ps.getDivisions(divdrop.val()));
+});
+
+
+  });
+
+
+
+
+
+    getSelectedSport = function(){
+      return sportlist.find('.active').data('class_type_id');
+  }
+
+  getSelectedDivRoom = function(){
+    return divdrop.val();
+}
+
+
+return { 
+  drop:divdrop,
+  list:sportlist,
+  getSelectedSport: getSelectedSport,
+  divisions: divisions, 
+};
 
 })();
 
@@ -373,13 +390,14 @@ $(function(){
 	})
 
 	.on("roomsRefreshed", function(){
-		divisibleRoomPanel.drop.html(rooms.drop.html());
+		divisibleRoomPanel.drop.html('<option value="" disabled selected>Select a room</option>' + rooms.drop.html());
 		ps.refresh(rooms.drop.first().val());
 	})
 
 	.on("divisibleroomsRefreshed", function(){
-		assignDivPanel.drop.html(divisiblerooms.drop.html());
-	})
+		assignDivPanel.drop.html('<option value="" disabled selected>Select a room</option>' + divisiblerooms.drop.html());
+
+    })
 
 	.on("divisionChanged", function(){
 		var sport = assignDivPanel.getSelectedSport();
