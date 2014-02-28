@@ -1,55 +1,55 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+/*
+ * CONTACT A USER BASED ON THEIR PREFERNECES
+ * @access public
+ * @param LIST OF IDS
+ * @param LIST OF MESSAGES OR SINGLE MESSAGE
+ * @param SEND ONLY BY EMAIL
+ * @return LIST OF STATUS
+ */
+
 if (!function_exists('contact_user'))
 {
-	function contact_user($id,$message,$service=""){
+	function contact_user($id,$message,$service=false){
 		if(!is_array($id)){$id = array($id);}
 		if(!is_array($message)){$message =  array('email'=>$message,'sms'=>$message,'twitter'=>$message);}
 		$ci =& get_instance();
 		if(check_admin()){
 			$ci->load->model('members');
-			//Admin Override
-			if($service!="")
+			// Fetch User Preference
+			$list = array('email'=>array(),'sms'=>array(),'twitter'=>array());
+			foreach($id as $i)
 			{
-				$service = array_map('strtolower', $service);
-				//if(in_array('sms',$service)){contact_user_sms($id,$message);}
-				//if(in_array('twitter',$service)){contact_user_twitter($id,$message);}
-				//if(in_array('email',$service)){contact_user_email($id,$message);}
-			}
-			else
-			{
-				// Fetch User Preference
-				$list = array('email'=>array(),'sms'=>array(),'twitter'=>array());
-				foreach($id as $i)
-				{
-					$prefD = $ci->members->getUserColumn($i, array('comms_preference','email','twitter','mobile_number'));
-					$prefD = $prefD[0];
+				$prefD = $ci->members->getUserColumn($i, array('comms_preference','email','twitter','mobile_number'));
+				$prefD = $prefD[0];
 
-					if($prefD->comms_preference> 2){
-						$list['twitter'][] = $prefD->twitter; 
-					}
-					
-					if($prefD->comms_preference> 1){
-						$list['sms'][] = $prefD->mobile_number; 
-					}
-					$list['email'][] = $prefD->email; 
-				}			
-				$status=array();
+				if($prefD->comms_preference> 2){
+					$list['twitter'][] = $prefD->twitter; 
+				}
+				
+				if($prefD->comms_preference> 1){
+					$list['sms'][] = $prefD->mobile_number; 
+				}
+				$list['email'][] = $prefD->email; 
+			}			
+			$status=array();
+			if(!$service){ // ADMIN -- EMAIL ONLY
 				if($ci->config->item('twitter_allow') &&  isset($message['twitter'])) {$status['twitter'] = contact_twitter(array_unique($list['twitter']),$message['twitter']);}
 				if($ci->config->item('sms_allow') &&  isset($message['sms'])) {$status['sms'] = contact_sms(array_unique($list['sms']),$message['sms']);}
-				if(isset($message['email'])){$status['email'] = contact_email(array_unique($list['email']),$message['email']);};
-
-				return $status;				
-			}			
+			}
+			if(isset($message['email'])){$status['email'] = contact_email(array_unique($list['email']),$message['email']);};
+			return $status;	
 		}
 	}
 }
 
 /*
  * SEND SMS Message
- * @access private
+ * @access public
  * @param ID
  * @param message
+ * @return sms status
  */
 if (!function_exists('contact_sms')) // MAX NUMBER OF MESSAGES
 {
@@ -67,9 +67,10 @@ if (!function_exists('contact_sms')) // MAX NUMBER OF MESSAGES
 
 /*
  * SEND Twitter 
- * @access private
+ * @access public
  * @param ID
  * @param message
+ * @return twitter status
  */
 if (!function_exists('contact_twitter'))
 {
@@ -86,9 +87,10 @@ if (!function_exists('contact_twitter'))
 
 /*
  * SEND EMAIL
- * @access private
+ * @access public
  * @param ID
  * @param message
+ * @return email status
  */
 if (!function_exists('contact_email'))
 {

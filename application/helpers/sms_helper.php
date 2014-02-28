@@ -53,7 +53,7 @@ if (!function_exists('getBalance'))
 }
 
 /**
- *
+ * Send SMS Messages
  *
  *
  *
@@ -84,7 +84,7 @@ if (!function_exists('getBalance'))
 }
 
 /**
- *
+ * Cost Message to Require Length
  *
  *
  *
@@ -103,7 +103,7 @@ if (!function_exists('message_length'))
 }
 
 /**
- *
+ * Get Estimated Cost of Sending Messages
  *
  *
  *

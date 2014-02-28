@@ -115,9 +115,8 @@ class Member extends CI_Controller{
 	/*
 	 * Update User Membership
 	 */
-	function updateUserMembership(){		
-		$this->load->helper('comms');
-		print_r(contact_user(array(2,2,2,2,2,2,2),"THIS IS A TEST MESSAGE !!! THIS IS A TEST MESSAGE !!! THIS IS A TEST MESSAGE !!! THIS IS A TEST MESSAGE !!! THIS IS A TEST MESSAGE !!! THIS IS A TEST MESSAGE !!! THIS IS A TEST MESSAGE !!!"));			
+	function updateUserMembership(){
+	
 	}
 	
 	/*
