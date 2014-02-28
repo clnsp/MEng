@@ -28,8 +28,8 @@ $config['email_footer'] = "THIS IS A FOOTER \r\n Regards CSR";
 | These details are used when allowing and sending SMS
 |--------------------------------------------------------------------------
 */
-$config['sms_limit'] = 2; // Max Number of texts per Message
-$config['sms_allow'] = TRUE;
+$config['sms_limit'] = 1; // Max Number of texts per Message
+$config['sms_allow'] = FALSE;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,7 +40,7 @@ $config['sms_allow'] = TRUE;
 */
 $config['sms_txtlocal_sms'] = TRUE;
 $config['sms_txtlocal_username'] = 'colin.espie@strath.ac.uk';
-$config['sms_txtlocal_hash'] = '79c9c60054b672eb9543c572cbb1adf12178f0d3';
+$config['sms_txtlocal_hash'] = '644803d2f1c4678d8dc453eb437ac7a95d4269dc';
 
 /*
 |--------------------------------------------------------------------------
@@ -50,6 +50,7 @@ $config['sms_txtlocal_hash'] = '79c9c60054b672eb9543c572cbb1adf12178f0d3';
 |--------------------------------------------------------------------------
 */
 $config['twitter_allow'] = TRUE;
+$config['twitter_username']="mengers2013";
 $config['twitter_consumerKey']       = '9uo6ym4fGqUzJj1CJignUQ';
 $config['twitter_consumerSecret']    = 'qFuZChnvmJSwcZwynm5bQGeeY6awxLdBKkXovOLT0';
 $config['twitter_accessToken']       = '2255084299-P7iUK9u3xIVceXv1tpRthR5UfCbxO0JekULhser';
