@@ -8,7 +8,7 @@ $( document ).ready(function() {
 		e.stopImmediatePropagation(); //prevent clicking the row when selecting color swatch
 	});
 		
-		var categoriesPanel, addClassTypePanel, manageClassTypesPanel, editClassTypeModal, addBlockClassesPanel, categories, classtypes, datepicker;
+		var categoriesPanel, addClassTypePanel, manageClassTypesPanel, editClassTypeModal, addBlockClassesPanel, datepicker;
 
 
 
@@ -30,13 +30,7 @@ $( document ).ready(function() {
 					categoriesPanel.storename($(this).parent('.list-group-item').data('category_id'), this.value );
 			});
 			
-			initColorPickers = function() {
-				$('INPUT.minicolors').minicolors({
-					hide: saveColor,
-					show: storeColor,
-				});
-			},
-			
+				
 			storeColor = function() {
 				currentColor = this.value;
 			},
@@ -132,7 +126,6 @@ $( document ).ready(function() {
 			
 
 			return {
-				initColorPickers: initColorPickers,
 				urlBase : urlBase, 
 				addCategory : addCategory,
 				removeCategory : removeCategory,  
@@ -231,7 +224,7 @@ $( document ).ready(function() {
 			class_type.val(ct);
 			class_description.val(cd);
 			modal.modal('show');
-			category_id.html(categories.drop.html());
+			category_id.html(categories.getDropdown());
 			category_id.val(catid);
 		},
 
@@ -357,164 +350,164 @@ $( document ).ready(function() {
 
 	})();
 
-	rooms = (function() {
+	// rooms = (function() {
 
-		var urlBase = "room/";
-		var rdrop = $('<select></select>')
+	// 	var urlBase = "room/";
+	// 	var rdrop = $('<select></select>')
 
-		rcreateOption = function (room) {
-			return($('<option></option>').val(room['room_id']).append(room['room']));
-		},
-
-
-		refresh = function () {		
-			$.getJSON(urlBase + 'getRoomIDs', function(data) {
-
-				rclear();
-				if(data.length>0){
-					$.each( data, function( key, room ) {
-						rdrop.append(rcreateOption(room));
-					});
-
-				}
-				rupdate();
-
-			});
-		},
-
-		rclear = function() {
-			rdrop.html('');
-		},
+	// 	rcreateOption = function (room) {
+	// 		return($('<option></option>').val(room['room_id']).append(room['room']));
+	// 	},
 
 
-		rupdate = function () {
-			addBlockClassesPanel.roomDrop.html(rdrop.html());
-		}
+	// 	refresh = function () {		
+	// 		$.getJSON(urlBase + 'getRoomIDs', function(data) {
 
-		return { refresh: refresh };
+	// 			rclear();
+	// 			if(data.length>0){
+	// 				$.each( data, function( key, room ) {
+	// 					rdrop.append(rcreateOption(room));
+	// 				});
 
-	})();
+	// 			}
+	// 			rupdate();
 
-	classtypes = (function() {
-		var cttable = $('<tbody></tbody>');
-		var ctdrop = $('<select></select>');
+	// 		});
+	// 	},
 
-		var urlBase = "class_type/";
-
-		ctcreateRow = function (type) {
-			return($('<tr data-class_type_id="' + type['class_type_id'] + '"></tr>')
-				.append('<td class="class_type">'+type['class_type'] + '</td>')
-				.append('<td class="class_description">' + type['class_description'] +'</td>')
-				.append('<td data-category_id='+ type['category_id'] +' class="category">' + type['category'] +'</td>') 
-				);			
-		},
-
-		ctcreateOption = function (type) {
-			return($('<option></option>').val(type['class_type_id']).append(type['class_type']));		
-
-		},
+	// 	rclear = function() {
+	// 		rdrop.html('');
+	// 	},
 
 
-		refresh = function () {		
-			$.getJSON(urlBase + 'getClassTypes', function(data) {
+	// 	rupdate = function () {
+	// 		addBlockClassesPanel.roomDrop.html(rdrop.html());
+	// 	}
 
-				ctclear();
-				if(data.length>0){
-					$.each( data, function( key, type ) {
-						cttable.append(ctcreateRow(type));
-						ctdrop.append(ctcreateOption(type));
-					});
+	// 	return { refresh: refresh };
 
-				}
-				ctupdate();
+	// })();
 
-			});
-		},
+	// classtypes = (function() {
+	// 	var cttable = $('<tbody></tbody>');
+	// 	var ctdrop = $('<select></select>');
 
-		ctclear = function() {
-			cttable.empty();
-			ctdrop.html('');
-		},
+	// 	var urlBase = "class_type/";
 
+	// 	ctcreateRow = function (type) {
+	// 		return($('<tr data-class_type_id="' + type['class_type_id'] + '"></tr>')
+	// 			.append('<td class="class_type">'+type['class_type'] + '</td>')
+	// 			.append('<td class="class_description">' + type['class_description'] +'</td>')
+	// 			.append('<td data-category_id='+ type['category_id'] +' class="category">' + type['category'] +'</td>') 
+	// 			);			
+	// 	},
 
-		ctupdate = function () {
-			manageClassTypesPanel.table.html(cttable.html());
-			addBlockClassesPanel.drop.html(ctdrop.html());
-		}
+	// 	ctcreateOption = function (type) {
+	// 		return($('<option></option>').val(type['class_type_id']).append(type['class_type']));		
 
-
-		return {
-			refresh: refresh,
-		};
-
-	})();
+	// 	},
 
 
-	categories = (function() {
-		var urlBase 		= "category/";
-		var catList = $('<ul></ul>');
-		var catDrop = $('<select></select>');
+	// 	refresh = function () {		
+	// 		$.getJSON(urlBase + 'getClassTypes', function(data) {
 
-		refresh = function () {
-			$.getJSON(urlBase + 'fetchAll', function(data) {
+	// 			ctclear();
+	// 			if(data.length>0){
+	// 				$.each( data, function( key, type ) {
+	// 					cttable.append(ctcreateRow(type));
+	// 					ctdrop.append(ctcreateOption(type));
+	// 				});
 
-				catList.empty();
-				if(data.length>0){
-					$.each( data, function( key, cat ) {
-						catList.append(createListItem(cat['category_id'], cat['category'], cat['color']));
-						catDrop.append(createOption(cat));
-					});
+	// 			}
+	// 			ctupdate();
 
-				}
+	// 		});
+	// 	},
 
-				update();
+	// 	ctclear = function() {
+	// 		cttable.empty();
+	// 		ctdrop.html('');
+	// 	},
 
-			});
 
-		},
+	// 	ctupdate = function () {
+	// 		manageClassTypesPanel.table.html(cttable.html());
+	// 		addBlockClassesPanel.drop.html(ctdrop.html());
+	// 	}
 
-		createOption = function (type) {
-			return($('<option></option>').val(type['category_id'])
-				.append(type['category']));			
-		},
 
-		createListItem = function(id, name, color){
-			if(id != 1){
-				return $('<li class="list-group-item"></li>').attr('data-category_id', id)
-				.append($('<input class="pull-right" name="category_id[]" value="'+ id + '" type="checkbox">'))
-				.append($('<input>')
-					.attr({
-						type: 'hidden',
-						class: 'minicolors',
-						value: color,
-						size: 7,
-						'data-category_id': id
-					}))
+	// 	return {
+	// 		refresh: refresh,
+	// 	};
 
-				.append('<span class="editable">' + name + '</span>');
-			}else{
-				return null;
-			}
-		},
+	// })();
 
-		clear = function() {
-			categoriesPanel.categorylist.empty();
-			addClassTypePanel.categoryDropdown.html('');
-		},
 
-		update = function() {
-			categoriesPanel.categorylist.html(catList.html());
-			categoriesPanel.initColorPickers();
-			addClassTypePanel.categoryDropdown.html(catDrop.html());
-		}
+	// categories = (function() {
+	// 	var urlBase 		= "category/";
+	// 	var catList = $('<ul></ul>');
+	// 	var catDrop = $('<select></select>');
 
-		return { 
-			refresh: refresh,
-			list: catList,
-			drop: catDrop
-		};
+	// 	refresh = function () {
+	// 		$.getJSON(urlBase + 'fetchAll', function(data) {
 
-	})();
+	// 			catList.empty();
+	// 			if(data.length>0){
+	// 				$.each( data, function( key, cat ) {
+	// 					catList.append(createListItem(cat['category_id'], cat['category'], cat['color']));
+	// 					catDrop.append(createOption(cat));
+	// 				});
+
+	// 			}
+
+	// 			update();
+
+	// 		});
+
+	// 	},
+
+	// 	createOption = function (type) {
+	// 		return($('<option></option>').val(type['category_id'])
+	// 			.append(type['category']));			
+	// 	},
+
+	// 	createListItem = function(id, name, color){
+	// 		if(id != 1){
+	// 			return $('<li class="list-group-item"></li>').attr('data-category_id', id)
+	// 			.append($('<input class="pull-right" name="category_id[]" value="'+ id + '" type="checkbox">'))
+	// 			.append($('<input>')
+	// 				.attr({
+	// 					type: 'hidden',
+	// 					class: 'minicolors',
+	// 					value: color,
+	// 					size: 7,
+	// 					'data-category_id': id
+	// 				}))
+
+	// 			.append('<span class="editable">' + name + '</span>');
+	// 		}else{
+	// 			return null;
+	// 		}
+	// 	},
+
+	// 	clear = function() {
+	// 		categoriesPanel.categorylist.empty();
+	// 		addClassTypePanel.categoryDropdown.html('');
+	// 	},
+
+	// 	update = function() {
+	// 		categoriesPanel.categorylist.html(catList.html());
+	// 		categoriesPanel.initColorPickers();
+	// 		addClassTypePanel.categoryDropdown.html(catDrop.html());
+	// 	}
+
+	// 	return { 
+	// 		refresh: refresh,
+	// 		list: catList,
+	// 		drop: catDrop
+	// 	};
+
+	// })();
 
 	datepicker = (function() {
 

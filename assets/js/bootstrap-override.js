@@ -115,150 +115,143 @@
 // },
 
 
-var classtypes = (function() {
-	var cttable = $('<tbody></tbody>');
-	var ctdrop = $('<select></select>');
-	var ctlist = $('<ul></ul>');
+var ClassTypes = function() {
+	var table, drop, list, urlBase;
+	
+	var init = function() {
+	 table = $('<tbody></tbody>');
+	 drop = $('<select></select>');
+	 list = $('<ul></ul>');
+	 urlBase = "class_type/";
+	}
 
-	var urlBase = "class_type/";
-
-	ctcreateListItem = function(type){
+	var createListItem = function(type){
 		return $('<a href="#" data-class_type_id="' + type['class_type_id'] + '" class="list-group-item">' + type['class_type'] + '</a>');
-		
-	},
+	}
 
-	ctcreateRow = function (type) {
+	var createRow = function (type) {
 		return($('<tr data-class_type_id="' + type['class_type_id'] + '"></tr>')
 			.append('<td class="class_type">'+type['class_type'] + '</td>')
 			.append('<td class="class_description">' + type['class_description'] +'</td>')
 			.append('<td data-category_id='+ type['category_id'] +' class="category">' + type['category'] +'</td>') 
 			);			
-	},
+	}
 
-	ctcreateOption = function (type) {
+	var createOption = function (type) {
 		return($('<option></option>').val(type['class_type_id']).append(type['class_type']));		
 
-	},
+	}
 
 
-	refresh = function () {		
+	this.refresh = function () {		
 		$.getJSON(urlBase + 'getClassTypes', function(data) {
 
-			ctclear();
+			clear();
 			if(data.length>0){
 				$.each( data, function( key, type ) {
-					cttable.append(ctcreateRow(type));
-					ctdrop.append(ctcreateOption(type));
-					ctlist.append(ctcreateListItem(type));
+					table.append(createRow(type));
+					drop.append(createOption(type));
+					list.append(createListItem(type));
 				});
 
 			}
-			ctupdate();
+			update();
 
 		});
-	},
+	}
 
-	ctclear = function() {
-		cttable.empty();
-		ctdrop.html('');
-	},
+	var clear = function() {
+		table.empty();
+		drop.html('');
+	}
+	
 
 
-	ctupdate = function () {
+	var update = function () {
 		$.event.trigger({
 			type: "classtypesRefreshed",
 			message: "Hello World!",
 			time: new Date()
 		});
+
+		$('[type=dropdown].classtype').html(drop.html());
+		$('table.classtype tbody').html(table.html());
+		$('ul.classtype').html(list.html());
+	}
+
+	init();
+
+
+};
+
+var classtypes = new ClassTypes();
+
+
+
+var Categories = function() {
+	var $this, urlBase, list, drop;
+	
+	
+	var init = function() {
+	
+		 $this = this;
+		 urlBase 		= "category/";
+		 hiya 		= "category/";
+		 list = $('<ul></ul>');
+		 drop = $('<select></select>');
 	}
 
 
-	return {
-		refresh: refresh,
-		drop: ctdrop,
-		table: cttable,
-		list: ctlist
-	};
-
-})();
-
-
-var rooms = (function() {
-
-	var urlBase = "room/";
-	var rdrop = $('<select></select>')
-
-	rcreateOption = function (room) {
-		return($('<option></option>').val(room['room_id']).append(room['room']));
-	},
-
-
-	refresh = function () {		
-		$.getJSON(urlBase + 'getRoomIDs', function(data) {
-
-			rclear();
-			if(data.length>0){
-				$.each( data, function( key, room ) {
-					rdrop.append(rcreateOption(room));
-				});
-
-			}
-			rupdate();
-
-		});
-	},
-
-	rclear = function() {
-		rdrop.html('');
-	},
-
-
-	rupdate = function () {
-		$.event.trigger({
-			type: "roomsRefreshed",
-			message: "Hello World!",
-			time: new Date()
-		});	
-	}
-
-	return {
-
-		refresh: refresh,
-		drop: rdrop
-
-	};
-
-})();
-
-var categories = (function() {
-	var urlBase 		= "category/";
-	var catList = $('<ul></ul>');
-	var catDrop = $('<select></select>');
-
-	refresh = function () {
+	this.refresh = function () {
 		$.getJSON(urlBase + 'fetchAll', function(data) {
 
-			catList.empty();
+			clear();
 			if(data.length>0){
 				$.each( data, function( key, cat ) {
-					catList.append(createListItem(cat['category_id'], cat['category'], cat['color']));
-					catDrop.append(createOption(cat));
+					setupCategories(cat);
+			
 				});
-
 			}
-
 			update();
-
 		});
 
-	},
+	}
+	
+	var setupCategories = function(cat) {
+		list.append(createListItem(cat['category_id'], cat['category'], cat['color']));
+		drop.append(createOption(cat));
+	
+	}
 
-	createOption = function (type) {
+	var initColors = function() {
+		$('INPUT.minicolors').minicolors({
+			hide: saveColor,
+			show: storeColor,
+		});
+	}
+	
+	var update = function() {
+		$.event.trigger({
+			type: "categoriesRefreshed",
+			message: "Hello World!",
+			time: new Date()
+		});
+		
+		$('ul.categories').html(list.html());
+		$('[type=dropdown].categories').html(drop.html());
+		initColors();
+	}
+	
+	var createOption = function (type) {
 		return($('<option></option>').val(type['category_id'])
 			.append(type['category']));			
-	},
-
-	createListItem = function(id, name, color){
+	} 
+	
+	this.getDropdown = function() {
+		return drop.html();
+	}
+	
+	var createListItem = function(id, name, color){
 		if(id != 1){
 			return $('<li class="list-group-item"></li>')
 			.append($('<input class="pull-right" name="category_id[]" value="'+ id + '" type="checkbox">'))
@@ -275,42 +268,90 @@ var categories = (function() {
 		}else{
 			return null;
 		}
-	},
+	}
 
-	clear = function() {
-		categoriesPanel.categorylist.empty();
-		addClassTypePanel.categoryDropdown.html('');
-	},
+	var clear = function() {
+		list.empty();
+		drop.html('');
+	}
+	
+	init();
 
-	update = function() {
-		$.event.trigger({
-			type: "categoriesRefreshed",
-			message: "Hello World!",
-			time: new Date()
+};
+
+var categories = new Categories();
+
+
+
+
+var Rooms = function() {
+
+	var urlBase, drop;
+	
+	var init = function() {
+		urlBase = "room/";
+		drop = $('<select></select>');
+	}
+
+	var createOption = function (room) {
+		return($('<option></option>').val(room['room_id']).append(room['room']));
+	}
+
+
+	 this.refresh = function () {		
+		$.getJSON(urlBase + 'getRoomIDs', function(data) {
+
+			clear();
+			if(data.length>0){
+				$.each( data, function( key, room ) {
+					drop.append(createOption(room));
+				});
+
+			}
+			update();
+
 		});
 	}
 
-	return { 
-		refresh: refresh,
-		list: catList,
-		drop: catDrop
-	};
-
-})();
-
-var divisiblerooms = (function() {
-
-	var drdrop = $('<select></select>');
-	var urlBase = 'facilities/';
+	var clear = function() {
+		drop.html('');
+	}
 
 
-	refresh = function () {
+	var update = function () {
+		$.event.trigger({
+			type: "roomsRefreshed",
+			message: "Hello World!",
+			time: new Date()
+		});
+		
+		$('[type=dropdown].rooms').html(drop.html());
+	}
+	
+	init();
+
+};
+var rooms = new Rooms();
+
+
+
+var DivisibleRooms = function() {
+
+	var drop, urlBase;
+	
+	var init = function() {
+		 drop = $('<select></select>');
+		 urlBase = 'facilities/';
+	}
+
+
+	this.refresh = function () {
 		$.getJSON(urlBase + 'getDivisibleRooms', function(data) {
 
-			drdrop.empty();
+			drop.empty();
 			if(data.length>0){
 				$.each( data, function( key, cat ) {
-					drdrop.append(createOption(cat));
+					drop.append(createOption(cat));
 				});
 
 			}
@@ -321,7 +362,7 @@ var divisiblerooms = (function() {
 
 	},
 
-	this.createOption = function (type) {
+	createOption = function (type) {
 		return($('<option></option>').val(type['room_id'])
 			.append(type['room']));			
 	},
@@ -332,11 +373,12 @@ var divisiblerooms = (function() {
 			type: "divisibleroomsRefreshed",
 			time: new Date()
 		});
+		
+		$('[type=dropdown].divisiblerooms').html('<option value="" disabled selected>Select a room</option>' + drop.html());
 	}
+	
+	init();
+	
+};
 
-	return { 
-		refresh: refresh,
-		drop: drdrop
-	};
-
-})();
+var divisiblerooms = new DivisibleRooms();

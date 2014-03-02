@@ -43,7 +43,7 @@
 						<h5>Edit Categories</h5>
 						<div class="manage-panel form-group">
 							<form id="remove-category-form" class="prevent">
-								<ul id='class-categories-list' class="no-margin-btm list-group checkbox-group"></ul>
+								<ul id='class-categories-list' class="categories no-margin-btm list-group checkbox-group"></ul>
 							</div>
 							<button type="submit" class="btn btn-danger pull-right">Remove</button>
 						</form>
@@ -75,7 +75,7 @@
 
 							<div class="form-group">
 								<label for="class_category">Category</label>
-								<select name="category_id" type="dropdown" class="form-control"></select>
+								<select name="category_id" type="dropdown" class="categories form-control"></select>
 							</div>
 
 							<div class="form-group">
@@ -106,7 +106,7 @@
 				</div>
 				<div class="panel-body">						
 
-					<table id='class-types-table' class="table table-striped table-hover scroll">
+					<table id='class-types-table' class="classtype table table-striped table-hover scroll">
 						<thead>
 							<tr>
 								<th>Title</th>
@@ -144,7 +144,7 @@
 								<div class="form-group">
 									<label for="class_type_id" class="col-sm-3 control-label">Class Type</label>
 									<div class="col-sm-9">
-										<select name="class_type_id" type="dropdown" class="form-control"></select>							</div>
+										<select name="class_type_id" type="dropdown" class="classtype form-control"></select>							</div>
 									</div>
 
 									<div class="form-group">
@@ -182,7 +182,7 @@
 								<div class="form-group">
 									<label for="room_id" class="col-sm-3 control-label">Room</label>
 									<div class="col-sm-9">
-										<select name="room_id" type="dropdown" class="form-control"></select>							</div>
+										<select name="room_id" type="dropdown" class="rooms form-control"></select>							</div>
 									</div>
 
 

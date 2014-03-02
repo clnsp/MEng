@@ -767,7 +767,7 @@ border: 2px solid #000;
 
 #booking #eventModal .modal-body #event-member-list{
 	max-height: 325px;
-	overflow-y: scroll;
+	overflow-y: auto;
 	margin-bottom: 25px;
 }
 
@@ -798,7 +798,7 @@ ul.ui-menu .ui-menu-item {
 
 ul.ui-autocomplete.popover.dropdown-menu{
 	max-height: 300px;
-	overflow-y: scroll;
+	overflow-y: auto;
 }
 
 /* @end */
@@ -834,8 +834,15 @@ ul.ui-autocomplete.popover.dropdown-menu{
 /* @group Manage */
 
 .manage-panel{
+	min-height: 250px;
 	max-height: 450px;
-	overflow-y: scroll;
+	overflow-y: auto;
+}
+
+.manage-inner-panel{
+	height:250px;
+	max-height: 250px;
+	overflow-y: auto;
 }
 
 #booking.manage-sports-hall #divisible-room{
@@ -892,7 +899,21 @@ ul.ui-autocomplete.popover.dropdown-menu{
 	display:table-row;
 }
 
+#the-restrictions{
+	display: table;
+	width: 100%;
+	text-align: center;
+}
 
+#the-restrictions form{
+	display: table-row;
+}
+
+#the-restrictions form *{
+	display: table-cell;
+		margin-bottom: 15px;
+	
+}
 
 /* @end */
 

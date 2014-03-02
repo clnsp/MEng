@@ -388,27 +388,8 @@ return {
 $(function(){
 
 	$(document)
-	.on("classtypesRefreshed", function(){
-		assignDivPanel.list.html(classtypes.list.html());
-	})
 
-	.on("roomsRefreshed", function(){
-		divisibleRoomPanel.drop.html('<option value="" disabled selected>Select a room</option>' + rooms.drop.html());
-		ps.refresh(assignDivPanel.drop.first().val());
-	})
-
-	.on("divisibleroomsRefreshed", function(){
-		assignDivPanel.drop.html('<option value="" disabled selected>Select a room</option>' + divisiblerooms.drop.html());
-
-    })
-
-	.on("divisionChanged", function(){
-		var sport = assignDivPanel.getSelectedSport();
-		if(sport){
-			assignDivPanel.divisions.html(ps.getDivisions(sport));
-		}
-	})
-	.on("courtDirectoryRefreshed", function(){
+	.on("divisionChanged, courtDirectoryRefreshed", function(){
 		var sport = assignDivPanel.getSelectedSport();
 		if(sport){
 			assignDivPanel.divisions.html(ps.getDivisions(sport));
