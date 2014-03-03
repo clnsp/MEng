@@ -16,7 +16,7 @@
 
 					<div class="form-group">
 						<form id="manage-divisible-room-form" class="form-horizontal prevent" role="form">
-						
+							
 
 							<div class="col-xs-10">
 								<select name="room_id" type="dropdown" class="rooms form-control"></select>
@@ -84,7 +84,7 @@
 				<div class=" col-xs-6">
 					<div id="sports-divisions" class="divisions well well-sm manage-panel"><b class="">Assigned Divisions</b></div>
 					
-						<button id="assign-sports-to-courts" type="submit" class="pull-right btn btn-primary">Assign to Courts </button>
+					<button id="assign-sports-to-courts" type="submit" class="pull-right btn btn-primary">Assign to Courts </button>
 				</div>
 				
 				
@@ -111,39 +111,41 @@
 	</div>
 	
 	<div class="row">
-		<div id="manage-restrictions " class="panel panel-default ">
+		<div id="manage-restrictions" class="panel panel-default ">
 			<div class="panel-heading"><h3 class="panel-title">Manage Restrictions</h3></div>
 			<div class="panel-body">
 				
 				<div class="manage-panel">
-				
-				<div id="the-restrictions">				
-					<form id="form-block-restriction" class="form-inline" role="form">
-						<span><strong>Block</strong></span>
-						<select id="block_sport" type="dropdown" class="classtype form-control form-inline"></select>
-						<span>when </span>
-						<select id="block_occurs" type="dropdown" class="classtype form-control"></select> 
-						<span>occurs </span>
-						<button class="btn btn-default"><i class="glyphicon glyphicon-plus"></i></button>
-					</form>
 					
-					<form id="form-limit-restriction" class="form-inline" role="form">
-						<span><strong>Limit </strong></span>
-						<select id="limit_sport" type="dropdown" class="classtype form-control form-inline"></select>
-						<span>to </span>
-						<input type="number" class="form-control" id="limit_number" placeholder="">
-						 <span>occurrences</span>
-						 <button class="btn btn-default"><i class="glyphicon glyphicon-plus"></i></button>
-					</form>
-				</div>
-				
-				<div id="restrictions" class="well well-sm manage-panel"><b class=""><h4>Existing Restriction</h4>
-				<button class="btn btn-default"><i class="glyphicon glyphicon-minus"></i></button>
-				</div>
-				
-				
-				
-				
+					<div id="the-restrictions">	
+						
+						<select name="room_id" type="dropdown" class="divisiblerooms form-control"></select>	
+						<form id="form-block-restriction" class="form-inline prevent" role="form">
+							<span><strong>Block</strong></span>
+							<select name="sport_to_block_id" type="dropdown" class="classtype form-control form-inline"></select>
+							<span>when </span>
+							<select name="occurring_sport_id" type="dropdown" class="classtype form-control"></select> 
+							<span>occurs </span>
+							<button id="submit-block" class="btn btn-default"><i class="glyphicon glyphicon-plus"></i></button>
+						</form>
+						
+						<form id="form-limit-restriction" class="form-inline prevent" role="form">
+							<span><strong>Limit </strong></span>
+							<select name="sport_id" type="dropdown" class="classtype form-control form-inline"></select>
+							<span>to </span>
+							<input type="number" class="form-control" name="limit" placeholder="">
+							<span>occurrences</span>
+
+							<button id="submit-limit" class="btn btn-default"><i class="glyphicon glyphicon-plus"></i></button>
+						</form>
+					</div>
+
+					<h4>Existing Restrictions</h4>
+					<div id="restrictions" class="well well-sm manage-panel"></div>
+					
+					
+					
+					
 				</div>
 				
 			</div>

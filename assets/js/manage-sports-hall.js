@@ -349,7 +349,7 @@ assignDivPanel = (function() {
 
 
     fetchDivisibleRoomSetup = function(room_id){
-     $.getJSON('facilities/getDivisibleRoom/' + room_id, function(data) {
+       $.getJSON('facilities/getDivisibleRoom/' + room_id, function(data) {
         if(data.length>0){
             manage_sports.cols = parseInt(data[0].cols);
             manage_sports.rows = parseInt(data[0].rows);
@@ -361,14 +361,14 @@ assignDivPanel = (function() {
         divisions.html(ps.getDivisions(divdrop.val()));
     });
 
- }
+   }
 
 
- getSelectedSport = function(){
-  return sportlist.find('.active').data('class_type_id');
-}
+   getSelectedSport = function(){
+      return sportlist.find('.active').data('class_type_id');
+  }
 
-getSelectedDivRoom = function(){
+  getSelectedDivRoom = function(){
     return divdrop.val();
 }
 
@@ -384,24 +384,73 @@ return {
 
 })();
 
+var manageRestrictionsPanel = (function() {
+	var container = $('#manage-restrictions');
+    var  limitForm = container.find('#form-limit-restriction');
+    var  blockForm = container.find('#form-block-restriction');   
+    var  drop = container.find('select[type=dropdown].divisiblerooms');
+    var  baseUrl = 'court/';
+
+    $('#submit-limit').click(function(){
+        $.post( baseUrl + 'addLimitRestriction/', limitForm.serialize() + '&' +  jQuery.param({room_id: drop.val()}))
+        .done(function( result ) {
+            alert(result);
+        });
+    });
+
+    $('#submit-block').click(function(){
+        $.post( baseUrl + 'addBlockRestriction/', blockForm.serialize() + '&' +  jQuery.param({room_id: drop.val()}))
+        .done(function( result ) {
+            alert(result);
+        });
+    });
+
+    return { 
+
+    };
+
+})();
+
+var ManageRestrictions = function() {
+    var container, limitForm, blockForm, drop, baseUrl;
+
+    var init = function(){
+        container = $('#manage-restrictions');
+        limitForm = container.find('#form-limit-restriction');
+        blockForm = container.find('#form-block-restriction');   
+        drop = container.find('select[type=dropdown].divisiblerooms');
+        baseUrl = 'court/';
+    };
+
+    init();
+
+
+
+    drop.change(function(){
+
+    });
+
+
+};
 
 $(function(){
 
-	$(document)
+    $(document)
 
-	.on("divisionChanged, courtDirectoryRefreshed", function(){
-		var sport = assignDivPanel.getSelectedSport();
-		if(sport){
-			assignDivPanel.divisions.html(ps.getDivisions(sport));
-		}
-	})
-	
-	;
+    .on("divisionChanged, courtDirectoryRefreshed", function(){
+      var sport = assignDivPanel.getSelectedSport();
+      if(sport){
+        assignDivPanel.divisions.html(ps.getDivisions(sport));
+    }
+})
 
-	classtypes.refresh();
-	rooms.refresh();
-	divisiblerooms.refresh();
+    ;
 
-	
+    classtypes.refresh();
+    rooms.refresh();
+    divisiblerooms.refresh();
+
+
 });
+managerestrictions = new ManageRestrictions();
 

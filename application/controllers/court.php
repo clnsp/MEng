@@ -5,6 +5,8 @@ class Court extends CI_Controller{
 		parent::__construct();
 
 		$this->load->model('courts');
+
+
 	}
 
 	/**
@@ -90,7 +92,45 @@ class Court extends CI_Controller{
 		}
 		
 	}
+	
+	/**
+	* Add new block restriction
+	*/
+	function addBlockRestriction() {
+		if($this->tank_auth->is_admin()){
+			$this->load->model('restrictions');
 
+			if(isset($_POST['room_id']) && isset($_POST['sport_to_block_id']) && isset($_POST['occurring_sport_id'])){
+				if($_POST['room_id'] != '' && $_POST['sport_to_block_id']!='' && $_POST['occurring_sport_id']!='' ){
+					$this->restrictions->addBlockRestriction($_POST['room_id'], $_POST['sport_to_block_id'], $_POST['occurring_sport_id']);
+					echo "Saved";
+				}else{
+					echo "Not Saved";
+				}
+			}
+		}
+		
+	}
+	
+	/**
+	* Add new limit restriction
+	*/
+	function addLimitRestriction() {
+		if($this->tank_auth->is_admin()){
+			$this->load->model('restrictions');
+
+			if(isset($_POST['room_id']) && isset($_POST['sport_id']) && isset($_POST['limit'])){
+				if($_POST['sport_id'] != '' && $_POST['limit']='' && $_POST['room_id']!='' ){
+					$this->restrictions->addLimitRestriction($_POST['room_id'], $_POST['sport_id'], $_POST['limit']);
+					echo "Saved";
+				}else{
+					echo "Not saved";
+				}
+
+			}
+		}
+		
+	}
 
 
 
