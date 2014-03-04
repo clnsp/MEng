@@ -123,57 +123,30 @@
 	// CONTACTING A MEMBER
 
 	contactMemberMod = (function () {
-		var $selector = $(".message");
+		var $selector = $("#contact");
 		var $message = $('#message');
 		var body = '<h3>Contact:</h3><form class="form-horizontal"><div class="form-group"><label class="control-label" for="inputEmail">Message: </label><textarea id="message" class="form-control" rows="3"></textarea><span class="help-block">Length: <span id="length">0</span> Characters <span class="pull-right" id="warning-message"></span></span></div></form>';
 		var footer = '<button class="btn btn-sm" data-dismiss="submodal" aria-hidden="true">Cancel</button><button class="btn btn-sm btn-danger submit" data-dismiss="submodal">Submit</button>';
-		var type = "email";
 		
 		// Create UI
-		generateUI = function (temp) {
+		generateUI = function () {
 			// Display Contact
 			$($subModal + " .modal-content").children('.modal-body').html(body);
 			$($subModal + " .modal-content").children('.modal-footer').html(footer);
 			// Listener
 			$message = $('#message'); // Point to New Element
 			
-			type = temp;
 			$($subModal + " .submit").on( "click", function() {send(); });
-			if (type == 'tweet') { $("#message").attr('maxlength', 140) }
-				$($subModal + " .modal-content").on('keyup keydown', $message, function () {
+			$($subModal + " .modal-content").on('keyup keydown', $message, function () {
 					$('#length').html($message.val().length);
-					if (type == 'tweet') { twitter(); } else if (type == 'sms') { sms(); } else { email(); }
-				});
-		},
-
-		// TWITTER
-		twitter = function () {
-			if ($message.val().length > 139) {
-				addFormError('has-error', 'Message has reached it\'s maximum length');
-			}
-			else if ($message.parent('.form-group').hasClass('has-error')) {
-				removeFormErorr('has-error');
-			}
-		},
-		// SMS
-		sms = function () {
-			if ($message.val().length > 130) {
-				addFormError('has-warning', ' Warning: ' + (Math.round($message.val().length / 130) + 1) + ' Messages in Length');
-			}
-			else if ($message.parent('.form-group').hasClass('has-warning')) {
-				removeFormErorr('has-warning');
-			}
-		},
-		// EMAIL
-		email = function () {
-		   // Validation -- Max Length
+			});
 		},
 		// SEND MESSAGE
 		send = function () {  
-			$.post($baseUrl.member+$functionUrl.contactUser, { id: $member.id, service: type, message: $message.val() }, function (data) {        });
+			$.post($baseUrl.member+$functionUrl.contactUser, { id: $member.id, message: $message.val() }, function (data) {        });
 		},
 		// Start Point
-		$selector.on("click", function () { generateUI($(this).attr('id')); });
+		$selector.on("click", function () { generateUI(); });
 	})(),
 
 	// Block / Ban

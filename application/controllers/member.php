@@ -116,9 +116,7 @@ class Member extends CI_Controller{
 	 * Update User Membership
 	 */
 	function updateUserMembership(){
-		$this->load->helper('twitter');
-		//send_tweet("Graeme_Clark", "Did it work ?");
-		print_r (user_following("StrathCSR"));//("shadowbeam_"));//("Graeme_Clark"));
+	
 	}
 	
 	/*
@@ -142,48 +140,17 @@ class Member extends CI_Controller{
 	
 	/*
 	 * Contact User
+	 * @param ids: Pass a single id or array of id for the message to be sent to
+	 * @parm messages: Pass a single message or array of messages 'email','sms','twitter' to send differnt messages using the different options
+	 * $ids,$messages
 	 */
 	function contactUser() {
-	if(check_admin()){
-		$this->load->model('members');
-		if(isset($_POST['id']) && isset($_POST['service']) && isset($_POST['message']))
-		{
-			$id = $_POST['id']; // User ID
-			$service = strtolower($_POST['service']); // Communication Service
-			$message = $_POST['message']; // Message
-
-			switch ($service) {
-			// SMS
-				case "sms":  
-				$this->load->helper('sms');
-				$mobile_number = $this->members->getUserColumn($id, 'mobile_number');
-				// GET MOBILE NUMBER
-				if(isset($mobile_number[0])){
-					echo send_sms($mobile_number[0]->mobile_number,$message);
-				}
-				break;
-			// TWITTER
-				case "twitter":
-				$twitter_name = $this->members->getUserColumn($id, 'twitter'); 
-				if(!$this->config->item('twitter_allow')){
-					echo "Service Disabled";
-				}
-				break;
-			// EMAIL
-				default:
-				$query = $this->members->getUserColumn($id, 'email'); 
-				if(count($query[0]) == 1){
-					$this->load->helper('email');
-					send_email($query[0]->email, 'Gym Message', $message);				
-				}
-				break;
+		if(check_admin()){
+			if(isset($_POST['id']) && isset($_POST['message'])){
+				$this->load->helper('comms');
+				echo json_encode(contact_user(array($_POST['id']),$_POST['message']));
 			}
 		}
-		else
-		{
-			echo "Incomplete";
-		}
-	}
 	}
 }
 
