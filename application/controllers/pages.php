@@ -210,7 +210,14 @@
 				$this->load->Model('Classtype');
                  
 				$dbres = $this->Classtype->getClasstype();
-		
+				$sports = $this->Classtype->getActivitytype();
+				
+				$sportmenu = array();
+				foreach ($sports as $row) {
+  					$sportmenu[] = $row['class_type'];
+				}
+				$data['sportsoptions'] = $sportmenu;
+				
 				$ddmenu = array();
 				foreach ($dbres as $row) {
   					$ddmenu[] = $row['class_type'];

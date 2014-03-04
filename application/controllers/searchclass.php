@@ -21,7 +21,7 @@ function __construct()
 	  $this->load->Model('Classes');
 	  $this->load->Model('Classtype');
                  
-				 
+				 //Retrieve class types for dropdown menu
 				$dbres = $this->Classtype->getClasstype();
 		
 				$ddmenu = array();
@@ -31,19 +31,33 @@ function __construct()
 				$selected = $ddmenu[0];
 				$data['options'] = $ddmenu;
 				
+				//retrieve sports types for dropdown menu
+			  $sports = $this->Classtype->getActivitytype();
 				
+				$sportmenu = array();
+				foreach ($sports as $row) {
+  					$sportmenu[] = $row['class_type'];
+				}
+				$data['sportsoptions'] = $sportmenu;
 				
 	$user_id = $this->tank_auth->get_user_id();
-        $class_type = $this->input->post('classname');
+	$sportorclass = $this->input->post('sportorclass');
+   $class_type = $this->input->post('classname');
 	$date = $this->input->post('date');
 	
 	$start_time = $this->input->post('starttime');
 	$end_time = $this->input->post('endtime');
-	
+	if($sportorclass == "class"){
     	for ($i = 0; $i <= $class_type; $i++) {
     	$selected = $ddmenu[$i];
 		}
-
+}else{
+	for ($i = 0; $i <= $class_type; $i++) {
+    	$selected = $sportmenu[$i];
+		}
+	}
+	
+	
 	if($date == "" && $start_time == "" && $end_time == ""){
 		
 	$data['classes'] = $this->Classes->getClassesWithType($selected);	
@@ -284,6 +298,7 @@ $dbresults = $this->Classes->getClassesWithTypeAndStartTime($selected, $starttim
 
 	$data['classtype'] = $this->Classtype->getClasstype();
 
+	
 	parse_temp($page, $this->load->view('pages/'.$page, $data, true));
 
 	}

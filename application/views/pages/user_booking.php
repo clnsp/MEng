@@ -10,7 +10,16 @@ $classname = array(
 
 	);
 	
-	
+$classname1 = array(
+	'name'	=> 'classname',
+	'id'	=> 'classname',
+	'value' => 'classname',
+	'maxlength'	=> 20,
+	'size'	=> 20,
+	'class' => 'form-control',
+	'placeholder' => 'Class Name',
+
+	);	
 	
 $date = array(
 	'name'	=> 'date',
@@ -24,18 +33,18 @@ $date = array(
 	
 	);
 
-$date2 = array(
+$date1 = array(
 	'name'	=> 'date',
-	'id'	=> 'date',
+	'id'	=> 'date1',
 	'value' => set_value('date'),
 	'maxlength'	=> 20,
 	'size'	=> 20,
 	'type'  => 'text',
 	'class' => 'form-control',
-	'placeholder' => 'Date2',
+	'placeholder' => 'Date',
 	
 	);
-
+	
 $starttime = array(
 	'name'	=> 'starttime',
 	'id'	=> 'starttime',
@@ -45,7 +54,27 @@ $starttime = array(
 	'class' => 'form-control',
 	'placeholder' => 'Between - Start Time',
 );
+
+$starttime1 = array(
+	'name'	=> 'starttime',
+	'id'	=> 'starttime1',
+	'value' => set_value('starttime'),
+	'maxlength'	=> 20,
+	'size'	=> 20,
+	'class' => 'form-control',
+	'placeholder' => 'Between - Start Time',
+);
 	
+$endtime1 = array(
+	'name'	=> 'endtime',
+	'id'	=> 'endtime1',
+	'value' => set_value('endtime'),
+	'maxlength'	=> 20,
+	'size'	=> 20,
+	'class' => 'form-control',
+	'placeholder' => 'And - End Time',
+	);
+
 $endtime = array(
 	'name'	=> 'endtime',
 	'id'	=> 'endtime',
@@ -55,7 +84,7 @@ $endtime = array(
 	'class' => 'form-control',
 	'placeholder' => 'And - End Time',
 	);
-
+	
 $label = array(
 	'class' => 'col-sm-2 control-label',
 	);
@@ -104,12 +133,13 @@ $js = 'class="form-control"';
 <div id="content">	
 <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
         <li class="active"><a href="#classstuff" data-toggle="tab"><b>Class Search</b></a></li>
-        <li><a href="#courtsstuff" data-toggle="tab"><b>Court Search</b></a></li>
+        <li><a href="#courtsstuff" data-toggle="tab"><b>Sport Search</b></a></li>
       </ul>	
 <p>	
 <div class="tab-content" id="my-tab-content">
 <div class="tab-pane fade in active" id="classstuff">
-<?php echo form_open("/searchclass/index", $form); ?>
+<?php $hidden = array('sportorclass' => 'class');?> 
+<?php echo form_open("/searchclass/index", $form, $hidden); ?>
    <div class="form-group">
    <div class="col-sm-10">
 	 <?php echo form_dropdown('classname', $options, 'classname' , $js);	 ?>
@@ -152,10 +182,12 @@ $js = 'class="form-control"';
 	
 </div>    
     <div class="tab-pane fade in" id="courtsstuff">
-<?php echo form_open("/searchclass/index", $form); ?>
+    
+    <?php $hidden = array('sportorclass' => 'sport');?> 
+<?php echo form_open("/searchclass/index", $form, $hidden); ?>
    <div class="form-group">
    <div class="col-sm-10">
-	 <?php echo form_dropdown('classname', $options, 'classname' , $js);	 ?>
+	 <?php echo form_dropdown('classname', $sportsoptions, 'classname' , $js);	 ?>
 	 </div>
 	</div>
 
@@ -164,21 +196,21 @@ $js = 'class="form-control"';
 
 			<div class="col-sm-10">
 				
-				<?php echo form_input($date2); ?>
+				<?php echo form_input($date1); ?>
 			</div>
 		</div>
 
 	    <div class="form-group">
 
 			<div class="col-sm-10">
-				<?php echo form_input($starttime); ?>
+				<?php echo form_input($starttime1); ?>
 			</div>
 		</div>
 		
 		<div class="form-group">
 
 			<div class="col-sm-10">
-				<?php echo form_input($endtime); ?>
+				<?php echo form_input($endtime1); ?>
 			</div>
 		</div>
 			
@@ -249,6 +281,18 @@ window.onload = function () {
         });
 	
 	$('#date').datepicker();
+	
+	jQuery(document).ready(function()
+	{
+	$('#starttime1').timepicker('setTime', '');
+        });
+
+	jQuery(document).ready(function()
+	{
+        $('#endtime1').timepicker('setTime', '');
+        });
+	
+	$('#date1').datepicker();
 	
  }
 

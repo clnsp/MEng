@@ -2,7 +2,7 @@
 $classname = array(
 	'name'	=> 'classname',
 	'id'	=> 'classname',
-	'value' =>  'classname',
+	'value' => 'classname',
 	'maxlength'	=> 20,
 	'size'	=> 20,
 	'class' => 'form-control',
@@ -10,7 +10,16 @@ $classname = array(
 
 	);
 	
-	
+$classname1 = array(
+	'name'	=> 'classname',
+	'id'	=> 'classname',
+	'value' => 'classname',
+	'maxlength'	=> 20,
+	'size'	=> 20,
+	'class' => 'form-control',
+	'placeholder' => 'Class Name',
+
+	);	
 	
 $date = array(
 	'name'	=> 'date',
@@ -24,17 +33,18 @@ $date = array(
 	
 	);
 
-$date2 = array(
+$date1 = array(
 	'name'	=> 'date',
-	'id'	=> 'date',
+	'id'	=> 'date1',
 	'value' => set_value('date'),
 	'maxlength'	=> 20,
 	'size'	=> 20,
 	'type'  => 'text',
 	'class' => 'form-control',
-	'placeholder' => 'Date2',
+	'placeholder' => 'Date',
 	
 	);
+	
 $starttime = array(
 	'name'	=> 'starttime',
 	'id'	=> 'starttime',
@@ -42,9 +52,29 @@ $starttime = array(
 	'maxlength'	=> 20,
 	'size'	=> 20,
 	'class' => 'form-control',
-	'placeholder' => 'Start Time',
-	);
+	'placeholder' => 'Between - Start Time',
+);
+
+$starttime1 = array(
+	'name'	=> 'starttime',
+	'id'	=> 'starttime1',
+	'value' => set_value('starttime'),
+	'maxlength'	=> 20,
+	'size'	=> 20,
+	'class' => 'form-control',
+	'placeholder' => 'Between - Start Time',
+);
 	
+$endtime1 = array(
+	'name'	=> 'endtime',
+	'id'	=> 'endtime1',
+	'value' => set_value('endtime'),
+	'maxlength'	=> 20,
+	'size'	=> 20,
+	'class' => 'form-control',
+	'placeholder' => 'And - End Time',
+	);
+
 $endtime = array(
 	'name'	=> 'endtime',
 	'id'	=> 'endtime',
@@ -52,9 +82,9 @@ $endtime = array(
 	'maxlength'	=> 20,
 	'size'	=> 20,
 	'class' => 'form-control',
-	'placeholder' => 'End Time',
+	'placeholder' => 'And - End Time',
 	);
-
+	
 $label = array(
 	'class' => 'col-sm-2 control-label',
 	);
@@ -64,17 +94,17 @@ $form = array(
 	'role' => 'form',
 	);
 
+	
 
 $js = 'class="form-control"';
 
 ?>
 
-	
 
-	
 
   
-  <meta name="viewport" content="width=device-width" />
+  
+  
 
     <div id="wrapper">
 
@@ -84,6 +114,7 @@ $js = 'class="form-control"';
  
            <div class="col-lg-12">
 
+
           </div>
         </div><!-- /.row -->
 
@@ -92,7 +123,6 @@ $js = 'class="form-control"';
         <div class="row">
           <div class="col-lg-6">
 
-  
 
 	 
   <p>  
@@ -103,12 +133,13 @@ $js = 'class="form-control"';
 <div id="content">	
 <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
         <li class="active"><a href="#classstuff" data-toggle="tab"><b>Class Search</b></a></li>
-        <li><a href="#courtsstuff" data-toggle="tab"><b>Court Search</b></a></li>
+        <li><a href="#courtsstuff" data-toggle="tab"><b>Sport Search</b></a></li>
       </ul>	
 <p>	
 <div class="tab-content" id="my-tab-content">
 <div class="tab-pane fade in active" id="classstuff">
-<?php echo form_open("/searchclass/index", $form); ?>
+<?php $hidden = array('sportorclass' => 'class');?> 
+<?php echo form_open("/searchclass/index", $form, $hidden); ?>
    <div class="form-group">
    <div class="col-sm-10">
 	 <?php echo form_dropdown('classname', $options, 'classname' , $js);	 ?>
@@ -151,10 +182,12 @@ $js = 'class="form-control"';
 	
 </div>    
     <div class="tab-pane fade in" id="courtsstuff">
-<?php echo form_open("/searchclass/index", $form); ?>
+    
+    <?php $hidden = array('sportorclass' => 'sport');?> 
+<?php echo form_open("/searchclass/index", $form, $hidden); ?>
    <div class="form-group">
    <div class="col-sm-10">
-	 <?php echo form_dropdown('classname', $options, 'classname' , $js);	 ?>
+	 <?php echo form_dropdown('classname', $sportsoptions, 'classname' , $js);	 ?>
 	 </div>
 	</div>
 
@@ -163,21 +196,21 @@ $js = 'class="form-control"';
 
 			<div class="col-sm-10">
 				
-				<?php echo form_input($date2); ?>
+				<?php echo form_input($date1); ?>
 			</div>
 		</div>
 
 	    <div class="form-group">
 
 			<div class="col-sm-10">
-				<?php echo form_input($starttime); ?>
+				<?php echo form_input($starttime1); ?>
 			</div>
 		</div>
 		
 		<div class="form-group">
 
 			<div class="col-sm-10">
-				<?php echo form_input($endtime); ?>
+				<?php echo form_input($endtime1); ?>
 			</div>
 		</div>
 			
@@ -202,7 +235,7 @@ $js = 'class="form-control"';
           
 <p></p>
 <p></p>           
-                        
+             
                 <table cellpadding="0" cellspacing="0" border="0" class="table table-hover table-striped table-condensed table-bordered dataTable display pull-right" id="SearchResultsTable">
 <thead>
           <tr>
@@ -267,8 +300,31 @@ $js = 'class="form-control"';
 
 		
 	<script type="text/javascript">
-	
+
 	window.onload = function () { 
+	
+	/*
+			$(document)
+        .ready(
+                function() {
+                    $('.dataTable')
+                            .dataTable(
+                                    {
+                                        "sDom" : "<'row-fluid'<'span2 offset1'l><'span4 offset1'f>r>t<'row-fluid'<'span2 offset1'i><'span6 offset1'p>>",
+                                        "sPaginationType" : "bootstrap",
+                                        "oLanguage" : {
+                                            "sLengthMenu" : "_MENU_",
+                                            "sInfo" : "_START_ / _END_  (_TOTAL_)"
+                                        },
+                                        // Disable sorting on the no-sort class
+                                        "aoColumnDefs" : [ {
+                                            "bSortable" : false,
+                                            "aTargets" : [ "no-sort" ]
+                                        } ]
+                                    });
+                });
+*/
+                
 		$('#showResults').click(function(){
 		 $("#resultsPan tbody").append(
         "<tr>"+
