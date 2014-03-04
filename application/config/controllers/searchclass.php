@@ -21,7 +21,7 @@ function __construct()
 	  $this->load->Model('Classes');
 	  $this->load->Model('Classtype');
                  
-				 //Retrieve class types for dropdown menu
+				 
 				$dbres = $this->Classtype->getClasstype();
 		
 				$ddmenu = array();
@@ -31,61 +31,27 @@ function __construct()
 				$selected = $ddmenu[0];
 				$data['options'] = $ddmenu;
 				
-				//retrieve sports types for dropdown menu
-			  $sports = $this->Classtype->getActivitytype();
 				
-				$sportmenu = array();
-				foreach ($sports as $row) {
-  					$sportmenu[] = $row['class_type'];
-				}
-				$data['sportsoptions'] = $sportmenu;
 				
 	$user_id = $this->tank_auth->get_user_id();
-	$sportorclass = $this->input->post('sportorclass');
-   $class_type = $this->input->post('classname');
+        $class_type = $this->input->post('classname');
 	$date = $this->input->post('date');
-	
 	$start_time = $this->input->post('starttime');
 	$end_time = $this->input->post('endtime');
-	if($sportorclass == "class"){
+	
     	for ($i = 0; $i <= $class_type; $i++) {
     	$selected = $ddmenu[$i];
 		}
-}else{
-	for ($i = 0; $i <= $class_type; $i++) {
-    	$selected = $sportmenu[$i];
-		}
-	}
-	
-	
+
 	if($date == "" && $start_time == "" && $end_time == ""){
 		
 	$data['classes'] = $this->Classes->getClassesWithType($selected);	
-
+	$dbresults = $this->Classes->getClassesWithType($selected);	
 		
-		
-			
-		   $rowCount = 0;
-	//Make sure results are within a valid date
-            foreach ($data['classes'] as $row){
-
-                $startdatecheck = $row['class_start_date'];
-
-                if(time() > strtotime($startdatecheck)){
-
-                    unset($data['classes'][$rowCount]);                
-                
-                }
-                
-                $rowCount++;            
-
-            }
-            
-            		$ddrmenu = array();
-				foreach ($data['classes'] as $row) {
+				$ddrmenu = array();
+				foreach ($dbresults as $row) {
   					$resulted = $row['class_id'];
   					$bookedout = $this->isClassBookedOut($resulted);
-  					echo $bookedout;
 					if($bookedout != ""){
 						$ddrmenu[] = "btn btn-warning";
 						
@@ -99,6 +65,8 @@ function __construct()
 			
 				}
 		$data['buttondata'] = $ddrmenu;
+			
+		
                 
                 	
 			
@@ -108,33 +76,15 @@ function __construct()
 	$dbDate = $dateInput[2].'-'.$dateInput[0].'-'.$dateInput[1];
 	$starttime = $dbDate." 00:00:00";
 	$endtime = $dbDate." 23:59:00";
+	echo "HI";
+	echo $starttime;
+	echo $endtime;
 $data['classes'] = $this->Classes->getClassesWithTypeAndStartTime($selected, $starttime, $endtime);
 
 $dbresults = $this->Classes->getClassesWithTypeAndStartTime($selected, $starttime, $endtime);
 		
-				
-		
-		$data['buttondata'] = $ddrmenu;
-		
-		//Make sure results are within a valid date
-		   $rowCount = 0;
-
-            foreach ($data['classes'] as $row){
-
-                $startdatecheck = $row['class_start_date'];
-
-                if(time() > strtotime($startdatecheck)){
-
-                    unset($data['classes'][$rowCount]);                
-                
-                }
-                
-                $rowCount++;            
-
-            }
-            
-            $ddrmenu = array();
-				foreach ($data['classes'] as $row) {
+				$ddrmenu = array();
+				foreach ($dbresults as $row) {
   					$resulted = $row['class_id'];
   					$bookedout = $this->isClassBookedOut($resulted);
 					if($bookedout != ""){
@@ -149,9 +99,9 @@ $dbresults = $this->Classes->getClassesWithTypeAndStartTime($selected, $starttim
 		//			}
 			
 				}
+		$data['buttondata'] = $ddrmenu;
 	}else{	
 	
-
 
 	$startAMorPM = mb_substr($start_time,-2);
 	$endAMorPM = mb_substr($end_time,-2);
@@ -253,52 +203,15 @@ $dbresults = $this->Classes->getClassesWithTypeAndStartTime($selected, $starttim
 	
 	$start_date = $dbDate . " " . $start_time;
 	$end_date = $dbDate . " " . $end_time;
+	echo $start_date;
+	echo $end_date;	
 	$data['classes'] = $this->Classes->getClassesWithTypeAndStartTime($selected, $start_date, $end_date);
-	     
-	     $rowCount = 0;
-	//Make sure results are within a valid date
-            foreach ($data['classes'] as $row){
-
-                $startdatecheck = $row['class_start_date'];
-
-                if(time() > strtotime($startdatecheck)){
-
-                    unset($data['classes'][$rowCount]);                
-                
-                }
-                
-                $rowCount++;            
-
-            }
-            
-
-		
-			$dbresults = $this->Classes->getClassesWithTypeAndStartTime($selected, $start_date, $end_date);
-		
-				$ddrmenu = array();
-				foreach ($dbresults as $row) {
-  					$resulted = $row['class_id'];
-  					$bookedout = $this->isClassBookedOut($resulted);
-					if($bookedout != ""){
-						$ddrmenu[] = "btn btn-warning";
-						
-					}else{
-						$ddrmenu[] = "btn btn-primary";
-					}
-					
-		//			if($this->isClassBookedOut($bookedout)){
-		//				echo $bookedout;
-		//			}
-			
-				}
-						$data['buttondata'] = $ddrmenu;
 
 }
 
 
 	$data['classtype'] = $this->Classtype->getClasstype();
-
-	
+//    $data['classes'] = $this->Classes->getClassesWithType($selected);
 	parse_temp($page, $this->load->view('pages/'.$page, $data, true));
 
 	}
@@ -308,8 +221,10 @@ $dbresults = $this->Classes->getClassesWithTypeAndStartTime($selected, $starttim
       $this->load->model('bookings');
       $capacity = $this->classes->getClassCapacity($class_booking_id);
       $attending = $this->bookings->countBookingAttendants($class_booking_id);
+
       return ($attending >= $capacity);
     }
 
 }
 ?>
+

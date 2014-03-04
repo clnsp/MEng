@@ -24,7 +24,10 @@
     <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/cal/fullcalendar.css"/>
 	<link rel="stylesheet" href="<?php echo base_url();?>assets/css/datepicker.css" >
 	<link rel="stylesheet" href="<?php echo base_url();?>assets/css/bootstrap-timepicker.min.css" />
-	
+
+	<link rel="stylesheet" href="<?php echo base_url();?>assets/css/bootstrap-timepicker.css" />
+	<link rel="stylesheet" href="<?php echo base_url();?>assets/css/PatrickTest.css" >
+
     <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/css/jquery.minicolors.css">
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
