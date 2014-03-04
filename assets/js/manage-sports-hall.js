@@ -391,8 +391,8 @@ var Restrictions = function() {
         baseUrl = 'court/';
         limits = $('<tbody>');
         blocks = $('<tbody>');
-        delLimit = $('<td><button class="deleteLimit btn btn-xs btn-danger">x</button></td>');
-        delBlock = $('<td ><button class="deleteBlock btn btn-xs btn-danger">x</button></td>');
+        delLimit = $('<td><button class="deleteLimit btn btn-xs btn-danger"><i class="glyphicon glyphicon-remove"></i></button></td>');
+        delBlock = $('<td ><button class="deleteBlock btn btn-xs btn-danger"><i class="glyphicon glyphicon-remove"></i></button></td>');
     };
 
     init();
@@ -462,6 +462,36 @@ var manageRestrictionsPanel = (function() {
             alert(result);
             restrictions.refresh(drop.val());
         });
+    });
+
+
+    container.on('click', 'button.deleteBlock', function () {
+        var tr = $(this).parents('tr:first');
+        
+        $.post(baseUrl + 'removeBlockRestriction', { 
+            room_id: drop.val(), 
+            sport_to_block_id: tr.find("[data-sport_to_block_id]").data('sport_to_block_id'),
+            occurring_sport_id: tr.find("[data-occurring_sport_id]").data('occurring_sport_id')
+        })
+        .done(function( result ) {
+            alert(result);
+            restrictions.refresh(drop.val());
+        });
+
+    });
+
+    container.on('click', 'button.deleteLimit', function () {
+        var tr = $(this).parents('tr:first');
+        
+        $.post(baseUrl + 'removeLimitRestriction', { 
+            room_id: drop.val(), 
+            sport_id: tr.find("[data-sport_id]").data('sport_id'),
+        })
+        .done(function( result ) {
+            alert(result);
+            restrictions.refresh(drop.val());
+        });
+
     });
 
     drop.change(function(){

@@ -907,6 +907,10 @@ ul.ui-autocomplete.popover.dropdown-menu{
 	text-align: center;
 }
 
+#restrictions table{
+	font-size: 14px;
+}
+
 #the-restrictions form{
 	display: table-row;
 }
@@ -915,7 +919,6 @@ ul.ui-autocomplete.popover.dropdown-menu{
 #manage-restrictions .divisiblerooms{
 	display: table-cell;
 	margin-bottom: 15px;
-	
 }
 
 /* @end */

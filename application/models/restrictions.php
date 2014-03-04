@@ -21,6 +21,20 @@ Class Restrictions extends CI_Model{
 	} 
 
 	/**
+	 * Removes a limit restriction
+	 */
+	function removeLimitRestriction($room_id, $sport_id){  
+		$data = array(
+			'sport_id'=>$sport_id,
+			'room_id' => $room_id
+			);
+
+		$this->db->where($data);
+		$this->db->delete($this -> limit_tbl);
+
+	} 
+
+	/**
 	 * Adds a new block restriction
 	 */
 	function addBlockRestriction($room_id, $sport_to_block_id, $occurring_sport_id){  
@@ -31,6 +45,20 @@ Class Restrictions extends CI_Model{
 			);
 
 		$this->db->insert($this -> block_tbl, $data);
+	} 
+
+	/**
+	 * Removes a block restriction
+	 */
+	function removeBlockRestriction($room_id, $sport_to_block_id, $occurring_sport_id){  
+		$data = array(
+			'divisible_room_id'=>$room_id,
+			'sport_to_block_id' => $sport_to_block_id,
+			'occurring_sport_id' => $occurring_sport_id,
+			);
+
+		$this->db->where($data);
+		$this->db->delete($this -> block_tbl);
 	} 
 
 	/**
@@ -51,12 +79,10 @@ Class Restrictions extends CI_Model{
 	 * @return array
 	 */
 	function getBlockRestrictions($room_id){  
-		$this->db->where('divisible_room_id', $room_id);
-		return $this->db->get($this-> block_view)->result_array();
 
-		$this -> db -> select('sport_id, limit, class_type');
-		$this -> db -> from($this -> limit_view);
-		$this -> db -> where('room_id', $room_id);
+		$this -> db -> select('sport_to_block, sport_to_block_id, occurring_sport_id, occurring_sport');
+		$this -> db -> from($this -> block_view);
+		$this -> db -> where('divisible_room_id', $room_id);
 
 		$query = $this->db->get();
 		return $query ->result_array();

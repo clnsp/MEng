@@ -144,12 +144,11 @@
 
 				<div class="col-md-4">
 
-					<h4>Existing Restrictions</h4>
 
 					<!-- Nav tabs -->
 					<ul class="nav nav-tabs">
-						<li class="active"><a href="#block" data-toggle="tab">Block</a></li>
-						<li><a href="#limit" data-toggle="tab">Limit</a></li>
+						<li class="active"><a href="#block" data-toggle="tab">Block Restrictions</a></li>
+						<li><a href="#limit" data-toggle="tab">Limit Restrictions</a></li>
 
 					</ul>
 

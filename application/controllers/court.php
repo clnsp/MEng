@@ -5,7 +5,7 @@ class Court extends CI_Controller{
 		parent::__construct();
 
 		$this->load->model('courts');
-
+		$this->load->model('restrictions');
 
 	}
 
@@ -98,7 +98,6 @@ class Court extends CI_Controller{
 	*/
 	function addBlockRestriction() {
 		if($this->tank_auth->is_admin()){
-			$this->load->model('restrictions');
 
 			if(isset($_POST['room_id']) && isset($_POST['sport_to_block_id']) && isset($_POST['occurring_sport_id'])){
 				if($_POST['room_id'] != '' && $_POST['sport_to_block_id']!='' && $_POST['occurring_sport_id']!='' ){
@@ -117,8 +116,6 @@ class Court extends CI_Controller{
 	*/
 	function addLimitRestriction() {
 		if($this->tank_auth->is_admin()){
-			$this->load->model('restrictions');
-
 			if(isset($_POST['room_id']) && isset($_POST['sport_id']) && isset($_POST['limit'])){
 
 				if($_POST['room_id']!=''){
@@ -138,14 +135,38 @@ class Court extends CI_Controller{
 	}
 
 	/**
-	* Add new limit restriction
+	* Remove limit restriction
+	*/
+	function removeBlockRestriction() {
+		if($this->tank_auth->is_admin()){
+			if(isset($_POST['room_id']) && isset($_POST['sport_to_block_id']) && isset($_POST['occurring_sport_id'])){
+				$this->restrictions->removeBlockRestriction($_POST['room_id'], $_POST['sport_to_block_id'], $_POST['occurring_sport_id'] );
+				echo "Removed";
+			}
+		}
+	}
+
+	/**
+	* Remove Limiy restriction
+	*/
+	function removeLimitRestriction() {
+		if($this->tank_auth->is_admin()){
+			if(isset($_POST['room_id']) && isset($_POST['sport_id'])){
+				$this->restrictions->removeLimitRestriction($_POST['room_id'], $_POST['sport_id']);
+				echo "Removed";
+			}
+		}
+
+	}
+
+	/**
+	* Get all restrictions
 	*/
 	function getRestrictions($room_id){
 		if($this->tank_auth->is_admin()){
-			$this->load->model('restrictions');
 			$restrictions = array(
-					'limits' => $this->restrictions->getLimitRestrictions($room_id),
-					'blocks' => $this->restrictions->getBlockRestrictions($room_id)
+				'limits' => $this->restrictions->getLimitRestrictions($room_id),
+				'blocks' => $this->restrictions->getBlockRestrictions($room_id)
 				);
 			echo json_encode($restrictions);
 		}
