@@ -120,16 +120,35 @@ class Court extends CI_Controller{
 			$this->load->model('restrictions');
 
 			if(isset($_POST['room_id']) && isset($_POST['sport_id']) && isset($_POST['limit'])){
-				if($_POST['sport_id'] != '' && $_POST['limit']='' && $_POST['room_id']!='' ){
+
+				if($_POST['room_id']!=''){
+					echo "No room selected";
+					return;
+				}
+				if($_POST['sport_id'] != '' && $_POST['limit']!=''){
 					$this->restrictions->addLimitRestriction($_POST['room_id'], $_POST['sport_id'], $_POST['limit']);
 					echo "Saved";
 				}else{
-					echo "Not saved";
+					echo "Missing sport or limit";
 				}
 
 			}
 		}
 		
+	}
+
+	/**
+	* Add new limit restriction
+	*/
+	function getRestrictions($room_id){
+		if($this->tank_auth->is_admin()){
+			$this->load->model('restrictions');
+			$restrictions = array(
+					'limits' => $this->restrictions->getLimitRestrictions($room_id),
+					'blocks' => $this->restrictions->getBlockRestrictions($room_id)
+				);
+			echo json_encode($restrictions);
+		}
 	}
 
 

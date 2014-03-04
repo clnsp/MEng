@@ -911,9 +911,10 @@ ul.ui-autocomplete.popover.dropdown-menu{
 	display: table-row;
 }
 
-#the-restrictions form *{
+#the-restrictions form *,
+#manage-restrictions .divisiblerooms{
 	display: table-cell;
-		margin-bottom: 15px;
+	margin-bottom: 15px;
 	
 }
 

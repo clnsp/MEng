@@ -16,7 +16,7 @@
 
 					<div class="form-group">
 						<form id="manage-divisible-room-form" class="form-horizontal prevent" role="form">
-							
+
 
 							<div class="col-xs-10">
 								<select name="room_id" type="dropdown" class="rooms form-control"></select>
@@ -115,11 +115,12 @@
 			<div class="panel-heading"><h3 class="panel-title">Manage Restrictions</h3></div>
 			<div class="panel-body">
 				
-				<div class="manage-panel">
-					
+				<div class="col-md-8">
+					<select name="room_id" type="dropdown" class="divisiblerooms form-control"></select>
+
 					<div id="the-restrictions">	
-						
-						<select name="room_id" type="dropdown" class="divisiblerooms form-control"></select>	
+
+
 						<form id="form-block-restriction" class="form-inline prevent" role="form">
 							<span><strong>Block</strong></span>
 							<select name="sport_to_block_id" type="dropdown" class="classtype form-control form-inline"></select>
@@ -128,7 +129,7 @@
 							<span>occurs </span>
 							<button id="submit-block" class="btn btn-default"><i class="glyphicon glyphicon-plus"></i></button>
 						</form>
-						
+
 						<form id="form-limit-restriction" class="form-inline prevent" role="form">
 							<span><strong>Limit </strong></span>
 							<select name="sport_id" type="dropdown" class="classtype form-control form-inline"></select>
@@ -139,14 +140,48 @@
 							<button id="submit-limit" class="btn btn-default"><i class="glyphicon glyphicon-plus"></i></button>
 						</form>
 					</div>
+				</div>
+
+				<div class="col-md-4">
 
 					<h4>Existing Restrictions</h4>
-					<div id="restrictions" class="well well-sm manage-panel"></div>
-					
-					
-					
-					
+
+					<!-- Nav tabs -->
+					<ul class="nav nav-tabs">
+						<li class="active"><a href="#block" data-toggle="tab">Block</a></li>
+						<li><a href="#limit" data-toggle="tab">Limit</a></li>
+
+					</ul>
+
+					<!-- Tab panes -->
+					<div id="restrictions"class="tab-content manage-panel">
+
+						<div class="tab-pane active" id="block">
+							<table class='table restriction blocks'>
+								<thead>
+									<th>Occurring Sport</th>
+									<th>Blocked Sport</th>
+									<th></th>
+								</thead>
+								<tbody></tbody>
+							</table>
+						</div>
+
+						<div class="tab-pane" id="limit">
+
+							<table class='table restriction limits'>
+								<thead>
+									<th>Sport</th>
+									<th>Limit</th>
+									<th></th>
+								</thead>
+							
+								<tbody></tbody>
+							</table>
+						</div>
+
+					</div>
 				</div>
-				
+
 			</div>
 		</div>
