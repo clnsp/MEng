@@ -51,8 +51,9 @@ if(!$this->tank_auth->is_admin()){ ?>
 	 
 		<!-- Patrick Test Scripts -->
 	   <script type="text/javascript" src="<?php echo base_url();?>assets/js/bootstrap-timepicker.js"></script>
-	   <script type="text/javascript" src="<?php echo base_url();?>assets/js/bootstrap-timepicker.js"></script>
-     
+     <script src="<?php echo base_url();?>assets/datatab/js/jquery.dataTables.min.js"></script>
+     <script src="<?php echo base_url();?>assets/datatab/js/DT_bootstrap.min.js"></script>
+
      <!-- Custom -->
      <script type="text/javascript" src="<?php echo base_url();?>assets/js/bootbox.min.js"></script>
      

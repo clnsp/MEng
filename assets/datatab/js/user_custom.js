@@ -121,6 +121,7 @@
 	// member status 		$statusChange = false;
 	
 	// CONTACTING A MEMBER
+
 	contactMemberMod = (function () {
 		var $selector = $(".message");
 		var $message = $('#message');

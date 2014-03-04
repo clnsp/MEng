@@ -1,9 +1,8 @@
 <?php
 $classname = array(
-    'options' => $options,
 	'name'	=> 'classname',
 	'id'	=> 'classname',
-	'class' =>'input-append dropdown combobox',
+	'value' =>  'classname',
 	'maxlength'	=> 20,
 	'size'	=> 20,
 	'class' => 'form-control',
@@ -25,7 +24,17 @@ $date = array(
 	
 	);
 
-
+$date2 = array(
+	'name'	=> 'date',
+	'id'	=> 'date',
+	'value' => set_value('date'),
+	'maxlength'	=> 20,
+	'size'	=> 20,
+	'type'  => 'text',
+	'class' => 'form-control',
+	'placeholder' => 'Date2',
+	
+	);
 $starttime = array(
 	'name'	=> 'starttime',
 	'id'	=> 'starttime',
@@ -33,7 +42,7 @@ $starttime = array(
 	'maxlength'	=> 20,
 	'size'	=> 20,
 	'class' => 'form-control',
-	'placeholder' => 'Start Date',
+	'placeholder' => 'Start Time',
 	);
 	
 $endtime = array(
@@ -43,7 +52,7 @@ $endtime = array(
 	'maxlength'	=> 20,
 	'size'	=> 20,
 	'class' => 'form-control',
-	'placeholder' => 'End Date',
+	'placeholder' => 'End Time',
 	);
 
 $label = array(
@@ -55,29 +64,17 @@ $form = array(
 	'role' => 'form',
 	);
 
-	?>	
+
+$js = 'class="form-control"';
+
+?>
 
 	
-  <!-- Bootstrap core CSS -->
-    <link href="<?php echo base_url();?>assets/css/bootstrap.css" rel="stylesheet">
-    <link href="<?php echo base_url();?>assets/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Add custom CSS here -->
-    <link href="css/sb-admin.css" rel="stylesheet">
-	  <link rel="stylesheet" href="<?php echo base_url();?>assets/css/bootstrap-theme.php">
-  
-    
-    <link rel="stylesheet" href="<?php echo base_url();?>assets/css/font-awesome.min.css">
-    <link rel="stylesheet" href="<?php echo base_url();?>assets/css/datepicker.min.css" >
-	<link href="<?php echo base_url();?>assets/css/datepicker.css" rel="stylesheet">
-	<link href="<?php echo base_url();?>assets/css/bootstrap-timepicker.min.css" rel="stylesheet">
-	<link href="<?php echo base_url();?>assets/css/bootstrap-timepicker.css" rel="stylesheet">
-	<link href="<?php echo base_url();?>assets/css/bootstrap-combobox.css" rel="stylesheet">
-	<link href="<?php echo base_url();?>assets/css/select2.css" rel="stylesheet">
 	
 
   
-  
+  <meta name="viewport" content="width=device-width" />
 
     <div id="wrapper">
 
@@ -86,7 +83,6 @@ $form = array(
         <div class="row">
  
            <div class="col-lg-12">
-            <h1>Class Search</h1>
 
           </div>
         </div><!-- /.row -->
@@ -96,27 +92,32 @@ $form = array(
         <div class="row">
           <div class="col-lg-6">
 
-             
+  
+
 	 
   <p>  
-  <div class="col-xs-8">
+  <div class="col-lg-8">
   	 	
 
 	
-	
-		
-
+<div id="content">	
+<ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
+        <li class="active"><a href="#classstuff" data-toggle="tab"><b>Class Search</b></a></li>
+        <li><a href="#courtsstuff" data-toggle="tab"><b>Court Search</b></a></li>
+      </ul>	
+<p>	
+<div class="tab-content" id="my-tab-content">
+<div class="tab-pane fade in active" id="classstuff">
 <?php echo form_open("/searchclass/index", $form); ?>
    <div class="form-group">
-  <?php echo form_label('Class Name', $classname['id'], $label); ?>
    <div class="col-sm-10">
-	 <?php echo form_dropdown('classname', $classname['options'], set_value('classname'), 'id ="classname"'); ?>
+	 <?php echo form_dropdown('classname', $options, 'classname' , $js);	 ?>
 	 </div>
 	</div>
 
   
         <div class="form-group">
-			<?php echo form_label('Date', $date['id'], $label); ?>
+
 			<div class="col-sm-10">
 				
 				<?php echo form_input($date); ?>
@@ -124,14 +125,14 @@ $form = array(
 		</div>
 
 	    <div class="form-group">
-			<?php echo form_label('Start Time', $starttime['id'], $label); ?>
+
 			<div class="col-sm-10">
 				<?php echo form_input($starttime); ?>
 			</div>
 		</div>
 		
 		<div class="form-group">
-			<?php echo form_label('End Time', $endtime['id'], $label); ?>
+
 			<div class="col-sm-10">
 				<?php echo form_input($endtime); ?>
 			</div>
@@ -143,57 +144,66 @@ $form = array(
 			<?php echo form_submit('search', 'Search', 'class="btn btn-primary"'); ?>
 			<?php echo form_close(); ?>
 		</div>
-	</div>
+
+
+</div>
 	
 	
-	<?php /* May need this section for styling purposes do not remove yet.
-	 <div class="form-group">	
-    <label class="control-label">Date:</label>
-    <div  class="input-group date" id="dp3" data-date="12-02-2012" data-date-format="mm-dd-yyyy">
-      <input class="form-control" type="text"  placeholder="Date" >
-      <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-    </div>
-  </div>
-
-
-
- <div class="form-group">
- <label class="control-label">From:</label>
-     <div  class="input-group bootstrap-timepicker"  style ="width:100%" >
-	 <input  id="start" type="text" class="form-control" > 
-	 <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>    
-        </div>
-  </div>
-
-	 <div class="form-group">
-	<label class="control-label">To:</label>
-<div  class="input-group bootstrap-timepicker"  style ="width:100%">
-<input  id="end" type="text" class="form-control" > 
-	 <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
-</div>      
-</div>
-</p><p>
-
- <div class="form-group">
-<a class="btn btn-primary" input type="submit" a href="<?php echo site_url();?>/searchclass" id="showResults">Search</a>
-</div>
-*/?>
-
-
-</p><p>		
 </div>    
-       
+    <div class="tab-pane fade in" id="courtsstuff">
+<?php echo form_open("/searchclass/index", $form); ?>
+   <div class="form-group">
+   <div class="col-sm-10">
+	 <?php echo form_dropdown('classname', $options, 'classname' , $js);	 ?>
+	 </div>
+	</div>
+
+  
+        <div class="form-group">
+
+			<div class="col-sm-10">
+				
+				<?php echo form_input($date2); ?>
+			</div>
+		</div>
+
+	    <div class="form-group">
+
+			<div class="col-sm-10">
+				<?php echo form_input($starttime); ?>
+			</div>
+		</div>
+		
+		<div class="form-group">
+
+			<div class="col-sm-10">
+				<?php echo form_input($endtime); ?>
+			</div>
+		</div>
+			
+			<div class="form-group">
+		<div class="col-sm-offset-2 col-sm-10">
+
+			<?php echo form_submit('search', 'Search', 'class="btn btn-primary"'); ?>
+			<?php echo form_close(); ?>
+		</div>
+
+
+</div>
+</div> 
           </div>
+</div>
+
+
+</div>
+</div>
 
           <div class="col-lg-6">
           
-            <div class="panel panel-default" id="p1">
-              <div class="panel-heading">
-                <h3 class="panel-title">Results</h3>
-              </div>
-              <div class="panel-body">
-                            
-                <table cellpadding="0" cellspacing="0" border="0" class="table table-hover table-bordered dataTable display pull-right" id="resultsPan">
+<p></p>
+<p></p>           
+                        
+                <table cellpadding="0" cellspacing="0" border="0" class="table table-hover table-striped table-condensed table-bordered dataTable display pull-right" id="SearchResultsTable">
 <thead>
           <tr>
 			<th>Activity</th>
@@ -210,23 +220,29 @@ $form = array(
                  
                 	<?php $class_type1 = $row['class_type'];?>
                 	<?php $start_date1 = $row['class_start_date'];?>
+					<?php $mystartdate = strtotime($start_date1); ?>				
+					<?php $start_test = date('jS F Y h.i A', $mystartdate); ?>
                 	<?php $end_date1 = $row['class_end_date'];?>
+					<?php $myenddate = strtotime($end_date1); ?>				
+					<?php $end_test = date('jS F Y h.i A', $myenddate); ?>
                 	<?php $room1 = $row['room'];?>
                 	<?php $classid = $row['class_id'];?>
-                	<?php $hidden = array('classid' => $classid);?> 
+                	<?php $hidden = array('classid' => $classid,
+                						  'start' => $start_test,
+										  'end' => $end_test);?> 
                 	
                 	<?php echo form_open("/userbook/index", $form,$hidden); ?>
           
-                	<td><?php echo $row['class_type'];?></td>
+                	<td data-title="Activity"><?php echo $row['class_type'];?></td>
             
-                	<td><?php echo $row['class_start_date'];?></td>
+                	<td data-title="Start"><?php echo $start_test; ?></td>
        
-                	<td><?php echo $row['class_end_date'];?></td>
+                	<td data-title="End"><?php echo $end_test; ?></td>
                 
-                	<td><?php echo $row['room'];?></td>    
+                	<td data-title="Room"><?php echo $row['room'];?></td>    
                 	     
   
-                	<td><?php echo form_submit('letssubmit', 'Book', 'class=' . '"' .$buttondata[$count] . '"'); ?></td>
+                	<td data-title="Book"><?php echo form_submit('letssubmit', 'Book', 'class=' . '"' .$buttondata[$count] . '"'); ?></td>
                 	<?php $count = $count + 1; ?>
                 	<?php echo form_close(); ?>
                 	
@@ -235,12 +251,8 @@ $form = array(
           
         </tbody>
 </table>
-              </div>
-            </div>
-
-            
-
-          </div>
+    </div> 
+             
         </div><!-- /.row -->
 
         
@@ -249,19 +261,14 @@ $form = array(
 
     </div><!-- /#wrapper -->
 
-    <!-- JavaScript -->
- <script type="text/javascript" src="<?php echo base_url();?>assets/js/jquery-1.10.2.min.js"></script>
-    <script type="text/javascript" src="<?php echo base_url();?>assets/js/bootstrap-datepicker.js"></script>
-    <script type="text/javascript" src="<?php echo base_url();?>assets/js/bootstrap-timepicker.min.js"></script>
-	<script type="text/javascript" src="<?php echo base_url();?>assets/js/bootstrap-timepicker.js"></script>
-	<script type="text/javascript" src="<?php echo base_url();?>assets/js/bootstrap-combobox.js"></script>
-	<script type="text/javascript" src="<?php echo base_url();?>assets/js/select2.js"></script>
-	<script type="text/javascript" src="<?php echo base_url();?>assets/js/combobox.js"></script>
+
 	
 	
 
 		
 	<script type="text/javascript">
+	
+	window.onload = function () { 
 		$('#showResults').click(function(){
 		 $("#resultsPan tbody").append(
         "<tr>"+
@@ -276,25 +283,23 @@ $form = array(
 
 		document.getElementById("p1").style.visibility="visible";
 	});
-	</script>
+
 	
-		<script type="text/javascript">
+	
 	jQuery(document).ready(function()
 	{
 	$('#starttime').timepicker('setTime', '');
         });
-	</script>
 
-	<script type="text/javascript">
+
+	
 	jQuery(document).ready(function()
 	{
         $('#endtime').timepicker('setTime', '');
         });
-	</script>
- 
 
-	 
-	<script type="text/javascript">
 
-			$('#date').datepicker();
+	$('#date').datepicker();
+	
+}
 	</script>

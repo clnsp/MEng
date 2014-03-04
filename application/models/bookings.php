@@ -10,7 +10,7 @@
 class Bookings extends CI_Model
 {
 	private $table_name			= 'class_booking_tbl';			// user accounts
-
+    private $waiting_pool_tbl	= 'waiting_pool_tbl';		//waiting list
 
 	function __construct()
 	{
@@ -75,7 +75,7 @@ class Bookings extends CI_Model
 	 * @param int 
 	 */
 	function addMember($class_booking_id, $member_id){ // was add_member
-	if(check_admin()){
+
 		$data = array(
 			'member_id' => $member_id,
 			'class_id' => $class_booking_id,
@@ -84,7 +84,7 @@ class Bookings extends CI_Model
 			);
 		echo ('inserting');
 		$this->db->insert($this -> table_name, $data); 	
-		}
+		
 	}
 	
 	/**
@@ -110,13 +110,15 @@ class Bookings extends CI_Model
 	 * @return	int
 	 */
 	function countBookingAttendants($class_id){ 
-	if(check_admin()){
+	
+	//Removed check admin so i can reuse it for searching for classes
+	//if(check_admin()){
 		$this -> db -> select("member_id");
 		$this -> db -> from($this -> table_name);
 		$this -> db -> where('class_id', $class_id);
 
 		return $this->db->count_all_results();
-		}
+	//	}
 	}
 	
 	/**
@@ -194,5 +196,34 @@ class Bookings extends CI_Model
 		}
 	}
 
+     /**
+        * Returns an array of those waiting for a position
+        * @param int
+        * @return array
+        */
+        function getWaiting($class_id){
+            $this -> db -> select('first_name, second_name');
 
+            $this->db->from($this -> waiting_pool_tbl);
+
+            $this->db->join('users', 'users.id = waiting_pool_tbl.member_id');
+            $this->db->where('class_id', $class_id);
+
+            $query = $this -> db -> get();
+            return $query->result_array();
+
+
+        }
+		
+		function addMemberWaitingList($class_booking_id, $member_id){ 
+
+		$data = array(
+			'member_id' => $member_id,
+			'class_id' => $class_booking_id,
+
+			);
+		echo ('inserting');
+		$this->db->insert($this -> waiting_pool_tbl, $data); 	
+
+	}	
 }

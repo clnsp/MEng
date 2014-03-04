@@ -1,9 +1,8 @@
 <?php
 $classname = array(
-    'options' => $options,
 	'name'	=> 'classname',
 	'id'	=> 'classname',
-	'class' =>'input-append dropdown combobox',
+	'value' => 'classname',
 	'maxlength'	=> 20,
 	'size'	=> 20,
 	'class' => 'form-control',
@@ -25,6 +24,17 @@ $date = array(
 	
 	);
 
+$date2 = array(
+	'name'	=> 'date',
+	'id'	=> 'date',
+	'value' => set_value('date'),
+	'maxlength'	=> 20,
+	'size'	=> 20,
+	'type'  => 'text',
+	'class' => 'form-control',
+	'placeholder' => 'Date2',
+	
+	);
 
 $starttime = array(
 	'name'	=> 'starttime',
@@ -33,8 +43,8 @@ $starttime = array(
 	'maxlength'	=> 20,
 	'size'	=> 20,
 	'class' => 'form-control',
-	'placeholder' => 'Start Time',
-	);
+	'placeholder' => 'Between - Start Time',
+);
 	
 $endtime = array(
 	'name'	=> 'endtime',
@@ -43,7 +53,7 @@ $endtime = array(
 	'maxlength'	=> 20,
 	'size'	=> 20,
 	'class' => 'form-control',
-	'placeholder' => 'End Time',
+	'placeholder' => 'And - End Time',
 	);
 
 $label = array(
@@ -55,7 +65,12 @@ $form = array(
 	'role' => 'form',
 	);
 
-	?>	
+	
+
+$js = 'class="form-control"';
+
+?>
+
 
 
   
@@ -69,7 +84,7 @@ $form = array(
         <div class="row">
  
            <div class="col-lg-12">
-            <h1>Class Search</h1>
+
 
           </div>
         </div><!-- /.row -->
@@ -79,27 +94,31 @@ $form = array(
         <div class="row">
           <div class="col-lg-6">
 
-             
+
 	 
   <p>  
-  <div class="col-xs-8">
+  <div class="col-lg-8">
   	 	
 
 	
-	
-		
-
+<div id="content">	
+<ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
+        <li class="active"><a href="#classstuff" data-toggle="tab"><b>Class Search</b></a></li>
+        <li><a href="#courtsstuff" data-toggle="tab"><b>Court Search</b></a></li>
+      </ul>	
+<p>	
+<div class="tab-content" id="my-tab-content">
+<div class="tab-pane fade in active" id="classstuff">
 <?php echo form_open("/searchclass/index", $form); ?>
    <div class="form-group">
-  <?php echo form_label('Class Name', $classname['id'], $label); ?>
    <div class="col-sm-10">
-	 <?php echo form_dropdown('classname', $classname['options'], set_value('classname'), 'id ="classname"'); ?>
+	 <?php echo form_dropdown('classname', $options, 'classname' , $js);	 ?>
 	 </div>
 	</div>
 
   
         <div class="form-group">
-			<?php echo form_label('Date', $date['id'], $label); ?>
+
 			<div class="col-sm-10">
 				
 				<?php echo form_input($date); ?>
@@ -107,14 +126,14 @@ $form = array(
 		</div>
 
 	    <div class="form-group">
-			<?php echo form_label('Start Time', $starttime['id'], $label); ?>
+
 			<div class="col-sm-10">
 				<?php echo form_input($starttime); ?>
 			</div>
 		</div>
 		
 		<div class="form-group">
-			<?php echo form_label('End Time', $endtime['id'], $label); ?>
+
 			<div class="col-sm-10">
 				<?php echo form_input($endtime); ?>
 			</div>
@@ -126,12 +145,58 @@ $form = array(
 			<?php echo form_submit('search', 'Search', 'class="btn btn-primary"'); ?>
 			<?php echo form_close(); ?>
 		</div>
-	</div>
+
+
+</div>
+	
 	
 </div>    
-       
-          </div>
+    <div class="tab-pane fade in" id="courtsstuff">
+<?php echo form_open("/searchclass/index", $form); ?>
+   <div class="form-group">
+   <div class="col-sm-10">
+	 <?php echo form_dropdown('classname', $options, 'classname' , $js);	 ?>
+	 </div>
+	</div>
 
+  
+        <div class="form-group">
+
+			<div class="col-sm-10">
+				
+				<?php echo form_input($date2); ?>
+			</div>
+		</div>
+
+	    <div class="form-group">
+
+			<div class="col-sm-10">
+				<?php echo form_input($starttime); ?>
+			</div>
+		</div>
+		
+		<div class="form-group">
+
+			<div class="col-sm-10">
+				<?php echo form_input($endtime); ?>
+			</div>
+		</div>
+			
+			<div class="form-group">
+		<div class="col-sm-offset-2 col-sm-10">
+
+			<?php echo form_submit('search', 'Search', 'class="btn btn-primary"'); ?>
+			<?php echo form_close(); ?>
+		</div>
+
+
+</div>
+</div> 
+          </div>
+</div>
+
+
+</div>
           <div class="col-lg-6">
           
    
@@ -156,6 +221,8 @@ $form = array(
 	
 window.onload = function () { 
 	
+   $('#tabs').tab();
+
 		$('#showResults').click(function(){
 		 $("#resultsPan tbody").append(
         "<tr>"+
@@ -184,6 +251,8 @@ window.onload = function () {
 	$('#date').datepicker();
 	
  }
+
+
 	</script>
 
 	 

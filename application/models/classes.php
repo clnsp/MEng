@@ -164,7 +164,7 @@ class Classes extends CI_Model{
             echo($this->db->_error_message());
 
         }
-
+//Add
         /**
         * Get class information
         *
@@ -280,6 +280,14 @@ class Classes extends CI_Model{
 
 
         }	
+		
+		/**
+        * Returns an array of classes with type and between two different times
+        * @param int
+		* @param int
+		* @param int
+        * @return array
+        */
 	function getClassesWithTypeAndStartTime($class_type, $start, $end)
 	{
 		
@@ -298,7 +306,13 @@ return $query->result_array();
 
 	}
 
-function getClassesWithTypeAndDate($class_type, $date)
+	/**
+        * Returns an array of classes which occur that day
+        * @param string
+		* @param int
+        * @return array
+        */
+	function getClassesWithTypeAndDate($class_type, $date)
 	{
 		
 
@@ -315,27 +329,28 @@ function getClassesWithTypeAndDate($class_type, $date)
 	return $query->result_array();
 
 	}
+	
 	/**
-	 * Get booking by Class Type
+	 * Get classes by Class Type
+	 * Returns an array of classes which have a specified class type
 	 *
-	 * @param	int
-	 * @param	bool
+	 * @param	String
 	 * @return	object
 	 */
 	function getClassesWithType($class_type)
 	{
 		
 
-$this -> db -> select('class_type, class_start_date, class_end_date, room, class_id');
-$this -> db -> from($this -> table_name);
-$this -> db -> where('class_type', $class_type);
-$this -> db -> join('class_type_tbl', 'class_type_tbl.class_type_id = class_tbl.class_type_id');
-$this -> db -> join('room_tbl', 'room_tbl.room_id = class_tbl.room_id');
+	$this -> db -> select('class_type, class_start_date, class_end_date, room, class_id');
+	$this -> db -> from($this -> table_name);
+	$this -> db -> where('class_type', $class_type);
+	$this -> db -> join('class_type_tbl', 'class_type_tbl.class_type_id = class_tbl.class_type_id');
+	$this -> db -> join('room_tbl', 'room_tbl.room_id = class_tbl.room_id');
 
-$query = $this -> db -> get();
+	$query = $this -> db -> get();
 
 
-return $query->result_array();
+	return $query->result_array();
 
 	}
 	
