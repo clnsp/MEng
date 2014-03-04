@@ -10,16 +10,6 @@ $classname = array(
 
 	);
 	
-$classname1 = array(
-	'name'	=> 'classname',
-	'id'	=> 'classname',
-	'value' => 'classname',
-	'maxlength'	=> 20,
-	'size'	=> 20,
-	'class' => 'form-control',
-	'placeholder' => 'Class Name',
-
-	);	
 	
 $date = array(
 	'name'	=> 'date',

@@ -281,7 +281,7 @@ $js = 'class="form-control"';
                 	
                 </tr>
         <?php endforeach; ?> 
-          
+               
         </tbody>
 </table>
     </div> 
@@ -356,6 +356,18 @@ $js = 'class="form-control"';
 
 
 	$('#date').datepicker();
+	
+		jQuery(document).ready(function()
+	{
+	$('#starttime1').timepicker('setTime', '');
+        });
+
+	jQuery(document).ready(function()
+	{
+        $('#endtime1').timepicker('setTime', '');
+        });
+	
+	$('#date1').datepicker();
 	
 }
 	</script>
