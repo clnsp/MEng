@@ -523,6 +523,12 @@ html, body, #booking {
 	margin: 0 auto -155px;
 }
 
+#booking.user #page-wrapper:after {
+	content: "";
+	display: block;
+	height: 155px;
+}
+
 #booking .username{
 	text-transform: capitalize;
 }

@@ -16,7 +16,7 @@
 				// Whoops, we don't have a page for that!
 				show_404();
 			}
-	
+
 
 			if(!$this->tank_auth->is_logged_in()){
 			  //If no session, redirect to login page
@@ -27,7 +27,7 @@
 			}
 
 			if(check_admin()){
-		 		$data['user'] = $this->tank_auth->is_admin();
+				$data['user'] = $this->tank_auth->is_admin();
 				
 				$h = gmdate('H');
 				$s = gmdate("Y-m-d H:i:s", 1390176000); // GET FOR CURRENT TIME  date('Y-m-d H:') . ':00:00';
@@ -141,55 +141,53 @@
 				$this->load->Model('classes');
 				
 				$data['user'] = $this->tank_auth->is_admin();
-	
+
 				$data['categories'] = $this->Categories->getCategories();
 				$data['class_types'] = $this->classes->getClassTypes();
-							
+
 				parse_temp($page, $this->load->view('pages/'.$page, $data, true));
 			}
 		}
 		
-			/*
-                 *User booking page
-                 */
-           public function user_booking($page = 'user_booking'){
-				 
-				$this->load->Model('Classtype');
-                 
-				$dbres = $this->Classtype->getClasstype();
-		
-				$ddmenu = array();
-				foreach ($dbres as $row) {
-  					$ddmenu['class_type'] = $row['class_type'];
-				}
-				$data['options'] = $ddmenu;
+		/*
+	     * User booking page
+	     */
+		public function user_booking($page = 'user_booking'){
+
+			$this->load->Model('Classtype');
+
+			$dbres = $this->Classtype->getClasstype();
+
+			$ddmenu = array();
+			foreach ($dbres as $row) {
+				$ddmenu['class_type'] = $row['class_type'];
+			}
+			$data['options'] = $ddmenu;
 
 
-				 
-				                
-			 	$data['classtype'] = $this->Classtype->getClasstype();
-								
-                 parse_temp($page, $this->load->view('pages/'.$page, $data, true));
-				  
-              }
+			$data['classtype'] = $this->Classtype->getClasstype();
 
-				/*
-                 * Class List Page
-                 */
-           
-				 		public function class_list($page = 'class_list'){
+			parse_temp($page, $this->load->view('pages/'.$page, $data, true));
 
-			
-				$this->load->Model('Categories');
-				$this->load->Model('classes');
-				
-			
-	
-				$data['categories'] = $this->Categories->getCategories();
-				$data['class_types'] = $this->classes->getClassTypes();
-							
-				parse_temp($page, $this->load->view('pages/'.$page, $data, true));
-			
+		}
+
+		/*
+         * Class List Page
+         */
+
+		public function class_list($page = 'class_list'){
+
+
+			$this->load->Model('Categories');
+			$this->load->Model('classes');
+
+
+
+			$data['categories'] = $this->Categories->getCategories();
+			$data['class_types'] = $this->classes->getClassTypes();
+
+			parse_temp($page, $this->load->view('pages/'.$page, $data, true));
+
 		}
 
 	}

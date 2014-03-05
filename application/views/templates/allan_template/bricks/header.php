@@ -40,7 +40,7 @@
 
       <body>
 
-        <div id="booking" class='{page_title}'>
+        <div id="booking" class='{page_title} <?php if(!$this->tank_auth->is_admin()){ echo "user"; }?> ?>'>
           <div id="page-wrapper">
 
            <div class="navbar navbar-default navbar-inverse navbar-top navbar-fixed-top" role="navigation">

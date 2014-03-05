@@ -10,10 +10,10 @@
 * @author MEng Project
 */
 class Classes extends CI_Model{
-    private $table_name             = 'class_tbl';	
-    private $class_type_tbl	        = 'class_type_tbl';	
-    private $class_info_view        = 'class_info_view';    
-    private $waiting_pool_tbl	= 'waiting_pool_tbl';	
+    private $table_name         = 'class_tbl';	
+    private $class_type_tbl     = 'class_type_tbl';	
+    private $class_info_view    = 'class_info_view';    
+    private $waiting_pool_tbl   = 'waiting_pool_tbl';	
 
     function __construct(){
         parent::__construct();
@@ -280,82 +280,118 @@ class Classes extends CI_Model{
 
 
         }	
-		
-		/**
+
+        /**
         * Returns an array of classes with type and between two different times
         * @param int
-		* @param int
-		* @param int
+        * @param int
+        * @param int
         * @return array
         */
-	function getClassesWithTypeAndStartTime($class_type, $start, $end)
-	{
-		
+        function getClassesWithTypeAndStartTime($class_type, $start, $end) {
 
-	$this -> db -> select('class_type, class_start_date, class_end_date, room, class_id');
-	$this -> db -> from($this -> table_name);
-	$this -> db -> where('class_type', $class_type);
-	$this -> db -> where('class_start_date BETWEEN "' . $start . '" AND "' . $end . '"');
-	$this -> db -> join('class_type_tbl', 'class_type_tbl.class_type_id = class_tbl.class_type_id');
-	$this -> db -> join('room_tbl', 'room_tbl.room_id = class_tbl.room_id');
+            $this -> db -> select('class_type, class_start_date, class_end_date, room, class_id');
+            $this -> db -> from($this -> table_name);
+            $this -> db -> where('class_type', $class_type);
+            $this -> db -> where('class_start_date BETWEEN "' . $start . '" AND "' . $end . '"');
+            $this -> db -> join('class_type_tbl', 'class_type_tbl.class_type_id = class_tbl.class_type_id');
+            $this -> db -> join('room_tbl', 'room_tbl.room_id = class_tbl.room_id');
 
-	$query = $this -> db -> get();
+            $query = $this -> db -> get();
 
 
-return $query->result_array();
+            return $query->result_array();
 
-	}
+        }
 
-	/**
+		/**
+        * Returns an array of future classes for specific id
+        * @param int
+        * @return array
+        */
+        function getFutureClasses($class_type_id) {
+
+            $this -> db -> select('class_type, class_start_date, class_end_date, room, class_id');
+            $this -> db -> from($this -> table_name);
+            $this -> db -> where('class_type_tbl.class_type_id', $class_type_id);
+            $this -> db -> where('class_start_date >=', date("Y-m-d H:i:s"));
+            $this -> db -> join('class_type_tbl', 'class_type_tbl.class_type_id = class_tbl.class_type_id');
+            $this -> db -> join('room_tbl', 'room_tbl.room_id = class_tbl.room_id');
+
+            $query = $this -> db -> get();
+
+            return $query->result_array();
+
+        }
+
+
+
+	   /**
         * Returns an array of classes which occur that day
         * @param string
 		* @param int
         * @return array
         */
-	function getClassesWithTypeAndDate($class_type, $date)
-	{
-		
+        function getClassesWithTypeAndDate($class_type, $date) {
 
-	$this -> db -> select('class_type, class_start_date, class_end_date, room, class_id');
-	$this -> db -> from($this -> table_name);
-	$this -> db -> where('class_type', $class_type);
-	$this -> db -> where('class_start_date', $date); 
-	$this -> db -> join('class_type_tbl', 'class_type_tbl.class_type_id = class_tbl.class_type_id');
-	$this -> db -> join('room_tbl', 'room_tbl.room_id = class_tbl.room_id');
+            $this -> db -> select('class_type, class_start_date, class_end_date, room, class_id');
+            $this -> db -> from($this -> table_name);
+            $this -> db -> where('class_type', $class_type);
+            $this -> db -> where('class_start_date', $date); 
+            $this -> db -> join('class_type_tbl', 'class_type_tbl.class_type_id = class_tbl.class_type_id');
+            $this -> db -> join('room_tbl', 'room_tbl.room_id = class_tbl.room_id');
 
-	$query = $this -> db -> get();
+            $query = $this -> db -> get();
 
 
-	return $query->result_array();
+            return $query->result_array();
 
-	}
-	
-	/**
-	 * Get classes by Class Type
-	 * Returns an array of classes which have a specified class type
-	 *
-	 * @param	String
-	 * @return	object
-	 */
-	function getClassesWithType($class_type)
-	{
-		
+        }
 
-	$this -> db -> select('class_type, class_start_date, class_end_date, room, class_id');
-	$this -> db -> from($this -> table_name);
-	$this -> db -> where('class_type', $class_type);
-	$this -> db -> join('class_type_tbl', 'class_type_tbl.class_type_id = class_tbl.class_type_id');
-	$this -> db -> join('room_tbl', 'room_tbl.room_id = class_tbl.room_id');
+    /**
+     * Get classes by Class Type
+     * Returns an array of classes which have a specified class type
+     *
+     * @param   String
+     * @return  object
+     */
+    function getClassesWithType($class_type){
+        $this -> db -> select('class_type, class_start_date, class_end_date, room, class_id');
+        $this -> db -> from($this -> table_name);
+        $this -> db -> where('class_type', $class_type);
+        $this -> db -> join('class_type_tbl', 'class_type_tbl.class_type_id = class_tbl.class_type_id');
+        $this -> db -> join('room_tbl', 'room_tbl.room_id = class_tbl.room_id');
 
-	$query = $this -> db -> get();
+        $query = $this -> db -> get();
 
 
-	return $query->result_array();
-
-	}
-	
+        return $query->result_array();
 
     }
+
+    /**
+	 * Get classes by Class Type id
+	 * Returns an array of classes which have a specified class type id
+	 *
+	 * @param	String
+	 * @return	array
+	 */
+	function getClassesWithTypeID($class_type_id){
+        $this -> db -> select('class_type, class_start_date, class_end_date, room, class_id');
+        $this -> db -> from($this -> table_name);
+        $this -> db -> where('class_type_tbl.class_type_id', $class_type_id);  
+        $this -> db -> join('class_type_tbl', 'class_type_tbl.class_type_id = class_tbl.class_type_id');
+        $this -> db -> join('room_tbl', 'room_tbl.room_id = class_tbl.room_id');
+
+        $query = $this -> db -> get();
+        echo json_encode($query->result_array());
+        return $query->result_array();
+
+
+    }
+
+
+}
 
 
 

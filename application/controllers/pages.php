@@ -200,56 +200,33 @@
 			}
 		}
 		
-			/*
-                 *User booking page
-                 */
-           public function user_booking($page = 'user_booking'){
-				
-			//will change this to user	 
-				echo $this->tank_auth->get_user_id();
-				$this->load->Model('Classtype');
-                 
-				$dbres = $this->Classtype->getClasstype();
-				$sports = $this->Classtype->getActivitytype();
-				
-				$sportmenu = array();
-				foreach ($sports as $row) {
-  					$sportmenu[] = $row['class_type'];
-				}
-				$data['sportsoptions'] = $sportmenu;
-				
-				$ddmenu = array();
-				foreach ($dbres as $row) {
-  					$ddmenu[] = $row['class_type'];
-				}
-				$data['options'] = $ddmenu;
+		/*
+		* User booking page
+        */
+		public function user_booking($page = 'user_booking'){
+
+			$data = setupClassSearchForm();
+
+			parse_temp($page, $this->load->view('pages/'.$page, $data, true));
+
+		}
+
+		/**
+		 * Class List Page
+		 */
+		public function class_list($page = 'class_list'){
 
 
-				 
-				                
-			 	$data['classtype'] = $this->Classtype->getClasstype();
-								
-                 parse_temp($page, $this->load->view('pages/'.$page, $data, true));
-				 
-              }
+			$this->load->Model('Categories');
+			$this->load->Model('classes');
 
-				/*
-                 * Class List Page
-                 */
-           
-				 public function class_list($page = 'class_list'){
 
-			
-				$this->load->Model('Categories');
-				$this->load->Model('classes');
-				
-			
-	
-				$data['categories'] = $this->Categories->getCategories();
-				$data['class_types'] = $this->classes->getClassTypes();
-							
-				parse_temp($page, $this->load->view('pages/'.$page, $data, true));
-			
+
+			$data['categories'] = $this->Categories->getCategories();
+			$data['class_types'] = $this->classes->getClassTypes();
+
+			parse_temp($page, $this->load->view('pages/'.$page, $data, true));
+
 		}
 
 	}

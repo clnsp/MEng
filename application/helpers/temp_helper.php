@@ -2,6 +2,8 @@
 
 if ( ! function_exists('parse_temp')){
 
+
+
 	/**
 	 * Function for parsing template aspects
 	 */
@@ -123,6 +125,34 @@ if ( ! function_exists('parse_temp')){
 		# And as a test we print the attributes:
 		$attributes = $as->getAttributes();
 		return $attributes;	 
+	}
+
+	/**
+	* Setup the user class search page
+	*/
+	function setupClassSearchForm($data =array()){
+		//will change this to user	 
+		$ci = get_instance();
+		$ci->load->Model('Classtype');
+
+		$sportmenu = array();
+		foreach ($ci->Classtype->getSportClassTypeNameIDs() as $row) {
+			$sportmenu[$row['class_type']] = $row['class_type'];
+		}
+
+		$data['sportClassTypes'] = $sportmenu;
+
+
+		$ddmenu = array();
+		foreach ($ci->Classtype->getClassTypeNameIDs() as $row) {
+			$ddmenu[$row['class_type_id']] = $row['class_type'];
+		}
+
+		$data['classTypes'] = $ddmenu;
+
+		// $data['classtype'] = $ci->Classtype->getClasstype();
+
+		return $data;
 	}
 
 }

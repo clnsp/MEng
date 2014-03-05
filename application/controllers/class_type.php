@@ -113,10 +113,10 @@ class class_type extends CI_Controller
 					);
 
 				$start_time = new DateTime($_POST['class_start_date']);
-				$start_time = $start_time->format(' H:m:00');
+				$start_time = $start_time->format('H:m:00');
 
 				$end_time = new DateTime($_POST['class_end_date']);
-				$end_time = $end_time->format(' H:m:00');
+				$end_time = $end_time->format('H:m:00');
 
 				foreach ($_POST['repeat_dates'] as $key => $date) {
 					$date = new DateTime($date);
@@ -151,6 +151,18 @@ class class_type extends CI_Controller
 		
 		return(!($date["month"] == '' && $date["day"]=='' && $date["year"] =='' && $date["hour"] == '' && $date["minute"]==''));
 
+	}
+
+	/**
+	 * Get all the sports class types as json
+	 */
+	function getSportsClassTypes(){
+		if($this->tank_auth->is_admin()){
+		$this->load->model('classtype');
+			$types = $this->classtype->getActivitytype();
+			echo json_encode($types);
+
+		}
 	}
 
 
