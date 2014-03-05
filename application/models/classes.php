@@ -288,11 +288,11 @@ class Classes extends CI_Model{
         * @param int
         * @return array
         */
-        function getClassesWithTypeAndStartTime($class_type, $start, $end) {
+        function getClassesWithTypeAndStartTime($class_type_id, $start, $end) {
 
             $this -> db -> select('class_type, class_start_date, class_end_date, room, class_id');
             $this -> db -> from($this -> table_name);
-            $this -> db -> where('class_type', $class_type);
+            $this -> db -> where('class_type_tbl.class_type_id', $class_type_id);
             $this -> db -> where('class_start_date BETWEEN "' . $start . '" AND "' . $end . '"');
             $this -> db -> join('class_type_tbl', 'class_type_tbl.class_type_id = class_tbl.class_type_id');
             $this -> db -> join('room_tbl', 'room_tbl.room_id = class_tbl.room_id');
