@@ -99,7 +99,7 @@ class Bookings extends CI_Model
 			'attended' => 0,
 
 			);
-		echo ('inserting');
+
 		$this->db->insert($this -> table_name, $data); 	
 		
 	}
@@ -110,13 +110,13 @@ class Bookings extends CI_Model
 	 * @param int
 	 */
 	function removeMember($class_booking_id, $member_id){ // was remove_member
-	if(check_admin()){
+	
 		$data = array(
 			'member_id' => $member_id,
 			'class_id' => $class_booking_id,				   
 			);
 		$this->db->delete($this -> table_name, $data); 	
-		}
+		
 	}
 
 
@@ -239,7 +239,7 @@ class Bookings extends CI_Model
 			'class_id' => $class_booking_id,
 
 			);
-		echo ('inserting');
+
 		$this->db->insert($this -> waiting_pool_tbl, $data); 	
 
 	}	

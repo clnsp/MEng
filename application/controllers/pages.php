@@ -165,6 +165,7 @@
 			
 			$data['bookings'] = $this->bookings->getClassBookingByMember($member_id);
 			$data['bookingsPast'] = $this->bookings->getClassBookingByMember($member_id);
+			$data['bookingMember'] = $member_id;
 
 			$rowCount = 0;
 			$rowCounter = 0;

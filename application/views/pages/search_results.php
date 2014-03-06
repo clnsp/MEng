@@ -33,20 +33,21 @@ $form = array(
 					<?php $end_test = date('jS F Y h.i A', $myenddate); ?>
 					<?php $room1 = $row['room'];?>
 					<?php $classid = $row['class_id'];?>
+					<?php $bookingtype = $buttondata[$count]; ?>
 					<?php $hidden = array('classid' => $classid,
 						'start' => $start_test,
-						'end' => $end_test);?> 
+						'end' => $end_test,
+						'bookingtype' => $bookingtype);?> 
 
-						<?php echo form_open("/userbook/index", $form,$hidden); ?>
+						<?php echo form_open("/userbook/index", $form, $hidden); ?>
 
 						<td data-title="Activity"><?php echo $row['class_type'];?></td>
-
+					
 						<td data-title="Start"><?php echo $start_test; ?></td>
 
 						<td data-title="End"><?php echo $end_test; ?></td>
 
-						<td data-title="Room"><?php echo $row['room'];?></td>    
-
+						<td data-title="Room"><?php echo $row['room'];?></td>    	
 
 						<td data-title="Book"><?php echo form_submit('letssubmit', 'Book', 'class=' . '"' .$buttondata[$count] . '"'); ?></td>
 						<?php $count = $count + 1; ?>
