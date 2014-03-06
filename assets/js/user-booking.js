@@ -4,12 +4,15 @@ $( document ).ready(function() {
 	$('#endtime').timepicker('setTime', '');
 	$('#date').datepicker();
 	
-	$('#tabs a').click(function(){
-		$('#tab-content .form-group.toggleInput').toggleClass('hidden');
+	$('#tabs li').click(function(){
+		if(!$(this).hasClass('active')){
+			$('#tab-content .form-group.toggleInput').toggleClass('hidden');
+
+			$('#tab-content .form-group.toggleInput select').each(function() {
+				$(this).prop("disabled",!$(this).prop("disabled"))
+			});
+		}
 		
-		$('#tab-content .form-group.toggleInput select').each(function() {
-			$(this).prop("disabled",!$(this).prop("disabled"))
-		});
 		
 	});
 	
