@@ -37,7 +37,7 @@ $form = array(
 						'start' => $start_test,
 						'end' => $end_test);?> 
 
-						<?php echo form_open("/userbook/index", $form,$hidden); ?>
+						<?php echo form_open("/userbook/index", $form, $hidden); ?>
 
 						<td data-title="Activity"><?php echo $row['class_type'];?></td>
 
