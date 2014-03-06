@@ -5,6 +5,9 @@ class searchclass extends CI_Controller{
 	function __construct()
 	{
 		parent::__construct();
+		$this->load->model('Classes');
+		$this->load->Model('Classtype');
+
 	}
 
 /**
@@ -12,8 +15,6 @@ class searchclass extends CI_Controller{
 * for the database queries.
 */
 function index($page = 'search_results'){
-	$this->load->Model('Classes');
-	$this->load->Model('Classtype');
 	
 	$user_id = $this->tank_auth->get_user_id();
 	$sportorclass = $this->input->post('sportorclass');
@@ -50,26 +51,34 @@ function index($page = 'search_results'){
 	}
 	
 	$ddrmenu = array();
-		foreach ($data['classes'] as $row) {
+	foreach ($data['classes'] as $row) {
 
-			if($this->isClassBookedOut($row['class_id'])){
-				$ddrmenu[] = "btn btn-warning";
-			}else{
-				$ddrmenu[] = "btn btn-primary";
-			}
-
+		if($this->isClassBookedOut($row['class_id'])){
+			$ddrmenu[] = "btn btn-warning";
+		}else{
+			$ddrmenu[] = "btn btn-primary";
 		}
-		$data['buttondata'] = $ddrmenu;
+
+	}
+	$data['buttondata'] = $ddrmenu;
 	
 	parse_temp($page, $this->load->view('pages/user_booking', setupClassSearchForm(), true) . $this->load->view('pages/'.$page, $data, true));
 
 }
 
+/**
+* Retrieve possible *sports classes that could be booked out
+*/
+function fetchSportsClasses(){
+	echo json_encode($this->Classtype->getActivityType());
+}
+
+
 function isClassBookedOut($class_booking_id){
-	$this->load->model('classes');
-	$this->load->model('bookings');
-	$capacity = $this->classes->getClassCapacity($class_booking_id);
-	$attending = $this->bookings->countBookingAttendants($class_booking_id);
+	$this->load->model('Bookings');
+
+	$capacity = $this->Classes->getClassCapacity($class_booking_id);
+	$attending = $this->Bookings->countBookingAttendants($class_booking_id);
 	
 	return ($attending >= $capacity);
 }

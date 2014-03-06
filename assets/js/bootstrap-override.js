@@ -81,7 +81,7 @@
  $('INPUT.minicolors-inline').minicolors({ theme: 'bootstrap', control: 'wheel' });
  
  /* prevent forms submitting */
- $('form.prevent').submit(function(e) {
+ $(document).on('submit', 'form.prevent', function(e) {
  	e.preventDefault();
  });
 
@@ -394,3 +394,5 @@ var DivisibleRooms = function() {
 };
 
 var divisiblerooms = new DivisibleRooms();
+
+

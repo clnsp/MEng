@@ -137,7 +137,7 @@ if ( ! function_exists('parse_temp')){
 
 		$sportmenu = array();
 		foreach ($ci->Classtype->getSportClassTypeNameIDs() as $row) {
-			$sportmenu[$row['class_type']] = $row['class_type'];
+			$sportmenu[$row['class_type_id']] = $row['class_type'];
 		}
 
 		$data['sportClassTypes'] = $sportmenu;

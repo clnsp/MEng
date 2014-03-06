@@ -159,12 +159,11 @@ class class_type extends CI_Controller
 	 * Get all the sports class types as json
 	 */
 	function getSportsClassTypes(){
-		if($this->tank_auth->is_admin()){
 		$this->load->model('classtype');
-			$types = $this->classtype->getSportClassTypeNameIDs();
-			echo json_encode($types);
+		
+		$types = $this->classtype->getSportClassTypeNameIDs();
+		echo json_encode($types);
 
-		}
 	}
 
 

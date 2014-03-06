@@ -66,7 +66,7 @@ $js = 'class="form-control"';
 
 	<div id="tab-content" class="tab-content">
 		<div class="tab-pane fade in out active" id="classes">
-		
+
 			<?php $hidden = array('sportorclass' => 'class');?> 
 			
 			<?php echo form_open("/searchclass/index", $form, $hidden); ?>
@@ -100,8 +100,28 @@ $js = 'class="form-control"';
 
 	</div>
 
-
 </div>
 
+<div class="col-sm-8">
 
+
+<table class="footable table">
+	<thead>
+		<tr>
+			<th >Start</th>
+			<th data-hide="phone">End</th>
+			<th data-hide="phone, tablet">Room</th>
+			<th>Book</th>
+		</tr>
+	</thead>
+
+	<tbody>
+		<td>Start</td>
+		<td>end</td>
+		<td>room</td>
+		<td>book</td>
+	</tbody>
+</table>
+
+</div>
 
