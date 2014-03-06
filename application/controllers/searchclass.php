@@ -114,7 +114,7 @@ $dbresults = $this->Classes->getClassesWithTypeAndStartTime($selected, $starttim
 		
 				
 		
-		$data['buttondata'] = $ddrmenu;
+		
 		
 		//Make sure results are within a valid date
 		   $rowCount = 0;
@@ -149,6 +149,8 @@ $dbresults = $this->Classes->getClassesWithTypeAndStartTime($selected, $starttim
 		//			}
 			
 				}
+
+		$data['buttondata'] = $ddrmenu;
 	}else{	
 	
 

@@ -7,10 +7,6 @@ function __construct()
         parent::__construct();
     }
 
-    /*
-* Get users from associated with a class booking
-*/
-
 
    /*
     * Retrieves search results according to search parameters, also sorts date and time into the correct format
@@ -25,21 +21,13 @@ function __construct()
 
 
 	$user_id = $this->tank_auth->get_user_id();
-//	$username = $this->tank_auth->get_username();
- //   $class_type = $this->input->post('classname1');
     $classid = $this->input->post('classid');
 
 
 	$start = $this->input->post('start');
 	$end = $this->input->post('end');
 
- //   echo $classid;
-  //  if (isset($_POST['user_id']) && isset($_POST['class_id'])){
-   //     $m = strtolower($_POST['user_id']);
-    //    $b = strtolower($_POST['class_id']);
-
-
-   //     if(!$this->isClassBookedOut($classid) && !$this->isClassInPast($classid)){
+ 
 
          $this->addMember($classid, $user_id, $start, $end);
           echo "Added";
@@ -50,7 +38,7 @@ function __construct()
 
 		parse_temp($page, $this->load->view('pages/'.$page, $data, true));
         }
-      //} 
+     
 
 
 
