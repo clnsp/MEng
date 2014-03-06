@@ -39,7 +39,7 @@ $form = array(
 						'end' => $end_test,
 						'bookingtype' => $bookingtype);?> 
 
-						<?php echo form_open("/userbook/index", $form,$hidden); ?>
+						<?php echo form_open("/userbook/index", $form, $hidden); ?>
 
 						<td data-title="Activity"><?php echo $row['class_type'];?></td>
 					
