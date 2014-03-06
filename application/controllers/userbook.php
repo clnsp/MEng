@@ -31,6 +31,14 @@ class userbook extends CI_Controller{
 
      $start = $this->input->post('start');
      $end = $this->input->post('end');
+     $bookingtype = $this->input->post('bookingtype');
+
+    if($bookingtype == "btn btn-warning"){
+		$bookingtype = "You have been added to the Waiting List for";
+}else{
+		$bookingtype = "You will be Attending";
+
+}
 
  //   echo $classid;
   //  if (isset($_POST['user_id']) && isset($_POST['class_id'])){
@@ -41,9 +49,11 @@ class userbook extends CI_Controller{
    //     if(!$this->isClassBookedOut($classid) && !$this->isClassInPast($classid)){
 
      $this->addMember($classid, $user_id, $start, $end);
-     echo "Added";
      $data['user_id'] = $this->tank_auth->get_user_id();
      $data['class_id'] = $classid;
+     $data['start'] = $start;
+     $data['end'] = $end;
+     $data['bookingtype'] = $bookingtype;
 
      $data['classinfo'] = $this->classes->getClassInformation($classid);
 
@@ -59,19 +69,18 @@ class userbook extends CI_Controller{
 
     $m = strtolower($user_id);
     $b = strtolower($classid);
-    echo "Member id " . $m . ' class id ' . $b; 
 
     if(!$this->isClassBookedOut($b) && !$this->isClassInPast($b)){
       $this->bookings->addMember($b, $m);
       $this->_emailMemberAddedToClass($m, $b, $start, $end);
-      echo "Added";
+
 
     }elseif ($this->isClassBookedOut($b) && !$this->isClassInPast($b)) {
       $this->bookings->addMemberWaitingList($b, $m);
       $this->_emailMemberAddedToWaitingList($m, $b, $start, $end);
-      echo "Added";
+
     }
-		//could add a condition to check if booked out and not in past and wait list not full to add to wait list
+		
 
   }
 
@@ -97,7 +106,6 @@ class userbook extends CI_Controller{
    $this->load->helper('email');
    
    $email = $this->members->getMemberEmail($member_id);
-   echo $email;
    $classDetails = $this->classes->getClassInformation($class_id);
    $headers  = 'MIME-Version: 1.0' . "\r\n";
    $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
@@ -117,7 +125,6 @@ class userbook extends CI_Controller{
    $this->load->helper('email');
    
    $email = $this->members->getMemberEmail($member_id);
-   echo $email;
    $classDetails = $this->classes->getClassInformation($class_id);
    $headers  = 'MIME-Version: 1.0' . "\r\n";
    $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
