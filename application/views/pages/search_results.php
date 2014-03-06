@@ -5,7 +5,6 @@ $form = array(
 	'role' => 'form',
 	);
 
-
 	?>
 
 	<div class="col-sm-8">
@@ -60,48 +59,3 @@ $form = array(
 		</table>
 	</div> 
 
-
-
-
-
-
-
-	<script type="text/javascript">
-
-	window.onload = function () { 
-
-
-		$('#showResults').click(function(){
-			$("#resultsPan tbody").append(
-				"<tr>"+
-				"<td>hello</td>"+
-				"<td>test></td>"+
-				"<td>big test</td>"+
-				"<td>big test</td>"+
-				"<td>big test</td>"+
-				"<td> <button type='button' class='btn btn-primary btn-sm'>Book</button></td>"+
-				"</tr>");
-
-
-			document.getElementById("p1").style.visibility="visible";
-		});
-
-
-
-		jQuery(document).ready(function()
-		{
-			$('#starttime').timepicker('setTime', '');
-		});
-
-
-
-		jQuery(document).ready(function()
-		{
-			$('#endtime').timepicker('setTime', '');
-		});
-
-
-		$('#date').datepicker();
-
-	}
-	</script>

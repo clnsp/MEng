@@ -116,12 +116,14 @@
 
 
 var ClassTypes = function() {
-	var table, drop, list, urlBase;
+	var table, drop, list, urlBase, sportsdrop, sportslist;
 	
 	var init = function() {
 	 table = $('<tbody></tbody>');
 	 drop = $('<select></select>');
+	 sportsdrop = $('<select></select>');
 	 list = $('<ul></ul>');
+	 sportslist = $('<ul></ul>');
 	 urlBase = "class_type/";
 	}
 
@@ -150,8 +152,14 @@ var ClassTypes = function() {
 			if(data.length>0){
 				$.each( data, function( key, type ) {
 					table.append(createRow(type));
-					drop.append(createOption(type));
-					list.append(createListItem(type));
+					
+					if(type['is_sport'] == 1){
+						sportsdrop.append(createOption(type));
+						sportslist.append(createListItem(type));
+					}else{
+						drop.append(createOption(type));
+						list.append(createListItem(type));
+					}
 				});
 
 			}
@@ -163,6 +171,7 @@ var ClassTypes = function() {
 	var clear = function() {
 		table.empty();
 		drop.html('');
+		sportsdrop.html('');
 	}
 	
 
@@ -173,10 +182,13 @@ var ClassTypes = function() {
 			message: "Hello World!",
 			time: new Date()
 		});
-
+		
+		$('[type=dropdown].sportsclasstype').html(sportsdrop.html());
 		$('[type=dropdown].classtype').html(drop.html());
 		$('table.classtype tbody').html(table.html());
 		$('ul.classtype').html(list.html());
+		$('ul.sportsclasstype').html(sportslist.html());
+		
 	}
 
 	init();

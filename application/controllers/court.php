@@ -33,7 +33,7 @@ class Court extends CI_Controller{
 						if(is_array($divs)){
 							foreach ($divs as $key => $div) {
 								if(!$this->courts->assignSportToCourt($_POST['room_id'], $div, $class_type_id, $sport_number)){
-									echo "<br>Not added<br>";
+								//	echo "<br>Not added<br>";
 								}
 
 							}

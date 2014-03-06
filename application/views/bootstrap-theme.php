@@ -690,7 +690,7 @@ i.square{
 }
 
 @media (min-width: 1200px){
-	#booking .container {
+	#booking.admin .container {
 		width: 100%;
 	}
 }

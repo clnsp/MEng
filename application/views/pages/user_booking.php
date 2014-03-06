@@ -60,20 +60,22 @@ $js = 'class="form-control"';
 <div class="col-sm-4">
 
 	<ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
-		<li class="active"><a href="#classstuff" data-toggle="tab"><b>Class Search</b></a></li>
-		<li><a href="#courtsstuff" data-toggle="tab"><b>Sport Search</b></a></li>
+		<li class="active"><a href="#classes" data-toggle="tab"><b>Class Search</b></a></li>
+		<li><a href="#courts" data-toggle="tab"><b>Sport Search</b></a></li>
 	</ul>	
 
-	<div class="tab-content" id="my-tab-content">
-		<div class="tab-pane fade in active" id="classstuff">
+	<div id="tab-content" class="tab-content">
+		<div class="tab-pane fade in out active" id="classes">
+		
 			<?php $hidden = array('sportorclass' => 'class');?> 
+			
 			<?php echo form_open("/searchclass/index", $form, $hidden); ?>
 
-			<div class="form-group">
+			<div class="toggleInput form-group">
 				<?php echo form_dropdown('class_type_id', $classTypes, '' , $js);	 ?>
 			</div>
 
-			<div class="form-group hidden">
+			<div class="toggleInput form-group hidden">
 				<?php echo form_dropdown('class_type_id', $sportClassTypes, '' , $js. "disabled=disabled");	 ?>
 			</div>
 

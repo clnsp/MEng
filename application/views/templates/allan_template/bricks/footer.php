@@ -62,6 +62,10 @@ if(!$this->tank_auth->is_admin()){ ?>
      <script type="text/javascript" src="<?php echo base_url();?>assets/js/bootstrap-datetimepicker.js"></script>
      <script type="text/javascript" src="<?php echo base_url();?>assets/js/bootstrap-override.js"></script>
      <script type="text/javascript" src="<?php echo base_url();?>assets/js/theme.js"></script>
+     
+     <?php if($page_title=="user_booking" || $page_title=="search_results"){ ?>
+    	<script type="text/javascript" src="<?php echo base_url();?>assets/js/user-booking.js"></script>
+     <?php }?>
 
    <?php if($page_title=="manage-sports-hall"){ ?>
      <script type="text/javascript" src="<?php echo base_url();?>assets/js/manage-sports-hall.js"></script>

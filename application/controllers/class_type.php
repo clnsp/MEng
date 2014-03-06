@@ -36,6 +36,8 @@ class class_type extends CI_Controller
 		}
 	}
 	
+
+	
 	/**
 	 * Modify class type
 	 */
@@ -159,7 +161,7 @@ class class_type extends CI_Controller
 	function getSportsClassTypes(){
 		if($this->tank_auth->is_admin()){
 		$this->load->model('classtype');
-			$types = $this->classtype->getActivitytype();
+			$types = $this->classtype->getSportClassTypeNameIDs();
 			echo json_encode($types);
 
 		}

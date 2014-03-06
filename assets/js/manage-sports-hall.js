@@ -510,7 +510,7 @@ $(function(){
 
     $(document)
 
-    .on("divisionChanged, courtDirectoryRefreshed", function(){
+    .on("divisionChanged courtDirectoryRefreshed", function(){
       var sport = assignDivPanel.getSelectedSport();
       if(sport){
         assignDivPanel.divisions.html(ps.getDivisions(sport));

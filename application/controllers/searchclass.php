@@ -23,23 +23,7 @@ function index($page = 'search_results'){
 	$end_time = $this->input->post('endtime');
 
 	if($date == "" && $start_time == "" && $end_time == ""){
-
-		$data['classes'] = $this->Classes->getFutureClasses($_POST['class_type_id']);	
-		
-		$ddrmenu = array();
-		foreach ($data['classes'] as $row) {
-
-			if($this->isClassBookedOut($row['class_id']) != ""){
-				$ddrmenu[] = "btn btn-warning";
-				
-			}else{
-				$ddrmenu[] = "btn btn-primary";
-			}
-
-		}
-
-		$data['buttondata'] = $ddrmenu;
-		
+		$data['classes'] = $this->Classes->getFutureClasses($_POST['class_type_id']);		
 	}
 
 	elseif($date != "" && $start_time == "" && $end_time == ""){
@@ -51,19 +35,9 @@ function index($page = 'search_results'){
 
 		$data['classes'] = $this->Classes->getClassesWithTypeAndStartTime($_POST['class_type_id'], $starttime, $endtime);
 
-		$ddrmenu = array();
-		foreach ($data['classes'] as $row) {
-			if($this->isClassBookedOut($row['class_id'])){
-				$ddrmenu[] = "btn btn-warning";
-			}else{
-				$ddrmenu[] = "btn btn-primary";
-			}
-			$data['buttondata'] = $ddrmenu;			
-		}
 	}
 	else{	
 		$start_time = new DateTime($_POST['starttime']);
-
 		$end_time = new DateTime($_POST['endtime']);
 
 		$date = new DateTime($date);
@@ -72,9 +46,10 @@ function index($page = 'search_results'){
 		$end_date = $date->format('Y-m-d ') . $end_time->format('H:i:00');
 
 		$data['classes'] = $this->Classes->getClassesWithTypeAndStartTime($_POST['class_type_id'], $start_date, $end_date);
-		
 
-		$ddrmenu = array();
+	}
+	
+	$ddrmenu = array();
 		foreach ($data['classes'] as $row) {
 
 			if($this->isClassBookedOut($row['class_id'])){
@@ -85,8 +60,6 @@ function index($page = 'search_results'){
 
 		}
 		$data['buttondata'] = $ddrmenu;
-
-	}
 	
 	parse_temp($page, $this->load->view('pages/user_booking', setupClassSearchForm(), true) . $this->load->view('pages/'.$page, $data, true));
 
@@ -97,6 +70,7 @@ function isClassBookedOut($class_booking_id){
 	$this->load->model('bookings');
 	$capacity = $this->classes->getClassCapacity($class_booking_id);
 	$attending = $this->bookings->countBookingAttendants($class_booking_id);
+	
 	return ($attending >= $capacity);
 }
 

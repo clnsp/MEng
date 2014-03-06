@@ -1,7 +1,7 @@
 
 
 <!-- 	<div class="row">
-		<h1>Manage Sports Hall</h1>
+		<h1>Manage Hall</h1>
 	</div>
 -->
 <div class="row">
@@ -78,7 +78,7 @@
 			<div  class="col-sm-6">
 
 				<div class=" col-xs-6">
-					<ul id="sports-list" class="classtype manage-panel list-group "></ul>
+					<ul id="sports-list" class="sportsclasstype manage-panel list-group "></ul>
 				</div>
 				<div class=" col-xs-6">
 					<div id="sports-divisions" class="divisions well well-sm manage-panel"><b class="">Assigned Divisions</b></div>
@@ -123,16 +123,16 @@
 
 					<form id="form-block-restriction" class="form-inline prevent" role="form">
 						<span><strong>Block</strong></span>
-						<select name="sport_to_block_id" type="dropdown" class="classtype form-control form-inline"></select>
+						<select name="sport_to_block_id" type="dropdown" class="sportsclasstype form-control form-inline"></select>
 						<span>when </span>
-						<select name="occurring_sport_id" type="dropdown" class="classtype form-control"></select> 
+						<select name="occurring_sport_id" type="dropdown" class="sportsclasstype form-control"></select> 
 						<span>occurs </span>
 						<button id="submit-block" class="btn btn-default"><i class="glyphicon glyphicon-plus"></i></button>
 					</form>
 
 					<form id="form-limit-restriction" class="form-inline prevent" role="form">
 						<span><strong>Limit </strong></span>
-						<select name="sport_id" type="dropdown" class="classtype form-control form-inline"></select>
+						<select name="sport_id" type="dropdown" class="sportsclasstype form-control form-inline"></select>
 						<span>to </span>
 						<input type="number" class="form-control" name="limit" placeholder="">
 						<span>occurrences</span>
