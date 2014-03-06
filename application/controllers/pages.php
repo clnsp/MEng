@@ -152,6 +152,56 @@
 
 		}
 
+
+
+				/**
+		 * User Past Bookings List
+		 */
+		public function mybookings(){
+
+			$member_id = $this->tank_auth->get_user_id();
+
+			$this->load->Model($page = 'bookings');
+			
+			$data['bookings'] = $this->bookings->getClassBookingByMember($member_id);
+			$data['bookingsPast'] = $this->bookings->getClassBookingByMember($member_id);
+
+			$rowCount = 0;
+			$rowCounter = 0;
+
+			foreach ($data['bookings'] as $row){
+
+				$end = $row['end'];
+
+				if(time() > strtotime($end)){
+
+					unset($data['bookings'][$rowCount]);				
+				
+				}
+				
+				$rowCount++;			
+
+			}
+
+			foreach ($data['bookingsPast'] as $row){
+
+				$end = $row['end'];
+
+				if(time() < strtotime($end)){
+
+					unset($data['bookingsPast'][$rowCounter]);				
+				
+				}
+				
+				$rowCounter++;			
+
+			}
+			
+			parse_temp($page, $this->load->view('pages/member/mybookings', $data, true));
+
+		}
+
+
 		/**
 		 * Links
 		 */

@@ -58,6 +58,7 @@ $route['member'] = 'member';
 $route['updateClasses'] = 'pages/updateClasses';
 $route['users_fetch'] = 'users_fetch';
 $route['booking'] = 'booking';
+$route['mybookings'] = 'pages/mybookings';
 $route['room/(:any)'] = 'pages/room/$1';
 $route['room/getRoomIDs'] = 'room/getRoomIDs';
 $route['manage'] = 'pages/manage';
