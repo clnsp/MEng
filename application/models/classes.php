@@ -388,9 +388,22 @@ class Classes extends CI_Model{
         return $query->result_array();
     }
 
-    /**
-     * Fetch available sports on day
-     */
+	/**
+	* Get all sports booked into the room at particular time
+	* @param int
+	* @param int
+	* @return int
+	*/
+	function getSportsBookedOverTime($room_id, $start){
+	
+		$this->db->where('class_end_date >=', $start);
+		$this->db->where('class_start_date <=', $start);
+		$this->db->where('room_id', $room_id);
+		$this->db->from($this->table_name);
+			
+		return $this -> db -> get()->result_array();
+	}
+
      
 
 }

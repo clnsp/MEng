@@ -929,3 +929,7 @@ ul.ui-autocomplete.popover.dropdown-menu{
 
 /* @end */
 
+/* @remove*/
+#booking.search_results table.footable{
+	display: none;
+}

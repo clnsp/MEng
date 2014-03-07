@@ -102,26 +102,27 @@ $js = 'class="form-control"';
 
 </div>
 
-<div class="col-sm-8">
-
+<!-- <div class="col-sm-8">
+ -->
 
 <table class="footable table">
 	<thead>
 		<tr>
 			<th >Start</th>
-			<th data-hide="phone">End</th>
+			<th data-hide="">Duration</th>
 			<th data-hide="phone, tablet">Room</th>
+			<th data-hide="phone">Available</th>
 			<th>Book</th>
 		</tr>
 	</thead>
 
 	<tbody>
-		<td>Start</td>
+<!-- 		<td>Start</td>
 		<td>end</td>
 		<td>room</td>
-		<td>book</td>
+		<td>book</td> -->
 	</tbody>
 </table>
 
-</div>
-
+<!-- </div>
+ -->

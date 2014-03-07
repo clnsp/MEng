@@ -111,6 +111,41 @@ Class Courts extends CI_Model{
 
  		$this->db->delete($this->sports_playing_area_tbl); 
  	}
+ 	
+ 	/**
+ 	 * Find all potential sports
+ 	 * @param int
+ 	 * @param int
+ 	 * @return int
+ 	 */
+ 	function countSportInstances($room_id, $class_type_id){
+ 
+ 		$sql_query  = "SELECT DISTINCT room_id, sport_number, class_type_id
+	 FROM sports_to_divisions_tbl
+	 WHERE room_id = $room_id
+	 AND class_type_id =$class_type_id";
+	 $query  =   $this->db->query($sql_query);                
+	
+	 return count($query->result_array());
+	}
+	
+ 	/**
+ 	* Count number of courts a sport takes up
+ 	* @param int
+ 	* @param int
+ 	* @return int
+ 	*/
+ 	function countSportCourts($room_id, $class_type_id){
+ 		$this->db->where('room_id', $room_id);
+ 		$this->db->where('class_type_id', $class_type_id);
+		$this->db->from($this->sports_to_divisions_tbl);
+		
+		return $this->db->count_all_results();
+ 	}
+ 	
+
+
+	
 
  }
  ?>

@@ -20,23 +20,39 @@ $( document ).ready(function() {
 	});
 
 	$('#booking').on('submit', 'form.prevent.sports', function(e) {
-
-		// $.ajax({
-		// 	type:"POST",
-		// 	url: "searchclass/fetchSportsClasses",
-		// 	data:$(this).serialize(),
-		// 	success: function (response){
-		// 		console.log(parseJSON(response));
-		// 	}
-		// });
+		var table = $('table.footable.table tbody');
 
 		$.post("searchclass/fetchSportsClasses", $(this).serialize(), function( data ) {
+			table.html('');
 			alert(data);
-			console.log($.parseJSON(data));
+			var json = $.parseJSON(data);
+			
+			var book = $('<button>Book</button>');
+
+			for (var key in json) {
+				var tr = $('<tr>');
+
+				var obj = json[key];
+				
+				for (var prop in obj) {
+					tr.append('<td clas="' + prop +'">' + obj[prop] + '</td>');
+				}
+				tr.append($(book).clone());
+				table.append(tr).trigger('footable_redraw');
+			}
+
+		
 		});
+
 
 
 
 	});
 	
+
+	// $('#courts').click();
+	// $('input[name="date"]').val('03/12/2014');
+	// $('input[name="starttime"]').val('5:00 PM');
+	// $('input[name="endtime"]').val('7:00 PM');
 });
+

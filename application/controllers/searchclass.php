@@ -39,8 +39,7 @@ function index($page = 'search_results'){
 	}
 	else{	
 		$start_time = new DateTime($_POST['starttime']);
-		$end_time = new DateTime($_POST['endtime']);
-
+		$end_time = new DateTime($_POST['starttime']);
 		$date = new DateTime($date);
 
 		$start_date = $date->format('Y-m-d ') . $start_time->format('H:i:00');
@@ -70,7 +69,60 @@ function index($page = 'search_results'){
 * Retrieve possible *sports classes that could be booked out
 */
 function fetchSportsClasses(){
-	echo json_encode($this->Classtype->getActivityType());
+
+	$this->load->model('courts');
+	$this->load->model('rooms');
+	$this->load->model('classes');
+	if(isset($_POST['class_type_id']) && isset($_POST['starttime']) && isset($_POST['endtime']) && isset($_POST['date'])){
+		if($_POST['class_type_id'] == '' || $_POST['starttime'] == '' || $_POST['endtime'] == '' || $_POST['date']== ''){
+			return;
+		}
+	
+		$start_time = new DateTime($_POST['starttime']);
+		$end_time = new DateTime($_POST['endtime']);
+		$date = new DateTime($_POST['date']);
+
+		$results =  array();
+		
+		
+		$sportInstances = $this->courts->countSportInstances(1, $_POST['class_type_id']);
+		$sportCourts = $this->courts->countSportCourts(1, $_POST['class_type_id']);
+		$roomSize = $this->rooms->getRoomSize(1);
+		//$sportInstances = $this->courts->countSportsInstances(1, $_POST['class_type_id']);
+		
+//		echo($roomSize ."<br>");
+//		echo($sportCourts."<br>");
+//		echo($sportInstances."<br>");
+//		echo($sportCourts / $sportInstances );
+//		
+		//find all the sports booked in that room
+		$alreadyBooked = $this->classes->getSportsBookedOverTime(1,'2014-02-03 13:00:00');
+		if(count($alreadyBooked)==0){
+			
+		}
+		
+	//	return;
+		
+
+		while($start_time <= $end_time){
+
+			$result['start'] = $start_time->format('H:i');
+			$result['duration'] = "30";
+			$result['room'] = "room";
+			$result['available'] = $sportInstances;
+
+			array_push($results, $result);
+			$start_time->modify("+30 minutes");
+
+		}
+		echo json_encode($results);
+		
+	}else{
+		echo "Missing params";
+	}
+
+
+
 }
 
 
