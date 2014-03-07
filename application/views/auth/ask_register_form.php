@@ -2,28 +2,26 @@
 $firstname = array(
 	'name'	=> 'first_name',
 	'id'	=> 'first_name',
-	'value'	=> set_value('first_name',$fname),
+	'value'	=> set_value('first_name'),
 	'maxlength'	=> 80,
 	'size'	=> 30,
 	'class' => 'form-control',
-	'placeholder' => 'Firstname',
-	'readonly' => 'readonly',
+	'placeholder' => 'First Name',
 	);
 $secondname = array(
 	'name'	=> 'second_name',
 	'id'	=> 'second_name',
-	'value'	=> set_value('second_name',$sname),
+	'value'	=> set_value('second_name'),
 	'maxlength'	=> 80,
 	'size'	=> 30,
 	'class' => 'form-control',
-	'placeholder' => 'Secondname',
-	'readonly' => 'readonly',
+	'placeholder' => 'Second Name',
 	);
 
 $email = array(
 	'name'	=> 'email',
 	'id'	=> 'email',
-	'value'	=> set_value('email',$mail),
+	'value'	=> set_value('email'),
 	'maxlength'	=> 80,
 	'size'	=> 30,
 	'class' => 'form-control',
@@ -79,17 +77,31 @@ $user_type = array(
 	'id' => 'member_type',
 	);
 
-$radio_student = array(
+$radio_associate = array(
     'name'        => 'member_type',
-    'id'          => 'student-radio',
+    'id'          => 'associate-radio',
     'value'       => '1',
     'checked'     => FALSE,
 );
 
-$radio_staff = array(
+$radio_retired_staff  = array(
     'name'        => 'member_type',
-    'id'          => 'staff-radio',
+    'id'          => 'retired-staff-radio',
     'value'       => '2',
+    'checked'     => FALSE,
+);
+
+$radio_external_student   = array(
+    'name'        => 'member_type',
+    'id'          => 'external-student-radio',
+    'value'       => '3',
+    'checked'     => FALSE,
+);
+
+$radio_graduate  = array(
+    'name'        => 'member_type',
+    'id'          => 'graduate-radio',
+    'value'       => '4',
     'checked'     => FALSE,
 );
 
@@ -114,6 +126,21 @@ $form = array(
 	<p>Lorem ipsum dolor sit amet, feugiat apeirian contentiones ut ius, ius probatus rationibus repudiandae ad. Ad sed vero periculis. An posse delectus philosophia vel. Ne ius pertinax consectetuer, eam ex mundi aeterno dissentiunt. Saepe ancillae assueverit vis et, eam rebum delenit deterruisset cu.</p>
 	<div class="well well-lg  div-center">
 		<?php echo form_open($this->uri->uri_string(), $form); ?>
+		
+		<div class="form-group">
+			<?php echo form_label('User *', $user_type['id'], $label); ?>
+			<div class="col-sm-10">
+				<?php echo form_radio($radio_associate) . " Affiliate   " ; echo  form_radio($radio_retired_staff) . " Spouse/Partner   ";?>
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<?php echo form_label('User Type *', $user_type['id'], $label); ?>
+			<div class="col-sm-10">
+				<?php echo form_radio($radio_associate) . " Associate   " ; echo  form_radio($radio_retired_staff) . " Retired Staff    "; echo form_radio($radio_external_student) . " External Student    " ; echo  form_radio($radio_graduate) . " Graduate   ";?>
+			</div>
+		</div>
+		
 		<?php echo form_error($firstname['name']); ?>
 		<div class="form-group">
 			<?php echo form_label('First Name', $firstname['id'], $label); ?>
@@ -173,14 +200,6 @@ $form = array(
 				<?php echo form_password($confirm_password); ?>
 			</div>
 		</div>
-
-		<div class="form-group">
-			<?php echo form_label('User Type *', $user_type['id'], $label); ?>
-			<div class="col-sm-10">
-				<?php echo form_radio($radio_student) . " Student   " ; echo  form_radio($radio_staff) . " Staff   ";?>
-			</div>
-		</div>
-
 		
 		<div class="form-group">
 			<?php echo form_label('Communication Preferences *', $comm_prefs['id'], $label); ?>

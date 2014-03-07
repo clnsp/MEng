@@ -225,6 +225,26 @@ class Auth extends CI_Controller
 		}
 	}
 
+
+
+	function ask_register()
+	{
+		if ($this->tank_auth->is_logged_in()) {									// logged in
+			redirect('');
+
+		} elseif ($this->tank_auth->is_logged_in(FALSE)) {						// logged in, not activated
+			redirect('/auth/send_again/');
+
+		} elseif (!$this->config->item('allow_registration', 'tank_auth')) {	// registration is off
+			$this->_show_message($this->lang->line('auth_message_registration_disabled'));
+
+		} else {
+			$data = array();
+			parse_temp('Register', $this->load->view('auth/ask_register_form', $data, true));
+		}
+
+	}
+
 	/**
 	 * Send activation email again, to the same or new email address
 	 *
@@ -506,8 +526,8 @@ class Auth extends CI_Controller
 		}
 		//$this->load->view('auth/change_email_form', $data);
 		parse_temp('Change Email', $this->load->view('auth/account_settings', '', true) . $this->load->view('auth/change_email_form', $data, true));
+		}
 	}
-}
 
 	/**
 	 * Replace user email with a new one.
@@ -518,7 +538,7 @@ class Auth extends CI_Controller
 	 */
 	function reset_email()
 	{
-		$user_id		= $this->uri->segment(3);
+		$user_id	= $this->uri->segment(3);
 		$new_email_key	= $this->uri->segment(4);
 
 		// Reset email
@@ -528,6 +548,57 @@ class Auth extends CI_Controller
 
 		} else {																// fail
 			$this->_show_message($this->lang->line('auth_message_new_email_failed'));
+		}
+	}
+
+	
+		
+	// MOBILE NUMBER - SMS
+
+	function change_mobile_number()
+	{
+		if (!$this->tank_auth->is_logged_in()) {				// not logged in or not activated
+			redirect('/auth/login/');
+		} else {
+
+
+
+	}
+	}
+
+	function reset_mobile_number()
+	{
+		$user_id	= $this->uri->segment(3);
+		$new_mobile_key	= $this->uri->segment(4);
+
+		// Reset Mobile Number
+		if ($this->tank_auth->activate_new_mobile_number($user_id, $new_mobile_key)) {	// success
+			$this->_show_message($this->lang->line('auth_message_mobile_number_activated').' '.anchor('/auth/login/', 'Login'));
+
+		} else {																// fail
+			$this->_show_message($this->lang->line('auth_message_new_mobile_number_failed'));
+		}
+	}
+
+	// TWITTER 
+
+	function change_twtter()
+	{
+
+
+	}
+
+	function reset_twitter()
+	{
+		$user_id	= $this->uri->segment(3);
+		$new_twitter_key	= $this->uri->segment(4);
+
+		// Reset Twitter
+		if ($this->tank_auth->activate_new_twitter($user_id, $new_twitter_key)) {	// success
+			$this->_show_message($this->lang->line('auth_message_new_twitter_activated').' '.anchor('/auth/login/', 'Login'));
+
+		} else {																// fail
+			$this->_show_message($this->lang->line('auth_message_new_twitter_failed'));
 		}
 	}
 
@@ -630,7 +701,7 @@ class Auth extends CI_Controller
 	 */
 	function _check_captcha($code)
 	{
-		$time = $this->session->flashdata('captcha_time');
+		$time = $this->session->flashdata('captcha_timeEmergeAdapt');
 		$word = $this->session->flashdata('captcha_word');
 
 		list($usec, $sec) = explode(" ", microtime());

@@ -22,11 +22,11 @@
     <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/css/bootstrap-datetimepicker.min.css">
 
     <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/cal/fullcalendar.css"/>
-	<link rel="stylesheet" href="<?php echo base_url();?>assets/css/datepicker.css" >
-	<link rel="stylesheet" href="<?php echo base_url();?>assets/css/bootstrap-timepicker.min.css" />
+    <link rel="stylesheet" href="<?php echo base_url();?>assets/css/datepicker.css" >
+    <link rel="stylesheet" href="<?php echo base_url();?>assets/css/bootstrap-timepicker.min.css" />
 
-	<link rel="stylesheet" href="<?php echo base_url();?>assets/css/bootstrap-timepicker.css" />
-	<link rel="stylesheet" href="<?php echo base_url();?>assets/css/PatrickTest.css" >
+  <link rel="stylesheet" href="<?php echo base_url();?>assets/css/bootstrap-timepicker.css" />
+  <link rel="stylesheet" href="<?php echo base_url();?>assets/css/PatrickTest.css" >
 
     <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/css/jquery.minicolors.css">
 
@@ -81,7 +81,7 @@
                   <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Register<span class="caret"></span></button>
                   <ul class="dropdown-menu">
                     <li><a href="register">DS Registration</a></li>
-                    <li><a href="#">Alternative</a></li>
+                    <li><a href="ask_register">Alternative</a></li>
                   </ul>
                 </div>
               </form>
