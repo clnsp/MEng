@@ -72,7 +72,9 @@
 		if (v.is("input")) { return v.val(); } else { return v.html(); }
 	},
 
-	formatedDate = function (d){ return d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear();},
+	formatedDate = function (d){
+		if(isNaN(d.getDate())){return "N/A";}
+		else{return d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear();}},
 	
 	// Add Form Error
 	addFormError = function (element,type,message) {
@@ -134,27 +136,20 @@
 			$($subModal + " .modal-content").children('.modal-body').html(body);
 			$($subModal + " .modal-content").children('.modal-footer').html(footer);
 			// Listener
+			console.log("TEST");
 			$message = $('#message'); // Point to New Element
 			
-			$($subModal + " .submit").on( "click", function() {send(); });
+			$($subModal + " .submit").on( "click", function() {sendMessage(); });
 			$($subModal + " .modal-content").on('keyup keydown', $message, function () {
-					$('#length').html($message.val().length);
+			$('#length').html($message.val().length);
 			});
 		},
 		// SEND MESSAGE
-		send = function () {  
+		sendMessage = function () {  
 			$.post($baseUrl.member+$functionUrl.contactUser, { id: $member.id, message: $message.val() }, function (data) {        });
 		},
 		// Start Point
 		$selector.on("click", function () { generateUI(); });
-	})(),
-
-	// Block / Ban
-	BlockMemberMod = (function () {
-
-
-
-
 	})(),
 	
 	// Update Members Status
@@ -280,12 +275,18 @@
 	$('.delete').on("click", function () { loadDelete(); });
 })();
 
-
 	// UPDATING A MEMBERS MEMBERSHIP
 	updateMembershipMod = (function () { 
 		
-		getPossibleType = function ($id) {
-			$.getJSON($baseUrl.member+$functionUrl.userMembership, {id: $id}, function (data){
+		getPossibleType = function () {
+			$.getJSON($baseUrl.member+$functionUrl.userMembership, {id: $member.id}, function (data){
+				$('#memType').html(cFirst($member.type));
+				$('#memShipType').html(cFirst($member.membership_type));
+				
+				// PASS TO SERVER ??
+				$('#dateStart').html(formatedDate(new Date($member.start_date)));
+				$('#dateEnd').html(formatedDate(new Date($member.end_date)));				
+				
 				$('#membershipSelect').empty();
 				for(var i=0;i<data.length;i++) {
 					var option = $('<option/>'); 								
@@ -296,12 +297,21 @@
 					option.tooltip();
 					$('#membershipSelect').append(option);
 				}
+					var option = $('<option/>'); 								
+					option.attr({ 'value': -1}).text("Custom Membership");
+					option.attr('data-toggle','tooltip');
+					option.attr('data-placement','left');
+					option.attr('data-original-title','Create Custom membership (Provide Start/End Dates)');
+					option.tooltip();
 				$('#membershipSelect').tooltip();
+				$('#membershipSelect').append(option);
 			});
+			console.log($member);
+			console.log("INNER " + $member.id);
 		},
 
-		getBookings = function ($id) {
-			$.get($baseUrl.member+$functionUrl.getBookings,{id:$id},function (data){
+		getBookings = function () {
+			$.get($baseUrl.member+$functionUrl.getBookings,{id:$member.id},function (data){
 				
 				$('#accordion').html(data);
 			});	
@@ -311,15 +321,14 @@
 		updateMembershipType = function () {
 
 		},	
-
-
-		getPossibleType(883);
-		getBookings(2);
+		
+		$('.membership').on("click", function () { getPossibleType(); });
+		$('#attendance').on("click", function () { getBookings(); });
 	})();
 	
 	datepicker = (function() {
 
-		var cal = $('#date-selector').multiDatesPicker({numberOfMonths: 2});
+		var cal = $('#date-selector').multiDatesPicker({numberOfMonths: 2,maxPicks: 2});
 
 		getDates = function() {
 			return cal.multiDatesPicker('getDates');

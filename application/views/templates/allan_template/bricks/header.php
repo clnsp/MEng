@@ -25,14 +25,17 @@
   <link rel="stylesheet" href="<?php echo base_url();?>assets/css/datepicker.css" >
   <link rel="stylesheet" href="<?php echo base_url();?>assets/css/bootstrap-timepicker.min.css" />
 
-  <link rel="stylesheet" href="<?php echo base_url();?>assets/css/bootstrap-timepicker.css" />
+
   <link rel="stylesheet" href="<?php echo base_url();?>assets/css/PatrickTest.css" >
+
 
   <link rel="stylesheet" href="<?php echo base_url();?>assets/css/footable.core.min.css" >
 
   <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/css/jquery.minicolors.css">
 
-  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
       <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
@@ -83,7 +86,7 @@
                   <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Register<span class="caret"></span></button>
                   <ul class="dropdown-menu">
                     <li><a href="register">DS Registration</a></li>
-                    <li><a href="#">Alternative</a></li>
+                    <li><a href="ask_register">Alternative</a></li>
                   </ul>
                 </div>
               </form>

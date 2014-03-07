@@ -52,6 +52,15 @@ class Bookings extends CI_Model
 		return $query -> result();
 		}
 	}
+	
+	function getBookingByMemberView($member_id){
+		if(check_admin()){
+			$this -> db -> where('member_id', $member_id);
+
+		$query = $this -> db -> get('member_attendance_view');
+			return $query -> result();
+		}
+	}
 
 	/**
 	 * Get class bookings by Member
