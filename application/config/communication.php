@@ -50,12 +50,17 @@ $config['sms_txtlocal_hash'] = '644803d2f1c4678d8dc453eb437ac7a95d4269dc';
 |--------------------------------------------------------------------------
 */
 $config['twitter_allow'] = TRUE;
-$config['twitter_username']="mengers2013";
+$config['twitter_username']	="mengers2013";
 $config['twitter_consumerKey']       = '9uo6ym4fGqUzJj1CJignUQ';
 $config['twitter_consumerSecret']    = 'qFuZChnvmJSwcZwynm5bQGeeY6awxLdBKkXovOLT0';
 $config['twitter_accessToken']       = '2255084299-P7iUK9u3xIVceXv1tpRthR5UfCbxO0JekULhser';
 $config['twitter_accessTokenSecret'] = 'aXY0J0fXyecR0W8i95G9gehKTRDztmDnDdZc8CrLkxi7X';
 
-
-
+/*
+|--------------------------------------------------------------------------
+| GOOGLE URL SHORTNER
+| https://developers.google.com/url-shortener/v1/
+|--------------------------------------------------------------------------
+*/
+$config['googleshort_key'] = 'AIzaSyDbkNXd0GHXtvqMSHIxGZlGdWBipad09go'; 
 ?>

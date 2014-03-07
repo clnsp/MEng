@@ -1,4 +1,5 @@
-<?php foreach ($categories as $cat){?> 
+<?php foreach ($categories as $cat){?>
+  <?php if(isset($bookings[$cat['category_id']])){ ?>
   <div class="panel" style="border-color: <?php echo $cat['color']?>;">
     <div class="panel-heading" style="background-color: <?php echo $cat['color']?>; color: rgb(255,255,255);">
       <h4 class="panel-title">
@@ -17,15 +18,17 @@
           </tr>
         </thead>
         <tbody>
-		<?php for($i=0;$i<5;$i++){ ?>
+		<?php foreach ($bookings[$cat['category_id']] as $book){ ?>
           <tr>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
+            <td><?php echo $book->class_type; ?></td><!-- CLASS NAME -->
+			<?php $date = date_create($book->class_start_date);?>
+            <td><?php echo date_format($date, 'h:i A d/m/Y'); ?></td><!-- CLASS DATE -->
+            <td><?php echo $book->attended==1?"Yes":"No"; ?></td><!-- ATTEND -->
           </tr>
 		<?php } ?>  
         </tbody>
       </table></div>
     </div>
   </div>
+    <?php }?>
   <?php }?>

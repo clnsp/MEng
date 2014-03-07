@@ -21,14 +21,14 @@ if (!function_exists('contact_user'))
 			$list = array('email'=>array(),'sms'=>array(),'twitter'=>array());
 			foreach($id as $i)
 			{
-				$prefD = $ci->members->getUserColumn($i, array('comms_preference','email','twitter','mobile_number'));
+				$prefD = $ci->members->getUserColumn($i, array('comms_preference','email','twitter','valid_twitter','mobile_number','valid_mobile_number'));
 				$prefD = $prefD[0];
 
-				if($prefD->comms_preference> 2){
+				if($prefD->comms_preference> 2 && $prefD->valid_twitter){
 					$list['twitter'][] = $prefD->twitter; 
 				}
 				
-				if($prefD->comms_preference> 1){
+				if($prefD->comms_preference> 1 && $prefD->valid_mobile_number){
 					$list['sms'][] = $prefD->mobile_number; 
 				}
 				$list['email'][] = $prefD->email; 
@@ -107,6 +107,49 @@ if (!function_exists('contact_email'))
 			}
 		}
 		return $fail;
+	}
+}
+/*
+		$this->load->library('email');
+		$this->email->clear();
+		$this->email->from($this->config->item('webmaster_email', 'tank_auth'), $this->config->item('website_name', 'tank_auth'));
+		$this->email->reply_to($this->config->item('webmaster_email', 'tank_auth'), $this->config->item('website_name', 'tank_auth'));
+		$this->email->to($email);
+		$this->email->send();
+*/
+
+/*
+if (!function_exists('load_message'))
+{
+	function load_message($service, $type, &$data)
+	{
+		switch($service){
+			$data = array();
+			case 'sms': // LOAD SMS MESSAGE
+				$data['message'] = $this->load->view('sms/'.$type.'-txt', $data, TRUE);
+				break;
+			case 'twitter': // LOAD TWITTER MESSAGE
+				$data['message'] = $this->load->view('twitter/'.$type.'-txt', $data, TRUE);
+				break;
+			case 'email': // LOAD EMAIL MESSAGE
+				$data['subject'] = sprintf($this->lang->line('auth_subject_'.$type), $this->config->item('website_name', 'tank_auth'));
+				$data['message'] = $this->load->view('email/'.$type.'-html', $data, TRUE);
+				$data['alt_message'] = $this->load->view('email/'.$type.'-txt', $data, TRUE);
+				break;
+			}
+		return $data;
+	}
+}
+*/
+
+if(!function_exists('create_mesage'))
+{
+	function create_mesage($message,$url)
+	{
+		$ci =& get_instance();
+		$param = array('key' => $ci->config->item('googleshort_key'));
+		$ci->load->library('GoogleUrlApi', $param);
+		echo($ci->googleurlapi->shorten($url));
 	}
 }
 ?>
