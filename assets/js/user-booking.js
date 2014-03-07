@@ -2,11 +2,19 @@ $( document ).ready(function() {
 
 	$('#starttime').timepicker('setTime', '');
 	$('#endtime').timepicker('setTime', '');
-	$('#date').datepicker();
+
+	$('#date').datepicker({
+		minDate: 0
+	});
+
+	$('#sportsdate').datepicker({ 
+		maxDate: "+1w", //hardcoded
+		minDate: 0
+	});
 
 	/* responsive tables */
 	$('.footable').footable();
-	
+
 	$('#tabs li').click(function(){
 		if(!$(this).hasClass('active')){
 			$('#tab-content .form-group.toggleInput').toggleClass('hidden');
@@ -24,14 +32,13 @@ $( document ).ready(function() {
 
 		$.post("searchclass/fetchSportsClasses", $(this).serialize(), function( data ) {
 			table.html('');
-			//alert(data);
+			alert(data);
 			var json = $.parseJSON(data);
 			
-			var book = $('<button>Book</button>');
+			var book = $('<button class="btn btn-primary">Book</button>');
 
 			for (var key in json) {
 				var tr = $('<tr>');
-
 				var obj = json[key];
 				
 				for (var prop in obj) {
@@ -41,14 +48,14 @@ $( document ).ready(function() {
 				table.append(tr).trigger('footable_redraw');
 			}
 
-		
+
 		});
 
 
 
 
 	});
-	
+
 
 	// $('#courts').click();
 	// $('input[name="date"]').val('03/12/2014');

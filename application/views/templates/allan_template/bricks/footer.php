@@ -27,7 +27,6 @@ if(!$this->tank_auth->is_admin()){ ?>
      <!-- COLIN TEST FIX-->
      <script src="<?php echo base_url();?>assets/js/jquery-ui.custom.min.js"></script>
 
-
      <script type="text/javascript" src="<?php echo base_url();?>assets/js/jquery.ui.core.js"></script>
      <script type="text/javascript" src="<?php echo base_url();?>assets/js/jquery.ui.datepicker.js"></script>
      <script type="text/javascript" src="<?php echo base_url();?>assets/js/jquery-ui.multidatespicker.js"></script>
@@ -64,6 +63,7 @@ if(!$this->tank_auth->is_admin()){ ?>
      <script type="text/javascript" src="<?php echo base_url();?>assets/js/theme.js"></script>
      
      <?php if($page_title=="user_booking" || $page_title=="search_results"){ ?>
+       <script type="text/javascript" src="<?php echo base_url();?>assets/js/modernizr-custom.js"></script>
        <script type="text/javascript" src="<?php echo base_url();?>assets/js/footable/footable.js"></script>
        <script type="text/javascript" src="<?php echo base_url();?>assets/js/footable/footable.filter.js"></script>
        <script type="text/javascript" src="<?php echo base_url();?>assets/js/footable/footable.paginate.js"></script>

@@ -23,12 +23,25 @@ $date = array(
 	
 	);
 
+$sportsdate = array(
+	'name'	=> 'date',
+	'id'	=> 'sportsdate',
+	'value' => set_value('date'),
+	'maxlength'	=> 20,
+	'size'	=> 20,
+	'type'  => 'text',
+	'class' => 'form-control sports',
+	'placeholder' => 'Date',
+	
+	);
+
 $starttime = array(
 	'name'	=> 'starttime',
 	'id'	=> 'starttime',
 	'value' => set_value('starttime'),
 	'maxlength'	=> 20,
 	'size'	=> 20,
+	'type' 	=> 'text',
 	'class' => 'form-control',
 	'placeholder' => 'Between - Start Time',
 	);
@@ -39,6 +52,7 @@ $endtime = array(
 	'value' => set_value('endtime'),
 	'maxlength'	=> 20,
 	'size'	=> 20,
+	'type' 	=> 'text',
 	'class' => 'form-control',
 	'placeholder' => 'And - End Time',
 	);
@@ -66,10 +80,8 @@ $js = 'class="form-control"';
 
 	<div id="tab-content" class="tab-content">
 		<div class="tab-pane fade in out active" id="classes">
-
-			<?php $hidden = array('sportorclass' => 'class');?> 
 			
-			<?php echo form_open("/searchclass/index", $form, $hidden); ?>
+			<?php echo form_open("/searchclass/index", $form); ?>
 
 			<div class="toggleInput form-group">
 				<?php echo form_dropdown('class_type_id', $classTypes, '' , $js);	 ?>
@@ -79,8 +91,12 @@ $js = 'class="form-control"';
 				<?php echo form_dropdown('class_type_id', $sportClassTypes, '' , $js. "disabled=disabled");	 ?>
 			</div>
 
-			<div class="form-group">
+			<div class="toggleInput form-group">
 				<?php echo form_input($date); ?>
+			</div>
+
+			<div class="toggleInput form-group hidden">
+				<?php echo form_input($sportsdate); ?>
 			</div>
 
 			<div class="form-group">
@@ -103,7 +119,7 @@ $js = 'class="form-control"';
 </div>
 
 <!-- <div class="col-sm-8">
- -->
+-->
 
 <table class="footable table">
 	<thead>
@@ -125,4 +141,4 @@ $js = 'class="form-control"';
 </table>
 
 <!-- </div>
- -->
+-->

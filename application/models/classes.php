@@ -10,7 +10,7 @@
 * @author MEng Project
 */
 class Classes extends CI_Model{
-    private $table_name         = 'class_tbl';	
+    private $class_tbl         = 'class_tbl';	
     private $class_type_tbl     = 'class_type_tbl';	
     private $class_info_view    = 'class_info_view';    
     private $waiting_pool_tbl   = 'waiting_pool_tbl';	
@@ -19,7 +19,7 @@ class Classes extends CI_Model{
         parent::__construct();
 
         $ci =& get_instance();
-        $this->table_name	= $ci->config->item('db_table_prefix', 'tank_auth').$this->table_name;
+        $this->class_tbl	= $ci->config->item('db_table_prefix', 'tank_auth').$this->class_tbl;
 
     }
 
@@ -68,7 +68,7 @@ class Classes extends CI_Model{
     */
     function getClassCapacity($class_id){
         $this -> db -> select('max_attendance');
-        $this -> db -> from($this -> table_name);
+        $this -> db -> from($this -> class_tbl);
         $this -> db -> join('class_type_tbl', 'class_tbl.class_type_id = class_type_tbl.class_type_id');
         $this -> db -> where('class_id', $class_id);
 
@@ -85,7 +85,7 @@ class Classes extends CI_Model{
     */
     function getClassEndDate($class_id){
         $this -> db -> select("class_end_date");
-        $this -> db -> from($this -> table_name);
+        $this -> db -> from($this -> class_tbl);
         $this -> db -> where('class_id', $class_id);
 
         $query = $this -> db -> get();
@@ -107,7 +107,7 @@ class Classes extends CI_Model{
             );
 
         $this->db->where('class_id', $class_id);
-        $this->db->update($this -> table_name, $data);
+        $this->db->update($this -> class_tbl, $data);
 
     }
 
@@ -119,7 +119,7 @@ class Classes extends CI_Model{
     */
     function isClassCancelled($class_id){
         $this->db->select('cancelled');
-        $this->db->from($this -> table_name);
+        $this->db->from($this -> class_tbl);
         $this -> db -> where('class_id', $class_id);
 
         $query = $this -> db -> get();
@@ -160,7 +160,7 @@ class Classes extends CI_Model{
     * @param array
     */
     function insertClass($data){
-        $this->db->insert($this -> table_name, $data);
+        $this->db->insert($this -> class_tbl, $data);
         echo($this->db->_error_message());
 
     }
@@ -174,7 +174,7 @@ class Classes extends CI_Model{
     function getClassInformation($class_id){
 
         $this -> db -> select('class_type, class_start_date, class_end_date, room');
-        $this -> db -> from($this -> table_name);
+        $this -> db -> from($this -> class_tbl);
         $this -> db -> where('class_id =' . $class_id);
         $this -> db -> join('class_type_tbl', 'class_type_tbl.class_type_id = class_tbl.class_type_id');
         $this -> db -> join('room_tbl', 'room_tbl.room_id = class_tbl.room_id');
@@ -291,7 +291,7 @@ class Classes extends CI_Model{
     function getClassesWithTypeAndStartTime($class_type_id, $start, $end) {
 
         $this -> db -> select('class_type, class_start_date, class_end_date, room, class_id');
-        $this -> db -> from($this -> table_name);
+        $this -> db -> from($this -> class_tbl);
         $this -> db -> where('class_type_tbl.class_type_id', $class_type_id);
         $this -> db -> where('class_start_date BETWEEN "' . $start . '" AND "' . $end . '"');
         $this -> db -> join('class_type_tbl', 'class_type_tbl.class_type_id = class_tbl.class_type_id');
@@ -312,7 +312,7 @@ class Classes extends CI_Model{
     function getFutureClasses($class_type_id) {
 
         $this -> db -> select('class_type, class_start_date, class_end_date, room, class_id');
-        $this -> db -> from($this -> table_name);
+        $this -> db -> from($this -> class_tbl);
         $this -> db -> where('class_type_tbl.class_type_id', $class_type_id);
         $this -> db -> where('class_start_date >=', date("Y-m-d H:i:s"));
         $this -> db -> join('class_type_tbl', 'class_type_tbl.class_type_id = class_tbl.class_type_id');
@@ -335,7 +335,7 @@ class Classes extends CI_Model{
     function getClassesWithTypeAndDate($class_type, $date) {
 
         $this -> db -> select('class_type, class_start_date, class_end_date, room, class_id');
-        $this -> db -> from($this -> table_name);
+        $this -> db -> from($this -> class_tbl);
         $this -> db -> where('class_type', $class_type);
         $this -> db -> where('class_start_date', $date); 
         $this -> db -> join('class_type_tbl', 'class_type_tbl.class_type_id = class_tbl.class_type_id');
@@ -357,7 +357,7 @@ class Classes extends CI_Model{
      */
     function getClassesWithType($class_type){
         $this -> db -> select('class_type, class_start_date, class_end_date, room, class_id');
-        $this -> db -> from($this -> table_name);
+        $this -> db -> from($this -> class_tbl);
         $this -> db -> where('class_type', $class_type);
         $this -> db -> join('class_type_tbl', 'class_type_tbl.class_type_id = class_tbl.class_type_id');
         $this -> db -> join('room_tbl', 'room_tbl.room_id = class_tbl.room_id');
@@ -378,7 +378,7 @@ class Classes extends CI_Model{
 	 */
     function getClassesWithTypeID($class_type_id){
         $this -> db -> select('class_type, class_start_date, class_end_date, room, class_id');
-        $this -> db -> from($this -> table_name);
+        $this -> db -> from($this -> class_tbl);
         $this -> db -> where('class_type_tbl.class_type_id', $class_type_id);  
         $this -> db -> join('class_type_tbl', 'class_type_tbl.class_type_id = class_tbl.class_type_id');
         $this -> db -> join('room_tbl', 'room_tbl.room_id = class_tbl.room_id');
@@ -395,16 +395,17 @@ class Classes extends CI_Model{
 	* @return int
 	*/
 	function getSportsBookedOverTime($room_id, $start){
-	
-		$this->db->where('class_end_date >=', $start);
-		$this->db->where('class_start_date <=', $start);
-		$this->db->where('room_id', $room_id);
-		$this->db->from($this->table_name);
-			
-		return $this -> db -> get()->result_array();
-	}
+        $this -> db -> select('class_type_id');
 
-     
+        $this->db->where('class_end_date >=', $start);
+        $this->db->where('class_start_date <=', $start);
+        $this->db->where('room_id', $room_id);
+        $this->db->from($this->class_tbl);
+
+        return $this -> db -> get()->result_array();
+    }
+
+
 
 }
 

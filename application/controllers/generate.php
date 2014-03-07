@@ -5,10 +5,10 @@ class Generate extends CI_Controller{
 	* Populate the database with random classes
 	* @param int - number of classes to generate
 	* @param int - offset time in seconds from now to start generating
-	* @param int - number of months to generate classes for
+	* @param int - number of weeks to generate classes for
 	* 
 	*/
-	function classes($numberClasses = 0, $offset = 0, $months = 1){
+	function classes($numberClasses = 0, $offset = 0, $weeks = 1){
 		
 		if($numberClasses > 0){
 			$this->load->model('classes');
@@ -31,7 +31,7 @@ class Generate extends CI_Controller{
 				$class_type_id = $classTypes[rand(0, $maxCTindex)]['class_type_id'];
 
 			//start and end date one hour apart
-				$randtime = $now + rand(30, 60 * 60 * 24 * 30 * $months);
+				$randtime = $now + rand(30, 60 * 60 * 24 * 7 * $weeks);
 				$class_start_date = date('Y-m-d H:0:0',  $randtime);
 				$class_end_date = date('Y-m-d H:0:0', $randtime + (60*60));
 

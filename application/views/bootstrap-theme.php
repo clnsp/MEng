@@ -933,3 +933,4 @@ ul.ui-autocomplete.popover.dropdown-menu{
 #booking.search_results table.footable{
 	display: none;
 }
+

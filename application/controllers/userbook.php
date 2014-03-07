@@ -22,7 +22,6 @@ class userbook extends CI_Controller{
      $this->load->Model('Classtype');
      $this->load->model('bookings');
 
-
      $user_id = $this->tank_auth->get_user_id();
 //	$username = $this->tank_auth->get_username();
  //   $class_type = $this->input->post('classname1');
@@ -33,12 +32,12 @@ class userbook extends CI_Controller{
      $end = $this->input->post('end');
      $bookingtype = $this->input->post('bookingtype');
 
-    if($bookingtype == "btn btn-warning"){
-		$bookingtype = "You have been added to the Waiting List for";
-}else{
-		$bookingtype = "You will be Attending";
+     if($bookingtype == "btn btn-warning"){
+      $bookingtype = "You have been added to the Waiting List for";
+    }else{
+      $bookingtype = "You will be Attending";
 
-}
+    }
 
  //   echo $classid;
   //  if (isset($_POST['user_id']) && isset($_POST['class_id'])){
@@ -48,22 +47,22 @@ class userbook extends CI_Controller{
 
    //     if(!$this->isClassBookedOut($classid) && !$this->isClassInPast($classid)){
 
-     $this->addMember($classid, $user_id, $start, $end);
-     $data['user_id'] = $this->tank_auth->get_user_id();
-     $data['class_id'] = $classid;
-     $data['start'] = $start;
-     $data['end'] = $end;
-     $data['bookingtype'] = $bookingtype;
+    $this->addMember($classid, $user_id, $start, $end);
+    $data['user_id'] = $this->tank_auth->get_user_id();
+    $data['class_id'] = $classid;
+    $data['start'] = $start;
+    $data['end'] = $end;
+    $data['bookingtype'] = $bookingtype;
 
-     $data['classinfo'] = $this->classes->getClassInformation($classid);
+    $data['classinfo'] = $this->classes->getClassInformation($classid);
 
-     parse_temp($page, $this->load->view('pages/'.$page, $data, true));
-   }
+    parse_temp($page, $this->load->view('pages/'.$page, $data, true));
+  }
       //} 
 
 
 
-   function addMember($classid, $user_id, $start, $end){
+  function addMember($classid, $user_id, $start, $end){
     $this->load->model('bookings');
 
 
@@ -80,7 +79,7 @@ class userbook extends CI_Controller{
       $this->_emailMemberAddedToWaitingList($m, $b, $start, $end);
 
     }
-		
+
 
   }
 
