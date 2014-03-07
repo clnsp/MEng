@@ -81,7 +81,7 @@
                   <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Register<span class="caret"></span></button>
                   <ul class="dropdown-menu">
                     <li><a href="register">DS Registration</a></li>
-                    <li><a href="#">Alternative</a></li>
+                    <li><a href="ask_register">Alternative</a></li>
                   </ul>
                 </div>
               </form>

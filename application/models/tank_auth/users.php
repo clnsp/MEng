@@ -129,6 +129,26 @@ class Users extends CI_Model
 		return $query->num_rows() == 0;
 	}
 
+	function is_mobile_number_available($mobile_number)
+	{
+		$this->db->select('1', FALSE);
+		$this->db->where('LOWER(mobile_number)=', strtolower($mobile_number));
+		$this->db->or_where('LOWER(new_mobile_number)=', strtolower($mobile_number));
+
+		$query = $this->db->get($this->table_name);
+		return $query->num_rows() == 0;
+	}
+
+	function is_twitter_available($twitter)
+	{
+		$this->db->select('1', FALSE);
+		$this->db->where('LOWER(twitter)=', strtolower($twitter));
+		$this->db->or_where('LOWER(new_twitter)=', strtolower($twitter));
+
+		$query = $this->db->get($this->table_name);
+		return $query->num_rows() == 0;
+	}
+
 	/**
 	 * Create new user record
 	 *
@@ -324,6 +344,55 @@ class Users extends CI_Model
 		$this->db->set('new_email_key', NULL);
 		$this->db->where('id', $user_id);
 		$this->db->where('new_email_key', $new_email_key);
+
+		$this->db->update($this->table_name);
+		return $this->db->affected_rows() > 0;
+	}
+
+
+	//MOBILE
+	function set_new_mobile_number($user_id, $new_mobile_number, $new_mobile_number_key, $activated)
+	{
+		$this->db->set($activated ? 'new_mobile_number' : 'mobile_number', $new_mobile_number);
+		$this->db->set('new_mobile_number_key', $new_mobile_number_key);
+		$this->db->where('id', $user_id);
+		$this->db->where('activated', $activated ? 1 : 0);
+
+		$this->db->update($this->table_name);
+		return $this->db->affected_rows() > 0;
+	}
+
+	function activate_new_mobile_number($user_id, $new_mobile_key)
+	{
+		$this->db->set('mobile_number', 'new_mobile_number', FALSE);
+		$this->db->set('new_mobile_number', NULL);
+		$this->db->set('new_mobile_number_key', NULL);
+		$this->db->where('id', $user_id);
+		$this->db->where('new_mobile_number_key', $new_mobile_key);
+
+		$this->db->update($this->table_name);
+		return $this->db->affected_rows() > 0;
+	}
+
+	//TWITTER
+	function set_new_twitter($user_id, $new_twitter, $new_twitter_key, $activated)
+	{
+		$this->db->set($activated ? 'new_twitter' : 'twitter', $new_twitter);
+		$this->db->set('new_twitter_key', $new_twitter_key);
+		$this->db->where('id', $user_id);
+		$this->db->where('activated', $activated ? 1 : 0);
+
+		$this->db->update($this->table_name);
+		return $this->db->affected_rows() > 0;
+	}
+
+	function activate_new_twitter($user_id, $new_twitter_key)
+	{
+		$this->db->set('twitter', 'new_twitter', FALSE);
+		$this->db->set('new_twitter', NULL);
+		$this->db->set('new_twitter_key', NULL);
+		$this->db->where('id', $user_id);
+		$this->db->where('new_twitter_key', $new_twitter_key);
 
 		$this->db->update($this->table_name);
 		return $this->db->affected_rows() > 0;
