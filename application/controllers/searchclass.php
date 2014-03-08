@@ -90,49 +90,38 @@ function fetchSportsClasses(){
 	//	print_r($rooms);
 		foreach ($rooms as $key => $room) {
 			$room_id = $room['room_id'];
-
 			$sportInstances = $this->courts->countSportInstances($room_id, $_POST['class_type_id']);
-
 			$roomSize = $this->rooms->getRoomSize($room_id);
-
 			$targetSportTokenSize = $this->_fetchTokenSize($room_id, $_POST['class_type_id']);
 
-			//		echo($roomSize ."<br>");
-			//		echo($sportCourts."<br>");
-			//		echo($sportInstances."<br>");
-			//		echo();
-			//		
-					//find all the sports booked in that room
-
-			
-
-
 			while($start_time <= $end_time){
-
-				$alreadyBooked = $this->classes->getSportsBookedOverTime($room_id, $date->format('Y-m-d ') . $start_time->format('H:i:00'));
-
+			
+				$sportInstancesForTime = $sportInstances;
+				$roomSizeForTime = $roomSize;
+				
+				$alreadyBooked = $this->classes->getSportsBookedOverTime($room_id, $date->format('Y-m-d ') . $start_time->format('H:i:00'), $date->format('Y-m-d ') . $end_time->format('H:i:00'));
+				//print_r($alreadyBooked);
 				foreach ($alreadyBooked as $key => $booked) {
 					if($booked['class_type_id'] == $_POST['class_type_id']){
-						$sportInstances--;
-						$roomSize = $roomSize - $targetSportTokenSize;
+						$sportInstancesForTime--;
+						$roomSizeForTime = $roomSizeForTime - $targetSportTokenSize;
 					}else{
-						$roomSize = $roomSize  - $this->_fetchTokenSize($room_id, $booked['class_type_id']);
+						$roomSizeForTime = $roomSizeForTime  - $this->_fetchTokenSize($room_id, $booked['class_type_id']);
 					}
 				}
 
-				if($sportInstances > 0 && $roomSize >= $targetSportTokenSize){
+				if($sportInstancesForTime > 0 && $roomSizeForTime >= $targetSportTokenSize){
 					$result['start'] = $start_time->format('H:i');
 					$result['duration'] = "1 hour";
 					$result['room'] = $room['room'];
-					$result['available'] = $sportInstances;
+					$result['room_id'] = $room['room_id'];
+					$result['date'] = $date->format('Y-m-d ');
+					$result['available'] = $sportInstancesForTime;
 
 					array_push($results, $result);
 				}
 				
-
-				
 				$start_time->modify("+60 minutes");
-
 			}
 			
 
@@ -159,11 +148,15 @@ function fetchSportsClasses(){
  * @return int
  */
 function _fetchTokenSize($room_id, $class_type_id){
+//	echo($class_type_id);
 	$sportInstances = $this->courts->countSportInstances($room_id, $class_type_id);
 	$sportCourts = $this->courts->countSportCourts($room_id, $class_type_id);
-
+	
+//	echo("courts ($sportCourts) instances ($sportInstances)" );
 	return $sportCourts / $sportInstances;
 }
+
+
 
 function isClassBookedOut($class_booking_id){
 	$this->load->model('Bookings');

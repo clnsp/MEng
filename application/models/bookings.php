@@ -127,8 +127,7 @@ class Bookings extends CI_Model
 		$this->db->delete($this -> table_name, $data); 	
 		
 	}
-
-
+	
 	/**
 	 * Count attendants of a specific booking
 	 *
@@ -223,33 +222,41 @@ class Bookings extends CI_Model
 	}
 
      /**
-        * Returns an array of those waiting for a position
-        * @param int
-        * @return array
-        */
-        function getWaiting($class_id){
-            $this -> db -> select('first_name, second_name');
+    * Returns an array of those waiting for a position
+    * @param int
+    * @return array
+    */
+    function getWaiting($class_id){
+        $this -> db -> select('first_name, second_name');
 
-            $this->db->from($this -> waiting_pool_tbl);
+        $this->db->from($this -> waiting_pool_tbl);
 
-            $this->db->join('users', 'users.id = waiting_pool_tbl.member_id');
-            $this->db->where('class_id', $class_id);
+        $this->db->join('users', 'users.id = waiting_pool_tbl.member_id');
+        $this->db->where('class_id', $class_id);
 
-            $query = $this -> db -> get();
-            return $query->result_array();
+        $query = $this -> db -> get();
+        return $query->result_array();
 
 
-        }
-		
-		function addMemberWaitingList($class_booking_id, $member_id){ 
+    }
+	
+	function addMemberWaitingList($class_booking_id, $member_id){ 
 
-		$data = array(
-			'member_id' => $member_id,
-			'class_id' => $class_booking_id,
+	$data = array(
+		'member_id' => $member_id,
+		'class_id' => $class_booking_id,
 
-			);
+		);
 
-		$this->db->insert($this -> waiting_pool_tbl, $data); 	
+	$this->db->insert($this -> waiting_pool_tbl, $data); 	
 
-	}	
+}	
+
+	/**
+	 * Add user to a sports booking
+	 */
+	 function bookIntoSport($class_type_id, $member_id) {
+	 	
+	 }
+	 
 }

@@ -82,6 +82,31 @@ class userbook extends CI_Controller{
 
 
   }
+  
+  /**
+   * Book user into a sport
+   */
+  function bookSport() {
+	  $this->load->model('bookings');
+	  $this->load->model('classes');
+  	/*! need to check that you're allowed to make booking !*/
+  	
+  	if(isset($_POST['class_type_id']) && isset($_POST['class_start_date']) && isset($_POST['room_id'])){
+  		$end = new DateTime($_POST['class_start_date']);
+  		$end->modify("+60 minutes");
+  	
+  		$data = array(
+  			'class_type_id'		=> $_POST['class_type_id'],
+  			'class_start_date'	=> $_POST['class_start_date'],
+  			'class_end_date'	=> $end->format('Y-m-d H:i:00'),
+  			'room_id'			=> $_POST['room_id'],
+  		);
+
+	  	$id = $this->classes->insertClass($data);
+
+	  	$this->bookings->addMember($id, $this->tank_auth->get_user_id());
+	}
+  }
 
   function isClassBookedOut($class_booking_id){
     $this->load->model('classes');
@@ -135,6 +160,8 @@ class userbook extends CI_Controller{
    $msg .= '</html> </head>';
    mail($email, 'Booked into a Class', $msg, $headers);
  }
+ 
+
  
 }
 

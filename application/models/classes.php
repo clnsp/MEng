@@ -158,11 +158,12 @@ class Classes extends CI_Model{
     /**
     * Insert a new class
     * @param array
+    * @return int - the id of the inserted class
     */
     function insertClass($data){
         $this->db->insert($this -> class_tbl, $data);
         echo($this->db->_error_message());
-
+		return $this->db->insert_id();
     }
 
     /**
@@ -394,15 +395,36 @@ class Classes extends CI_Model{
 	* @param int
 	* @return int
 	*/
-	function getSportsBookedOverTime($room_id, $start){
-        $this -> db -> select('class_type_id');
-
-        $this->db->where('class_end_date >=', $start);
+	function getSportsBookedOverTime($room_id, $start, $end){
+        $this -> db -> select('class_tbl.class_type_id');
+        
+        $this->db->where('class_type_tbl.is_sport', '1');
+ 
         $this->db->where('class_start_date <=', $start);
+        $this->db->where('class_end_date >', $start);
+        
+        $this->db->or_where('class_end_date <', $end);
+        $this->db->where('class_start_date >=', $end);
+        
         $this->db->where('room_id', $room_id);
         $this->db->from($this->class_tbl);
-
+         $this -> db -> join('class_type_tbl', 'class_type_tbl.class_type_id = class_tbl.class_type_id');
+	
+		//echo  $this->db->last_query();
         return $this -> db -> get()->result_array();
+    }
+    
+    /**
+    * Remove a class if it is a sport
+    * @int 
+    */
+    function removeSportClass($class_id) {
+		$sql = "DELETE t1 FROM class_tbl t1
+						  JOIN class_type_tbl t2 ON t1.class_type_id = t2.class_type_id
+						   WHERE class_id = ? AND t2.is_sport = '1'";
+		  
+
+    	$this->db->query($sql, array($class_id));
     }
 
 

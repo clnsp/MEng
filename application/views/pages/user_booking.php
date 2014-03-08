@@ -71,11 +71,11 @@ $js = 'class="form-control"';
 
 ?>
 
-<div class="col-sm-4">
+<div class="col-sm-3">
 
 	<ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
-		<li class="active"><a href="#classes" data-toggle="tab"><b>Class Search</b></a></li>
-		<li><a href="#courts" data-toggle="tab"><b>Sport Search</b></a></li>
+		<li class="active"><a href="#classes" data-toggle="tab"><b>Classes</b></a></li>
+		<li><a href="#courts" data-toggle="tab"><b>Sports</b></a></li>
 	</ul>	
 
 	<div id="tab-content" class="tab-content">
@@ -88,7 +88,7 @@ $js = 'class="form-control"';
 			</div>
 
 			<div class="toggleInput form-group hidden">
-				<?php echo form_dropdown('class_type_id', $sportClassTypes, '' , $js. "disabled=disabled");	 ?>
+				<?php echo form_dropdown('class_type_id', $sportClassTypes, '' , 'class="form-control sports" disabled=disabled');	 ?>
 			</div>
 
 			<div class="toggleInput form-group">
@@ -118,10 +118,10 @@ $js = 'class="form-control"';
 
 </div>
 
-<!-- <div class="col-sm-8">
--->
+ <div class="col-sm-9">
 
-<table class="footable table">
+
+<table class="footable table table-hover table-bordered">
 	<thead>
 		<tr>
 			<th >Start</th>
@@ -140,5 +140,5 @@ $js = 'class="form-control"';
 	</tbody>
 </table>
 
-<!-- </div>
--->
+ </div>
+
