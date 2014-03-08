@@ -143,36 +143,7 @@
                         </div>
 						
 </div>
-                        </div>	
-			<!--COLIN TEST --><!--COLIN TEST -->
-			<div class="row">
-			                    <div class="panel panel-primary col-lg-6" style="padding:0px;">
-                        <div class="panel-heading">
-                            <h3 class="panel-title views">Change Membership</h3>
                         </div>
-                        <div class="panel-body">
-							<span>Current Membership: <span class="pull-right"><span id="memType">N/A</span> <span id="memShipType">N/A</span></span></span><br/>
-							
-							<div class="row">
-								<div class="col-md-4">Validity:</div>
-								<div class="col-md-8 text-right">From: <strong id="dateStart">01/02/03</strong> To: <strong id="dateEnd">06/07/08</strong></div>
-							</div>
-							<form role="form">
-								<div class="form-group">
-									<label for="memberships">Avaliable Membership Types:</label>
-									<select id="membershipSelect"class="form-control"></select>
-								</div>
-                        </div>
-						</div>
-			            <div class="panel panel-primary col-lg-6" style="padding:0px;">
-                        <div class="panel-heading">
-                            <h3 class="panel-title views">Custom Membership </h3>
-                        </div>
-                        <div class="panel-body">
-							<div id="date-selector"></div>
-						</div>
-			</div>
-			
 			
 			
 			

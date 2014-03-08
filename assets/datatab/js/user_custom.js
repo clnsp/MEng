@@ -278,6 +278,16 @@
 	// UPDATING A MEMBERS MEMBERSHIP
 	updateMembershipMod = (function () { 
 		
+		var membershipbody = '<h3>Update Membership:</h3><div class="row"><div class="panel panel-primary col-lg-6" style="padding:0px;"><div class="panel-heading"><h3 class="panel-title views">Change Membership</h3></div><div class="panel-body"><span>Current Membership: <span class="pull-right"><span id="memType">N/A</span> <span id="memShipType">N/A</span></span></span><br/><div class="row"><div class="col-md-4">Validity:</div><div class="col-md-8 text-right">From: <strong id="dateStart">01/02/03</strong> To: <strong id="dateEnd">06/07/08</strong></div></div><form role="form"><div class="form-group"><label for="memberships">Avaliable Membership Types:</label><select id="membershipSelect"class="form-control"></select></div></div></div><div class="panel panel-primary col-lg-6" style="padding:0px;"><div class="panel-heading"><h3 class="panel-title views">Custom Membership </h3></div> <div class="panel-body"><div id="date-selector"></div></div></div>';
+		
+		loadMembership = function(){
+			$($subModal + " .modal-content").children('.modal-body').html(membershipbody);
+			$($subModal + " .modal-content").children('.modal-footer').html(footer);
+			getPossibleType();
+			datepicker.draw();
+			datepicker.options('disable');
+		},
+		
 		getPossibleType = function () {
 			$.getJSON($baseUrl.member+$functionUrl.userMembership, {id: $member.id}, function (data){
 				$('#memType').html(cFirst($member.type));
@@ -298,7 +308,7 @@
 					$('#membershipSelect').append(option);
 				}
 					var option = $('<option/>'); 								
-					option.attr({ 'value': -1}).text("Custom Membership");
+					option.attr({ 'value': -1}).text("Custom Membership"); // Custom Membership Option
 					option.attr('data-toggle','tooltip');
 					option.attr('data-placement','left');
 					option.attr('data-original-title','Create Custom membership (Provide Start/End Dates)');
@@ -306,8 +316,11 @@
 				$('#membershipSelect').tooltip();
 				$('#membershipSelect').append(option);
 			});
-			console.log($member);
-			console.log("INNER " + $member.id);
+			$('#membershipSelect').on('change', function() {
+				if($( "#membershipSelect option:selected" ).val() == -1){datepicker.options("enable");}
+				else{datepicker.options("disable");}
+			});
+			
 		},
 
 		getBookings = function () {
@@ -322,14 +335,18 @@
 
 		},	
 		
-		$('.membership').on("click", function () { getPossibleType(); });
+		$('.membership').on("click", function () { loadMembership(); });
 		$('#attendance').on("click", function () { getBookings(); });
 	})();
 	
 	datepicker = (function() {
 
-		var cal = $('#date-selector').multiDatesPicker({numberOfMonths: 2,maxPicks: 2});
+		var cal;
 
+		draw = function() {
+			cal = $('#date-selector').multiDatesPicker({numberOfMonths: 2,maxPicks: 2});
+		},
+		
 		getDates = function() {
 			return cal.multiDatesPicker('getDates');
 		},
@@ -367,15 +384,28 @@
 				if(newDates.length > 0)
 					cal.multiDatesPicker('addDates', newDates);
 			}
+		},
+		
+		alternate = function(){
+			if(cal.multiDatesPicker('isDisabled')){
+				options('enable');
+			}else {	
+				options('disable');
+			}
+		},
+		
+		options = function(o){
+			cal.datepicker(o);
 		}
-
-
-
+		
 		return { 
-			cal:cal,
+			draw: draw,
+			cal:cal, 
+			options: options,
 			hasDates: hasDates,
 			repeatDates: repeatDates,
 			getDates : getDates,
+			alternate: alternate,
 		};
 
 	})();

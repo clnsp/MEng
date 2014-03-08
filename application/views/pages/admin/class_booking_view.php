@@ -1,4 +1,4 @@
-<?php foreach ($categories as $cat){?>
+<?php if(count($bookings)>0){ foreach ($categories as $cat){?>
   <?php if(isset($bookings[$cat['category_id']])){ ?>
   <div class="panel" style="border-color: <?php echo $cat['color']?>;">
     <div class="panel-heading" style="background-color: <?php echo $cat['color']?>; color: rgb(255,255,255);">
@@ -31,4 +31,8 @@
     </div>
   </div>
     <?php }?>
-  <?php }?>
+  <?php }}else{?>
+  <div class="jumbotron text-center" style="background-color: inherit;">
+  <p>No Bookings Made !!</p>
+</div>  
+ <?php }?>
