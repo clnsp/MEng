@@ -10,7 +10,7 @@
 			/*Controllers*/
 			$baseUrl ={member:'member/'};
 			/*Functions*/
-			$functionUrl={getUser:'getUserDetails/',updateUser:'updateUserDetails',contactUser:'contactUser',deleteUser:'deleteUser',userMembership:'getMembershipOptions',getAttendance:'getAttendance/', getBookings:'getBookings/'};
+			$functionUrl={getUser:'getUserDetails/',updateUser:'updateUserDetails',contactUser:'contactUser',deleteUser:'deleteUser',updateUserMembership:'updateUserMembership',userMembership:'getMembershipOptions',getAttendance:'getAttendance/', getBookings:'getBookings/'};
 			$warnClass={text:{e:"text-danger",s:"text-success",w:"text-warning"},form:{e:"has-error",s:"has-success",w:"has-warning"}};
 			
 			var footer = '<button class="btn btn-sm" data-dismiss="submodal" aria-hidden="true">Cancel</button><button id="submitState" class="btn btn-sm btn-danger submit" data-dismiss="submodal">Submit</button>';
@@ -286,6 +286,7 @@
 			getPossibleType();
 			datepicker.draw();
 			datepicker.options('disable');
+			$($subModal + " .submit").on( "click", function() {updateMembershipType(); });
 		},
 		
 		getPossibleType = function () {
@@ -316,26 +317,37 @@
 				$('#membershipSelect').tooltip();
 				$('#membershipSelect').append(option);
 			});
+			
 			$('#membershipSelect').on('change', function() {
 				if($( "#membershipSelect option:selected" ).val() == -1){datepicker.options("enable");}
 				else{datepicker.options("disable");}
 			});
-			
 		},
+		
+		updateMembershipType = function () {
+			var memship = $("#membershipSelect option:selected").val();
+			var op=new Object();
+			if(memship == -1 && datepicker.hasDates()){var date = datepicker.getDates(); op.start = date[0]; op.end= date[1];}
 
+			var i = {id: $member.id, membership:memship, options: op};
+			console.log(i);
+			$.post($baseUrl.member+$functionUrl.updateUserMembership, {id: $member.id, membership:memship, options: op}, function (data){
+				console.log(data);
+			});			
+		},	
+		
+		$('.membership').on("click", function () { loadMembership(); });
+	})();
+	
+	attendance = (function(){
+	
 		getBookings = function () {
 			$.get($baseUrl.member+$functionUrl.getBookings,{id:$member.id},function (data){
-				
 				$('#accordion').html(data);
 			});	
 		},
 		
 		
-		updateMembershipType = function () {
-
-		},	
-		
-		$('.membership').on("click", function () { loadMembership(); });
 		$('#attendance').on("click", function () { getBookings(); });
 	})();
 	
