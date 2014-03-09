@@ -341,14 +341,22 @@
 	
 	attendance = (function(){
 	
+		var attendbody = '<div id="mainContent" class="row" style="z-index:2;"><div class="panel panel-primary col-lg-6" style="padding:0px;"><div class="panel-heading"><h3 class="panel-title">Attendance</h3></div> <div class="panel-body"><div class="row"><div class="col-md-6"><span>Class Bookings:  <strong>10</strong></span><br/><br/><span>Popular Class:  <strong>Zumba</strong></span><br/></div><div class="col-md-6"><span>Class Attendance: <strong>50%</strong></span><br/><br/><span>Popular Time:  <strong>Tuesday, 5:00</strong></span><br/></div></div></div></div><div class="panel panel-primary col-lg-6" style="padding:0px;"><div class="panel-heading"><h3 class="panel-title">Bookings</h3></div><div class="panel-body"><div class="panel-group" id="accordion"></div></div></div></div></div>';
+	
+		loadAttendacne = function(){
+			$($subModal + " .modal-content").children('.modal-body').html(attendbody);
+			$($subModal + " .modal-content").children('.modal-footer').html(footer);
+			getBookings();
+			$($subModal + " .submit").on( "click", function() { });
+		},
+	
 		getBookings = function () {
 			$.get($baseUrl.member+$functionUrl.getBookings,{id:$member.id},function (data){
 				$('#accordion').html(data);
 			});	
 		},
 		
-		
-		$('#attendance').on("click", function () { getBookings(); });
+		$('#attendance').on("click", function () { loadAttendacne(); });
 	})();
 	
 	datepicker = (function() {

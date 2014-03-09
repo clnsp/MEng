@@ -119,36 +119,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
-				<!--COLIN TEST --> <!--COLIN TEST--> 
-				                <div id="mainContent" class="row" style="z-index:2;">
-                    <div class="panel panel-primary col-lg-6" style="padding:0px;">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">Bookings</h3>
-                        </div>
-                        <div class="panel-body">
-<div class="panel-group" id="accordion">
-</div>
-                        </div>
-                    </div>
-                    <div class="panel panel-primary col-lg-6" style="padding:0px;">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">Attendance</h3>
-                        </div>
-                        <div class="panel-body">
-						<div class="row">
-							<div class="col-md-6"><span>Class Bookings:  <strong>10</strong></span><br/><br/><span>Popular Class:  <strong>Zumba</strong></span><br/></div>
-							<div class="col-md-6"><span>Class Attendance: <strong>50%</strong></span><br/><br/><span>Popular Time:  <strong>Tuesday, 5:00</strong></span><br/></div>
-						</div>
-                        </div>
-						
-</div>
-                        </div>
-			
-			
-			
-			
-			
+                </div>			
             </div>
             <!-- FOOTER-->
             <div class="modal-footer">
@@ -160,7 +131,7 @@
                                 <i class="fa fa-user fa-fw"></i> Contact </span>
                             </button>
                         <!-- Single button -->
-                            <button type="button" id="attendance"class="btn btn-warning btn-sm dropdown-toggle" data-toggle="dropdown">
+                            <button type="button" id="attendance"class="btn btn-warning btn-sm" href="#SubMemberDetails" data-toggle="submodal">
                                 <i class="fa fa-search"></i> Attendance</span>
                             </button>
                         <!-- Single button -->
