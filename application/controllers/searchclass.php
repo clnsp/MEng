@@ -93,13 +93,20 @@ function fetchSportsClasses(){
 			$sportInstances = $this->courts->countSportInstances($room_id, $_POST['class_type_id']);
 			$roomSize = $this->rooms->getRoomSize($room_id);
 			$targetSportTokenSize = $this->_fetchTokenSize($room_id, $_POST['class_type_id']);
-
+			//$blockedSportIds = $this->restrictions->getBlockRestrictionIDs($room_id);
+			
 			while($start_time <= $end_time){
 			
 				$sportInstancesForTime = $sportInstances;
 				$roomSizeForTime = $roomSize;
 				
 				$alreadyBooked = $this->classes->getSportsBookedOverTime($room_id, $date->format('Y-m-d ') . $start_time->format('H:i:00'), $date->format('Y-m-d ') . $end_time->format('H:i:00'));
+				
+				//if intersect then this sport is blocked and can't be booked
+//				if(count(array_intersect($array1, $array2)) > 0){
+//					$start_time->modify("+60 minutes");
+//					continue;
+//				}
 				//print_r($alreadyBooked);
 				foreach ($alreadyBooked as $key => $booked) {
 					if($booked['class_type_id'] == $_POST['class_type_id']){

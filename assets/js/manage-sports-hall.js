@@ -504,7 +504,34 @@ var manageRestrictionsPanel = (function() {
 
 })();
 
+var addSportPanel = (function() {
+	var urlBase = "class_type/";
+		var form = $('form#add-sport-type-form');
+		var categoryDropdown = form.find('select[name=category_id]');
+		
+		form.submit(function(){ sendForm() });
+		
+		var sendForm = function() {
 
+			$.post(urlBase + 'addSportType/', form.serialize())
+			.done(function( result ) { 
+				alert(result); 
+				resetAddForm();
+				classtypes.refresh();
+			})
+			.fail(function( result ) { alert(result); });			
+		}
+
+		
+		var resetAddForm = function () {
+			form[0].reset();
+		}
+
+
+})();
+
+
+	
 
 $(function(){
 
@@ -522,6 +549,7 @@ $(function(){
     classtypes.refresh();
     rooms.refresh();
     divisiblerooms.refresh();
+    categories.refresh();
 
 
 });

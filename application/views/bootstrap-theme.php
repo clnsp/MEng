@@ -761,6 +761,7 @@ border: 2px solid #000;
 }
 */
 
+
 #booking .form-control:focus{
 	border: 1px solid <?php echo $brandSecondary;?>;
 	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),0 0 8px rgba(102, 175, 233, 0.6);

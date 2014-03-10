@@ -15,7 +15,7 @@ class class_type extends CI_Controller
 	function addClassType(){
 		if($this->tank_auth->is_admin()){
 			if (isset($_POST['class_type']) && isset($_POST['class_description']) && isset($_POST['category_id'])){
-				$this->classes->addNewClassType($_POST['class_type'], $_POST['class_description'], $_POST['category_id']);
+				$this->classes->addNewClassType($_POST['class_type'], $_POST['class_description'], $_POST['category_id'], false);
 				echo "Class Added";
 			}else{
 				echo "No values";
@@ -165,6 +165,22 @@ class class_type extends CI_Controller
 		echo json_encode($types);
 
 	}
+	
+	/**
+	* Add new sport type
+	*/
+	function addSportType(){
+		if($this->tank_auth->is_admin()){
+			if (isset($_POST['class_type']) && isset($_POST['class_description']) && isset($_POST['category_id'])){
+				$this->classes->addNewClassType($_POST['class_type'], $_POST['class_description'], $_POST['category_id'], true);
+				echo "Class Added";
+			}else{
+				echo "No values";
+			}
+
+		}
+	}
+
 
 
 }

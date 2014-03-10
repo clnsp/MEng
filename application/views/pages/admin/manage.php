@@ -96,6 +96,7 @@
 
 		</div>
 	</div>
+	
 	<div class="row">
 		
 		
@@ -106,11 +107,11 @@
 				</div>
 				<div class="panel-body">						
 
-					<table id='class-types-table' class="classtype table table-striped table-hover scroll">
+					<table id='class-types-table' class="classtype footable table table-bordered table-striped table-hover scroll">
 						<thead>
 							<tr>
 								<th>Title</th>
-								<th>Description</th>
+								<th data-hide="phone, tablet">Description</th>
 								<th>Category</th>
 							</tr>
 						</thead>

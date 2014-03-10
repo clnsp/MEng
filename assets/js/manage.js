@@ -8,7 +8,7 @@ $( document ).ready(function() {
 		e.stopImmediatePropagation(); //prevent clicking the row when selecting color swatch
 	});
 		
-		var categoriesPanel, addClassTypePanel, manageClassTypesPanel, editClassTypeModal, addBlockClassesPanel, datepicker;
+		var categoriesPanel, addClassTypePanel, manageClassTypesPanel, datepicker;
 
 
 
@@ -174,100 +174,8 @@ $( document ).ready(function() {
 	})();
 	
 
-	editClassTypeModal = (function(){
-		var modal =  $('#modal-edit-class-type');
-		var form = modal.find('#edit-class-type-form');
-		var removeSubmit = modal.find('#remove-submit');
-
-		var class_type_id = form.find('input[name=class_type_id]');
-		var class_type = form.find('input[name=class_type]');
-		var class_description = form.find('textarea[name=class_description]');
-		var category_id = form.find('select[name=category_id]');
-
-		var urlBase = "class_type/";
-		
-		form.submit(function() { editClassTypeModal.sendForm() });
-		removeSubmit.click(function() { 
-
-			bootbox.dialog({
-				message: "Removing class types will also remove any associated classes that have been added to the system under this class type. Are you sure you want to continue?",
-				title: "Warning",
-				buttons: {
-					main: {
-						label: "Cancel",
-						className: "btn-default",
-						callback: function() {}
-					},
-
-					danger: {
-						label: "Confirm",
-						className: "btn-danger",
-						callback: function() {
-							editClassTypeModal.sendRemoveForm() 
-
-						}
-					}
-					
-					
-				}
-			});
-
-		});
-		
-		$('table#class-types-table tbody').on('click','tr',function(e){
-			editClassTypeModal.setupModal($(this).data('class_type_id'), $(this).find('.class_type').html(), $(this).find('.class_description').html(), $(this).find('.category').data('category_id'));
-		});
 
 
-		setupModal = function (ci, ct, cd, catid) {				
-			class_type_id.val(ci);
-			class_type.val(ct);
-			class_description.val(cd);
-			modal.modal('show');
-			category_id.html(categories.getDropdown());
-			category_id.val(catid);
-		},
-
-		tearDownModal = function() {
-			class_type_id.val('');
-			class_type.val('');
-			class_description.html('');
-		},
-
-		sendForm = function (id) {
-			
-			$.post( urlBase + 'updateClassType/', form.serialize())
-			.done(function( data ) {
-				alert(data);
-				modal.modal('hide');
-				classtypes.refresh();
-			});
-
-		},
-
-		sendRemoveForm = function (id) {
-			
-			$.post( urlBase + 'removeClassType/', form.serialize())
-			.done(function( data ) {
-				alert(data);
-				modal.modal('hide');
-				refresh();
-			});
-
-		}
-
-		return{
-			modal: modal,
-			setupModal: setupModal,
-			form: form,
-			sendForm: sendForm,
-			category_id: category_id,
-			removeSubmit: removeSubmit,
-			sendRemoveForm: sendRemoveForm
-
-		};
-
-	})();
 	
 	manageClassTypesPanel = (function() {
 		var typeTable = $('table#class-types-table tbody'); 
@@ -277,7 +185,7 @@ $( document ).ready(function() {
 
 
 	
-	addBlockClassesPanel = (function() {
+	var addBlockClassesPanel = (function() {
 		var container = $('#add-block-classes');
 		var form = container.find('#add-block-classes-form');
 		var classTypeDrop = form.find('select[name=class_type_id]');
@@ -294,7 +202,7 @@ $( document ).ready(function() {
 			if(datepicker.hasDates()){
 				bootbox.confirm("<h4 class='modal-title'>Confirmation</h2><p>Are you sure you want to add new bookable classes? You will add classes to the following dates:</p>" + datepicker.getDates().toString(), function(result) {
 					if(result)
-						addBlockClassesPanel.sendForm();
+						sendForm();
 				}); 
 			}
 			else 
@@ -324,7 +232,7 @@ $( document ).ready(function() {
 			}
 		});
 
-		sendForm = function () {
+		var sendForm = function () {
 
 			var formSz = form.serializeArray();
 			var dates = datepicker.getDates();
@@ -339,175 +247,10 @@ $( document ).ready(function() {
 
 		}
 
-		return {
-
-			drop: classTypeDrop,
-			form: form,
-			roomDrop: roomDrop,
-			sendForm: sendForm
-
-		};
+		return {};
 
 	})();
 
-	// rooms = (function() {
-
-	// 	var urlBase = "room/";
-	// 	var rdrop = $('<select></select>')
-
-	// 	rcreateOption = function (room) {
-	// 		return($('<option></option>').val(room['room_id']).append(room['room']));
-	// 	},
-
-
-	// 	refresh = function () {		
-	// 		$.getJSON(urlBase + 'getRoomIDs', function(data) {
-
-	// 			rclear();
-	// 			if(data.length>0){
-	// 				$.each( data, function( key, room ) {
-	// 					rdrop.append(rcreateOption(room));
-	// 				});
-
-	// 			}
-	// 			rupdate();
-
-	// 		});
-	// 	},
-
-	// 	rclear = function() {
-	// 		rdrop.html('');
-	// 	},
-
-
-	// 	rupdate = function () {
-	// 		addBlockClassesPanel.roomDrop.html(rdrop.html());
-	// 	}
-
-	// 	return { refresh: refresh };
-
-	// })();
-
-	// classtypes = (function() {
-	// 	var cttable = $('<tbody></tbody>');
-	// 	var ctdrop = $('<select></select>');
-
-	// 	var urlBase = "class_type/";
-
-	// 	ctcreateRow = function (type) {
-	// 		return($('<tr data-class_type_id="' + type['class_type_id'] + '"></tr>')
-	// 			.append('<td class="class_type">'+type['class_type'] + '</td>')
-	// 			.append('<td class="class_description">' + type['class_description'] +'</td>')
-	// 			.append('<td data-category_id='+ type['category_id'] +' class="category">' + type['category'] +'</td>') 
-	// 			);			
-	// 	},
-
-	// 	ctcreateOption = function (type) {
-	// 		return($('<option></option>').val(type['class_type_id']).append(type['class_type']));		
-
-	// 	},
-
-
-	// 	refresh = function () {		
-	// 		$.getJSON(urlBase + 'getClassTypes', function(data) {
-
-	// 			ctclear();
-	// 			if(data.length>0){
-	// 				$.each( data, function( key, type ) {
-	// 					cttable.append(ctcreateRow(type));
-	// 					ctdrop.append(ctcreateOption(type));
-	// 				});
-
-	// 			}
-	// 			ctupdate();
-
-	// 		});
-	// 	},
-
-	// 	ctclear = function() {
-	// 		cttable.empty();
-	// 		ctdrop.html('');
-	// 	},
-
-
-	// 	ctupdate = function () {
-	// 		manageClassTypesPanel.table.html(cttable.html());
-	// 		addBlockClassesPanel.drop.html(ctdrop.html());
-	// 	}
-
-
-	// 	return {
-	// 		refresh: refresh,
-	// 	};
-
-	// })();
-
-
-	// categories = (function() {
-	// 	var urlBase 		= "category/";
-	// 	var catList = $('<ul></ul>');
-	// 	var catDrop = $('<select></select>');
-
-	// 	refresh = function () {
-	// 		$.getJSON(urlBase + 'fetchAll', function(data) {
-
-	// 			catList.empty();
-	// 			if(data.length>0){
-	// 				$.each( data, function( key, cat ) {
-	// 					catList.append(createListItem(cat['category_id'], cat['category'], cat['color']));
-	// 					catDrop.append(createOption(cat));
-	// 				});
-
-	// 			}
-
-	// 			update();
-
-	// 		});
-
-	// 	},
-
-	// 	createOption = function (type) {
-	// 		return($('<option></option>').val(type['category_id'])
-	// 			.append(type['category']));			
-	// 	},
-
-	// 	createListItem = function(id, name, color){
-	// 		if(id != 1){
-	// 			return $('<li class="list-group-item"></li>').attr('data-category_id', id)
-	// 			.append($('<input class="pull-right" name="category_id[]" value="'+ id + '" type="checkbox">'))
-	// 			.append($('<input>')
-	// 				.attr({
-	// 					type: 'hidden',
-	// 					class: 'minicolors',
-	// 					value: color,
-	// 					size: 7,
-	// 					'data-category_id': id
-	// 				}))
-
-	// 			.append('<span class="editable">' + name + '</span>');
-	// 		}else{
-	// 			return null;
-	// 		}
-	// 	},
-
-	// 	clear = function() {
-	// 		categoriesPanel.categorylist.empty();
-	// 		addClassTypePanel.categoryDropdown.html('');
-	// 	},
-
-	// 	update = function() {
-	// 		categoriesPanel.categorylist.html(catList.html());
-	// 		categoriesPanel.initColorPickers();
-	// 		addClassTypePanel.categoryDropdown.html(catDrop.html());
-	// 	}
-
-	// 	return { 
-	// 		refresh: refresh,
-	// 		list: catList,
-	// 		drop: catDrop
-	// 	};
-
-	// })();
 
 	datepicker = (function() {
 

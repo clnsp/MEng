@@ -12,8 +12,7 @@ $( document ).ready(function() {
 		minDate: 0
 	});
 
-	/* responsive tables */
-	$('.footable').footable();
+
 
 	$('#tabs li').click(function(){
 		if(!$(this).hasClass('active')){

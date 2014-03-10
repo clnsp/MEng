@@ -62,7 +62,7 @@ $label = array(
 	);
 
 $form = array(
-	'class' => 'form-horizontal',
+	'class' => 'form',
 	'role' => 'form',
 	);
 
@@ -72,6 +72,8 @@ $js = 'class="form-control"';
 ?>
 
 <div class="col-sm-3">
+
+
 
 	<ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
 		<li class="active"><a href="#classes" data-toggle="tab"><b>Classes</b></a></li>

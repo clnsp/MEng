@@ -190,11 +190,12 @@ class Classes extends CI_Model{
     * @param string
     * @param string
     */
-    function addNewClassType($class_type, $class_description, $category_id){
+    function addNewClassType($class_type, $class_description, $category_id, $sport){
         $data = array(
-            'class_type'	=>	$class_type,
+            'class_type'		=>	$class_type,
             'class_description'	=>	$class_description,
-            'category_id'	=>	$category_id,
+            'category_id'		=>	$category_id,
+            'is_sport'			=>	$sport
             );
 
         $this->db->insert($this -> class_type_tbl, $data);

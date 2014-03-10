@@ -76,11 +76,28 @@ Class Restrictions extends CI_Model{
 
 	/**
 	 * Fetch the block restrictions
+	 * @param int
 	 * @return array
 	 */
 	function getBlockRestrictions($room_id){  
 
 		$this -> db -> select('sport_to_block, sport_to_block_id, occurring_sport_id, occurring_sport');
+		$this -> db -> from($this -> block_view);
+		$this -> db -> where('divisible_room_id', $room_id);
+
+		$query = $this->db->get();
+		return $query ->result_array();
+	} 
+	
+	
+	/**
+	 * Fetch the block restriction ids
+	 * @param int
+	 * @return array
+	 */
+	function getBlockRestrictionIDs($room_id){  
+
+		$this -> db -> select('sport_to_block, occurring_sport_id');
 		$this -> db -> from($this -> block_view);
 		$this -> db -> where('divisible_room_id', $room_id);
 

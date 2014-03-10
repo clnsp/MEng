@@ -120,6 +120,7 @@ var ClassTypes = function() {
 	
 	var init = function() {
 	 table = $('<tbody></tbody>');
+	 sportstable = $('<tbody></tbody>');
 	 drop = $('<select></select>');
 	 sportsdrop = $('<select></select>');
 	 list = $('<ul></ul>');
@@ -151,14 +152,16 @@ var ClassTypes = function() {
 			clear();
 			if(data.length>0){
 				$.each( data, function( key, type ) {
-					table.append(createRow(type));
+					
 					
 					if(type['is_sport'] == 1){
 						sportsdrop.append(createOption(type));
 						sportslist.append(createListItem(type));
+						sportstable.append(createRow(type));
 					}else{
 						drop.append(createOption(type));
 						list.append(createListItem(type));
+						table.append(createRow(type));
 					}
 				});
 
@@ -170,6 +173,7 @@ var ClassTypes = function() {
 
 	var clear = function() {
 		table.empty();
+		sportstable.empty();
 		drop.html('');
 		sportsdrop.html('');
 	}
@@ -185,7 +189,8 @@ var ClassTypes = function() {
 		
 		$('[type=dropdown].sportsclasstype').html(sportsdrop.html());
 		$('[type=dropdown].classtype').html(drop.html());
-		$('table.classtype tbody').html(table.html());
+		$('table.classtype tbody').html(table.html()).trigger('footable_redraw');
+		$('table.sportsclasstype tbody').html(sportstable.html()).trigger('footable_redraw');
 		$('ul.classtype').html(list.html());
 		$('ul.sportsclasstype').html(sportslist.html());
 		
@@ -394,5 +399,8 @@ var DivisibleRooms = function() {
 };
 
 var divisiblerooms = new DivisibleRooms();
+
+/* responsive tables */
+$('.footable').footable();
 
 
