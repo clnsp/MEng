@@ -72,10 +72,21 @@ class Members extends CI_Model
  * @return array
  */
  function getMembershipTypes($id) {
-	$sql = "SELECT  membership_type_tbl.id as id, membership_type, start_date, end_date FROM users, member_membership_tbl, membership_type_tbl WHERE users.id = ? AND member_membership_tbl.member_type_id = users.member_type_id AND membership_type_tbl.id = member_membership_tbl.membership_type_id AND end_date > CURDATE( )";
+	$sql = "SELECT  membership_type_tbl.id as id, membership_type, start_date, end_date FROM users, member_membership_tbl, membership_type_tbl WHERE users.id = ? AND member_membership_tbl.member_type_id = users.member_type_id AND membership_type_tbl.id = member_membership_tbl.membership_type_id  AND membership_type_tbl.id != users.membership_type_id AND end_date > CURDATE( )";
     $query = $this->db->query($sql, $id);
-	return $query->result();
+	return $query->result();  
  }
+ 
+ /**
+  * Create a new membership
+  * @return the new row's id
+  */
+ function createNewMembership($name,$startDate,$endDate){
+	$data = array('membership_type' => $name ,'start_date' => $startDate , 'end_date' => $endDate );
+	$this->db->insert('membership_type_tbl', $data); 
+	$insert_id = $this->db->insert_id();
+	return $insert_id;
+}
 
  /**
  * Get member email

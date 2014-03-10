@@ -133,13 +133,50 @@ class Member extends CI_Controller{
 		}
 		}
 	}
+			/*$this->load->helper('comms');
+		create_mesage('','https://devweb2013.cis.strath.ac.uk');*/
 	
 	/*
 	 * Update User Membership
 	 */
 	function updateUserMembership(){
-		$this->load->helper('comms');
-		create_mesage('','https://devweb2013.cis.strath.ac.uk');
+		if(check_admin()){
+			$this->load->model('members');
+			if(isset($_POST['id']) && isset($_POST['membership']) && isset($_POST['options'])){ // CUSTOM MEMBERSHIP
+				print_r($_POST);				
+				if($_POST['membership']==-1 && $this->_validDate($_POST['options']['start']) && $this->_validDate($_POST['options']['end']))
+				{
+					$start =  new DateTime($_POST['options']['start']);
+					$end =  new DateTime($_POST['options']['end']);
+					$mem = $this->members->createNewMembership('Custom',$start->format('Y-m-d'),$end->format('Y-m-d'));
+					echo $this->members->updateUser($_POST['id'],array('membership_type_id'=>$mem));
+					return;
+				}else {
+					echo "Invalid date format";
+					return;
+				}
+			}
+			else if(isset($_POST['id']) && isset($_POST['membership'])){ // AVAILABLE MEMBERSHIPS
+				$avMeb = $this->members->getMembershipTypes($_POST['id']);
+				foreach ($avMeb as $m){ 
+					if (isset($m->id) && $m->id == $_POST['membership']) 
+						echo $this->members->updateUser($_POST['id'],array('membership_type_id'=>$_POST['membership']));
+				}
+			}
+		}
+	}
+	
+		/**
+	 * Checks whether supplied string is a valid date
+	 * @param	string
+	 * @return	bool
+	 */
+	
+	function _validDate($string) {
+		$date = date_parse($string);	
+		
+		return(!($date["month"] == '' && $date["day"]=='' && $date["year"] =='' && $date["hour"] == '' && $date["minute"]==''));
+
 	}
 	
 	/*
