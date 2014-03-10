@@ -32,7 +32,7 @@ $( document ).ready(function() {
 
 		$.post("searchclass/fetchSportsClasses", $(this).serialize(), function( data ) {
 			table.html('');
-			alert(data);
+		//	alert(data);
 			var json = $.parseJSON(data);
 			
 			var book = $('<button class="booksport btn btn-primary">Book</button>');
