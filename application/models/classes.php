@@ -406,24 +406,32 @@ class Classes extends CI_Model{
 	* @param int
 	* @return int
 	*/
-	function getSportsBookedOverTime($room_id, $start, $end){
+	function getSportsBookedOverTime($room_id, $start_date, $end_date, $start_time, $end_time){
         $this -> db -> select('class_tbl.class_type_id');
         
         $this->db->where('class_type_tbl.is_sport', '1');
+        
+        $this -> db -> where("DATE(class_start_date) >= '$start_date'");
+        $this -> db -> where("DATE(class_end_date) <= '$end_date'");
  
-        $this->db->where('class_start_date <=', $start);
-        $this->db->where('class_end_date >', $start);
+        $this->db->where("TIME(class_start_date) <= '$start_time'");
+        $this->db->where("TIME(class_end_date) > '$start_time'");
         
-        $this->db->or_where('class_end_date <', $end);
-        $this->db->where('class_start_date >=', $end);
-        
+        $this->db->or_where("TIME(class_end_date) < '$end_time'");
+        $this->db->where("TIME(class_start_date) >= '$end_time'");
+               
         $this->db->where('room_id', $room_id);
         $this->db->from($this->class_tbl);
          $this -> db -> join('class_type_tbl', 'class_type_tbl.class_type_id = class_tbl.class_type_id');
-	
-		//echo  $this->db->last_query();
-        return $this -> db -> get()->result_array();
+		
+		$query = $this -> db -> get();
+			//	echo($this->db->last_query());
+//				echo($this->db->_error_message());
+        return $query->result_array();
     }
+    
+    
+
     
     /**
     * Remove a class if it is a sport

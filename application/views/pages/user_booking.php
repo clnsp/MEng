@@ -23,18 +23,6 @@ $date = array(
 	
 	);
 
-$sportsdate = array(
-	'name'	=> 'date',
-	'id'	=> 'sportsdate',
-	'value' => set_value('date'),
-	'maxlength'	=> 20,
-	'size'	=> 20,
-	'type'  => 'text',
-	'class' => 'form-control sports',
-	'placeholder' => 'Date',
-	
-	);
-
 $starttime = array(
 	'name'	=> 'starttime',
 	'id'	=> 'starttime',
@@ -56,10 +44,17 @@ $endtime = array(
 	'class' => 'form-control',
 	'placeholder' => 'And - End Time',
 	);
-
-$label = array(
-	'class' => 'col-sm-2 control-label',
+	
+$isSport = array(
+	'name'	=> 'is_sport',
+	'id'	=> 'is_sport',
+	'value' => set_value(true),
+	'type' 	=> 'hidden',
+	'class' => 'form-control',
+	'disabled' => 'disabled',
+	'value'	=> 1
 	);
+
 
 $form = array(
 	'class' => 'form prevent classes',
@@ -85,9 +80,18 @@ $js = 'class="form-control"';
 			
 			<?php echo form_open("/booking/search", $form); ?>
 
+		<div class="toggleInput ">
+			<?php echo form_input($isSport);	 ?>
+		</div>
+			
+			
+			<div class="form-group"></div>
+			
 			<div class="toggleInput form-group">
 				<?php echo form_dropdown('class_type_id', $classTypes, '' , 'class="form-control classes"');	 ?>
 			</div>
+			
+			
 
 			<div class="toggleInput form-group hidden">
 				<?php echo form_dropdown('class_type_id', $sportClassTypes, '' , 'class="form-control sports" disabled=disabled');	 ?>
@@ -97,9 +101,6 @@ $js = 'class="form-control"';
 				<?php echo form_input($date); ?>
 			</div>
 
-<!--			<div class="toggleInput form-group hidden">
-				<?php echo form_input($sportsdate); ?>
-			</div>-->
 
 			<div class="form-group">
 				<?php echo form_input($starttime); ?>

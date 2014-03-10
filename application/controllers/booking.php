@@ -5,8 +5,8 @@ class booking extends CI_Controller{
 	function __construct()
 	{
 		parent::__construct();
-		$this->load->model('Classes');
-		$this->load->Model('Classtype');
+		
+		$this->load->Model('classes');
 
 	}
 	
@@ -22,8 +22,6 @@ class booking extends CI_Controller{
 	    */
 	   function success($page = 'bookingsuccess'){
 	
-	     $this->load->Model('Classes');
-	     $this->load->Model('Classtype');
 	     $this->load->model('bookings');
 	
 	     $user_id = $this->tank_auth->get_user_id();
@@ -92,7 +90,6 @@ class booking extends CI_Controller{
 	   */
 	  function bookSport() {
 		  $this->load->model('bookings');
-		  $this->load->model('classes');
 	  	/*! need to check that you're allowed to make booking !*/
 	  	
 	  	if(isset($_POST['class_type_id']) && isset($_POST['class_start_date']) && isset($_POST['room_id'])){
@@ -120,7 +117,6 @@ class booking extends CI_Controller{
 
 	
 	  function isClassInPast($class_booking_id){
-	    $this->load->model('classes');
 	    $end = $this->classes->getClassEndDate($class_booking_id);
 	
 	    return (time() >  strtotime($end));
@@ -128,7 +124,6 @@ class booking extends CI_Controller{
 	
 	  function _emailMemberAddedToClass($member_id, $class_id, $start, $end) {
 	   $this->load->model('members');
-	   $this->load->model('classes');
 	   $this->load->helper('email');
 	   
 	   $email = $this->members->getMemberEmail($member_id);
@@ -147,7 +142,7 @@ class booking extends CI_Controller{
 	 
 	 function _emailMemberAddedToWaitingList($member_id, $class_id, $start, $end) {
 	   $this->load->model('members');
-	   $this->load->model('classes');
+	   
 	   $this->load->helper('email');
 	   
 	   $email = $this->members->getMemberEmail($member_id);
@@ -176,27 +171,27 @@ class booking extends CI_Controller{
 function search(){
 
 	$user_id = $this->tank_auth->get_user_id();
-	$is_sport = null; $start_date=''; $end_time='';
-		
+	 $start_date=''; $end_time='';
+	
+	print_r($_POST);
+			
 	if(!isset($_POST['class_type_id'])){
 		echo("Missing class to search for");
 		return;
 	}
-	
-	if(isset($_POST['is_sport'])){
-	echo('isport');
-		$is_sport = $_POST['is_sport'];
-	}
-		
 		
 	if($_POST['date'] == ''){
 		$start_date = new DateTime();
 		$end_date = new DateTime();
 		$end_date->modify("+1 weeks");
+		
 	}else{
 			$start_date = new DateTime($_POST['date']);
 			$end_date = new DateTime($_POST['date']);
 	}
+	
+	$end_date = $end_date->format("Y-m-d");
+	$start_date = $start_date->format("Y-m-d");
 
 	if($_POST['starttime']!=''){
 		$start_time = new DateTime($_POST['starttime']);
@@ -211,56 +206,71 @@ function search(){
 	}else{
 		$end_time = '23:59:59';
 	}
-			
-	$data['classes'] = $this->Classes->getClassesWithTypeAndStartTime($_POST['class_type_id'], $start_date->format("Y-m-d"), $end_date->format("Y-m-d"), $start_time, $end_time);
-
-	foreach ($data['classes'] as $key => $row) {
-		$data['classes'][$key]['fully_booked'] = $this->isClassBookedOut($row['class_id']);
+	
+	if(isset($_POST['is_sport'])){
+	$end_date = new DateTime($_POST['date']);
+	$end_date = $end_date->format("Y-m-d");
+		$data['classes'] = $this->_fetchSportsClasses($_POST['class_type_id'], $start_date, $end_date, $start_time, $end_time);
+		
+	}else{
+		$data['classes'] = $this->classes->getClassesWithTypeAndStartTime($_POST['class_type_id'], $start_date, $end_date, $start_time, $end_time);
+		foreach ($data['classes'] as $key => $row) {
+			$data['classes'][$key]['fully_booked'] = $this->isClassBookedOut($row['class_id']);
+		}
 	}
+			
+
+
 
 	//$data['classes'] = $classes;
 //	echo json_encode($classes);
 //	include_once('pages/search_results');
-echo ($this->load->view('pages/search_results', $data, true));
+	echo ($this->load->view('pages/search_results', $data, true));
 
 }
 
 /**
-* Retrieve possible *sports classes that could be booked out
+* Retrieve possible sports classes that could be booked out
 */
-function fetchSportsClasses(){
-
+function _fetchSportsClasses($class_type_id, $start_date, $end_date, $start_time, $end_time){
+	
+	echo($start_time . " " .$end_time);
 	$this->load->model('courts');
 	$this->load->model('rooms');
-	$this->load->model('classes');
-	if(isset($_POST['class_type_id']) && isset($_POST['starttime']) && isset($_POST['endtime']) && isset($_POST['date'])){
-		
-		//Need all values to continue
-		if($_POST['class_type_id'] == '' || $_POST['starttime'] == '' || $_POST['endtime'] == '' || $_POST['date']== ''){
-			return;
-		}
-
-		$start_time = new DateTime($_POST['starttime']);
-		$end_time = new DateTime($_POST['endtime']);
-		$date = new DateTime($_POST['date']);
 
 		$results =  array();
+		$rooms = $this->courts->findRoomsWithSports($class_type_id);
 		
-		$rooms = $this->courts->findRoomsWithSports($_POST['class_type_id']);
-	//	print_r($rooms);
+		echo("[start $start_date  $start_time]");
+		
+		echo("[end $end_date  $end_time]");
+		
+		
+		$start_object = new DateTime($start_date . $start_time);
+		$end_object = new DateTime($end_date ." ". $end_time);
+		$start_time = new DateTime($start_time);
+		
+
+
 		foreach ($rooms as $key => $room) {
 			$room_id = $room['room_id'];
-			$sportInstances = $this->courts->countSportInstances($room_id, $_POST['class_type_id']);
+			$sportInstances = $this->courts->countSportInstances($room_id, $class_type_id);
 			$roomSize = $this->rooms->getRoomSize($room_id);
-			$targetSportTokenSize = $this->_fetchTokenSize($room_id, $_POST['class_type_id']);
+			$targetSportTokenSize = $this->_fetchTokenSize($room_id, $class_type_id);
 			//$blockedSportIds = $this->restrictions->getBlockRestrictionIDs($room_id);
 			
-			while($start_time <= $end_time){
+		
+		
+			echo($start_object <= $end_object);
+			while($start_object <= $end_object){
 			
 				$sportInstancesForTime = $sportInstances;
 				$roomSizeForTime = $roomSize;
+
 				
-				$alreadyBooked = $this->classes->getSportsBookedOverTime($room_id, $date->format('Y-m-d ') . $start_time->format('H:i:00'), $date->format('Y-m-d ') . $end_time->format('H:i:00'));
+				
+				$alreadyBooked = $this->classes->getSportsBookedOverTime($room_id, $start_date, $end_date, $start_time->format('H:i:s'), $end_time);
+								
 				
 				//if intersect then this sport is blocked and can't be booked
 //				if(count(array_intersect($array1, $array2)) > 0){
@@ -269,7 +279,7 @@ function fetchSportsClasses(){
 //				}
 				//print_r($alreadyBooked);
 				foreach ($alreadyBooked as $key => $booked) {
-					if($booked['class_type_id'] == $_POST['class_type_id']){
+					if($booked['class_type_id'] == $class_type_id){
 						$sportInstancesForTime--;
 						$roomSizeForTime = $roomSizeForTime - $targetSportTokenSize;
 					}else{
@@ -278,32 +288,22 @@ function fetchSportsClasses(){
 				}
 
 				if($sportInstancesForTime > 0 && $roomSizeForTime >= $targetSportTokenSize){
-					$result['start'] = $start_time->format('H:i');
-					$result['duration'] = "1 hour";
+					$result['class_start_date'] = $start_object->format('H:i:s');
+					$result['class_end_date'] = $end_date;
+					$result['class_type'] = $class_type_id;
 					$result['room'] = $room['room'];
 					$result['room_id'] = $room['room_id'];
-					$result['date'] = $date->format('Y-m-d ');
+					$result['date'] = $start_date;
 					$result['available'] = $sportInstancesForTime;
 
 					array_push($results, $result);
 				}
 				
-				$start_time->modify("+60 minutes");
+				$start_object->modify("+60 minutes");
 			}
-			
-
 		}
 		
-		
-
-
-		echo json_encode($results);
-		
-	}else{
-		echo "Missing params";
-	}
-
-
+		return $results;
 
 }
 
@@ -320,6 +320,10 @@ function _fetchTokenSize($room_id, $class_type_id){
 	$sportCourts = $this->courts->countSportCourts($room_id, $class_type_id);
 	
 //	echo("courts ($sportCourts) instances ($sportInstances)" );
+	
+	if($sportCourts == 0 || $sportInstances==0){
+		return 0;
+	}
 	return $sportCourts / $sportInstances;
 }
 
@@ -328,7 +332,7 @@ function _fetchTokenSize($room_id, $class_type_id){
 function isClassBookedOut($class_booking_id){
 	$this->load->model('Bookings');
 
-	$capacity = $this->Classes->getClassCapacity($class_booking_id);
+	$capacity = $this->classes->getClassCapacity($class_booking_id);
 	$attending = $this->Bookings->countBookingAttendants($class_booking_id);
 	
 	return ($attending >= $capacity);
