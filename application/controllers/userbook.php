@@ -105,6 +105,11 @@ class userbook extends CI_Controller{
 	  	$id = $this->classes->insertClass($data);
 
 	  	$this->bookings->addMember($id, $this->tank_auth->get_user_id());
+	  	
+	  	if($this->db->_error_number() == 0){
+	  		echo("You have been booked in");
+	  	}
+	  	
 	}
   }
 

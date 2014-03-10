@@ -110,6 +110,7 @@ class Bookings extends CI_Model
 			);
 
 		$this->db->insert($this -> table_name, $data); 	
+
 		
 	}
 	
