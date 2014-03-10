@@ -128,4 +128,24 @@ class Members extends CI_Model
    $this->db->where('class_id', $cid);
    $this->db->update('class_booking_tbl', $data); 
   }
+
+  function getAdminUsers()
+  {
+    $this -> db -> select($this -> table_name.'.id, first_name, second_name, email, home_number, mobile_number, twitter, comms_preference, activated, banned, ban_reason');
+    $this -> db -> from($this -> table_name);
+    $this -> db -> where($this -> table_name.'.member_type_id', '7');
+
+    $query = $this -> db -> get();
+    return $query->result();
+ }
+
+  function getSuperAdminUsers()
+  {
+    $this -> db -> select($this -> table_name.'.id, first_name, second_name, email, home_number, mobile_number, twitter, comms_preference, activated, banned, ban_reason');
+    $this -> db -> from($this -> table_name);
+    $this -> db -> where($this -> table_name.'.member_type_id', '8');
+
+    $query = $this -> db -> get();   
+    return $query->result();
+  }
 }

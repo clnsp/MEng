@@ -294,8 +294,11 @@ class Auth extends CI_Controller
 			$data['errors'] = array();
 
             $this->load->Model('Members');
-            $members = $this->Members->getUserByID($this->tank_auth->get_user_id());
-            $data['member'] = $members['0']; 
+            $admin = $this->Members->getAdminUsers();
+            $data['admin'] = $admin;
+
+            $super = $this->Members->getSuperAdminUsers();
+            $data['super'] = $super;
 
 			if ($this->form_validation->run()) {								// validation ok
 				if ($this->tank_auth->change_password(
@@ -309,7 +312,7 @@ class Auth extends CI_Controller
 				}
 			}
 			//$this->load->view('auth/change_password_form', $data);
-			parse_temp('Change Password', $this->load->view('auth/account_settings', '', true) . $this->load->view('auth/detail_form', $data, true));
+			parse_temp('Change Password', $this->load->view('auth/account_settings', '', true) . $this->load->view('auth/administrator_select_form', $data, true));
 		}
 	}
 	

@@ -31,24 +31,61 @@ class Member extends CI_Controller{
 	
 
 
-	function createUserChanges(){
-	if(check_admin()){
+	function createUserChanges()
+	{
+	  if(check_admin()){
+		  $this->load->model('members');
+		  $this->load->library('tank_auth');
+		
+		  $new_details['first_name']       = $_POST['first_name'];
+		  $new_details['second_name']      = $_POST['second_name'];
+		  //$new_details['email']            = $_POST['email'];
+		  $new_details['home_number']      = $_POST['home_number'];
+		  $new_details['mobile_number']    = $_POST['mobile_number'];
+		  $new_details['twitter']          = $_POST['twitter'];
+		  $new_details['comms_preference'] = $_POST['comms_preference'];
+		
+		  $_POST['changes'] = $new_details;
+		
+		if(isset($_POST['changes'])){
+		  echo $this->members->updateUser(strtolower($this->tank_auth->get_user_id()), array_map('strtolower',$_POST['changes']));
+		  redirect('auth/load_details');
+		}
+	  }
+	}
+	
+	function createPermissionChanges()
+	{
+	  if(check_admin()){
 		$this->load->model('members');
 		$this->load->library('tank_auth');
 		
-		$new_details['first_name']       = $_POST['first_name'];
-		$new_details['second_name']      = $_POST['second_name'];
-		//$new_details['email']            = $_POST['email'];
-		$new_details['home_number']      = $_POST['home_number'];
-		$new_details['mobile_number']    = $_POST['mobile_number'];
-		$new_details['twitter']          = $_POST['twitter'];
-		$new_details['comms_preference'] = $_POST['comms_preference'];
-		
-		$_POST['changes'] = $new_details;
-		
-		echo $this->members->updateUser(strtolower($this->tank_auth->get_user_id()), array_map('strtolower',$_POST['changes']));
-		redirect('auth/load_details');
-		}
+		print_r($_POST);
+
+		if(isset($_POST['new_admins'])){
+		  $admins = $_POST['new_admins'];
+		  $new_details['member_type_id'] = '8';
+		  $_POST['changes'] = $new_details;
+		  if(isset($_POST['changes'])){		  
+		    foreach ($admins as $a) {
+		      echo $this->members->updateUser($a, $new_details);
+		    }
+		  }
+	    }
+
+	    if(isset($_POST['new_supers'])){
+		  $supers = $_POST['new_supers'];
+	      $new_details['member_type_id'] = '7';
+		  $_POST['changes'] = $new_details;
+		  if(isset($_POST['changes'])){
+		    foreach ($supers as $s) {
+		      //echo $this->members->updateUser($s, $new_details);
+			}
+          }
+	    }
+
+		redirect('auth/admin');
+	  }
 	}
 	
 	/*
