@@ -290,40 +290,50 @@ class Classes extends CI_Model{
     * @param int
     * @return array
     */
-    function getClassesWithTypeAndStartTime($class_type_id, $start, $end) {
-
+    function getClassesWithTypeAndStartTime($class_type_id, $start_date, $end_date, $start_time, $end_time) {	
+    
+    
         $this -> db -> select('class_type, class_start_date, class_end_date, room, class_id');
         $this -> db -> from($this -> class_tbl);
-        $this -> db -> where('class_type_tbl.class_type_id', $class_type_id);
-        $this -> db -> where('class_start_date BETWEEN "' . $start . '" AND "' . $end . '"');
-        $this -> db -> join('class_type_tbl', 'class_type_tbl.class_type_id = class_tbl.class_type_id');
+        
+        $this -> db -> where('class_type_tbl.class_type_id', $class_type_id );
+        $this -> db -> where("TIME(class_start_date) >= '$start_time'");
+        $this -> db -> where("TIME(class_end_date) <= '$end_time'");
+       	$this -> db -> where("DATE(class_start_date) >= '$start_date'");
+        $this -> db -> where("DATE(class_end_date) <= '$end_date'");
+		
+		$this -> db -> join('class_type_tbl', 'class_type_tbl.class_type_id = class_tbl.class_type_id');
         $this -> db -> join('room_tbl', 'room_tbl.room_id = class_tbl.room_id');
 
         $query = $this -> db -> get();
-
+//		
+	//	echo($this->db->last_query());
+//		echo($this->db->_error_message());
 
         return $query->result_array();
 
     }
 
 	/**
-    * Returns an array of future classes for specific id
+    * Returns an array of future classes over next week for specific id
     * @param int
     * @return array
     */
     function getFutureClasses($class_type_id) {
-
+    
+   		$date = new DateTime();
+   
         $this -> db -> select('class_type, class_start_date, class_end_date, room, class_id');
         $this -> db -> from($this -> class_tbl);
         $this -> db -> where('class_type_tbl.class_type_id', $class_type_id);
-        $this -> db -> where('class_start_date >=', date("Y-m-d H:i:s"));
+        $this -> db -> where('class_start_date >=', $date->format("Y-m-d H:i:s"));
+        $this -> db -> where('class_start_date <=', $date->modify('+1 week')->format("Y-m-d H:i:s"));
         $this -> db -> join('class_type_tbl', 'class_type_tbl.class_type_id = class_tbl.class_type_id');
         $this -> db -> join('room_tbl', 'room_tbl.room_id = class_tbl.room_id');
 
         $query = $this -> db -> get();
 
         return $query->result_array();
-
     }
 
 

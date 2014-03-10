@@ -62,7 +62,7 @@ $label = array(
 	);
 
 $form = array(
-	'class' => 'form',
+	'class' => 'form prevent classes',
 	'role' => 'form',
 	);
 
@@ -81,25 +81,25 @@ $js = 'class="form-control"';
 	</ul>	
 
 	<div id="tab-content" class="tab-content">
-		<div class="tab-pane fade in out active" id="classes">
+		<div class="tab-pane in out active" id="classes">
 			
-			<?php echo form_open("/searchclass/index", $form); ?>
+			<?php echo form_open("/booking/search", $form); ?>
 
 			<div class="toggleInput form-group">
-				<?php echo form_dropdown('class_type_id', $classTypes, '' , $js);	 ?>
+				<?php echo form_dropdown('class_type_id', $classTypes, '' , 'class="form-control classes"');	 ?>
 			</div>
 
 			<div class="toggleInput form-group hidden">
 				<?php echo form_dropdown('class_type_id', $sportClassTypes, '' , 'class="form-control sports" disabled=disabled');	 ?>
 			</div>
 
-			<div class="toggleInput form-group">
+			<div class="form-group">
 				<?php echo form_input($date); ?>
 			</div>
 
-			<div class="toggleInput form-group hidden">
+<!--			<div class="toggleInput form-group hidden">
 				<?php echo form_input($sportsdate); ?>
-			</div>
+			</div>-->
 
 			<div class="form-group">
 				<?php echo form_input($starttime); ?>
@@ -122,14 +122,14 @@ $js = 'class="form-control"';
 
  <div class="col-sm-9">
 
-
-<table class="footable table table-hover table-bordered">
+<table class="footable table table-hover table-bordered classes">
 	<thead>
 		<tr>
-			<th >Start</th>
-			<th data-hide="">Duration</th>
-			<th data-hide="phone, tablet">Room</th>
-			<th data-hide="phone">Available</th>
+			<th>Activity</th>
+			<th data-hide="">Date</th>
+			<th data-hide="">Start</th>
+			<th data-hide="phone">End</th>
+			<th data-hide="phone">Room</th>
 			<th>Book</th>
 		</tr>
 	</thead>

@@ -22,7 +22,7 @@ $( document ).ready(function() {
 				$(this).prop("disabled",!$(this).prop("disabled"))
 			});
 
-			$('form').toggleClass('sports prevent');
+			//$('form').toggleClass('sports prevent');
 		}
 	});
 
@@ -55,6 +55,16 @@ $( document ).ready(function() {
 
 	});
 	
+	$('#booking').on('submit', 'form.prevent.classes', function(e) {
+			var table = $('table.footable.table.classes tbody');
+	
+			$.post("booking/search", $(this).serialize(), function( data ) {
+				table.html(data);
+				table.trigger('footable_redraw');
+			});
+	
+		});
+	
 	$(document).on('click', 'button.booksport', function() {
 		$.post("userbook/bookSport", {
 			class_type_id : $(this).data('class_type_id'),
@@ -64,12 +74,12 @@ $( document ).ready(function() {
 			alert(data);
 		});
 		
-	}),
+	});
 
-
-	 $('#courts').click();
-	 $('input[name="date"]').val('03/12/2014');
-	 $('input[name="starttime"]').val('5:00 PM');
-	 $('input[name="endtime"]').val('7:00 PM');
+//
+//	 $('#courts').click();
+//	 $('input[name="date"]').val('03/12/2014');
+//	 $('input[name="starttime"]').val('5:00 PM');
+//	 $('input[name="endtime"]').val('7:00 PM');
 });
 
