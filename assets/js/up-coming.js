@@ -5,6 +5,8 @@ Gym Booking System
 
 $.pageManager = (function () {
 	
+	var reading = !1, chars = [], timeout = 300;
+
 	$.weekdays={0: "Sunday", 1: "Monday", 2: "Tuesday", 3: "Wednesday", 4: "Thursday", 5: "Friday", 6: "Saturday"};
 	$.months={0: "January", 1: "February", 2: "March", 3: "April", 4: "May", 5: "June", 6: "July", 7: "August", 8: "September", 9: "October", 10: "November", 11: "December"};
 
@@ -74,7 +76,7 @@ $.pageManager = (function () {
 		setTimeout('nextHour()',(((60 - (minutes % 60) - ((seconds>0)?1:0)) * 60) + (60 - seconds)) * 1000); // Every Hour
 		}else{
 		setTimeout('nextReg()',(((10 - (minutes % 10) - ((seconds>0)?1:0)) * 60) + (60 - seconds)) * 1000); // Every 10 Min
-		}
+		}var reading = !1, chars = [], timeout = 300;
 	},
 	
 	uiControls = function() {
@@ -91,6 +93,36 @@ $.pageManager = (function () {
 		$('tr').tooltip();
 	},
 
+	eanCalcCsum = function(a) {
+	  var b = 0, c = 1;
+	  for (pos = a.length - 2;0 <= pos;pos--) {
+	    b += parseInt(a.charAt(pos)) * (1 + 2 * (c++ % 2));
+	  }
+	  return(10 - b % 10) % 10;
+},
+
+eanValid = function(a) {
+  return eanCalcCsum(a) == parseInt(a.charAt(a.length - 1));
+},
+
+checkBC = function() {
+  var a = chars.join("");
+  eanValid(a) ? (console.log("EAN CSUM PASS: " + a), a = parseInt(a.substring(0, 7), 10), attendee($("#" + a).eq(0))) : console.log("EAN CSUM FAIL: " + a + ":" + eanCalcCsum(a));
+},
+
 	resize();
 	uiControls();
+
+
+document.onkeypress = function(a) {
+  a = a || window.event;
+  a = a.keyCode || a.which;
+  var b = String.fromCharCode(a);
+  48 <= a && 57 >= a && chars.push(b);
+  !0 == reading ? 8 == chars.length && (checkBC(), chars = [], reading = !1) : setTimeout(function() {
+    chars = [];
+    reading = !1;
+  }, timeout);
+  reading = !0;
+};
 })();
