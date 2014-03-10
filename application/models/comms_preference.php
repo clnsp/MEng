@@ -11,7 +11,7 @@ Class Comms_Preference extends CI_Model{
 	  $this->db->select('');
 		$query = $this -> db -> get('comms_preference_tbl');
 
-		return $query->result_array();
+		return $query->result();
 	}
 	
 }

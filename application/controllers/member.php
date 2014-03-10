@@ -63,12 +63,49 @@ class Member extends CI_Controller{
 		$new_details['mobile_number']    = $_POST['mobile_number'];
 		$new_details['twitter']          = $_POST['twitter'];
 		$new_details['comms_preference'] = $_POST['comms_preference'];
+
 		
-		$_POST['changes'] = $new_details;
+		  $_POST['changes'] = $new_details;
 		
-		echo $this->members->updateUser(strtolower($this->tank_auth->get_user_id()), array_map('strtolower',$_POST['changes']));
-		redirect('auth/load_details');
+		if(isset($_POST['changes'])){
+		  echo $this->members->updateUser(strtolower($this->tank_auth->get_user_id()), array_map('strtolower',$_POST['changes']));
+		  redirect('auth/load_details');
 		}
+	  }
+	}
+	
+	function createPermissionChanges()
+	{
+	  if(check_admin()){
+		$this->load->model('members');
+		$this->load->library('tank_auth');
+		
+		print_r($_POST);
+
+		if(isset($_POST['new_admins'])){
+		  $admins = $_POST['new_admins'];
+		  $new_details['member_type_id'] = '8';
+		  $_POST['changes'] = $new_details;
+		  if(isset($_POST['changes'])){		  
+		    foreach ($admins as $a) {
+		      echo $this->members->updateUser($a, $new_details);
+		    }
+		  }
+	    }
+
+	    if(isset($_POST['new_supers'])){
+		  $supers = $_POST['new_supers'];
+	      $new_details['member_type_id'] = '7';
+		  $_POST['changes'] = $new_details;
+		  if(isset($_POST['changes'])){
+		    foreach ($supers as $s) {
+		      //echo $this->members->updateUser($s, $new_details);
+			}
+          }
+	    }
+
+		redirect('auth/admin');
+	  }
 	}
 	
 	/*

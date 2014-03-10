@@ -52,7 +52,7 @@ $form = array(
 	);
 
 //print_r($comm_prefs);
-foreach ($comm_prefs as $p)	$prefs[$p['id']] = $p['comms_preference'];
+foreach ($comm_prefs as $p)	$prefs[$p->id] = $p->comms_preference;
 
 $js = 'class="form-control"';
 ?>
