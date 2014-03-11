@@ -179,6 +179,8 @@ var ClassTypes = function() {
 		sportstable.empty();
 		drop.html('');
 		sportsdrop.html('');
+		list.html('');
+		sportslist.html('');
 	}
 	
 

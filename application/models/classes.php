@@ -277,8 +277,7 @@ class Classes extends CI_Model{
     * @return array
     */
     function getClassesWithTypeAndStartTime($class_type_id, $start_date, $end_date, $start_time, $end_time) {	
-    
-    
+     
         $this -> db -> select('class_type, class_start_date, class_end_date, room, class_id');
         $this -> db -> from($this -> class_tbl);
         

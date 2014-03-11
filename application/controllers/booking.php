@@ -172,9 +172,7 @@ function search(){
 
 	$user_id = $this->tank_auth->get_user_id();
 	 $start_date=''; $end_time='';
-	
-	print_r($_POST);
-			
+				
 	if(!isset($_POST['class_type_id'])){
 		echo("Missing class to search for");
 		return;
@@ -225,7 +223,7 @@ function search(){
 	//$data['classes'] = $classes;
 //	echo json_encode($classes);
 //	include_once('pages/search_results');
-	echo ($this->load->view('pages/search_results', $data, true));
+	//echo ($this->load->view('pages/search_results', $data, true));
 
 }
 
@@ -234,43 +232,39 @@ function search(){
 */
 function _fetchSportsClasses($class_type_id, $start_date, $end_date, $start_time, $end_time){
 	
-	echo($start_time . " " .$end_time);
-	$this->load->model('courts');
-	$this->load->model('rooms');
-
-		$results =  array();
-		$rooms = $this->courts->findRoomsWithSports($class_type_id);
+		$this->load->model('courts');
+		$this->load->model('rooms');
+		$this->load->model('classtype');
+		$this->load->model('restrictions');
 		
-		echo("[start $start_date  $start_time]");
-		
-		echo("[end $end_date  $end_time]");
-		
+		$info = $this->classtype->getClasstypeInfo($class_type_id);
+		print_r($info);
+		$duration = $info['duration']; 
 		
 		$start_object = new DateTime($start_date . $start_time);
 		$end_object = new DateTime($end_date ." ". $end_time);
 		$start_time = new DateTime($start_time);
 		
-
+		$results =  array();
+		$rooms = $this->courts->findRoomsWithSports($class_type_id);
+		
+		
 
 		foreach ($rooms as $key => $room) {
 			$room_id = $room['room_id'];
 			$sportInstances = $this->courts->countSportInstances($room_id, $class_type_id);
 			$roomSize = $this->rooms->getRoomSize($room_id);
 			$targetSportTokenSize = $this->_fetchTokenSize($room_id, $class_type_id);
-			//$blockedSportIds = $this->restrictions->getBlockRestrictionIDs($room_id);
+			$blockedSportIds = $this->restrictions->getSportsThatBlock($room_id, $class_type_id);
 			
-		
-		
-			echo($start_object <= $end_object);
+			print_r($blockedSportIds);
+			
 			while($start_object <= $end_object){
 			
 				$sportInstancesForTime = $sportInstances;
 				$roomSizeForTime = $roomSize;
 
-				
-				
-				$alreadyBooked = $this->classes->getSportsBookedOverTime($room_id, $start_date, $end_date, $start_time->format('H:i:s'), $end_time);
-								
+				$alreadyBooked = $this->classes->getSportsBookedOverTime($room_id, $start_date, $end_date, $start_time->format('H:i:s'), $end_time);		
 				
 				//if intersect then this sport is blocked and can't be booked
 //				if(count(array_intersect($array1, $array2)) > 0){
@@ -289,17 +283,18 @@ function _fetchSportsClasses($class_type_id, $start_date, $end_date, $start_time
 
 				if($sportInstancesForTime > 0 && $roomSizeForTime >= $targetSportTokenSize){
 					$result['class_start_date'] = $start_object->format('H:i:s');
-					$result['class_end_date'] = $end_date;
-					$result['class_type'] = $class_type_id;
+					$result['class_end_date'] = $start_object->modify("+$duration minutes");
+					$result['class_type'] = $info['class_type'];
 					$result['room'] = $room['room'];
 					$result['room_id'] = $room['room_id'];
 					$result['date'] = $start_date;
 					$result['available'] = $sportInstancesForTime;
 
 					array_push($results, $result);
+				}else{
+					 $start_object->modify("+$duration minutes");
 				}
-				
-				$start_object->modify("+60 minutes");
+
 			}
 		}
 		

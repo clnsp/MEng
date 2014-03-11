@@ -45,10 +45,7 @@ var editClassTypeModal = (function(){
 		});
 
 
-		var setupModal = function (tr) {
-		
-		 
-			
+		var setupModal = function (tr) {			
 			class_type_id.val(tr.data('class_type_id'));
 			class_type.val(tr.find('.class_type').html());
 			class_description.val(tr.find('.class_description').html());

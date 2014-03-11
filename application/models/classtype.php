@@ -53,6 +53,19 @@ Class classtype extends CI_Model{
         return $this -> db -> get()->result_array();
     }
 
+    /**
+     * Fetch info on class type
+     * @param int
+     * @return array
+     */
+    function getClasstypeInfo($class_type_id){
+        $this -> db -> select('*');
+        $this -> db -> where('class_type_id',$class_type_id);
+        $this -> db -> from('class_type_tbl');
 
+        $query = $this -> db -> get();
+
+        return $query->row_array();
+    }
 }
 ?>
