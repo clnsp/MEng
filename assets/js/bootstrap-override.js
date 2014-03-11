@@ -137,7 +137,7 @@ var ClassTypes = function() {
 			.append('<td class="class_type">'+type['class_type'] + '</td>')
 			.append('<td class="class_description">' + type['class_description'] +'</td>')
 			.append('<td data-category_id='+ type['category_id'] +' class="category">' + type['category'] +'</td>');
-		if(type['duration']){
+		if(type['is_sport']==1){
 			tr.append('<td data-duration='+ type['duration'] +' class="duration">' + type['duration'] +'</td>')
 		}		
 		return tr;
