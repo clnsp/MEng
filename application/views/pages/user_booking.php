@@ -127,9 +127,9 @@ $js = 'class="form-control"';
 	<thead>
 		<tr>
 			<th>Activity</th>
-			<th data-hide="">Date</th>
-			<th data-hide="">Start</th>
-			<th data-hide="phone">End</th>
+			<th data-hide="" data-type="date">Date</th>
+			<th data-hide="" data-type="time">Start</th>
+			<th data-hide="phone" data-type="time">End</th>
 			<th data-hide="phone">Room</th>
 			<th>Book</th>
 		</tr>

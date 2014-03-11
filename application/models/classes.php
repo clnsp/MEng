@@ -72,7 +72,8 @@ class Classes extends CI_Model{
         $this -> db -> join('class_type_tbl', 'class_tbl.class_type_id = class_type_tbl.class_type_id');
         $this -> db -> where('class_id', $class_id);
 
-        $query = $this -> db -> get();
+        $query = $this -> db -> get();	
+       // echo($this -> db -> last_query());
 
         return $query->row()->max_attendance;
     }

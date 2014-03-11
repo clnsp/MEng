@@ -20,7 +20,7 @@ class booking extends CI_Controller{
 	    * Retrieves search results according to search parameters, also sorts date and time into the correct format
 	    * for the database queries.
 	    */
-	   function success($page = 'bookingsuccess'){
+	   function bookClass($page = 'bookingsuccess'){
 	
 	     $this->load->model('bookings');
 	
@@ -32,14 +32,16 @@ class booking extends CI_Controller{
 	
 	     $start = $this->input->post('start');
 	     $end = $this->input->post('end');
-	     $bookingtype = $this->input->post('bookingtype');
-	
-	     if($bookingtype == "btn btn-warning"){
-	      $bookingtype = "You have been added to the Waiting List for";
-	    }else{
-	      $bookingtype = "You will be Attending";
-	
-	    }
+//	     $bookingtype = $this->input->post('bookingtype');
+//	
+//	     if($bookingtype == "btn btn-warning"){
+//	      $bookingtype = "You have been added to the Waiting List for";
+//	    }else{
+//	      $bookingtype = "You will be Attending";
+//	
+//	    }
+
+
 	
 	 //   echo $classid;
 	  //  if (isset($_POST['user_id']) && isset($_POST['class_id'])){
@@ -54,7 +56,7 @@ class booking extends CI_Controller{
 	    $data['class_id'] = $classid;
 	    $data['start'] = $start;
 	    $data['end'] = $end;
-	    $data['bookingtype'] = $bookingtype;
+//	    $data['bookingtype'] = $bookingtype;
 	
 	    $data['classinfo'] = $this->classes->getClassInformation($classid);
 	
@@ -219,11 +221,8 @@ function search(){
 			
 
 
-
-	//$data['classes'] = $classes;
-//	echo json_encode($classes);
-//	include_once('pages/search_results');
-	//echo ($this->load->view('pages/search_results', $data, true));
+	print_r($data['classes'] );
+	echo ($this->load->view('pages/search_results', $data, true));
 
 }
 
@@ -283,7 +282,7 @@ function _fetchSportsClasses($class_type_id, $start_date, $end_date, $start_time
 
 				if($sportInstancesForTime > 0 && $roomSizeForTime >= $targetSportTokenSize){
 					$result['class_start_date'] = $start_object->format('H:i:s');
-					$result['class_end_date'] = $start_object->modify("+$duration minutes");
+					$result['class_end_date'] = $start_object->modify("+$duration minutes")->format('H:i:s');
 					$result['class_type'] = $info['class_type'];
 					$result['room'] = $room['room'];
 					$result['room_id'] = $room['room_id'];

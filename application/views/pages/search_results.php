@@ -1,4 +1,5 @@
-<?php $form = array('role' => 'form'); ?>
+<?php $form = array(
+	'role' => 'form'); ?>
 
 
 	
@@ -12,26 +13,12 @@
 	<tr>
 				
 	<?php 
-	
-		
+			
 		$start_date = new DateTime($row['class_start_date']);
 		$end_date = new DateTime($row['class_end_date']);
 		
-		if(isset($_POST['is_sport'])){
-			$hidden = array(
-				'start' => $row['class_start_date'],
-				'end' => $row['class_end_date']
-				);
-		}else{
-			$hidden = array(
-				'classid' =>  $row['class_id'],
-				'start' => $row['class_start_date'],
-				'end' => $row['class_end_date'],
-				'fully_booked' => $row['fully_booked']);
-		}
-
-		
-		echo form_open("/userbook/index", $form, $hidden); ?>
+	
+?>
 
 		<td data-title="Activity"><?php echo $row['class_type'];?></td>
 		<td data-title="Date"><?php echo $start_date->format('jS F Y'); ?></td>
@@ -40,7 +27,28 @@
 		<td data-title="Room"><?php echo $row['room'];?></td>    	
 
 		<td data-title="Book">
+		
+		
+		
 			<?php 
+			
+				if(isset($_POST['is_sport'])){
+						$hidden = array(
+							'start' => $row['class_start_date'],
+							'end' => $row['class_end_date']
+							);
+						echo form_open("/booking/bookSport", $form);
+						echo form_hidden($hidden);
+			
+					}else{
+						$hidden = array(
+							'classid' =>  $row['class_id'],
+							'start' => $row['class_start_date'],
+							'end' => $row['class_end_date'],
+							'fully_booked' => $row['fully_booked']);
+						echo form_open("/booking/bookClass", $form);
+						echo form_hidden($hidden);
+					}
 				if(isset($row['fully_booked']) && $row['fully_booked']){
 					echo form_submit('submit', 'Wait', "class='btn btn-warning'");
 				}else{
