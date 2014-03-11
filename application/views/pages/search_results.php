@@ -43,8 +43,6 @@
 					}else{
 						$hidden = array(
 							'classid' =>  $row['class_id'],
-							'start' => $row['class_start_date'],
-							'end' => $row['class_end_date'],
 							'fully_booked' => $row['fully_booked']);
 						echo form_open("/booking/bookClass", $form);
 						echo form_hidden($hidden);

@@ -99,6 +99,7 @@ class Bookings extends CI_Model
 	 * Add a user to a class
 	 * @param int
 	 * @param int 
+	 * @param bool
 	 */
 	function addMember($class_booking_id, $member_id){ // was add_member
 
@@ -111,6 +112,7 @@ class Bookings extends CI_Model
 
 		$this->db->insert($this -> table_name, $data); 	
 
+		return ($this->db->_error_number() == 0);
 		
 	}
 	

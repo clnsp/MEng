@@ -21,67 +21,76 @@ class booking extends CI_Controller{
 	    * for the database queries.
 	    */
 	   function bookClass($page = 'bookingsuccess'){
+	   
+	   	if(isset($_POST['classid'])){
 	
-	     $this->load->model('bookings');
+		     $this->load->model('bookings');
+		
+		     $user_id = $this->tank_auth->get_user_id();
 	
-	     $user_id = $this->tank_auth->get_user_id();
-	//	$username = $this->tank_auth->get_username();
-	 //   $class_type = $this->input->post('classname1');
-	     $classid = $this->input->post('classid');
-	
-	
-	     $start = $this->input->post('start');
-	     $end = $this->input->post('end');
-//	     $bookingtype = $this->input->post('bookingtype');
-//	
-//	     if($bookingtype == "btn btn-warning"){
-//	      $bookingtype = "You have been added to the Waiting List for";
-//	    }else{
-//	      $bookingtype = "You will be Attending";
-//	
-//	    }
-
-
-	
-	 //   echo $classid;
-	  //  if (isset($_POST['user_id']) && isset($_POST['class_id'])){
-	   //     $m = strtolower($_POST['user_id']);
-	    //    $b = strtolower($_POST['class_id']);
+	//	     $bookingtype = $this->input->post('bookingtype');
+	//	
+	//	     if($bookingtype == "btn btn-warning"){
+	//	      $bookingtype = "You have been added to the Waiting List for";
+	//	    }else{
+	//	      $bookingtype = "You will be Attending";
+	//	
+	//	    }
 	
 	
-	   //     if(!$this->isClassBookedOut($classid) && !$this->isClassInPast($classid)){
-	
-	    $this->addMember($classid, $user_id, $start, $end);
-	    $data['user_id'] = $this->tank_auth->get_user_id();
-	    $data['class_id'] = $classid;
-	    $data['start'] = $start;
-	    $data['end'] = $end;
-//	    $data['bookingtype'] = $bookingtype;
-	
-	    $data['classinfo'] = $this->classes->getClassInformation($classid);
-	
-	    parse_temp($page, $this->load->view('pages/'.$page, $data, true));
+		
+		 //   echo $classid;
+		  //  if (isset($_POST['user_id']) && isset($_POST['class_id'])){
+		   //     $m = strtolower($_POST['user_id']);
+		    //    $b = strtolower($_POST['class_id']);
+		
+		
+		   //     if(!$this->isClassBookedOut($classid) && !$this->isClassInPast($classid)){
+			$data['user_id'] = $this->tank_auth->get_user_id();
+		    $this->addMember($_POST['classid'], $user_id);
+		    
+		    
+//		    $data['start'] = $start;
+//		    $data['end'] = $end;
+	//	    $data['bookingtype'] = $bookingtype;
+		
+	    }else{
+	    	redirect('booking', 'refresh');
+	    }
 	  }
 	      //} 
 	
 	
 	
-	  function addMember($classid, $user_id, $start, $end){
+	  /**
+	   * Add member to a class
+	   */
+	  function addMember($classid, $user_id){
 	    $this->load->model('bookings');
-	
-	
-	    $m = strtolower($user_id);
-	    $b = strtolower($classid);
-	
-	    if(!$this->isClassBookedOut($b) && !$this->isClassInPast($b)){
-	      $this->bookings->addMember($b, $m);
-	      $this->_emailMemberAddedToClass($m, $b, $start, $end);
-	
-	
-	    }elseif ($this->isClassBookedOut($b) && !$this->isClassInPast($b)) {
+		
+		$classInfo = $this->classes->getClassInformation($_POST['classid']);
+	    $m = $user_id;
+	    $b = $classid;
+	    
+	    $full = $this->isClassBookedOut($b);
+	    $past = $this->isClassInPast($b);
+		
+		/* Book them */
+	    if(!$full && !$past){
+	      if($this->bookings->addMember($b, $m)){
+	     	 $this->_emailMemberAddedToClass($m, $b, $classInfo['class_start_date'], $classInfo['class_end_date']);
+	      	 $data['classinfo'] = $classInfo;
+	         parse_temp('booking-success', $this->load->view('pages/booking-success', $data, true));
+	      }else{
+	      	echo("Already booked into this class");
+	      }
+	      	      
+	     
+		return;
+	    }elseif ($full && !$past) {
 	      $this->bookings->addMemberWaitingList($b, $m);
 	      $this->_emailMemberAddedToWaitingList($m, $b, $start, $end);
-	
+	      echo "Give them choice to add to waiting";
 	    }
 	
 	
