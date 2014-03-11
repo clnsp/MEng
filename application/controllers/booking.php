@@ -68,13 +68,16 @@ class booking extends CI_Controller{
 	  function addMember($classid, $user_id){
 	    $this->load->model('bookings');
 		
-		$classInfo = $this->classes->getClassInformation($_POST['classid']);
+		$classInfo = $this->classes->getClassInformation($classid);
 	    $m = $user_id;
 	    $b = $classid;
 	    
 	    $full = $this->isClassBookedOut($b);
 	    $past = $this->isClassInPast($b);
 		
+//		echo("full($full)");
+//		echo("past($past)");
+//		
 		/* Book them */
 	    if(!$full && !$past){
 	      if($this->bookings->addMember($b, $m)){
@@ -84,9 +87,7 @@ class booking extends CI_Controller{
 	      }else{
 	      	echo("Already booked into this class");
 	      }
-	      	      
-	     
-		return;
+	      	 return;
 	    }elseif ($full && !$past) {
 	      $this->bookings->addMemberWaitingList($b, $m);
 	      $this->_emailMemberAddedToWaitingList($m, $b, $start, $end);
@@ -102,26 +103,26 @@ class booking extends CI_Controller{
 	  function bookSport() {
 		  $this->load->model('bookings');
 	  	/*! need to check that you're allowed to make booking !*/
+	 
 	  	
-	  	if(isset($_POST['class_type_id']) && isset($_POST['class_start_date']) && isset($_POST['room_id'])){
-	  		$end = new DateTime($_POST['class_start_date']);
-	  		$end->modify("+60 minutes");
+	  	if(isset($_POST['class_type_id']) && isset($_POST['start']) && isset($_POST['end'])){
+	  		//$end = new DateTime($_POST['class_start_date']);
+	  		//$end->modify("+60 minutes");
+	  		
 	  	
 	  		$data = array(
 	  			'class_type_id'		=> $_POST['class_type_id'],
-	  			'class_start_date'	=> $_POST['class_start_date'],
-	  			'class_end_date'	=> $end->format('Y-m-d H:i:00'),
+	  			'class_start_date'	=> $_POST['start'],
+	  			'class_end_date'	=> $_POST['end'],
 	  			'room_id'			=> $_POST['room_id'],
+	  			'max_attendance'	=> 1,
 	  		);
 	
 		  	$id = $this->classes->insertClass($data);
 	
-		  	$this->bookings->addMember($id, $this->tank_auth->get_user_id());
 		  	
-		  	if($this->db->_error_number() == 0){
-		  		echo("You have been booked in");
-		  	}
 		  	
+		  	$this->addMember($id, $this->tank_auth->get_user_id());		  	
 		}
 	  }
 	
@@ -129,7 +130,8 @@ class booking extends CI_Controller{
 	
 	  function isClassInPast($class_booking_id){
 	    $end = $this->classes->getClassEndDate($class_booking_id);
-	
+//		$end = new DateTime($end);
+//		echo($this->db->last_query());
 	    return (time() >  strtotime($end));
 	  }
 	
@@ -228,9 +230,9 @@ function search(){
 		}
 	}
 			
-
-
-	print_r($data['classes'] );
+//
+//
+//	print_r($data['classes'] );
 	echo ($this->load->view('pages/search_results', $data, true));
 
 }
@@ -246,7 +248,7 @@ function _fetchSportsClasses($class_type_id, $start_date, $end_date, $start_time
 		$this->load->model('restrictions');
 		
 		$info = $this->classtype->getClasstypeInfo($class_type_id);
-		print_r($info);
+
 		$duration = $info['duration']; 
 		
 		$start_object = new DateTime($start_date . $start_time);
@@ -254,10 +256,10 @@ function _fetchSportsClasses($class_type_id, $start_date, $end_date, $start_time
 		$start_time = new DateTime($start_time);
 		
 		$results =  array();
-		$rooms = $this->courts->findRoomsWithSports($class_type_id);
-		
-		
 
+		$rooms = $this->courts->findRoomsWithSports($class_type_id);
+		$now = new DateTime();
+		
 		foreach ($rooms as $key => $room) {
 			$room_id = $room['room_id'];
 			$sportInstances = $this->courts->countSportInstances($room_id, $class_type_id);
@@ -268,6 +270,12 @@ function _fetchSportsClasses($class_type_id, $start_date, $end_date, $start_time
 			print_r($blockedSportIds);
 			
 			while($start_object <= $end_object){
+					
+				//	echo($start_object < $now);		
+				if($start_object < $now){
+					$start_object->modify("+$duration minutes");
+					continue;
+				}
 			
 				$sportInstancesForTime = $sportInstances;
 				$roomSizeForTime = $roomSize;
@@ -297,6 +305,7 @@ function _fetchSportsClasses($class_type_id, $start_date, $end_date, $start_time
 					$result['room_id'] = $room['room_id'];
 					$result['date'] = $start_date;
 					$result['available'] = $sportInstancesForTime;
+					$result['class_type_id'] = $class_type_id;
 
 					array_push($results, $result);
 				}else{
@@ -337,7 +346,7 @@ function isClassBookedOut($class_booking_id){
 
 	$capacity = $this->classes->getClassCapacity($class_booking_id);
 	$attending = $this->Bookings->countBookingAttendants($class_booking_id);
-	
+
 	return ($attending >= $capacity);
 }
 
