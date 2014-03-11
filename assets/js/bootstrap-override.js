@@ -133,11 +133,14 @@ var ClassTypes = function() {
 	}
 
 	var createRow = function (type) {
-		return($('<tr data-class_type_id="' + type['class_type_id'] + '"></tr>')
+		var tr = $('<tr data-class_type_id="' + type['class_type_id'] + '"></tr>')
 			.append('<td class="class_type">'+type['class_type'] + '</td>')
 			.append('<td class="class_description">' + type['class_description'] +'</td>')
-			.append('<td data-category_id='+ type['category_id'] +' class="category">' + type['category'] +'</td>') 
-			);			
+			.append('<td data-category_id='+ type['category_id'] +' class="category">' + type['category'] +'</td>');
+		if(type['duration']){
+			tr.append('<td data-duration='+ type['duration'] +' class="duration">' + type['duration'] +'</td>')
+		}		
+		return tr;
 	}
 
 	var createOption = function (type) {

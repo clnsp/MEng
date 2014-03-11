@@ -187,34 +187,20 @@ class Classes extends CI_Model{
 
     /**
     * Insert a new class type
-    * @param string
+    * @param array
     * @param string
     */
-    function addNewClassType($class_type, $class_description, $category_id, $sport){
-        $data = array(
-            'class_type'		=>	$class_type,
-            'class_description'	=>	$class_description,
-            'category_id'		=>	$category_id,
-            'is_sport'			=>	$sport
-            );
-
+    function addNewClassType($data){
         $this->db->insert($this -> class_type_tbl, $data);
     }
 
     /**
     * Update a class type
     * @param int
-    * @param string
-    * @param string
+    * @param array
     */
-    function updateClassType($class_type_id, $class_type, $class_description, $category_id){
-
-        $data = array(
-            'class_type'	=>	$class_type,
-            'class_description'	=>	$class_description,
-            'category_id'	=>	$category_id
-            );
-
+    function updateClassType($class_type_id, $data){
+    
         $this->db->where('class_type_id', $class_type_id);
         $this->db->update($this -> class_type_tbl, $data);
 

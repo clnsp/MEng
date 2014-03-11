@@ -7,6 +7,7 @@ var editClassTypeModal = (function(){
 		var class_type = form.find('input[name=class_type]');
 		var class_description = form.find('textarea[name=class_description]');
 		var category_id = form.find('select[name=category_id]');
+		var duration = form.find('input[name=duration]');
 
 		var urlBase = "class_type/";
 		
@@ -40,17 +41,24 @@ var editClassTypeModal = (function(){
 		
 		$('table#class-types-table tbody').on('click','tr',function(e){
 			$(this).find('.class_type').find("span").remove();
-			setupModal($(this).data('class_type_id'), $(this).find('.class_type').html(), $(this).find('.class_description').html(), $(this).find('.category').data('category_id'));
+			setupModal($(this));
 		});
 
 
-		var setupModal = function (ci, ct, cd, catid) {				
-			class_type_id.val(ci);
-			class_type.val(ct);
-			class_description.val(cd);
+		var setupModal = function (tr) {
+		
+		 
+			
+			class_type_id.val(tr.data('class_type_id'));
+			class_type.val(tr.find('.class_type').html());
+			class_description.val(tr.find('.class_description').html());
 			modal.modal('show');
 			category_id.html(categories.getDropdown());
-			category_id.val(catid);
+			category_id.val(tr.find('.category').data('category_id'));
+			
+			if(duration){
+				duration.val(tr.find('.duration').data('duration'));
+			}
 		}
 
 		var tearDownModal = function() {
