@@ -30,7 +30,7 @@ $( document ).ready(function() {
 					categoriesPanel.storename($(this).parent('.list-group-item').data('category_id'), this.value );
 			});
 			
-				
+
 			storeColor = function() {
 				currentColor = this.value;
 			},
@@ -313,4 +313,9 @@ $( document ).ready(function() {
 
 	
 }
+});
+
+/* Focus input when input addon is clicked */
+$('.input-group-addon').click(function(){
+	$(this).siblings('input').focus();
 });

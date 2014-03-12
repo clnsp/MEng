@@ -30,7 +30,7 @@ $starttime = array(
 	'maxlength'	=> 20,
 	'size'	=> 20,
 	'type' 	=> 'text',
-	'class' => 'form-control',
+	'class' => 'form-control timepicker',
 	'placeholder' => 'Between - Start Time',
 	);
 
@@ -41,7 +41,7 @@ $endtime = array(
 	'maxlength'	=> 20,
 	'size'	=> 20,
 	'type' 	=> 'text',
-	'class' => 'form-control',
+	'class' => 'form-control timepicker',
 	'placeholder' => 'And - End Time',
 	);
 	

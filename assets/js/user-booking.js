@@ -1,11 +1,11 @@
 $( document ).ready(function() {
 
-	$('#starttime').timepicker('setTime', '');
-	$('#endtime').timepicker('setTime', '');
+	// $('#starttime').timepicker('setTime', '');
+	// $('#endtime').timepicker('setTime', '');
 
-	$('#date').datepicker({
-		minDate: 0
-	});
+	// $('#date').datepicker({
+	// 	minDate: 0
+	// });
 
 	$('#sportsdate').datepicker({ 
 		maxDate: "+1w", //hardcoded

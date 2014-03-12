@@ -156,11 +156,11 @@
 									</div>
 
 									<div class="form-group">
-										<label for="class_start_date" class="col-sm-3 control-label">Class End</label>
+										<label for="class_start_date" class="col-sm-3 control-label">Class Start</label>
 
 										<div class="col-sm-4">
-											<div class='input-group time timepicker'>
-												<input name="class_start_date" type='text' class="form-control" placeholder="00:00"/>
+											<div class='input-group'>
+												<input name="class_start_date" type='text' class="form-control timepicker" placeholder="00:00"/>
 												<span class="input-group-addon btn-default"><span class="glyphicon glyphicon-time"></span>
 											</span>
 										</div>
@@ -172,8 +172,8 @@
 									<label for="class_end_date" class="col-sm-3 control-label">Class End</label>
 
 									<div class="col-sm-4">
-										<div class='input-group time timepicker'>
-											<input name="class_end_date" type='text' class="form-control" placeholder="00:00" />
+										<div class='input-group'>
+											<input name="class_end_date" type='text' class="form-control timepicker" placeholder="00:00" />
 											<span class="input-group-addon btn-default"><span class="glyphicon glyphicon-time"></span></span>
 										</div>
 
@@ -210,8 +210,8 @@
 											<button id="clear-cal-btn" type="button" class="btn btn-default">Clear</button>
 										</div>
 										
-											<div class="col-xs-5 no-pad-left input-group date datepicker">
-												<input name="until" type="text" class="form-control" placeholder="DD/MM/YYYY" disabled>
+											<div class="col-xs-5 no-pad-left input-group">
+												<input name="until" type="text" class="form-control datepicker" placeholder="DD/MM/YYYY" disabled>
 												<span class="input-group-addon btn-default"><span class="glyphicon glyphicon-calendar"></span></span>
 											</div>
 											

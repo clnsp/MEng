@@ -154,7 +154,7 @@ class class_type extends CI_Controller
 					$this->classes->insertClass($newClass);
 				}
 
-				echo("Classes added");
+				echo("Classes saved");
 
 			}else{
 				echo("Missing parameters");	

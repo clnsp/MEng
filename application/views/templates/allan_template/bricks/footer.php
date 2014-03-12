@@ -59,7 +59,6 @@ if(!$this->tank_auth->is_admin()){ ?>
 
      <!-- Sitewide javascript -->
      <script type="text/javascript" src="<?php echo base_url();?>assets/js/moment.js"></script>  <!-- Time/DatePicker -->
-     <script type="text/javascript" src="<?php echo base_url();?>assets/js/bootstrap-datetimepicker.js"></script>
      <script type="text/javascript" src="<?php echo base_url();?>assets/js/bootstrap-override.js"></script>
      <script type="text/javascript" src="<?php echo base_url();?>assets/js/theme.js"></script>
      
