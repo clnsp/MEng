@@ -254,7 +254,9 @@ $( document ).ready(function() {
 
 	datepicker = (function() {
 
-		var cal = $('#date-selector').multiDatesPicker({numberOfMonths: [2,2]});
+		var cal = $('#date-selector').multiDatesPicker({
+			numberOfMonths: [2,2]
+		});
 
 		getDates = function() {
 			return cal.multiDatesPicker('getDates');

@@ -206,7 +206,7 @@
 										
 										<div class="col-sm-9">
 										<div class="col-xs-6 no-pad-right no-pad-left pull-right">
-											<button id="apply-repeat-btn" type="button" class="btn btn-default disabled">Apply</button>
+											<button id="apply-repeat-btn" type="button" class="btn btn-primary disabled">Apply</button>
 											<button id="clear-cal-btn" type="button" class="btn btn-default">Clear</button>
 										</div>
 										
