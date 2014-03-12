@@ -417,8 +417,8 @@ class Classes extends CI_Model{
         $this -> db -> join('class_type_tbl', 'class_type_tbl.class_type_id = class_tbl.class_type_id');
 
         $query = $this -> db -> get();
-			//	echo($this->db->last_query());
-//				echo($this->db->_error_message());
+		//		echo($this->db->last_query());
+			//	echo($this->db->_error_message());
         return $query->result_array();
     }
 

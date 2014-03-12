@@ -285,8 +285,7 @@ function _fetchSportsClasses($class_type_id, $start_date, $end_date, $start_time
 		$targetSportTokenSize = $this->_fetchTokenSize($room_id, $class_type_id);
 		$blockedSportIds = $this->restrictions->getSportsThatBlock($room_id, $class_type_id);
 
-		print_r($blockedSportIds);
-
+		//print_r($blockedSportIds);
 		while($start_object <= $end_object){
 
 				//	echo($start_object < $now);		
@@ -294,19 +293,24 @@ function _fetchSportsClasses($class_type_id, $start_date, $end_date, $start_time
 				$start_object->modify("+$duration minutes");
 				continue;
 			}
+
+		$start_dup = clone $start_object;
+		$start_dup->modify("+$duration minutes");
+
 			
 			$sportInstancesForTime = $sportInstances;
 			$roomSizeForTime = $roomSize;
 
-			$alreadyBooked = $this->classes->getSportsBookedOverTime($room_id, $start_date, $end_date, $start_time->format('H:i:s'), $end_time);		
+			$alreadyBooked = $this->classes->getSportsBookedOverTime($room_id, $start_date, $end_date, $start_object->format('H:i:s'), $start_dup->format('H:i:s'));		
 
-				//if intersect then this sport is blocked and can't be booked
-//				if(count(array_intersect($array1, $array2)) > 0){
-//					$start_time->modify("+60 minutes");
-//					continue;
-//				}
-				//print_r($alreadyBooked);
 			foreach ($alreadyBooked as $key => $booked) {
+			//echo $booked['class_type_id'] . "<br>";
+
+				if(in_array($booked['class_type_id'], $blockedSportIds)){
+				//	echo "Found dup";
+					continue;
+				}
+
 				if($booked['class_type_id'] == $class_type_id){
 					$sportInstancesForTime--;
 					$roomSizeForTime = $roomSizeForTime - $targetSportTokenSize;

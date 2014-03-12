@@ -137,8 +137,6 @@ class class_type extends CI_Controller
 				$end_time = new DateTime($_POST['class_end_date']);
 				$end_time = $end_time->format('H:i:00');
 
-				echo "$start_time, $end_time";
-
 				foreach ($_POST['repeat_dates'] as $key => $date) {
 					$date = new DateTime($date);
 					$date = $date->format('Y-m-d');

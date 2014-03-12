@@ -107,7 +107,14 @@ Class Restrictions extends CI_Model{
 		$this -> db -> where('sport_to_block_id', $sport_to_block_id);
 		
 		$query = $this->db->get();
-		return $query ->result_array();
+
+		$arr = array();
+
+		foreach ($query ->result_array() as $key => $blocked) {
+			array_push($arr, $blocked['occurring_sport_id']);
+		}
+
+		return $arr;
 	} 
 
 }

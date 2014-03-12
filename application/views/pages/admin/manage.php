@@ -1,9 +1,6 @@
 
 <div class="container">
 
-	<div class="row">
-		<h1>Manage</h1>
-	</div>
 	
 	<div class="row">
 
