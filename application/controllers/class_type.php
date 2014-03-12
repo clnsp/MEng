@@ -144,6 +144,13 @@ class class_type extends CI_Controller
 					$newClass['class_start_date'] = "$date $start_time";
 					$newClass['class_end_date'] = "$date $end_time";
 
+					$roomBooked = $this->classes
+					->isRoomBookedOut($_POST['room_id'], $date, $date, $start_time, $end_time);
+
+					if($roomBooked){
+						continue;
+					}
+
 					$this->classes->insertClass($newClass);
 				}
 

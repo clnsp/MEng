@@ -6,8 +6,8 @@
 | These details are used in emails sent by authentication library.
 |--------------------------------------------------------------------------
 */
-$config['opening_time'] = 'CSR Project';
-$config['closeing_time'] = 'CSR Project';
+$config['opening_time'] = '09:00:00';
+$config['closeing_time'] = '';
 
 
 ?>

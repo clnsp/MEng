@@ -163,8 +163,8 @@ class Classes extends CI_Model{
     */
     function insertClass($data){
         $this->db->insert($this -> class_tbl, $data);
-        echo($this->db->last_query());
-        echo($this->db->_error_message());
+        // echo($this->db->last_query());
+        // echo($this->db->_error_message());
 
         return $this->db->insert_id();
     }
@@ -302,27 +302,28 @@ class Classes extends CI_Model{
 
     }
 
-	/**
+    /**
     * Returns an array of future classes over next week for specific id
     * @param int
     * @return array
     */
     function getFutureClasses($class_type_id) {
 
-     $date = new DateTime();
+       $date = new DateTime();
 
-     $this -> db -> select('class_type, class_start_date, class_end_date, room, class_id');
-     $this -> db -> from($this -> class_tbl);
-     $this -> db -> where('class_type_tbl.class_type_id', $class_type_id);
-     $this -> db -> where('class_start_date >=', $date->format("Y-m-d H:i:s"));
-     $this -> db -> where('class_start_date <=', $date->modify('+1 week')->format("Y-m-d H:i:s"));
-     $this -> db -> join('class_type_tbl', 'class_type_tbl.class_type_id = class_tbl.class_type_id');
-     $this -> db -> join('room_tbl', 'room_tbl.room_id = class_tbl.room_id');
+       $this -> db -> select('class_type, class_start_date, class_end_date, room, class_id');
+       $this -> db -> from($this -> class_tbl);
+       $this -> db -> where('class_type_tbl.class_type_id', $class_type_id);
+       $this -> db -> where('class_start_date >=', $date->format("Y-m-d H:i:s"));
+       $this -> db -> where('class_start_date <=', $date->modify('+1 week')->format("Y-m-d H:i:s"));
+       $this -> db -> join('class_type_tbl', 'class_type_tbl.class_type_id = class_tbl.class_type_id');
+       $this -> db -> join('room_tbl', 'room_tbl.room_id = class_tbl.room_id');
 
-     $query = $this -> db -> get();
+       $query = $this -> db -> get();
 
-     return $query->result_array();
- }
+       return $query->result_array();
+   }
+
 
 
 
@@ -423,6 +424,27 @@ class Classes extends CI_Model{
 
 
     
+    /**
+    * Returns whether a room is booked out over a specific time
+    * @param int
+    * @param int - date
+    * @param int - date
+    * @param int - time
+    * @param int - time
+    * @return bool
+    */
+    function isRoomBookedOut($room_id, $start_date, $end_date, $start_time, $end_time) {
+
+        $this -> db -> where("DATE(class_start_date) >= '$start_date'");
+        $this -> db -> where("DATE(class_end_date) <= '$end_date'");
+        $this->db->where("((TIME(class_start_date) <= '$start_time' AND TIME(class_end_date) > '$start_time') OR (TIME(class_end_date) < '$end_time' AND TIME(class_start_date) >= '$end_time'))");
+        $this->db->where('room_id', $room_id);
+        $this->db->from($this->class_tbl);
+
+        $query = $this -> db -> get();
+
+        return $query->num_rows() > 0;
+    }
     
 
     
