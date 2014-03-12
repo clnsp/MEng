@@ -20,7 +20,7 @@ class booking extends CI_Controller{
 	    * Retrieves search results according to search parameters, also sorts date and time into the correct format
 	    * for the database queries.
 	    */
-	   function bookClass($page = 'bookingsuccess'){
+	   function bookClass(){
 
 	   	if(isset($_POST['classid'])){
 
@@ -82,9 +82,7 @@ class booking extends CI_Controller{
 	  	->isMemberBookedOut($user_id, $start->format("Y-m-d"), $start->format("H:i:s"), $end->format("H:i:s"));
 
 	  	if(count($bookedOut)>0){
-	  		$data['message'] = 'You are already booked into classes at this time';
-	  		parse_temp('booking-fail', $this->load->view('pages/booking-failure', $data, true));
-	  		
+	  		$this->_bookingFail('You are already booked into classes at this time');
 	  		return;
 	  	}
 
@@ -96,7 +94,7 @@ class booking extends CI_Controller{
 	  			$data['classinfo'] = $classInfo;
 	  			parse_temp('booking-success', $this->load->view('pages/booking-success', $data, true));
 	  		}else{
-	  			echo("Already booked into this class");
+	  			$this->_bookingFail('You are already booked into this class');
 	  		}
 	  		return;
 	  	}elseif ($full && !$past) {
@@ -105,6 +103,15 @@ class booking extends CI_Controller{
 	  		echo "Give them choice to add to waiting";
 	  	}
 
+
+	  }
+
+	  /**
+	   * Handle booking failuires
+	   */
+	  function _bookingFail($message){
+	  	$data['message'] = $message;
+	  	parse_temp('booking-fail', $this->load->view('pages/booking-failure', $data, true));
 
 	  }
 	  

@@ -163,7 +163,9 @@ class Classes extends CI_Model{
     */
     function insertClass($data){
         $this->db->insert($this -> class_tbl, $data);
+        echo($this->db->last_query());
         echo($this->db->_error_message());
+
         return $this->db->insert_id();
     }
 

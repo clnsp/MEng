@@ -16,12 +16,12 @@ class class_type extends CI_Controller
 		if($this->tank_auth->is_admin()){
 			if (isset($_POST['class_type']) && isset($_POST['class_description']) && isset($_POST['category_id'])){
 				$data = array(
-				    'class_type'		=>	$_POST['class_type'],
-				    'class_description'	=>	$_POST['class_description'],
-				    'category_id'		=>	$_POST['category_id'],
-				    'is_sport'			=>	false,
-				);
-			
+					'class_type'		=>	$_POST['class_type'],
+					'class_description'	=>	$_POST['class_description'],
+					'category_id'		=>	$_POST['category_id'],
+					'is_sport'			=>	false,
+					);
+
 				$this->classes->addNewClassType($data);
 				echo "Class Added";
 			}else{
@@ -52,15 +52,15 @@ class class_type extends CI_Controller
 		if($this->tank_auth->is_admin()){
 			if (isset($_POST['class_type']) && isset($_POST['class_description']) && isset($_POST['class_type_id']) && isset($_POST['category_id'])){	
 				$data = array(
-				    'class_type'	=>	$_POST['class_type'],
-				    'class_description'	=>	$_POST['class_description'],
-				    'category_id'	=>	$_POST['category_id']
-				    );
-				    
-				   if(isset($_POST['duration'])){
-				   	$data['duration'] = $_POST['duration'];
-				   }
-					
+					'class_type'	=>	$_POST['class_type'],
+					'class_description'	=>	$_POST['class_description'],
+					'category_id'	=>	$_POST['category_id']
+					);
+
+				if(isset($_POST['duration'])){
+					$data['duration'] = $_POST['duration'];
+				}
+
 				$this->classes->updateClassType($_POST['class_type_id'], $data);
 				echo "Class type updated";
 			}	
@@ -141,15 +141,13 @@ class class_type extends CI_Controller
 					$date = new DateTime($date);
 					$date = $date->format('Y-m-d');
 
-					$newClass['class_start_date'] = $date . $start_time;
-					$newClass['class_end_date'] = $date . $end_time;
+					$newClass['class_start_date'] = "$date $start_time";
+					$newClass['class_end_date'] = "$date $end_time";
 
 					$this->classes->insertClass($newClass);
 				}
 
 				echo("Classes added");
-
-
 
 			}else{
 				echo("Missing parameters");	
@@ -190,13 +188,13 @@ class class_type extends CI_Controller
 		if($this->tank_auth->is_admin()){
 			if (isset($_POST['class_type']) && isset($_POST['class_description']) && isset($_POST['category_id']) && isset($_POST['duration'])){
 				$data = array(
-				    'class_type'		=>	$_POST['class_type'],
-				    'class_description'	=>	$_POST['class_description'],
-				    'category_id'		=>	$_POST['category_id'],
-				    'is_sport'			=>	true,
-				    'duration'			=>	$_POST['duration']
-			    );
-			    
+					'class_type'		=>	$_POST['class_type'],
+					'class_description'	=>	$_POST['class_description'],
+					'category_id'		=>	$_POST['category_id'],
+					'is_sport'			=>	true,
+					'duration'			=>	$_POST['duration']
+					);
+
 				$this->classes->addNewClassType($data);
 				echo "Class Added";
 			}else{
