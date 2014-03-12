@@ -206,7 +206,7 @@
 										
 										<div class="col-sm-9">
 										<div class="col-xs-6 no-pad-right no-pad-left pull-right">
-											<button id="apply-repeat-btn" type="button" class="btn btn-primary disabled">Apply</button>
+											<button id="apply-repeat-btn" type="button" class="btn btn-primary disabled" data-toggle="tooltip" data-placement="bottom" title="Click to show dates on calendar">Apply</button>
 											<button id="clear-cal-btn" type="button" class="btn btn-default">Clear</button>
 										</div>
 										
@@ -226,7 +226,7 @@
 
 									<div class="form-group">
 										<div class="col-sm-offset-3 col-sm-9">
-											<button type="submit" class="btn btn-primary">Add Block</button>
+											<button id="add-block-button" type="submit" class="btn btn-primary">Add Block</button>
 											
 											
 										</div>

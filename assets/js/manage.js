@@ -321,3 +321,9 @@ $( document ).ready(function() {
 $('.input-group-addon').click(function(){
 	$(this).siblings('input').focus();
 });
+
+$('#apply-repeat-btn').tooltip();
+
+$('#add-block-button').hover(function(){
+	$('#apply-repeat-btn:not(.disabled)').tooltip('show');
+});

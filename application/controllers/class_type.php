@@ -132,10 +132,12 @@ class class_type extends CI_Controller
 					);
 
 				$start_time = new DateTime($_POST['class_start_date']);
-				$start_time = $start_time->format('H:m:00');
+				$start_time = $start_time->format('H:i:00');
 
 				$end_time = new DateTime($_POST['class_end_date']);
-				$end_time = $end_time->format('H:m:00');
+				$end_time = $end_time->format('H:i:00');
+
+				echo "$start_time, $end_time";
 
 				foreach ($_POST['repeat_dates'] as $key => $date) {
 					$date = new DateTime($date);
@@ -143,6 +145,7 @@ class class_type extends CI_Controller
 
 					$newClass['class_start_date'] = "$date $start_time";
 					$newClass['class_end_date'] = "$date $end_time";
+
 
 					$roomBooked = $this->classes
 					->isRoomBookedOut($_POST['room_id'], $date, $date, $start_time, $end_time);
