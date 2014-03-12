@@ -164,7 +164,7 @@ class Classes extends CI_Model{
     function insertClass($data){
         $this->db->insert($this -> class_tbl, $data);
         echo($this->db->_error_message());
-		return $this->db->insert_id();
+        return $this->db->insert_id();
     }
 
     /**
@@ -201,7 +201,7 @@ class Classes extends CI_Model{
     * @param array
     */
     function updateClassType($class_type_id, $data){
-    
+
         $this->db->where('class_type_id', $class_type_id);
         $this->db->update($this -> class_type_tbl, $data);
 
@@ -278,17 +278,17 @@ class Classes extends CI_Model{
     * @return array
     */
     function getClassesWithTypeAndStartTime($class_type_id, $start_date, $end_date, $start_time, $end_time) {	
-     
+
         $this -> db -> select('class_type, class_start_date, class_end_date, room, class_id');
         $this -> db -> from($this -> class_tbl);
         
         $this -> db -> where('class_type_tbl.class_type_id', $class_type_id );
         $this -> db -> where("TIME(class_start_date) >= '$start_time'");
         $this -> db -> where("TIME(class_end_date) <= '$end_time'");
-       	$this -> db -> where("DATE(class_start_date) >= '$start_date'");
+        $this -> db -> where("DATE(class_start_date) >= '$start_date'");
         $this -> db -> where("DATE(class_end_date) <= '$end_date'");
-		
-		$this -> db -> join('class_type_tbl', 'class_type_tbl.class_type_id = class_tbl.class_type_id');
+
+        $this -> db -> join('class_type_tbl', 'class_type_tbl.class_type_id = class_tbl.class_type_id');
         $this -> db -> join('room_tbl', 'room_tbl.room_id = class_tbl.room_id');
 
         $query = $this -> db -> get();
@@ -306,21 +306,21 @@ class Classes extends CI_Model{
     * @return array
     */
     function getFutureClasses($class_type_id) {
-    
-   		$date = new DateTime();
-   
-        $this -> db -> select('class_type, class_start_date, class_end_date, room, class_id');
-        $this -> db -> from($this -> class_tbl);
-        $this -> db -> where('class_type_tbl.class_type_id', $class_type_id);
-        $this -> db -> where('class_start_date >=', $date->format("Y-m-d H:i:s"));
-        $this -> db -> where('class_start_date <=', $date->modify('+1 week')->format("Y-m-d H:i:s"));
-        $this -> db -> join('class_type_tbl', 'class_type_tbl.class_type_id = class_tbl.class_type_id');
-        $this -> db -> join('room_tbl', 'room_tbl.room_id = class_tbl.room_id');
 
-        $query = $this -> db -> get();
+     $date = new DateTime();
 
-        return $query->result_array();
-    }
+     $this -> db -> select('class_type, class_start_date, class_end_date, room, class_id');
+     $this -> db -> from($this -> class_tbl);
+     $this -> db -> where('class_type_tbl.class_type_id', $class_type_id);
+     $this -> db -> where('class_start_date >=', $date->format("Y-m-d H:i:s"));
+     $this -> db -> where('class_start_date <=', $date->modify('+1 week')->format("Y-m-d H:i:s"));
+     $this -> db -> join('class_type_tbl', 'class_type_tbl.class_type_id = class_tbl.class_type_id');
+     $this -> db -> join('room_tbl', 'room_tbl.room_id = class_tbl.room_id');
+
+     $query = $this -> db -> get();
+
+     return $query->result_array();
+ }
 
 
 
@@ -399,22 +399,27 @@ class Classes extends CI_Model{
         
         $this -> db -> where("DATE(class_start_date) >= '$start_date'");
         $this -> db -> where("DATE(class_end_date) <= '$end_date'");
- 
-        $this->db->where("TIME(class_start_date) <= '$start_time'");
-        $this->db->where("TIME(class_end_date) > '$start_time'");
+
+        $this->db->where("((TIME(class_start_date) <= '$start_time' AND TIME(class_end_date) > '$start_time') OR (TIME(class_end_date) < '$end_time' AND TIME(class_start_date) >= '$end_time'))");
+
         
-        $this->db->or_where("TIME(class_end_date) < '$end_time'");
-        $this->db->where("TIME(class_start_date) >= '$end_time'");
-               
+        // $this->db->where("TIME(class_start_date) <= '$start_time'");
+        // $this->db->where("TIME(class_end_date) > '$start_time'");
+        
+        // $this->db->or_where("TIME(class_end_date) < '$end_time'");
+        // $this->db->where("TIME(class_start_date) >= '$end_time'");
+
         $this->db->where('room_id', $room_id);
         $this->db->from($this->class_tbl);
-         $this -> db -> join('class_type_tbl', 'class_type_tbl.class_type_id = class_tbl.class_type_id');
-		
-		$query = $this -> db -> get();
+        $this -> db -> join('class_type_tbl', 'class_type_tbl.class_type_id = class_tbl.class_type_id');
+
+        $query = $this -> db -> get();
 			//	echo($this->db->last_query());
 //				echo($this->db->_error_message());
         return $query->result_array();
     }
+
+
     
     
 
@@ -424,13 +429,13 @@ class Classes extends CI_Model{
     * @int 
     */
     function removeSportClass($class_id) {
-		$sql = "DELETE t1 FROM class_tbl t1
-						  JOIN class_type_tbl t2 ON t1.class_type_id = t2.class_type_id
-						   WHERE class_id = ? AND t2.is_sport = '1'";
-		  
+      $sql = "DELETE t1 FROM class_tbl t1
+      JOIN class_type_tbl t2 ON t1.class_type_id = t2.class_type_id
+      WHERE class_id = ? AND t2.is_sport = '1'";
 
-    	$this->db->query($sql, array($class_id));
-    }
+
+      $this->db->query($sql, array($class_id));
+  }
 
 
 

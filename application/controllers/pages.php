@@ -27,6 +27,8 @@
 					$data['cTimespan'] = "$h:00 - ".($h+1).":00";
 					parse_temp($page, $this->load->view($this->route.$page, $data, true));
 				}
+			}else{
+				redirect('booking/', 'refresh');
 			}
 		}
 
