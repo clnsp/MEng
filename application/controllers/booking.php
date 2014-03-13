@@ -182,7 +182,6 @@ class booking extends CI_Controller{
 		if($_POST['date'] == ''){
 			$start_date = new DateTime();
 			$end_date = new DateTime();
-			echo $this->config->item('class_booking_window');
 			$end_date->modify($this->config->item('class_booking_window'));
 
 		}else{
@@ -261,6 +260,7 @@ class booking extends CI_Controller{
 			$targetSportTokenSize = $this->_fetchTokenSize($room_id, $class_type_id);
 			$blockedSportIds = $this->restrictions->getSportsThatBlock($room_id, $class_type_id);
 
+
 			while($start_object <= $end_object){
 
 				$start_dup = clone $start_object;
@@ -290,9 +290,10 @@ class booking extends CI_Controller{
 						$roomSizeForTime = $roomSizeForTime  - $this->_fetchTokenSize($room_id, $booked['class_type_id']);
 					}
 				}
+
 				if($sportInstancesForTime > 0 && $roomSizeForTime >= $targetSportTokenSize){
-					$result['class_start_date'] = $start_object->format('H:i:s');
-					$result['class_end_date'] = $start_object->modify("+$duration minutes")->format('H:i:s');
+					$result['class_start_date'] = $start_object->format('Y-m-d H:i:s');
+					$result['class_end_date'] = $start_object->modify("+$duration minutes")->format('Y-m-d H:i:s');
 					$result['class_type'] = $info['class_type'];
 					$result['room'] = $room['room'];
 					$result['room_id'] = $room['room_id'];

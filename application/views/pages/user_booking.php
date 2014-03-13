@@ -124,7 +124,7 @@ $js = 'class="form-control"';
 
 	<div class="col-sm-9">
 
-		<table class="footable table table-hover table-bordered classes">
+		<table class="footable table table table-striped table-hover table-bordered classes">
 			<thead>
 				<tr>
 					<th>Activity</th>

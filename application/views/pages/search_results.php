@@ -10,14 +10,14 @@ if (count($classes) == 0) {
 }
 
 foreach($classes as $row): ?>
+
 <tr>
 
 	<?php 
-
 	$start_date = new DateTime($row['class_start_date']);
 	$end_date = new DateTime($row['class_end_date']);
-	$start_stamp = $start_date->format('U');
-	$end_stamp = $start_date->format('U');
+	$start_stamp = $start_date->getTimestamp();
+	$end_stamp = $start_date->getTimestamp();
 	
 	?>
 
@@ -26,10 +26,7 @@ foreach($classes as $row): ?>
 	<td data-value='<?php echo $start_stamp; ?>' data-title="Start" ><?php echo $start_date->format('h.i A'); ?></td>
 	<td data-value='<?php echo $end_stamp; ?>' data-title="End"><?php echo $end_date->format('h.i A'); ?></td>
 	<td data-title="Room"><?php echo $row['room'];?></td>    	
-
-	<td data-title="Book" data-sort-ignore="true">
-		
-		
+	<td data-title="Book" data-sort-ignore="true">		
 		
 		<?php 
 		if(isset($_POST['is_sport'])){
