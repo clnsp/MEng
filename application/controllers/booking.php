@@ -91,7 +91,7 @@ class booking extends CI_Controller{
 	 */
 	function bookSport() {
 		$this->load->model('bookings');
-		
+
 		/*! need to check that you're allowed to make booking !*/
 		if(isset($_POST['class_type_id']) && isset($_POST['start']) && isset($_POST['end'])){
 
@@ -231,7 +231,7 @@ class booking extends CI_Controller{
 	* @return array
 	*/
 	function _fetchSportsClasses($class_type_id, $start_date, $end_date, $start_time, $end_time){
-
+		$this->config->load('gym_settings');
 		$this->load->model('courts');
 		$this->load->model('rooms');
 		$this->load->model('classtype');
@@ -243,12 +243,14 @@ class booking extends CI_Controller{
 
 		$start_object = new DateTime($start_date . $start_time);
 		$end_object = new DateTime($end_date ." ". $end_time);
-		$start_time = new DateTime($start_time);
 
-		$results =  array();
+		$opening = new DateTime($start_date ." ". $this->config->item('open_'.$start_object->format('l')));
+		$closing = new DateTime($start_date ." ".$this->config->item('close_'.$start_object->format('l')));
 
 		$rooms = $this->courts->findRoomsWithSports($class_type_id);
 		$now = new DateTime();
+
+		$results =  array();
 
 		foreach ($rooms as $key => $room) {
 			$room_id = $room['room_id'];
@@ -259,15 +261,13 @@ class booking extends CI_Controller{
 
 			while($start_object <= $end_object){
 
-
-				if($start_object < $now){
-					$start_object->modify("+$duration minutes");
-					continue;
-				}
-
 				$start_dup = clone $start_object;
 				$start_dup->modify("+$duration minutes");
 
+				if($start_object < $opening || $start_dup > $closing || $start_object < $now){
+					$start_object->modify("+$duration minutes");
+					continue;
+				}
 
 				$sportInstancesForTime = $sportInstances;
 				$roomSizeForTime = $roomSize;

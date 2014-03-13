@@ -1,17 +1,9 @@
 $( document ).ready(function() {
 
-	// $('#starttime').timepicker('setTime', '');
-	// $('#endtime').timepicker('setTime', '');
-
-	// $('#date').datepicker({
-	// 	minDate: 0
-	// });
-
 	$('#sportsdate').datepicker({ 
 		maxDate: "+1w", //hardcoded
 		minDate: 0
 	});
-
 
 
 	$('#tabs li').click(function(){
@@ -21,25 +13,22 @@ $( document ).ready(function() {
 			$('#tab-content .toggleInput >').each(function() {
 				$(this).prop("disabled",!$(this).prop("disabled"))
 			});
-
-			//$('form').toggleClass('sports prevent');
 		}
 	});
 
-
 	
 	$('#booking').on('submit', 'form.prevent.classes', function(e) {
-			var table = $('table.footable.table.classes tbody');
-	
-			$.post("search", $(this).serialize(), function( data ) {
-				table.html(data);
-				table.trigger('footable_redraw');
-			});
-	
+		var table = $('table.footable.table.classes tbody');
+
+		$.post(siteUrl + "/booking/search", $(this).serialize(), function( data ) {
+			table.html(data);
+			table.trigger('footable_redraw');
 		});
+
+	});
 	
 	$(document).on('click', 'button.booksport', function() {
-		$.post("userbook/bookSport", {
+		$.post(siteUrl +"/booking/bookSport", {
 			class_type_id : $(this).data('class_type_id'),
 			room_id: $(this).parent().siblings('.room').data('room_id'),
 			class_start_date:  $(this).parent().siblings('.start').data('class_start_time')			

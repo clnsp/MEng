@@ -18,7 +18,7 @@ $date = array(
 	'maxlength'	=> 20,
 	'size'	=> 20,
 	'type'  => 'text',
-	'class' => 'form-control',
+	'class' => 'form-control datepicker',
 	'placeholder' => 'Date',
 	
 	);
@@ -132,7 +132,7 @@ $js = 'class="form-control"';
 					<th data-hide="" data-type="time">Start</th>
 					<th data-hide="phone" data-type="time">End</th>
 					<th data-hide="phone">Room</th>
-					<th>Book</th>
+					<th data-sort-ignore="true">Book</th>
 				</tr>
 			</thead>
 

@@ -8,6 +8,7 @@
  	return replacer;
  };
 
+ var siteUrl = $('html').data('site-url');
 
  $('#page-body')
  
@@ -340,7 +341,8 @@ var Rooms = function() {
 			time: new Date()
 		});
 		
-		$('[type=dropdown].rooms').html(drop.html());
+		$('[type=dropdown].rooms').html('<option value="" disabled selected>Select a room</option>' + drop.html());
+
 	}
 	
 	init();
@@ -411,3 +413,4 @@ $('.timepicker').each(function(){
 $('.datepicker').datepicker({
 	minDate: 0
 });
+
