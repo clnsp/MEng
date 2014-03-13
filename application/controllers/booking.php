@@ -169,6 +169,7 @@ class booking extends CI_Controller{
 	* Retrieves search results according to search parameters
 	*/
 	function search(){
+		$this->config->load('gym_settings');
 
 		$user_id = $this->tank_auth->get_user_id();
 		$start_date=''; $end_time='';
@@ -181,7 +182,8 @@ class booking extends CI_Controller{
 		if($_POST['date'] == ''){
 			$start_date = new DateTime();
 			$end_date = new DateTime();
-			$end_date->modify("+1 weeks");
+			echo $this->config->item('class_booking_window');
+			$end_date->modify($this->config->item('class_booking_window'));
 
 		}else{
 			$start_date = new DateTime($_POST['date']);

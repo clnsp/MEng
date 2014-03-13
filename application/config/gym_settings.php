@@ -27,3 +27,9 @@ $config['close_Saturday'] = '17:00';
 $config['open_Sunday'] = '13:00';
 $config['close_Sunday'] = '17:00';
 
+
+/**
+ * When can classes be booked in advance
+ **/
+$config['class_booking_window'] = '+1 days';
+
