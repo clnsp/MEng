@@ -102,15 +102,18 @@ $js = 'class="form-control"';
 				</div>
 
 				<div class="form-group">
+					<label for="date">Date</label>
 					<?php echo form_input($date); ?>
 				</div>
 
 
 				<div class="form-group">
+					<label for="starttime">Start</label>
 					<?php echo form_input($starttime); ?>
 				</div>
 
 				<div class="form-group">
+					<label for="endtime">Time</label>
 					<?php echo form_input($endtime); ?>
 				</div>
 

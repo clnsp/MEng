@@ -403,14 +403,30 @@ var divisiblerooms = new DivisibleRooms();
 /* responsive tables */
 $('.footable').footable();
 
-/* time pickers */
-$('.timepicker').each(function(){
-	$(this).timepicker('setTime', '');
 
-})
-
-/* datepickers */
-$('.datepicker').datepicker({
-	minDate: 0
+Modernizr.Detectizr.detect({
+	detectScreen:true,
+	detectDevice: true
 });
+
+if(Modernizr.Detectizr.device.type == 'mobile' || Modernizr.Detectizr.device.type == 'tablet' && Modernizr.inputtypes.date){
+	$('.datepicker').attr('type', 'date');
+}else{
+	/* datepickers */
+	$('.datepicker').datepicker({
+		minDate: 0
+	});
+}
+
+if(Modernizr.Detectizr.device.type == 'mobile' || Modernizr.Detectizr.device.type == 'tablet' && Modernizr.inputtypes.date){
+	$('.timepicker').attr('type', 'time');
+}else{
+	/* time pickers */
+	$('.timepicker').each(function(){
+		$(this).timepicker('setTime', '');
+
+	})
+}
+
+
 

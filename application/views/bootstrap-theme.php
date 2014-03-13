@@ -545,12 +545,18 @@ html, body, #booking {
 /* Lastly, apply responsive CSS fixes as necessary */
 @media (max-width: 767px) {
 	#footer {
-		margin-left: -20px;
-		margin-right: -20px;
-		padding-left: 20px;
-		padding-right: 20px;
+		//margin-left: -20px;
+		//margin-right: -20px;
+	//	padding-left: 20px;
+	//	padding-right: 20px;
 	}
+
 }
+
+	#booking #footer .row{
+			margin-left: 0px; 
+			margin-right: 0px; 
+	}
 
 /* @end */
 
@@ -655,7 +661,7 @@ i.square{
 
 #footer, .footer{
 	margin-top: 2em;
-	padding: 1em;
+	padding: 1em 0 1em 0;
 	background-color: <?php echo $brandPrimary;?>;
 }
 
@@ -939,4 +945,9 @@ ul.ui-autocomplete.popover.dropdown-menu{
 
 #booking.user_booking tbody{
 	font-size: 15px;
+}
+
+#booking.user_booking input{
+	width: 100%;
+
 }

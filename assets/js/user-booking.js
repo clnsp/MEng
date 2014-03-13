@@ -6,6 +6,7 @@ $( document ).ready(function() {
 	});
 
 
+
 	$('#tabs li').click(function(){
 		if(!$(this).hasClass('active')){
 			$('#tab-content .form-group.toggleInput').toggleClass('hidden');
