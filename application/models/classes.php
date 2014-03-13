@@ -141,7 +141,14 @@ class Classes extends CI_Model{
         $this->db->select('class_type_id');
         $this->db->from($this -> class_type_tbl);
 
-        return $this -> db -> get()->result_array();
+        $query = $this -> db -> get()->result_array();
+        $arr = array();
+
+        foreach ($query as $key => $value) {
+            array_push($arr, $value['class_type_id']);
+        }
+
+        return $arr;
     }
 
     /**
@@ -274,29 +281,34 @@ class Classes extends CI_Model{
 
     /**
     * Returns an array of classes with type and between two different times
-    * @param int
+    * @param array
     * @param int
     * @param int
     * @return array
     */
     function getClassesWithTypeAndStartTime($class_type_id, $start_date, $end_date, $start_time, $end_time) {	
+        $now = new DateTime();
+        $now = $now->format('Y-m-d H:i:0');
 
         $this -> db -> select('class_type, class_start_date, class_end_date, room, class_id');
         $this -> db -> from($this -> class_tbl);
         
-        $this -> db -> where('class_type_tbl.class_type_id', $class_type_id );
+        $this -> db -> where_in('class_type_tbl.class_type_id', $class_type_id);
+
         $this -> db -> where("TIME(class_start_date) >= '$start_time'");
         $this -> db -> where("TIME(class_end_date) <= '$end_time'");
         $this -> db -> where("DATE(class_start_date) >= '$start_date'");
         $this -> db -> where("DATE(class_end_date) <= '$end_date'");
+
+        $this -> db -> where("DATE(class_start_date) > '$now'");
 
         $this -> db -> join('class_type_tbl', 'class_type_tbl.class_type_id = class_tbl.class_type_id');
         $this -> db -> join('room_tbl', 'room_tbl.room_id = class_tbl.room_id');
 
         $query = $this -> db -> get();
 //		
-	//	echo($this->db->last_query());
-//		echo($this->db->_error_message());
+        echo($this->db->last_query());
+        echo($this->db->_error_message());
 
         return $query->result_array();
 

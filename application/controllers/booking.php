@@ -212,7 +212,14 @@ class booking extends CI_Controller{
 			$data['classes'] = $this->_fetchSportsClasses($_POST['class_type_id'], $start_date, $end_date, $start_time, $end_time);
 
 		}else{
-			$data['classes'] = $this->classes->getClassesWithTypeAndStartTime($_POST['class_type_id'], $start_date, $end_date, $start_time, $end_time);
+			if($_POST['class_type_id'] == '-1'){
+				$classtypes = $this->classes->getClassTypeIDs();
+			}else{
+				$classtypes = array('class_type_id' => $_POST['class_type_id']);
+				
+			}
+			print_r($classtypes);
+			$data['classes'] = $this->classes->getClassesWithTypeAndStartTime($classtypes, $start_date, $end_date, $start_time, $end_time);
 			foreach ($data['classes'] as $key => $row) {
 				$data['classes'][$key]['fully_booked'] = $this->isClassBookedOut($row['class_id']);
 			}

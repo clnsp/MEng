@@ -932,10 +932,11 @@ ul.ui-autocomplete.popover.dropdown-menu{
 /* @end */
 
 
-
-
 #booking .nofound{
 	text-align:center;
 	padding: 0 15px 0 15px;
 }
 
+#booking.user_booking tbody{
+	font-size: 15px;
+}

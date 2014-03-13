@@ -89,7 +89,10 @@ $js = 'class="form-control"';
 				<div class="form-group"></div>
 
 				<div class="toggleInput form-group">
-					<?php echo form_dropdown('class_type_id', $classTypes, '' , 'class="form-control classes"');	 ?>
+
+					<?php
+
+					echo form_dropdown('class_type_id',array('-1' => 'Choose a class...') + $classTypes, '' , 'class="form-control classes"');	 ?>
 				</div>
 
 
