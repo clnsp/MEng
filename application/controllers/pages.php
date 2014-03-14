@@ -140,6 +140,8 @@
 		 */
 		public function rooms(){
 
+		if(check_member()){
+
 			$this->load->Model($page = 'rooms');
 			
 			$data['rooms'] = $this->rooms->getRooms();
@@ -150,6 +152,8 @@
 
 */			parse_temp('room', $this->load->view('pages/member/rooms', $data, true));
 
+			}
+
 		}
 
 
@@ -158,6 +162,8 @@
 		 * User Past Bookings List
 		 */
 		public function mybookings(){
+
+		if(check_member()){
 
 			$member_id = $this->tank_auth->get_user_id();
 
@@ -199,6 +205,8 @@
 			}
 			
 			parse_temp($page, $this->load->view('pages/member/mybookings', $data, true));
+
+			}
 
 		}
 
@@ -256,9 +264,12 @@
         */
 		public function user_booking($page = 'user_booking'){
 
+		if(check_member()){
+
 			$data = setupClassSearchForm();
 
 			parse_temp($page, $this->load->view('pages/'.$page, $data, true));
+		}
 
 		}
 
@@ -266,6 +277,8 @@
 		 * Class List Page
 		 */
 		public function class_list($page = 'class_list'){
+
+		if(check_member()){
 
 
 			$this->load->Model('Categories');
@@ -277,6 +290,8 @@
 			$data['class_types'] = $this->classes->getClassTypes();
 
 			parse_temp($page, $this->load->view('pages/'.$page, $data, true));
+
+			}
 
 		}
 
