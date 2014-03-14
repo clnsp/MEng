@@ -5,7 +5,83 @@
 	</div>
 -->
 <div class="row">
+		<div class="col-md-6">
+				<div id="manage-add-sports" class="">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title">Add New Sport</h3>
+							
+						</div>
+						<div class="panel-body">
+						<p>Sports can be assigned to divisible rooms only</p>
+							
+							<form id="add-sport-type-form" class="prevent" role="form">
+								<div class="form-group">
+									<label for="class_type">Title</label>
+									<input name="class_type" type="text" class="form-control" placeholder="Sport Title">
+								</div>
+	
+								<div class="form-group">
+									<label for="class_category">Category</label>
+									<select name="category_id" type="dropdown" class="categories form-control"></select>
+								</div>
+								
+								<div class="form-group">
+									<label for="duration">Duration (mins)</label>
+									<input name="duration" min="15" step="15" type="number" class="form-control"/>
+								</div>
+	
+								<div class="form-group">
+									<label for="class_description">Description</label>
+									<textarea name="class_description" class="form-control" rows="3"></textarea>
+								</div>
+	
+								<div class="form-group">
+									<button type="submit" class="btn btn-primary">Add Sport</button>
+								</div>
+							</form>
+	
+	
+						</div>
+					</div>
+	
+				</div>
+	
+			</div>
+			<div class="col-md-6">
+			<div id="manage-classes" class="">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h3 class="panel-title">Manage Sports</h3>
+							</div>
+							<div class="panel-body ">						
+			
+								<table id='class-types-table' class="sportsclasstype footable table table-bordered table-striped table-hover scroll">
+									<thead>
+										<tr>
+											<th >Title</th>
+											<th data-hide="phone, tablet">Description</th>
+											<th>Category</th>
+											<th data-hide="phone, tablet">Duration</th>
+										</tr>
+									</thead>
+			
+									<tbody class="manage-panel"></tbody>
+			
+								</table>
+							</div>
+			
+						</div>
+					</div>
+			
+				</div>
+					</div>
+			
+</div>
 
+
+
+<div class="row">
 
 	<div id="manage-divisible-room" class="panel panel-default ">
 		<div class="panel-heading"><h3 class="panel-title">Manage Rooms</h3></div>
@@ -147,8 +223,8 @@
 
 				<!-- Nav tabs -->
 				<ul class="nav nav-tabs">
-					<li class="active"><a href="#block" data-toggle="tab">Block Restrictions</a></li>
-					<li><a href="#limit" data-toggle="tab">Limit Restrictions</a></li>
+					<li class="active"><a href="#block" data-toggle="tab">Blocks</a></li>
+					<li><a href="#limit" data-toggle="tab">Limits</a></li>
 
 				</ul>
 
@@ -185,3 +261,48 @@
 		</div>
 	</div>
 </div>
+
+
+<div id="modal-edit-class-type" class="modal fade">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">Edit Class Type</h4>
+			</div>
+			<div class="modal-body">
+				<form id="edit-class-type-form" class="prevent" role="form">
+
+					<input name="class_type_id" type="hidden" class="form-control">
+
+					<div class="form-group">
+						<label for="class_type">Title</label>
+						<input name="class_type" type="text" class="form-control">
+					</div>
+
+					<div class="form-group">
+						<label for="class_category">Category</label>
+						<select name="category_id" type="dropdown" class="form-control"></select>
+					</div>
+					
+					<div class="form-group">
+						<label for="duration">Duration</label>
+						<input name="duration" min="15" step="15" type="number" class="form-control"/>
+					</div>
+					
+					<div class="form-group">
+						<label for="class_description">Description</label>
+						<textarea name="class_description" class="form-control" rows="3"></textarea>
+					</div>
+
+
+				</div>
+				<div class="modal-footer">
+					<button id="remove-submit" type="button" class="btn btn-danger pull-left">Remove Class Type</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="submit" class="btn btn-primary">Save changes</button>
+				</div>
+			</form>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

@@ -10,7 +10,7 @@
 			/*Controllers*/
 			$baseUrl ={member:'member/'};
 			/*Functions*/
-			$functionUrl={getUser:'getUserDetails/',updateUser:'updateUserDetails',contactUser:'contactUser',deleteUser:'deleteUser',userMembership:'getMembershipOptions',getAttendance:'getAttendance/', getBookings:'getBookings/'};
+			$functionUrl={getUser:'getUserDetails/',updateUser:'updateUserDetails',contactUser:'contactUser',deleteUser:'deleteUser',updateUserMembership:'updateUserMembership',userMembership:'getMembershipOptions',getAttendance:'getAttendance/', getBookings:'getBookings/'};
 			$warnClass={text:{e:"text-danger",s:"text-success",w:"text-warning"},form:{e:"has-error",s:"has-success",w:"has-warning"}};
 			
 			var footer = '<button class="btn btn-sm" data-dismiss="submodal" aria-hidden="true">Cancel</button><button id="submitState" class="btn btn-sm btn-danger submit" data-dismiss="submodal">Submit</button>';
@@ -72,7 +72,9 @@
 		if (v.is("input")) { return v.val(); } else { return v.html(); }
 	},
 
-	formatedDate = function (d){ return d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear();},
+	formatedDate = function (d){
+		if(isNaN(d.getDate())){return "N/A";}
+		else{return d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear();}},
 	
 	// Add Form Error
 	addFormError = function (element,type,message) {
@@ -134,27 +136,20 @@
 			$($subModal + " .modal-content").children('.modal-body').html(body);
 			$($subModal + " .modal-content").children('.modal-footer').html(footer);
 			// Listener
+			console.log("TEST");
 			$message = $('#message'); // Point to New Element
 			
-			$($subModal + " .submit").on( "click", function() {send(); });
+			$($subModal + " .submit").on( "click", function() {sendMessage(); });
 			$($subModal + " .modal-content").on('keyup keydown', $message, function () {
-					$('#length').html($message.val().length);
+			$('#length').html($message.val().length);
 			});
 		},
 		// SEND MESSAGE
-		send = function () {  
+		sendMessage = function () {  
 			$.post($baseUrl.member+$functionUrl.contactUser, { id: $member.id, message: $message.val() }, function (data) {        });
 		},
 		// Start Point
 		$selector.on("click", function () { generateUI(); });
-	})(),
-
-	// Block / Ban
-	BlockMemberMod = (function () {
-
-
-
-
 	})(),
 	
 	// Update Members Status
@@ -280,12 +275,29 @@
 	$('.delete').on("click", function () { loadDelete(); });
 })();
 
-
 	// UPDATING A MEMBERS MEMBERSHIP
 	updateMembershipMod = (function () { 
 		
-		getPossibleType = function ($id) {
-			$.getJSON($baseUrl.member+$functionUrl.userMembership, {id: $id}, function (data){
+		var membershipbody = '<h3>Update Membership:</h3><div class="row"><div class="panel panel-primary col-lg-6" style="padding:0px;"><div class="panel-heading"><h3 class="panel-title views">Change Membership</h3></div><div class="panel-body"><span>Current Membership: <span class="pull-right"><span id="memType">N/A</span> <span id="memShipType">N/A</span></span></span><br/><div class="row"><div class="col-md-4">Validity:</div><div class="col-md-8 text-right">From: <strong id="dateStart">01/02/03</strong> To: <strong id="dateEnd">06/07/08</strong></div></div><form role="form"><div class="form-group"><label for="memberships">Avaliable Membership Types:</label><select id="membershipSelect"class="form-control"></select></div></div></div><div class="panel panel-primary col-lg-6" style="padding:0px;"><div class="panel-heading"><h3 class="panel-title views">Custom Membership </h3></div> <div class="panel-body"><div id="date-selector"></div></div></div>';
+		
+		loadMembership = function(){
+			$($subModal + " .modal-content").children('.modal-body').html(membershipbody);
+			$($subModal + " .modal-content").children('.modal-footer').html(footer);
+			getPossibleType();
+			datepicker.draw();
+			datepicker.options('disable');
+			$($subModal + " .submit").on( "click", function() {updateMembershipType(); });
+		},
+		
+		getPossibleType = function () {
+			$.getJSON($baseUrl.member+$functionUrl.userMembership, {id: $member.id}, function (data){
+				$('#memType').html(cFirst($member.type));
+				$('#memShipType').html(cFirst($member.membership_type));
+				
+				// PASS TO SERVER ??
+				$('#dateStart').html(formatedDate(new Date($member.start_date)));
+				$('#dateEnd').html(formatedDate(new Date($member.end_date)));				
+				
 				$('#membershipSelect').empty();
 				for(var i=0;i<data.length;i++) {
 					var option = $('<option/>'); 								
@@ -296,31 +308,65 @@
 					option.tooltip();
 					$('#membershipSelect').append(option);
 				}
+					var option = $('<option/>'); 								
+					option.attr({ 'value': -1}).text("Custom Membership"); // Custom Membership Option
+					option.attr('data-toggle','tooltip');
+					option.attr('data-placement','left');
+					option.attr('data-original-title','Create Custom membership (Provide Start/End Dates)');
+					option.tooltip();
 				$('#membershipSelect').tooltip();
+				$('#membershipSelect').append(option);
+			});
+			
+			$('#membershipSelect').on('change', function() {
+				if($( "#membershipSelect option:selected" ).val() == -1){datepicker.options("enable");}
+				else{datepicker.options("disable");}
 			});
 		},
+		
+		updateMembershipType = function () {
+			var memship = $("#membershipSelect option:selected").val();
+			var op=new Object();
+			if(memship == -1 && datepicker.hasDates()){var date = datepicker.getDates(); op.start = date[0]; op.end= date[1];}
 
-		getBookings = function ($id) {
-			$.get($baseUrl.member+$functionUrl.getBookings,{id:$id},function (data){
-				
+			var i = {id: $member.id, membership:memship, options: op};
+			console.log(i);
+			$.post($baseUrl.member+$functionUrl.updateUserMembership, {id: $member.id, membership:memship, options: op}, function (data){
+				console.log(data);
+			});			
+		},	
+		
+		$('.membership').on("click", function () { loadMembership(); });
+	})();
+	
+	attendance = (function(){
+	
+		var attendbody = '<div id="mainContent" class="row" style="z-index:2;"><div class="panel panel-primary col-lg-6" style="padding:0px;"><div class="panel-heading"><h3 class="panel-title">Attendance</h3></div> <div class="panel-body"><div class="row"><div class="col-md-6"><span>Class Bookings:  <strong>10</strong></span><br/><br/><span>Popular Class:  <strong>Zumba</strong></span><br/></div><div class="col-md-6"><span>Class Attendance: <strong>50%</strong></span><br/><br/><span>Popular Time:  <strong>Tuesday, 5:00</strong></span><br/></div></div></div></div><div class="panel panel-primary col-lg-6" style="padding:0px;"><div class="panel-heading"><h3 class="panel-title">Bookings</h3></div><div class="panel-body"><div class="panel-group" id="accordion"></div></div></div></div></div>';
+	
+		loadAttendacne = function(){
+			$($subModal + " .modal-content").children('.modal-body').html(attendbody);
+			$($subModal + " .modal-content").children('.modal-footer').html(footer);
+			getBookings();
+			$($subModal + " .submit").on( "click", function() { });
+		},
+	
+		getBookings = function () {
+			$.get($baseUrl.member+$functionUrl.getBookings,{id:$member.id},function (data){
 				$('#accordion').html(data);
 			});	
 		},
 		
-		
-		updateMembershipType = function () {
-
-		},	
-
-
-		getPossibleType(883);
-		getBookings(2);
+		$('#attendance').on("click", function () { loadAttendacne(); });
 	})();
 	
 	datepicker = (function() {
 
-		var cal = $('#date-selector').multiDatesPicker({numberOfMonths: 2});
+		var cal;
 
+		draw = function() {
+			cal = $('#date-selector').multiDatesPicker({numberOfMonths: 2,maxPicks: 2});
+		},
+		
 		getDates = function() {
 			return cal.multiDatesPicker('getDates');
 		},
@@ -358,15 +404,28 @@
 				if(newDates.length > 0)
 					cal.multiDatesPicker('addDates', newDates);
 			}
+		},
+		
+		alternate = function(){
+			if(cal.multiDatesPicker('isDisabled')){
+				options('enable');
+			}else {	
+				options('disable');
+			}
+		},
+		
+		options = function(o){
+			cal.datepicker(o);
 		}
-
-
-
+		
 		return { 
-			cal:cal,
+			draw: draw,
+			cal:cal, 
+			options: options,
 			hasDates: hasDates,
 			repeatDates: repeatDates,
 			getDates : getDates,
+			alternate: alternate,
 		};
 
 	})();

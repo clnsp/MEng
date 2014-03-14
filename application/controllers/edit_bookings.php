@@ -12,10 +12,13 @@ class edit_bookings extends CI_Controller{
 	if(check_member()){
 
 		$this->load->Model($page = 'bookings');
-
+		$this->load->Model($page = 'classes');
+		
 		$class_booking_id = $this->input->post('class_booking_id');
 		$member_id = $this->input->post('member_id');
 		$this->bookings->removeMember($class_booking_id, $member_id);
+		$this->classes->removeSportClass($class_booking_id); //if class is asport need to remove the class as well
+		
 		
 //		echo "member id: ".$member_id." class id: ".$class_booking_id;
 

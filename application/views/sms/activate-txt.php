@@ -1,0 +1,1 @@
+Thanks for joining <?php echo $site_name; ?>. Please click the link below to verify your mobile number. <?php echo $url; ?>

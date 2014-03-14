@@ -15,7 +15,14 @@ class class_type extends CI_Controller
 	function addClassType(){
 		if($this->tank_auth->is_admin()){
 			if (isset($_POST['class_type']) && isset($_POST['class_description']) && isset($_POST['category_id'])){
-				$this->classes->addNewClassType($_POST['class_type'], $_POST['class_description'], $_POST['category_id']);
+				$data = array(
+					'class_type'		=>	$_POST['class_type'],
+					'class_description'	=>	$_POST['class_description'],
+					'category_id'		=>	$_POST['category_id'],
+					'is_sport'			=>	false,
+					);
+
+				$this->classes->addNewClassType($data);
 				echo "Class Added";
 			}else{
 				echo "No values";
@@ -43,8 +50,18 @@ class class_type extends CI_Controller
 	 */
 	function updateClassType(){
 		if($this->tank_auth->is_admin()){
-			if (isset($_POST['class_type']) && isset($_POST['class_description']) && isset($_POST['class_type_id']) && isset($_POST['category_id'])){			
-				$this->classes->updateClassType($_POST['class_type_id'], $_POST['class_type'], $_POST['class_description'], $_POST['category_id']);
+			if (isset($_POST['class_type']) && isset($_POST['class_description']) && isset($_POST['class_type_id']) && isset($_POST['category_id'])){	
+				$data = array(
+					'class_type'	=>	$_POST['class_type'],
+					'class_description'	=>	$_POST['class_description'],
+					'category_id'	=>	$_POST['category_id']
+					);
+
+				if(isset($_POST['duration'])){
+					$data['duration'] = $_POST['duration'];
+				}
+
+				$this->classes->updateClassType($_POST['class_type_id'], $data);
 				echo "Class type updated";
 			}	
 		}
@@ -115,24 +132,30 @@ class class_type extends CI_Controller
 					);
 
 				$start_time = new DateTime($_POST['class_start_date']);
-				$start_time = $start_time->format('H:m:00');
+				$start_time = $start_time->format('H:i:00');
 
 				$end_time = new DateTime($_POST['class_end_date']);
-				$end_time = $end_time->format('H:m:00');
+				$end_time = $end_time->format('H:i:00');
 
 				foreach ($_POST['repeat_dates'] as $key => $date) {
 					$date = new DateTime($date);
 					$date = $date->format('Y-m-d');
 
-					$newClass['class_start_date'] = $date . $start_time;
-					$newClass['class_end_date'] = $date . $end_time;
+					$newClass['class_start_date'] = "$date $start_time";
+					$newClass['class_end_date'] = "$date $end_time";
+
+
+					$roomBooked = $this->classes
+					->isRoomBookedOut($_POST['room_id'], $date, $date, $start_time, $end_time);
+
+					if($roomBooked){
+						continue;
+					}
 
 					$this->classes->insertClass($newClass);
 				}
 
-				echo("Classes added");
-
-
+				echo("Classes saved");
 
 			}else{
 				echo("Missing parameters");	
@@ -159,13 +182,36 @@ class class_type extends CI_Controller
 	 * Get all the sports class types as json
 	 */
 	function getSportsClassTypes(){
-		if($this->tank_auth->is_admin()){
 		$this->load->model('classtype');
-			$types = $this->classtype->getSportClassTypeNameIDs();
-			echo json_encode($types);
+		
+		$types = $this->classtype->getSportClassTypeNameIDs();
+		echo json_encode($types);
+
+	}
+	
+	/**
+	* Add new sport type
+	*/
+	function addSportType(){
+		if($this->tank_auth->is_admin()){
+			if (isset($_POST['class_type']) && isset($_POST['class_description']) && isset($_POST['category_id']) && isset($_POST['duration'])){
+				$data = array(
+					'class_type'		=>	$_POST['class_type'],
+					'class_description'	=>	$_POST['class_description'],
+					'category_id'		=>	$_POST['category_id'],
+					'is_sport'			=>	true,
+					'duration'			=>	$_POST['duration']
+					);
+
+				$this->classes->addNewClassType($data);
+				echo "Class Added";
+			}else{
+				echo "No values";
+			}
 
 		}
 	}
+
 
 
 }

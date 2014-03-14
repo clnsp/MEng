@@ -37,7 +37,7 @@ class Members extends CI_Model
    */
   function getUserByID($id) //was fetchUser($id)
   {
-  	$this -> db -> select($this -> table_name.'.id, first_name, second_name, email, home_number, mobile_number, twitter, comms_preference, activated, banned, ban_reason, membership_type, end_date , type');
+  	$this -> db -> select($this -> table_name.'.id, first_name, second_name, email, home_number, mobile_number, twitter, comms_preference, activated, banned, ban_reason, membership_type, start_date, end_date , type');
   	$this -> db -> from($this -> table_name);
   	$this -> db -> where($this -> table_name.'.id', $id);
    	$this->db->join('membership_type_tbl', 'membership_type_tbl.id = '.$this -> table_name.'.membership_type_id');
@@ -72,10 +72,21 @@ class Members extends CI_Model
  * @return array
  */
  function getMembershipTypes($id) {
-	$sql = "SELECT  membership_type_tbl.id as id, membership_type, start_date, end_date FROM users, member_membership_tbl, membership_type_tbl WHERE users.id = ? AND member_membership_tbl.member_type_id = users.member_type_id AND membership_type_tbl.id = member_membership_tbl.membership_type_id AND end_date > CURDATE( )";
+	$sql = "SELECT  membership_type_tbl.id as id, membership_type, start_date, end_date FROM users, member_membership_tbl, membership_type_tbl WHERE users.id = ? AND member_membership_tbl.member_type_id = users.member_type_id AND membership_type_tbl.id = member_membership_tbl.membership_type_id  AND membership_type_tbl.id != users.membership_type_id AND end_date > CURDATE( )";
     $query = $this->db->query($sql, $id);
-	return $query->result();
+	return $query->result();  
  }
+ 
+ /**
+  * Create a new membership
+  * @return the new row's id
+  */
+ function createNewMembership($name,$startDate,$endDate){
+	$data = array('membership_type' => $name ,'start_date' => $startDate , 'end_date' => $endDate );
+	$this->db->insert('membership_type_tbl', $data); 
+	$insert_id = $this->db->insert_id();
+	return $insert_id;
+}
 
  /**
  * Get member email
@@ -127,5 +138,25 @@ class Members extends CI_Model
    $this->db->where('member_id', $pid);
    $this->db->where('class_id', $cid);
    $this->db->update('class_booking_tbl', $data); 
+  }
+
+  function getAdminUsers()
+  {
+    $this -> db -> select($this -> table_name.'.id, first_name, second_name, email, home_number, mobile_number, twitter, comms_preference, activated, banned, ban_reason');
+    $this -> db -> from($this -> table_name);
+    $this -> db -> where($this -> table_name.'.member_type_id', '7');
+
+    $query = $this -> db -> get();
+    return $query->result();
+ }
+
+  function getSuperAdminUsers()
+  {
+    $this -> db -> select($this -> table_name.'.id, first_name, second_name, email, home_number, mobile_number, twitter, comms_preference, activated, banned, ban_reason');
+    $this -> db -> from($this -> table_name);
+    $this -> db -> where($this -> table_name.'.member_type_id', '8');
+
+    $query = $this -> db -> get();   
+    return $query->result();
   }
 }

@@ -1,7 +1,6 @@
 <?php
 class Member extends CI_Controller{
 
-
 	/*
 	 * Get user details for editing
 	 */
@@ -23,15 +22,29 @@ class Member extends CI_Controller{
 	if(check_admin()){
 		$this->load->model('members');
 		if(isset($_POST['id']) && isset($_POST['changes'])){
-			echo $this->members->updateUser(strtolower($_POST['id']), array_map('strtolower',$_POST['changes']));
-		}
-		}
+			if(array_key_exists('email', $_POST['changes'])){
+				$this->load->library('tank_auth');
+				echo $this->tank_auth->change_email($_POST['changes']['email'],$_POST['id']);
+				unset($_POST['changes']['email']);
+			}
 
+			if(array_key_exists('mobile_number', $_POST['changes'])){
+				$this->load->library('tank_auth');
+				unset($_POST['changes']['mobile_number']);
+			}
+
+			if(array_key_exists('twitter', $_POST['changes'])){
+				$this->load->library('tank_auth');
+				unset($_POST['changes']['twitter']);
+			}
+			if(count($_POST['changes'])>0){
+				echo $this->members->updateUser(strtolower($_POST['id']), array_map('strtolower',$_POST['changes']));
+			}
+		}
+		}
 	}
-	
 
-
-	function createUserChanges(){
+	function createUserChanges(){ // ISSET CHECKS 
 	if(check_admin()){
 		$this->load->model('members');
 		$this->load->library('tank_auth');
@@ -39,16 +52,60 @@ class Member extends CI_Controller{
 		$new_details['first_name']       = $_POST['first_name'];
 		$new_details['second_name']      = $_POST['second_name'];
 		//$new_details['email']            = $_POST['email'];
+		if($_POST['comms_preference']==2){
+			//TWITTER VALIDATION
+		}
+
+		if($_POST['comms_preference']==1){
+			// SMS VALIDATION
+		}
 		$new_details['home_number']      = $_POST['home_number'];
 		$new_details['mobile_number']    = $_POST['mobile_number'];
 		$new_details['twitter']          = $_POST['twitter'];
 		$new_details['comms_preference'] = $_POST['comms_preference'];
+
 		
-		$_POST['changes'] = $new_details;
+		  $_POST['changes'] = $new_details;
 		
-		echo $this->members->updateUser(strtolower($this->tank_auth->get_user_id()), array_map('strtolower',$_POST['changes']));
-		redirect('auth/load_details');
+		if(isset($_POST['changes'])){
+		  echo $this->members->updateUser(strtolower($this->tank_auth->get_user_id()), array_map('strtolower',$_POST['changes']));
+		  redirect('auth/load_details');
 		}
+	  }
+	}
+	
+	function createPermissionChanges()
+	{
+	  if(check_admin()){
+		$this->load->model('members');
+		$this->load->library('tank_auth');
+		
+		print_r($_POST);
+
+		if(isset($_POST['new_admins'])){
+		  $admins = $_POST['new_admins'];
+		  $new_details['member_type_id'] = '8';
+		  $_POST['changes'] = $new_details;
+		  if(isset($_POST['changes'])){		  
+		    foreach ($admins as $a) {
+		      echo $this->members->updateUser($a, $new_details);
+		    }
+		  }
+	    }
+
+	    if(isset($_POST['new_supers'])){
+		  $supers = $_POST['new_supers'];
+	      $new_details['member_type_id'] = '7';
+		  $_POST['changes'] = $new_details;
+		  if(isset($_POST['changes'])){
+		    foreach ($supers as $s) {
+		      //echo $this->members->updateUser($s, $new_details);
+			}
+          }
+	    }
+
+		redirect('auth/admin');
+	  }
 	}
 	
 	/*
@@ -98,25 +155,65 @@ class Member extends CI_Controller{
 		if(isset($_GET['id']))
 		{
 			$this->load->Model('Categories');
-			/*$this->load->Model('classes');
 			$this->load->Model('Bookings');
 			
-			$vals['bookings'] = $this->Bookings->getBookingByMember($_GET['id']);*/
+			$bookings = $this->Bookings->getBookingByMemberView($_GET['id']);
 			$data['categories'] = $this->Categories->getCategories();
-			
-			/*foreach ($vals['bookings'] as $book){ 
-				$book->cla = $this->classes->getClassInformation($book->class_id)
-			}*/
-		$this->load->view('pages/admin/'.$page, $data);
+			$data['bookings'] = array();
+			foreach ($bookings as $book){ 
+				if(!isset($data['bookings'][$book->category_id])){
+					$data['bookings'][$book->category_id] = array();
+				}
+				$data['bookings'][$book->category_id][] = $book;		
+			}
+			$this->load->view('pages/admin/'.$page, $data);
 		}
 		}
 	}
+			/*$this->load->helper('comms');
+		create_mesage('','https://devweb2013.cis.strath.ac.uk');*/
 	
 	/*
 	 * Update User Membership
 	 */
 	function updateUserMembership(){
+		if(check_admin()){
+			$this->load->model('members');
+			if(isset($_POST['id']) && isset($_POST['membership']) && isset($_POST['options'])){ // CUSTOM MEMBERSHIP
+				print_r($_POST);				
+				if($_POST['membership']==-1 && $this->_validDate($_POST['options']['start']) && $this->_validDate($_POST['options']['end']))
+				{
+					$start =  new DateTime($_POST['options']['start']);
+					$end =  new DateTime($_POST['options']['end']);
+					$mem = $this->members->createNewMembership('Custom',$start->format('Y-m-d'),$end->format('Y-m-d'));
+					echo $this->members->updateUser($_POST['id'],array('membership_type_id'=>$mem));
+					return;
+				}else {
+					echo "Invalid date format";
+					return;
+				}
+			}
+			else if(isset($_POST['id']) && isset($_POST['membership'])){ // AVAILABLE MEMBERSHIPS
+				$avMeb = $this->members->getMembershipTypes($_POST['id']);
+				foreach ($avMeb as $m){ 
+					if (isset($m->id) && $m->id == $_POST['membership']) 
+						echo $this->members->updateUser($_POST['id'],array('membership_type_id'=>$_POST['membership']));
+				}
+			}
+		}
+	}
 	
+		/**
+	 * Checks whether supplied string is a valid date
+	 * @param	string
+	 * @return	bool
+	 */
+	
+	function _validDate($string) {
+		$date = date_parse($string);	
+		
+		return(!($date["month"] == '' && $date["day"]=='' && $date["year"] =='' && $date["hour"] == '' && $date["minute"]==''));
+
 	}
 	
 	/*

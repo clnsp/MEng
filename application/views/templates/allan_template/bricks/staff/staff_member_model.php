@@ -119,65 +119,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
-				<!--COLIN TEST --> <!--COLIN TEST--> 
-				                <div id="mainContent" class="row" style="z-index:2;">
-                    <div class="panel panel-primary col-lg-6" style="padding:0px;">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">Bookings</h3>
-                        </div>
-                        <div class="panel-body">
-<div class="panel-group" id="accordion">
-</div>
-                        </div>
-                    </div>
-                    <div class="panel panel-primary col-lg-6" style="padding:0px;">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">Attendance</h3>
-                        </div>
-                        <div class="panel-body">
-						<div class="row">
-							<div class="col-md-6"><span>Class Bookings:  <strong>10</strong></span><br/><br/><span>Popular Class:  <strong>Zumba</strong></span><br/></div>
-							<div class="col-md-6"><span>Class Attendance: <strong>50%</strong></span><br/><br/><span>Popular Time:  <strong>Tuesday, 5:00</strong></span><br/></div>
-						</div>
-                        </div>
-						
-</div>
-                        </div>	
-			<!--COLIN TEST --><!--COLIN TEST -->
-			<div class="row">
-			                    <div class="panel panel-primary col-lg-6" style="padding:0px;">
-                        <div class="panel-heading">
-                            <h3 class="panel-title views">Change Membership</h3>
-                        </div>
-                        <div class="panel-body">
-							<span>Current Membership: <span class="pull-right"><span id="memType">Student</span> <span id="memShipType">13/14</span></span></span><br/>
-							
-							<div class="row">
-								<div class="col-md-4">Validity:</div>
-								<div class="col-md-8 text-right">From: <strong>01/02/03</strong> To: <strong>06/07/08</strong></div>
-							</div>
-							<form role="form">
-								<div class="form-group">
-									<label for="memberships">Avaliable Membership Types:</label>
-									<select id="membershipSelect"class="form-control"></select>
-								</div>
-                        </div>
-						</div>
-			            <div class="panel panel-primary col-lg-6" style="padding:0px;">
-                        <div class="panel-heading">
-                            <h3 class="panel-title views">Custom Membership </h3>
-                        </div>
-                        <div class="panel-body">
-							<div id="date-selector"></div>
-						</div>
-			</div>
-			
-			
-			
-			
-			
-			
+                </div>			
             </div>
             <!-- FOOTER-->
             <div class="modal-footer">
@@ -185,11 +127,11 @@
                     <div class="col-md-8" style="text-align: left;">
                         <!-- LEFT-->
                         <!-- Single button -->
-                            <button type="button" id="contact "class="btn btn-info btn-sm" href="#SubMemberDetails" data-toggle="submodal">
+                            <button type="button" id="contact" class="btn btn-info btn-sm" href="#SubMemberDetails" data-toggle="submodal">
                                 <i class="fa fa-user fa-fw"></i> Contact </span>
                             </button>
                         <!-- Single button -->
-                            <button type="button" class="btn btn-warning btn-sm dropdown-toggle" data-toggle="dropdown">
+                            <button type="button" id="attendance"class="btn btn-warning btn-sm" href="#SubMemberDetails" data-toggle="submodal">
                                 <i class="fa fa-search"></i> Attendance</span>
                             </button>
                         <!-- Single button -->
@@ -198,7 +140,7 @@
                                 <i class="fa fa-cogs"></i>  Options <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="#SubMemberDetails" data-toggle="submodal"><i class="fa fa-users"></i>  Update Membership</a></li>
+                                <li class="membership"><a href="#SubMemberDetails" data-toggle="submodal"><i class="fa fa-users"></i>  Update Membership</a></li>
                                 <li class="divider"></li>
                                 <li class="status"><a href="#SubMemberDetails" data-toggle="submodal"><i class="fa fa-ban fa-fw"></i>  Change Status</a></li>
                                 <li class="divider"></li>

@@ -1,61 +1,60 @@
+<?php $form = array(
+'role' => 'form'); ?>
+
+
+
 <?php
 
-$form = array(
-	'class' => 'form-horizontal',
-	'role' => 'form',
-	);
+if (count($classes) == 0) {
+	echo("<td class='nofound' colspan='6'><h2 class='well'>No classes found</h2></td>");
+}
 
+foreach($classes as $row): ?>
+
+<tr>
+
+	<?php 
+	$start_date = new DateTime($row['class_start_date']);
+	$end_date = new DateTime($row['class_end_date']);
+	$start_stamp = $start_date->getTimestamp();
+	$end_stamp = $start_date->getTimestamp();
+	
 	?>
 
-	<div class="col-sm-8">
+	<td data-title="Activity"><?php echo $row['class_type'];?></td>
+	<td data-value='<?php echo $start_stamp; ?>' data-title="Date"><?php echo $start_date->format('jS F Y'); ?></td>
+	<td data-value='<?php echo $start_stamp; ?>' data-title="Start" ><?php echo $start_date->format('h.i A'); ?></td>
+	<td data-value='<?php echo $end_stamp; ?>' data-title="End"><?php echo $end_date->format('h.i A'); ?></td>
+	<td data-title="Room"><?php echo $row['room'];?></td>    	
+	<td data-title="Book" data-sort-ignore="true">		
+		
+		<?php 
+		if(isset($_POST['is_sport'])){
+			$hidden = array(
+				'class_type_id' =>  $row['class_type_id'],
+				'start' => $row['date'] . " " .$row['class_start_date'],
+				'end' => $row['date'] . " " . $row['class_end_date'],
+				'room_id' => $row['room_id']
+				);
+			echo form_open("/booking/bookSport", $form);			
+		}else{
+			$hidden = array(
+				'classid' =>  $row['class_id'],
+				'fully_booked' => $row['fully_booked']);
+			echo form_open("/booking/bookClass", $form);
+		}
 
-		<table cellpadding="0" cellspacing="0" border="0" class="table table-hover table-striped table-condensed table-bordered dataTable display pull-right" id="SearchResultsTable">
-			<thead>
-				<tr>
-					<th>Activity</th>
-					<th>Start Time</th>
-					<th>End Time</th>
-					<th>Room</th> 	
-					<th>Book</th>
-				</tr>
-			</thead>
-			<tbody>
-				<?php $count = 0; ?>
-				<?php foreach($classes as $row): ?>
-				<tr>
+		echo form_hidden($hidden);
 
-					<?php $class_type1 = $row['class_type'];?>
-					<?php $start_date1 = $row['class_start_date'];?>
-					<?php $mystartdate = strtotime($start_date1); ?>				
-					<?php $start_test = date('jS F Y h.i A', $mystartdate); ?>
-					<?php $end_date1 = $row['class_end_date'];?>
-					<?php $myenddate = strtotime($end_date1); ?>				
-					<?php $end_test = date('jS F Y h.i A', $myenddate); ?>
-					<?php $room1 = $row['room'];?>
-					<?php $classid = $row['class_id'];?>
-					<?php $hidden = array('classid' => $classid,
-						'start' => $start_test,
-						'end' => $end_test);?> 
+		if(isset($row['fully_booked']) && $row['fully_booked']){
+			echo form_submit('submit', 'Wait', "class='btn btn-warning'");
+		}else{
+			echo form_submit('submit', 'Book', "class='btn btn-primary'");
+		}
+		?>
+	</td>
+	<?php echo form_close(); ?>
 
-						<?php echo form_open("/userbook/index", $form, $hidden); ?>
-
-						<td data-title="Activity"><?php echo $row['class_type'];?></td>
-
-						<td data-title="Start"><?php echo $start_test; ?></td>
-
-						<td data-title="End"><?php echo $end_test; ?></td>
-
-						<td data-title="Room"><?php echo $row['room'];?></td>    
-
-
-						<td data-title="Book"><?php echo form_submit('letssubmit', 'Book', 'class=' . '"' .$buttondata[$count] . '"'); ?></td>
-						<?php $count = $count + 1; ?>
-						<?php echo form_close(); ?>
-
-					</tr>
-				<?php endforeach; ?> 
-
-			</tbody>
-		</table>
-	</div> 
+</tr>
+<?php endforeach; ?> 
 

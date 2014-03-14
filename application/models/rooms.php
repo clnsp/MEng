@@ -141,5 +141,19 @@ Class Rooms extends CI_Model{
 		
 	}
 	
+	/**
+	 * Fetch the size of a divisivle room
+	 * @param int
+	 * @param int
+	 */
+	function getRoomSize($room_id){
+
+		$this->db->select('rows*cols as size', FAlSE);
+		$this->db->from($this -> divisible_rooms_tbl);
+        $query = $this->db->get()->result_array();
+
+		 return $query[0]['size'];
+	}
+	
 }
 ?>

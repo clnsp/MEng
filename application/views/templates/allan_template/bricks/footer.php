@@ -27,7 +27,6 @@ if(!$this->tank_auth->is_admin()){ ?>
      <!-- COLIN TEST FIX-->
      <script src="<?php echo base_url();?>assets/js/jquery-ui.custom.min.js"></script>
 
-
      <script type="text/javascript" src="<?php echo base_url();?>assets/js/jquery.ui.core.js"></script>
      <script type="text/javascript" src="<?php echo base_url();?>assets/js/jquery.ui.datepicker.js"></script>
      <script type="text/javascript" src="<?php echo base_url();?>assets/js/jquery-ui.multidatespicker.js"></script>
@@ -43,33 +42,47 @@ if(!$this->tank_auth->is_admin()){ ?>
      <script type="text/javascript" src="<?php echo base_url();?>assets/js/booking-calendar.js"></script>
 
      <!-- Admin Manage Scripts -->
+
      <script type="text/javascript" src="<?php echo base_url();?>assets/js/jquery.minicolors.js"></script>
 
-     <script type="text/javascript" src="<?php echo base_url();?>assets/js/date.js"></script>
-     <script type="text/javascript" src="<?php echo base_url();?>assets/js/manage.js"></script>
-	 
-	 
-		<!-- Patrick Test Scripts -->
-	   <script type="text/javascript" src="<?php echo base_url();?>assets/js/bootstrap-timepicker.js"></script>
+     <!-- Patrick Test Scripts -->
+     <script type="text/javascript" src="<?php echo base_url();?>assets/js/bootstrap-timepicker.js"></script>
      <script src="<?php echo base_url();?>assets/datatab/js/jquery.dataTables.min.js"></script>
      <script src="<?php echo base_url();?>assets/datatab/js/DT_bootstrap.min.js"></script>
 
      <!-- Custom -->
      <script type="text/javascript" src="<?php echo base_url();?>assets/js/bootbox.min.js"></script>
-     
+     <script type="text/javascript" src="<?php echo base_url();?>assets/js/footable/footable.js"></script>
+     <script type="text/javascript" src="<?php echo base_url();?>assets/js/footable/footable.filter.js"></script>
+     <script type="text/javascript" src="<?php echo base_url();?>assets/js/footable/footable.paginate.js"></script>
+     <script type="text/javascript" src="<?php echo base_url();?>assets/js/footable/footable.sort.js"></script>
+
      <!-- Sitewide javascript -->
+     <script type="text/javascript" src="<?php echo base_url();?>assets/js/modernizr-custom.js"></script>
+     <script type="text/javascript" src="<?php echo base_url();?>assets/js/detectizr.js"></script>
+     
      <script type="text/javascript" src="<?php echo base_url();?>assets/js/moment.js"></script>  <!-- Time/DatePicker -->
-     <script type="text/javascript" src="<?php echo base_url();?>assets/js/bootstrap-datetimepicker.js"></script>
      <script type="text/javascript" src="<?php echo base_url();?>assets/js/bootstrap-override.js"></script>
      <script type="text/javascript" src="<?php echo base_url();?>assets/js/theme.js"></script>
      
+     <?php if($page_title=="manage"){ ?>
+     <script type="text/javascript" src="<?php echo base_url();?>assets/js/date.js"></script>
+     <script type="text/javascript" src="<?php echo base_url();?>assets/js/global-manage.js"></script>
+     <script type="text/javascript" src="<?php echo base_url();?>assets/js/manage.js"></script>
+     
+     <?php } ?>
+     
      <?php if($page_title=="user_booking" || $page_title=="search_results"){ ?>
-    	<script type="text/javascript" src="<?php echo base_url();?>assets/js/user-booking.js"></script>
-     <?php }?>
+     <script type="text/javascript" src="<?php echo base_url();?>assets/js/user-booking.js"></script>
 
-   <?php if($page_title=="manage-sports-hall"){ ?>
+     <?php }?>
+     
+
+     
+     <?php if($page_title=="manage-sports-hall"){ ?>
+     <script type="text/javascript" src="<?php echo base_url();?>assets/js/global-manage.js"></script>
      <script type="text/javascript" src="<?php echo base_url();?>assets/js/manage-sports-hall.js"></script>
-   <?php } ?>
+     <?php } ?>
 
      <script> 
       // using JQUERY's ready method to know when all dom elements are rendered

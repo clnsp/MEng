@@ -265,11 +265,14 @@ class Tank_auth
 	 * @param	string
 	 * @return	array
 	 */
-	function change_email($email)
+	function change_email($email, $user_id=-1)
 	{
-		$user_id = $this->ci->session->userdata('user_id');
+		if($user_id==-1){
+			$user_id = $this->ci->session->userdata('user_id');
+		}
 
 		if (!is_null($user = $this->ci->users->get_user_by_id($user_id, FALSE))) {
+
 
 			$data = array(
 				'user_id'	=> $user_id,
@@ -287,6 +290,64 @@ class Tank_auth
 
 			} else {
 				$this->error = array('email' => 'auth_email_in_use');
+			}
+		}
+		return NULL;
+	}
+
+	function change_mobile_number($mobile_number, $user_id=-1)
+	{
+		if($user_id==-1){
+			$user_id = $this->ci->session->userdata('user_id');
+		}
+
+		if (!is_null($user = $this->ci->users->get_user_by_id($user_id, FALSE))) {
+
+			$data = array(
+				'user_id'	=> $user_id,
+				'username'	=> $user->username,
+				'mobile_number'		=> $mobile_number,
+			);
+			if (strtolower($user->mobile_number) == strtolower($mobile_number)) {		// leave activation key as is
+				$data['new_mobile_number_key'] = $user->new_mobile_number_key;
+				return $data;
+
+			} elseif ($this->ci->users->is_mobile_number_available($mobile_number)) {
+				$data['new_mobile_number_key'] = md5(rand().microtime());
+				$this->ci->users->set_mobile_number_email($user_id, $mobile_number, $data['new_mobile_number_key'], FALSE);
+				return $data;
+
+			} else {
+				$this->error = array('mobile_number' => 'auth_mobile_number_in_use');
+			}
+		}
+		return NULL;
+	}
+
+	function change_twitter($twitter, $user_id=-1)
+	{
+		if($user_id==-1){
+			$user_id = $this->ci->session->userdata('user_id');
+		}
+
+		if (!is_null($user = $this->ci->users->get_user_by_id($user_id, FALSE))) {
+
+			$data = array(
+				'user_id'	=> $user_id,
+				'username'	=> $user->username,
+				'twitter'		=> $twitter,
+			);
+			if (strtolower($user->twitter) == strtolower($twitter)) {		// leave activation key as is
+				$data['new_twitter_key'] = $user->new_twitter_key;
+				return $data;
+
+			} elseif ($this->ci->users->is_twitter_available($twitter)) {
+				$data['new_twitter_key'] = md5(rand().microtime());
+				$this->ci->users->set_new_twitter($user_id, $twitter, $data['new_twitter_key'], FALSE);
+				return $data;
+
+			} else {
+				$this->error = array('twitter' => 'auth_twitter_in_use');
 			}
 		}
 		return NULL;

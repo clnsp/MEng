@@ -66,12 +66,6 @@ $confirm_password = array(
 	'class' => 'form-control',
 	'placeholder' => 'Confirm Password',
 	);
-$user_type = array(
-	'name' => 'member_type',
-	'id' => 'member_type',
-	);
-
-$user_type_options = array('1'  => 'Student','2'  => 'Staff',);
 
 $comm_prefs = array(
 	'name' => 'comms_preference',
@@ -79,6 +73,26 @@ $comm_prefs = array(
 	);
 
 $comm_prefs_options = array('1'  => 'Email only','2'  => ' Email and SMS','3'  => 'Email, SMS and Twitter',);
+
+$user_type = array(
+	'name' => 'member_type',
+	'id' => 'member_type',
+	);
+
+$radio_student = array(
+    'name'        => 'member_type',
+    'id'          => 'student-radio',
+    'value'       => '1',
+    'checked'     => FALSE,
+);
+
+$radio_staff = array(
+    'name'        => 'member_type',
+    'id'          => 'staff-radio',
+    'value'       => '2',
+    'checked'     => FALSE,
+);
+
 	
 $captcha = array(
 	'name'	=> 'captcha',
@@ -159,13 +173,14 @@ $form = array(
 				<?php echo form_password($confirm_password); ?>
 			</div>
 		</div>
-		
+
 		<div class="form-group">
 			<?php echo form_label('User Type *', $user_type['id'], $label); ?>
 			<div class="col-sm-10">
-				<?php echo  form_dropdown($user_type['name'], $user_type_options, '1','class="form-control"'); ?>
+				<?php echo form_radio($radio_student) . " Student   " ; echo  form_radio($radio_staff) . " Staff   ";?>
 			</div>
 		</div>
+
 		
 		<div class="form-group">
 			<?php echo form_label('Communication Preferences *', $comm_prefs['id'], $label); ?>
