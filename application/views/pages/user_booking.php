@@ -19,7 +19,7 @@ $date = array(
 	'size'	=> 20,
 	'type'  => 'text',
 	'class' => 'form-control datepicker',
-	'placeholder' => 'Date',
+	'placeholder' => 'mm/dd/yyyy',
 	
 	);
 
@@ -67,9 +67,7 @@ $js = 'class="form-control"';
 ?>
 
 <div class='row'>
-	<div class="col-sm-3 no-pad-right">
-
-
+	<div id="search-panel" class="col-sm-3">
 
 		<ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
 			<li class="active"><a href="#classes" data-toggle="tab"><b>Classes</b></a></li>
@@ -85,7 +83,6 @@ $js = 'class="form-control"';
 					<?php echo form_input($isSport);	 ?>
 				</div>
 
-
 				<div class="form-group"></div>
 
 				<div class="toggleInput form-group">
@@ -95,8 +92,6 @@ $js = 'class="form-control"';
 					echo form_dropdown('class_type_id',array('-1' => 'Choose a class...') + $classTypes, '' , 'class="form-control classes"');	 ?>
 				</div>
 
-
-
 				<div class="toggleInput form-group hidden">
 					<?php echo form_dropdown('class_type_id', $sportClassTypes, '' , 'class="form-control sports" disabled=disabled');	 ?>
 				</div>
@@ -105,7 +100,6 @@ $js = 'class="form-control"';
 					<label for="date">Date</label>
 					<?php echo form_input($date); ?>
 				</div>
-
 
 				<div class="form-group">
 					<label for="starttime">Start</label>
@@ -130,7 +124,7 @@ $js = 'class="form-control"';
 
 	<div class="col-sm-9">
 
-		<table class="footable table table table-striped table-hover table-bordered classes">
+		<table class="footable table table table-striped table-hover table-bordered classes hidden">
 			<thead>
 				<tr>
 					<th>Activity</th>
@@ -143,7 +137,7 @@ $js = 'class="form-control"';
 			</thead>
 
 			<tbody>
-<!-- 		<td>Start</td>
+<!-- 	<td>Start</td>
 		<td>end</td>
 		<td>room</td>
 		<td>book</td> -->

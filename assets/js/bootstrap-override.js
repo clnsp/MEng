@@ -409,6 +409,10 @@ Modernizr.Detectizr.detect({
 	detectDevice: true
 });
 
+if(Modernizr.Detectizr.device.type == 'desktop'){
+	$('.navbar-default.navbar').addClass('navbar-fixed-top');
+}
+
 if(Modernizr.Detectizr.device.type == 'mobile' || Modernizr.Detectizr.device.type == 'tablet' && Modernizr.inputtypes.date){
 	$('.datepicker').attr('type', 'date');
 }else{

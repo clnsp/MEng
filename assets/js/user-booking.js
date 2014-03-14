@@ -20,6 +20,7 @@ $( document ).ready(function() {
 	
 	$('#booking').on('submit', 'form.prevent.classes', function(e) {
 		var table = $('table.footable.table.classes tbody');
+		$('table.footable.table.classes').removeClass('hidden');
 
 		$.post(siteUrl + "/booking/search", $(this).serialize(), function( data ) {
 			table.html(data);
