@@ -12,7 +12,6 @@
 					<div class="manage-panel">
 						<table id='class-types-table' class="table table-striped table-hover">
 							<tr>
-								<th>Class id</th>
 								<th>Class</th>
 								<th>Room</th>
 								<th>Starting</th>
@@ -36,15 +35,19 @@
 		<?php $class_booking_id = $d['class_id']; ?>
 		<?php $hidden = array('class_booking_id' => $class_booking_id,
 				      'member_id' => $member_id	); ?>
+		<?php if($d['cancelled'] == "0"){
+			$cancelled = "No";
+			}else{
+			$cancelled = "Yes";
+} ?>
 							
 	<tr  booking_id="<?php echo $d['member_id'] ?>">
 
-			<td class="class_id"><?php echo $d['class_id'] ?></td>
 			<td class="class_id"><?php echo $d['title'] ?></td>
 			<td class="class_id"><?php echo $d['room'] ?></td>
 			<td class="class_id"><?php echo $startDate ?></td>
 			<td class="class_id"><?php echo $endDate ?></td>
-			<td class="class_id"><?php echo $d['cancelled'] ?></td>
+			<td class="class_id"><?php echo $cancelled ?></td>
 			<?php echo form_open("/edit_bookings/cancelBooking", $form, $hidden); ?>
   			<td class="class_id"><?php echo form_submit('cancelBooking', 'Cancel Booking', "class= btn btn-warning"); ?>
 			<?php echo form_close(); ?>
@@ -67,7 +70,6 @@
 					<div class="manage-panel">
 						<table id='class-types-table' class="table table-striped table-hover">
 							<tr>
-								<th>Class id</th>
 								<th>Class</th>
 								<th>Room</th>
 								<th>Starting</th>
@@ -85,16 +87,25 @@
 		<?php $endDate = $d['end'] ?>
 		<?php $endDate = strtotime($endDate); ?>				
 		<?php $endDate = date('jS F Y h.i A', $endDate); ?>
+		<?php if($d['cancelled'] == "0"){
+			$cancelled = "No";
+			}else{
+			$cancelled = "Yes";
+			}?>
+		<?php if($d['attended'] == "0"){
+			$attended = "No";
+			}else{
+			$attended = "Yes";
+			}?>
 							
 	<tr  booking_id="<?php echo $d['member_id'] ?>">
 
-			<td class="class_id"><?php echo $d['class_id'] ?></td>
 			<td class="class_id"><?php echo $d['title'] ?></td>
 			<td class="class_id"><?php echo $d['room'] ?></td>
 			<td class="class_id"><?php echo $startDate ?></td>
 			<td class="class_id"><?php echo $endDate ?></td>
-			<td class="class_id"><?php echo $d['cancelled'] ?></td>
-			<td class="class_id"><?php echo $d['attended'] ?></td>
+			<td class="class_id"><?php echo $cancelled ?></td>
+			<td class="class_id"><?php echo $attended ?></td>
 													
 		   </tr>
 							
