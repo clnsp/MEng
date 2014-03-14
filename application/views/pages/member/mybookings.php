@@ -11,6 +11,9 @@
 					
 					<div class="manage-panel">
 						<table id='class-types-table' class="table table-striped table-hover">
+
+	<?php if(count($bookings) != 0){ ?>
+
 							<tr>
 								<th>Class</th>
 								<th>Room</th>
@@ -55,6 +58,8 @@
 		   </tr>
 							
 	<?php endforeach; ?>
+	<?php }else{
+		echo("<td class='nofound' colspan='6'><h2>No classes found</h2></td>");}?>
 </tbody>
 		</table>
 					</div>
