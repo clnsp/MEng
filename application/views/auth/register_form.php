@@ -47,6 +47,15 @@ $mobile_number = array(
 	'class' => 'form-control',
 	'placeholder' => 'Mobile Number (Excluding 0)',
 );
+$twitter = array(
+	'name'	=> 'twitter',
+	'id'	=> 'twitter',
+	'value'	=> set_value('twitter'),
+	'maxlength'	=> 15,
+	'size'	=> 30,
+	'class' => 'form-control',
+	'placeholder' => 'Twitter ID',
+);
 $password = array(
 	'name'	=> 'password',
 	'id'	=> 'password',
@@ -93,6 +102,20 @@ $radio_staff = array(
     'checked'     => FALSE,
 );
 
+$radio_student_partner = array(
+    'name'        => 'member_type',
+    'id'          => 'student-radio',
+    'value'       => '3',
+    'checked'     => FALSE,
+);
+
+$radio_staff_partner = array(
+    'name'        => 'member_type',
+    'id'          => 'staff-radio',
+    'value'       => '4',
+    'checked'     => FALSE,
+);
+
 	
 $captcha = array(
 	'name'	=> 'captcha',
@@ -114,6 +137,13 @@ $form = array(
 	<p>Lorem ipsum dolor sit amet, feugiat apeirian contentiones ut ius, ius probatus rationibus repudiandae ad. Ad sed vero periculis. An posse delectus philosophia vel. Ne ius pertinax consectetuer, eam ex mundi aeterno dissentiunt. Saepe ancillae assueverit vis et, eam rebum delenit deterruisset cu.</p>
 	<div class="well well-lg  div-center">
 		<?php echo form_open($this->uri->uri_string(), $form); ?>
+		<div class="form-group">
+			<?php echo form_label('User Type *', $user_type['id'], $label); ?>
+			<div class="col-sm-10">
+				<?php echo form_radio($radio_student) . " Student   " ; echo  form_radio($radio_staff) . " Staff   "; echo form_radio($radio_student_partner) . " Student Partner/Spouse   " ; echo form_radio($radio_student_partner) . " Staff Partner/Spouse   " ;?>
+			</div>
+		</div>
+
 		<?php echo form_error($firstname['name']); ?>
 		<div class="form-group">
 			<?php echo form_label('First Name', $firstname['id'], $label); ?>
@@ -142,7 +172,7 @@ $form = array(
 			<?php echo form_label('Home Number', $home_number['id'], $label); ?>
 			<div class="col-sm-10">
 				<div class="input-group">
-				<span class="input-group-addon">+44</span>
+				<span class="input-group-addon"><i class="fa fa-phone"></i></span>
 				<?php echo form_input($home_number); ?>
 				</div>
 			</div>
@@ -152,12 +182,22 @@ $form = array(
 			<?php echo form_label('Mobile Number', $mobile_number['id'], $label); ?>
 			<div class="col-sm-10">
 				<div class="input-group">
-				<span class="input-group-addon">+44</span>
+				<span class="input-group-addon"><i class="fa fa-mobile"></i></span>
 				<?php echo form_input($mobile_number); ?>
 				</div>
 			</div>
 		</div>
 		
+		<div class="form-group">
+			<?php echo form_label('Twitter ID', $twitter['id'], $label); ?>
+			<div class="col-sm-10">
+				<div class="input-group">
+				<span class="input-group-addon"><i class="fa fa-twitter"></i></span>
+				<?php echo form_input($twitter); ?>
+				</div>
+			</div>
+		</div>
+
 		<?php echo form_error($password['name']); ?>
 		<div class="form-group">
 			<?php echo form_label('Password *', $password['id'], $label); ?>
@@ -173,14 +213,6 @@ $form = array(
 				<?php echo form_password($confirm_password); ?>
 			</div>
 		</div>
-
-		<div class="form-group">
-			<?php echo form_label('User Type *', $user_type['id'], $label); ?>
-			<div class="col-sm-10">
-				<?php echo form_radio($radio_student) . " Student   " ; echo  form_radio($radio_staff) . " Staff   ";?>
-			</div>
-		</div>
-
 		
 		<div class="form-group">
 			<?php echo form_label('Communication Preferences *', $comm_prefs['id'], $label); ?>

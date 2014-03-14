@@ -225,8 +225,6 @@ class Auth extends CI_Controller
 		}
 	}
 
-
-
 	function ask_register()
 	{
 		if ($this->tank_auth->is_logged_in()) {									// logged in
@@ -238,8 +236,27 @@ class Auth extends CI_Controller
 		} elseif (!$this->config->item('allow_registration', 'tank_auth')) {	// registration is off
 			$this->_show_message($this->lang->line('auth_message_registration_disabled'));
 
-		} else {
+		} else {			
+			$captcha_registration	= $this->config->item('captcha_registration', 'tank_auth');
+			$use_recaptcha			= $this->config->item('use_recaptcha', 'tank_auth');
+			if ($captcha_registration) {
+				if ($use_recaptcha) {
+					$this->form_validation->set_rules('recaptcha_response_field', 'Confirmation Code', 'trim|xss_clean|required|callback__check_recaptcha');
+				} else {
+					$this->form_validation->set_rules('captcha', 'Confirmation Code', 'trim|xss_clean|required|callback__check_captcha');
+				}
+			}
+			
 			$data = array();
+			if ($captcha_registration) {
+				if ($use_recaptcha) {
+					$data['recaptcha_html'] = $this->_create_recaptcha();
+				} else {
+					$data['captcha_html'] = $this->_create_captcha();
+				}
+			}
+			$data['captcha_registration'] = $captcha_registration;
+			$data['use_recaptcha'] = $use_recaptcha;
 			parse_temp('Register', $this->load->view('auth/ask_register_form', $data, true));
 		}
 
