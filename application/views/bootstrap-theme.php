@@ -496,6 +496,9 @@ table thead, table tfoot {
 
 body{
 	background-color: rgba(226, 226, 226, 0.65);
+}
+
+html.desktop body{
 	padding-top: 70px; //for fixed nav
 }
 
@@ -524,7 +527,8 @@ html, body, #booking {
 	margin: 0 auto -155px;
 }
 
-#booking.user #page-wrapper:after {
+html.desktop #booking.user #page-wrapper:after,
+html.tablet #booking.user #page-wrapper:after {
 	content: "";
 	display: block;
 	height: 155px;
@@ -542,14 +546,14 @@ html, body, #booking {
 	height: 155px;
 	margin-top: 0!important;
 }
-/* Lastly, apply responsive CSS fixes as necessary */
-@media (max-width: 767px) {
-	#footer {
-		margin-left: -20px;
-		margin-right: -20px;
-		padding-left: 20px;
-		padding-right: 20px;
-	}
+
+html.mobile #footer{
+	display: none;
+}
+
+#booking #footer .row{
+	margin-left: 0px; 
+	margin-right: 0px; 
 }
 
 /* @end */
@@ -655,7 +659,7 @@ i.square{
 
 #footer, .footer{
 	margin-top: 2em;
-	padding: 1em;
+	padding: 1em 0 1em 0;
 	background-color: <?php echo $brandPrimary;?>;
 }
 
@@ -931,8 +935,43 @@ ul.ui-autocomplete.popover.dropdown-menu{
 
 /* @end */
 
-/* @remove*/
-#booking.search_results table.footable{
-	display: none;
+
+#booking .nofound{
+	text-align:center;
+	padding: 0 15px 0 15px;
 }
 
+#booking.user_booking tbody{
+	font-size: 15px;
+}
+
+#booking.user_booking input{
+	width: 100%;
+
+}
+
+#booking.user_booking #search-panel .form-group{
+	width:100%;
+	min-width: 100%;
+}
+
+#booking.user_booking #search-panel form{
+	width: 100%;
+}
+
+@media (min-width: 768px){
+	#booking.user_booking #search-panel{
+		padding-right:0px;
+	}
+}
+
+html.mobile #booking.user_booking #search-panel input,
+html.mobile #booking.user_booking #search-panel select{
+	display:block!important;
+	width:100%;
+	height:40px;
+	min-width: 95%;	
+	font-size: 16px;
+	vertical-align: middle;
+	line-height: 35px;
+}

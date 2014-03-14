@@ -8,6 +8,7 @@
  	return replacer;
  };
 
+ var siteUrl = $('html').data('site-url');
 
  $('#page-body')
  
@@ -48,13 +49,6 @@
  	});
 	 //	e.stopImmediatePropagation();
 	});
-
-
- $('.time.timepicker').datetimepicker({	pickDate: false });
-
-
- $('.date.datepicker').datetimepicker({ pickTime:false });
-
 
 
 
@@ -119,13 +113,13 @@ var ClassTypes = function() {
 	var table, drop, list, urlBase, sportsdrop, sportslist;
 	
 	var init = function() {
-	 table = $('<tbody></tbody>');
-	 sportstable = $('<tbody></tbody>');
-	 drop = $('<select></select>');
-	 sportsdrop = $('<select></select>');
-	 list = $('<ul></ul>');
-	 sportslist = $('<ul></ul>');
-	 urlBase = "class_type/";
+		table = $('<tbody></tbody>');
+		sportstable = $('<tbody></tbody>');
+		drop = $('<select></select>');
+		sportsdrop = $('<select></select>');
+		list = $('<ul></ul>');
+		sportslist = $('<ul></ul>');
+		urlBase = "class_type/";
 	}
 
 	var createListItem = function(type){
@@ -133,11 +127,14 @@ var ClassTypes = function() {
 	}
 
 	var createRow = function (type) {
-		return($('<tr data-class_type_id="' + type['class_type_id'] + '"></tr>')
-			.append('<td class="class_type">'+type['class_type'] + '</td>')
-			.append('<td class="class_description">' + type['class_description'] +'</td>')
-			.append('<td data-category_id='+ type['category_id'] +' class="category">' + type['category'] +'</td>') 
-			);			
+		var tr = $('<tr data-class_type_id="' + type['class_type_id'] + '"></tr>')
+		.append('<td class="class_type">'+type['class_type'] + '</td>')
+		.append('<td class="class_description">' + type['class_description'] +'</td>')
+		.append('<td data-category_id='+ type['category_id'] +' class="category">' + type['category'] +'</td>');
+		if(type['is_sport']==1){
+			tr.append('<td data-duration='+ type['duration'] +' class="duration">' + type['duration'] +'</td>')
+		}		
+		return tr;
 	}
 
 	var createOption = function (type) {
@@ -176,6 +173,8 @@ var ClassTypes = function() {
 		sportstable.empty();
 		drop.html('');
 		sportsdrop.html('');
+		list.html('');
+		sportslist.html('');
 	}
 	
 
@@ -210,12 +209,12 @@ var Categories = function() {
 	
 	
 	var init = function() {
-	
-		 $this = this;
-		 urlBase 		= "category/";
-		 hiya 		= "category/";
-		 list = $('<ul></ul>');
-		 drop = $('<select></select>');
+
+		$this = this;
+		urlBase 		= "category/";
+		hiya 		= "category/";
+		list = $('<ul></ul>');
+		drop = $('<select></select>');
 	}
 
 
@@ -226,7 +225,7 @@ var Categories = function() {
 			if(data.length>0){
 				$.each( data, function( key, cat ) {
 					setupCategories(cat);
-			
+
 				});
 			}
 			update();
@@ -237,7 +236,7 @@ var Categories = function() {
 	var setupCategories = function(cat) {
 		list.append(createListItem(cat['category_id'], cat['category'], cat['color']));
 		drop.append(createOption(cat));
-	
+
 	}
 
 	var initColors = function() {
@@ -315,7 +314,7 @@ var Rooms = function() {
 	}
 
 
-	 this.refresh = function () {		
+	this.refresh = function () {		
 		$.getJSON(urlBase + 'getRoomIDs', function(data) {
 
 			clear();
@@ -342,7 +341,8 @@ var Rooms = function() {
 			time: new Date()
 		});
 		
-		$('[type=dropdown].rooms').html(drop.html());
+		$('[type=dropdown].rooms').html('<option value="" disabled selected>Select a room</option>' + drop.html());
+
 	}
 	
 	init();
@@ -357,8 +357,8 @@ var DivisibleRooms = function() {
 	var drop, urlBase;
 	
 	var init = function() {
-		 drop = $('<select></select>');
-		 urlBase = 'facilities/';
+		drop = $('<select></select>');
+		urlBase = 'facilities/';
 	}
 
 
@@ -402,5 +402,35 @@ var divisiblerooms = new DivisibleRooms();
 
 /* responsive tables */
 $('.footable').footable();
+
+
+Modernizr.Detectizr.detect({
+	detectScreen:true,
+	detectDevice: true
+});
+
+if(Modernizr.Detectizr.device.type == 'desktop'){
+	$('.navbar-default.navbar').addClass('navbar-fixed-top');
+}
+
+if(Modernizr.Detectizr.device.type == 'mobile' || Modernizr.Detectizr.device.type == 'tablet' && Modernizr.inputtypes.date){
+	$('.datepicker').attr('type', 'date');
+}else{
+	/* datepickers */
+	$('.datepicker').datepicker({
+		minDate: 0
+	});
+}
+
+if(Modernizr.Detectizr.device.type == 'mobile' || Modernizr.Detectizr.device.type == 'tablet' && Modernizr.inputtypes.date){
+	$('.timepicker').attr('type', 'time');
+}else{
+	/* time pickers */
+	$('.timepicker').each(function(){
+		$(this).timepicker('setTime', '');
+
+	})
+}
+
 
 

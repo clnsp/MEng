@@ -43,8 +43,10 @@ Class Restrictions extends CI_Model{
 			'sport_to_block_id' => $sport_to_block_id,
 			'occurring_sport_id' => $occurring_sport_id,
 			);
-
+		echo($data);
 		$this->db->insert($this -> block_tbl, $data);
+		echo($this->db->last_query());
+		
 	} 
 
 	/**
@@ -77,6 +79,7 @@ Class Restrictions extends CI_Model{
 	/**
 	 * Fetch the block restrictions
 	 * @param int
+	 * @param int
 	 * @return array
 	 */
 	function getBlockRestrictions($room_id){  
@@ -91,18 +94,27 @@ Class Restrictions extends CI_Model{
 	
 	
 	/**
-	 * Fetch the block restriction ids
+	 * Fetch the sports that block a specific sport
+	 * @param int
 	 * @param int
 	 * @return array
 	 */
-	function getBlockRestrictionIDs($room_id){  
+	function getSportsThatBlock($room_id, $sport_to_block_id){  
 
-		$this -> db -> select('sport_to_block, occurring_sport_id');
+		$this -> db -> select('occurring_sport_id');
 		$this -> db -> from($this -> block_view);
 		$this -> db -> where('divisible_room_id', $room_id);
-
+		$this -> db -> where('sport_to_block_id', $sport_to_block_id);
+		
 		$query = $this->db->get();
-		return $query ->result_array();
+
+		$arr = array();
+
+		foreach ($query ->result_array() as $key => $blocked) {
+			array_push($arr, $blocked['occurring_sport_id']);
+		}
+
+		return $arr;
 	} 
 
 }

@@ -25,6 +25,11 @@
 									<label for="class_category">Category</label>
 									<select name="category_id" type="dropdown" class="categories form-control"></select>
 								</div>
+								
+								<div class="form-group">
+									<label for="duration">Duration (mins)</label>
+									<input name="duration" min="15" step="15" type="number" class="form-control"/>
+								</div>
 	
 								<div class="form-group">
 									<label for="class_description">Description</label>
@@ -32,7 +37,7 @@
 								</div>
 	
 								<div class="form-group">
-									<button type="submit" class="btn btn-default">Add Class Type</button>
+									<button type="submit" class="btn btn-primary">Add Sport</button>
 								</div>
 							</form>
 	
@@ -47,7 +52,7 @@
 			<div id="manage-classes" class="">
 						<div class="panel panel-default">
 							<div class="panel-heading">
-								<h3 class="panel-title">Manage Class Types</h3>
+								<h3 class="panel-title">Manage Sports</h3>
 							</div>
 							<div class="panel-body ">						
 			
@@ -57,6 +62,7 @@
 											<th >Title</th>
 											<th data-hide="phone, tablet">Description</th>
 											<th>Category</th>
+											<th data-hide="phone, tablet">Duration</th>
 										</tr>
 									</thead>
 			
@@ -278,7 +284,12 @@
 						<label for="class_category">Category</label>
 						<select name="category_id" type="dropdown" class="form-control"></select>
 					</div>
-
+					
+					<div class="form-group">
+						<label for="duration">Duration</label>
+						<input name="duration" min="15" step="15" type="number" class="form-control"/>
+					</div>
+					
 					<div class="form-group">
 						<label for="class_description">Description</label>
 						<textarea name="class_description" class="form-control" rows="3"></textarea>

@@ -30,7 +30,7 @@ $( document ).ready(function() {
 					categoriesPanel.storename($(this).parent('.list-group-item').data('category_id'), this.value );
 			});
 			
-				
+
 			storeColor = function() {
 				currentColor = this.value;
 			},
@@ -254,7 +254,9 @@ $( document ).ready(function() {
 
 	datepicker = (function() {
 
-		var cal = $('#date-selector').multiDatesPicker({numberOfMonths: [2,2]});
+		var cal = $('#date-selector').multiDatesPicker({
+			numberOfMonths: [2,2]
+		});
 
 		getDates = function() {
 			return cal.multiDatesPicker('getDates');
@@ -313,4 +315,15 @@ $( document ).ready(function() {
 
 	
 }
+});
+
+/* Focus input when input addon is clicked */
+$('.input-group-addon').click(function(){
+	$(this).siblings('input').focus();
+});
+
+$('#apply-repeat-btn').tooltip();
+
+$('#add-block-button').hover(function(){
+	$('#apply-repeat-btn:not(.disabled)').tooltip('show');
 });

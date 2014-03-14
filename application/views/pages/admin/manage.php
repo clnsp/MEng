@@ -1,9 +1,6 @@
 
 <div class="container">
 
-	<div class="row">
-		<h1>Manage</h1>
-	</div>
 	
 	<div class="row">
 
@@ -156,11 +153,11 @@
 									</div>
 
 									<div class="form-group">
-										<label for="class_start_date" class="col-sm-3 control-label">Class End</label>
+										<label for="class_start_date" class="col-sm-3 control-label">Class Start</label>
 
 										<div class="col-sm-4">
-											<div class='input-group time timepicker'>
-												<input name="class_start_date" type='text' class="form-control" placeholder="00:00"/>
+											<div class='input-group'>
+												<input name="class_start_date" type='text' class="form-control timepicker" placeholder="00:00"/>
 												<span class="input-group-addon btn-default"><span class="glyphicon glyphicon-time"></span>
 											</span>
 										</div>
@@ -172,8 +169,8 @@
 									<label for="class_end_date" class="col-sm-3 control-label">Class End</label>
 
 									<div class="col-sm-4">
-										<div class='input-group time timepicker'>
-											<input name="class_end_date" type='text' class="form-control" placeholder="00:00" />
+										<div class='input-group'>
+											<input name="class_end_date" type='text' class="form-control timepicker" placeholder="00:00" />
 											<span class="input-group-addon btn-default"><span class="glyphicon glyphicon-time"></span></span>
 										</div>
 
@@ -206,12 +203,12 @@
 										
 										<div class="col-sm-9">
 										<div class="col-xs-6 no-pad-right no-pad-left pull-right">
-											<button id="apply-repeat-btn" type="button" class="btn btn-default disabled">Apply</button>
+											<button id="apply-repeat-btn" type="button" class="btn btn-primary disabled" data-toggle="tooltip" data-placement="bottom" title="Click to show dates on calendar">Apply</button>
 											<button id="clear-cal-btn" type="button" class="btn btn-default">Clear</button>
 										</div>
 										
-											<div class="col-xs-5 no-pad-left input-group date datepicker">
-												<input name="until" type="text" class="form-control" placeholder="DD/MM/YYYY" disabled>
+											<div class="col-xs-5 no-pad-left input-group">
+												<input name="until" type="text" class="form-control datepicker" placeholder="DD/MM/YYYY" disabled>
 												<span class="input-group-addon btn-default"><span class="glyphicon glyphicon-calendar"></span></span>
 											</div>
 											
@@ -226,7 +223,7 @@
 
 									<div class="form-group">
 										<div class="col-sm-offset-3 col-sm-9">
-											<button type="submit" class="btn btn-primary">Add Block</button>
+											<button id="add-block-button" type="submit" class="btn btn-primary">Add Block</button>
 											
 											
 										</div>
