@@ -32,8 +32,8 @@ foreach($classes as $row): ?>
 		if(isset($_POST['is_sport'])){
 			$hidden = array(
 				'class_type_id' =>  $row['class_type_id'],
-				'start' => $row['date'] . " " .$row['class_start_date'],
-				'end' => $row['date'] . " " . $row['class_end_date'],
+				'start' => $row['class_start_date'],
+				'end' => $row['class_end_date'],
 				'room_id' => $row['room_id']
 				);
 			echo form_open("/booking/bookSport", $form);			

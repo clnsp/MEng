@@ -32,4 +32,5 @@ $config['close_Sunday'] = '17:00';
  * When can classes be booked in advance
  **/
 $config['class_booking_window'] = '+1 days';
+$config['sports_booking_window'] = '+7 days';
 

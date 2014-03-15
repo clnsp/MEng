@@ -66,12 +66,13 @@ if ( ! function_exists('parse_temp')){
 
     function check_member(){
     	$ci = get_instance();
-    	if(!$ci->tank_auth->is_member()){
+
+    	if(!$ci->tank_auth->is_member() && !$ci->tank_auth->is_admin()){
     		//If no session, redirect to login page
     		redirect('login', 'refresh');
     		return false;
     	}
-    	return $ci->tank_auth->is_member();
+    	return (true);
     }
 
 

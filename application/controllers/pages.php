@@ -142,11 +142,11 @@
 		 */
 		public function rooms(){
 
-		if(check_member()){
+			if(check_member()){
 
-			$this->load->Model($page = 'rooms');
-			
-			$data['rooms'] = $this->rooms->getRooms();
+				$this->load->Model($page = 'rooms');
+
+				$data['rooms'] = $this->rooms->getRooms();
 /*
 			$data['room_id'] = $this->facilities->retrieve_ids();
 			$data['room'] = $this->facilities->retrieve_titles();
@@ -154,23 +154,23 @@
 
 */			parse_temp('room', $this->load->view('pages/member/rooms', $data, true));
 
-			}
-
 		}
 
+	}
 
 
-				/**
-		 * User Past Bookings List
-		 */
-		public function mybookings(){
+
+	/**
+	 * User Past Bookings List
+	 */
+	public function mybookings(){
 
 		if(check_member()){
 
 			$member_id = $this->tank_auth->get_user_id();
 
 			$this->load->Model($page = 'bookings');
-			
+
 			$data['bookings'] = $this->bookings->getClassBookingByMember($member_id);
 			$data['bookingsPast'] = $this->bookings->getClassBookingByMember($member_id);
 			$data['bookingMember'] = $member_id;
@@ -185,9 +185,9 @@
 				if(time() > strtotime($end)){
 
 					unset($data['bookings'][$rowCount]);				
-				
+
 				}
-				
+
 				$rowCount++;			
 
 			}
@@ -199,18 +199,18 @@
 				if(time() < strtotime($end)){
 
 					unset($data['bookingsPast'][$rowCounter]);				
-				
+
 				}
-				
+
 				$rowCounter++;			
 
 			}
-			
+
 			parse_temp($page, $this->load->view('pages/member/mybookings', $data, true));
 
-			}
-
 		}
+
+	}
 
 
 		/**
@@ -266,12 +266,12 @@
         */
 		public function user_booking($page = 'user_booking'){
 
-		if(check_member()){
+			if(check_member()){
 
-			$data = setupClassSearchForm();
+				$data = setupClassSearchForm();
 
-			parse_temp($page, $this->load->view('pages/'.$page, $data, true));
-		}
+				parse_temp($page, $this->load->view('pages/'.$page, $data, true));
+			}
 
 		}
 
@@ -280,18 +280,15 @@
 		 */
 		public function class_list($page = 'class_list'){
 
-		if(check_member()){
+			if(check_member()){
 
+				$this->load->Model('Categories');
+				$this->load->Model('classes');
 
-			$this->load->Model('Categories');
-			$this->load->Model('classes');
+				$data['categories'] = $this->Categories->getCategories();
+				$data['class_types'] = $this->classes->getClassTypes();
 
-
-
-			$data['categories'] = $this->Categories->getCategories();
-			$data['class_types'] = $this->classes->getClassTypes();
-
-			parse_temp($page, $this->load->view('pages/'.$page, $data, true));
+				parse_temp($page, $this->load->view('pages/'.$page, $data, true));
 
 			}
 

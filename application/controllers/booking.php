@@ -15,18 +15,22 @@ class booking extends CI_Controller{
 	* Book a class
 	*/
 	function bookClass(){
+		if(check_member()){
+			if(isset($_POST['classid'])){
 
-		if(isset($_POST['classid'])){
+				$this->load->model('bookings');
 
-			$this->load->model('bookings');
+				$user_id = $this->tank_auth->get_user_id();
+				$classInfo = $this->classes->getClassInformation($_POST['classid']);
 
-			$user_id = $this->tank_auth->get_user_id();
+				if(!$this->_bookedOut($user_id, new DateTime($classInfo['class_start_date']), new DateTime($classInfo['class_end_date']))){
+					$this->_addMember($_POST['classid'], $user_id, $classInfo);
+				}
+			}else{
+				$this->index();
 
-			$data['user_id'] = $this->tank_auth->get_user_id();
-			$this->addMember($_POST['classid'], $user_id);
+			}
 
-		}else{
-			redirect('booking', 'refresh');
 		}
 	}
 
@@ -36,10 +40,9 @@ class booking extends CI_Controller{
 	* @param int
 	* @param int
 	*/
-	function addMember($classid, $user_id){
+	function _addMember($classid, $user_id, $classInfo){
 		$this->load->model('bookings');
 
-		$classInfo = $this->classes->getClassInformation($classid);
 		$m = $user_id;
 		$b = $classid;
 
@@ -49,19 +52,11 @@ class booking extends CI_Controller{
 		$start = new DateTime($classInfo['class_start_date']);
 		$end = new DateTime($classInfo['class_start_date']);
 
-		$bookedOut = $this->bookings
-		->isMemberBookedOut($user_id, $start->format("Y-m-d"), $start->format("H:i:s"), $end->format("H:i:s"));
-
-		if(count($bookedOut)>0){
-			$this->_bookingFail('You are already booked into classes at this time');
-			return;
-		}
-
-
 		/* Book them */
 		if(!$full && !$past){
 			if($this->bookings->addMember($b, $m)){
-				$this->_emailMemberAddedToClass($m, $b, $classInfo['class_start_date'], $classInfo['class_end_date']);
+
+				$this->_emailMemberAddedToClass($m, $classInfo);
 				$data['classinfo'] = $classInfo;
 				parse_temp('booking-success', $this->load->view('pages/booking-success', $data, true));
 			}else{
@@ -74,6 +69,25 @@ class booking extends CI_Controller{
 			echo "Give them choice to add to waiting";
 		}
 
+
+	}
+
+	/**
+	* Check already booked classes
+	* @param int
+	* @param DateTime
+	* @param DateTime
+	* @return bool
+	*/
+	function _bookedOut($user_id, $start, $end){
+		$bookedOut = $this->bookings
+		->isMemberBookedOut($user_id, $start->format("Y-m-d"), $start->format("H:i:s"), $end->format("H:i:s"));
+
+		if(count($bookedOut)>0){
+			$this->_bookingFail('You are already booked into classes at this time');
+			return true;
+		}
+		return false;
 
 	}
 
@@ -104,9 +118,13 @@ class booking extends CI_Controller{
 				'max_attendance'	=> 1,
 				);
 
-			$id = $this->classes->insertClass($data);
 
-			$this->addMember($id, $this->tank_auth->get_user_id());		  	
+			$uid = $this->tank_auth->get_user_id();
+			if(!$this->_bookedOut($uid, new DateTime($_POST['start']), new DateTime($_POST['end']))){
+				$id = $this->classes->insertClass($data);
+				$data = $this->classes->getClassInformation($id);
+				$this->_addMember($id, $this->tank_auth->get_user_id(), $data);	
+			}
 		}
 	}
 
@@ -121,21 +139,12 @@ class booking extends CI_Controller{
 		return (time() >  strtotime($end));
 	}
 
-	function _emailMemberAddedToClass($member_id, $class_id, $start, $end) {
-		$this->load->model('members');
-		$this->load->helper('email');
+	function _emailMemberAddedToClass($member_id, $classDetails) {
+		$this->load->helper('comms');
 
-		$email = $this->members->getMemberEmail($member_id);
-		$classDetails = $this->classes->getClassInformation($class_id);
-		$headers  = 'MIME-Version: 1.0' . "\r\n";
-		$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-		$msg ='<!DOCTYPE html>
-		<html>
-		<head>'; 
-		$msg .= 'You have booked into the following class: ' . $classDetails['class_type'] . '. <p> Starting: '. $start . ' <p>End: '. $end;
-
-		$msg .= '</html> </head>';
-		mail($email, 'Booked into a Class', $msg, $headers);
+		$d = new DateTime($classDetails['class_start_date']);
+		$msg = 'You have booked into the following class: ' . $classDetails['class_type'] . ' on '. $d->format("jS F Y") . ' starting at '. $d->format("H:i") . ' in the following room: '. $classDetails['room'];
+		contact_user(array($member_id), $msg);
 	}
 
 
@@ -207,8 +216,7 @@ class booking extends CI_Controller{
 		}
 
 		if(isset($_POST['is_sport'])){
-			$end_date = new DateTime($_POST['date']);
-			$end_date = $end_date->format("Y-m-d");
+		
 			$data['classes'] = $this->_fetchSportsClasses($_POST['class_type_id'], $start_date, $end_date, $start_time, $end_time);
 
 		}else{
@@ -218,7 +226,7 @@ class booking extends CI_Controller{
 				$classtypes = array('class_type_id' => $_POST['class_type_id']);
 				
 			}
-			print_r($classtypes);
+
 			$data['classes'] = $this->classes->getClassesWithTypeAndStartTime($classtypes, $start_date, $end_date, $start_time, $end_time);
 			foreach ($data['classes'] as $key => $row) {
 				$data['classes'][$key]['fully_booked'] = $this->isClassBookedOut($row['class_id']);

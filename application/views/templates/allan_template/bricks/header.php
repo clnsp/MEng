@@ -24,7 +24,6 @@
   <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/cal/fullcalendar.css"/>
   <link rel="stylesheet" href="<?php echo base_url();?>assets/css/bootstrap-timepicker.min.css" />
 
-
   <link rel="stylesheet" href="<?php echo base_url();?>assets/css/footable.core.min.css" >
 
   <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/css/jquery.minicolors.css">
