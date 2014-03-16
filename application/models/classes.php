@@ -139,6 +139,7 @@ class Classes extends CI_Model{
     */
     function getClassTypeIDs(){
         $this->db->select('class_type_id');
+        $this->db->where('is_sport', 0);
         $this->db->from($this -> class_type_tbl);
 
         $query = $this -> db -> get()->result_array();
@@ -184,7 +185,7 @@ class Classes extends CI_Model{
     */
     function getClassInformation($class_id){
 
-        $this -> db -> select('class_type, class_start_date, class_end_date, room');
+        $this -> db -> select('class_type, class_start_date, class_end_date, room, class_id, max_attendance');
         $this -> db -> from($this -> class_tbl);
         $this -> db -> where('class_id =' . $class_id);
         $this -> db -> join('class_type_tbl', 'class_type_tbl.class_type_id = class_tbl.class_type_id');
@@ -472,6 +473,8 @@ class Classes extends CI_Model{
 
       $this->db->query($sql, array($class_id));
   }
+
+
 
 
 
