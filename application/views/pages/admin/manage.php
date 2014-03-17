@@ -205,7 +205,7 @@
 
 								<div class="col-sm-9">
 									<div class="col-xs-6 no-pad-right no-pad-left pull-right">
-										<button id="apply-repeat-btn" type="button" class="btn btn-primary disabled" data-toggle="tooltip" data-placement="bottom" title="Click to show dates on calendar">Apply</button>
+										<button id="apply-repeat-btn" type="button" class="btn btn-primary disabled" data-toggle="tooltip" data-placement="top" title="Click to show dates on calendar">Apply</button>
 										<button id="clear-cal-btn" type="button" class="btn btn-default">Clear</button>
 									</div>
 
@@ -215,9 +215,7 @@
 									</div>
 
 								</div>
-								<div class="col-sm-3">
-
-								</div>
+								<div class="col-sm-3"></div>
 
 							</div>
 
@@ -226,7 +224,7 @@
 
 							<div class="form-group">
 								<div class="col-sm-offset-3 col-sm-9">
-									<button id="import-block-button" type="submit" class="btn btn-default">Configure Blocks</button>
+									<button id="import-block-button" class="prevent btn btn-default">Configure Previous Blocks</button>
 									<button id="add-block-button" type="submit" class="btn btn-primary">Save Block</button>
 								</div>
 							</div>
@@ -290,6 +288,38 @@
 	</div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+
+<div id="modal-manage-blocks" class="modal fade">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">Configure Block Bookings</h4>
+			</div>
+			<div class="modal-body">
+				<p>Select a previous block booking from the table below to configure</p>
+
+				<table class='table footable footable-sortable'>
+					<thead>
+						<tr>
+							<th>Room</th>
+							<th>Class Type</th>
+							<th>Start</th>
+							<th>End</th>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</form>
+	</div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 </div><!--/container-->
 

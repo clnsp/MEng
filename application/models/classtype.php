@@ -4,6 +4,9 @@ Class classtype extends CI_Model{
 
     private $class_type_sports_view = 'class_type_sports_view';
     private $class_type_tbl = 'class_type_tbl';
+    private $block_booking_tbl = 'block_booking_tbl';
+    private $block_booking_view = 'block_booking_view';
+
 
     /**
      * Fetch all non-sport class types
@@ -66,6 +69,32 @@ Class classtype extends CI_Model{
         $query = $this -> db -> get();
 
         return $query->row_array();
+    }
+
+     /**
+     * Fetch all block booking info
+     * @return array
+     */
+     function getBlockBookingInformation(){
+        $this -> db -> from($this->block_booking_view);
+        $query = $this -> db -> get();
+
+        return $query->result_array();
+    }
+
+     /**
+     * Add new block booking
+     * @return array
+     */
+     function addNewBlockBooking($data, $start_time, $end_time){
+        $data['class_start_time'] = $start_time;
+        $data['class_end_time'] = $end_time;
+
+        $this -> db -> insert($this->block_booking_tbl, $data);
+        echo $this->db->last_query();
+        echo $this->db->_error_message();
+
+        return $this->db->insert_id();
     }
 }
 ?>

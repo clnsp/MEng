@@ -7,6 +7,8 @@ class class_type extends CI_Controller
 		parent::__construct();
 
 		$this->load->model('classes');
+		$this->load->model('classtype');
+
 	}
 	
 	/**
@@ -80,6 +82,64 @@ class class_type extends CI_Controller
 		}
 
 	}
+
+
+	/**
+	 * Checks whether supplied string is a valid date
+	 * @param	string
+	 * @return	bool
+	 */
+	
+	function _validDate($string) {
+		$date = date_parse($string);	
+		
+		return(!($date["month"] == '' && $date["day"]=='' && $date["year"] =='' && $date["hour"] == '' && $date["minute"]==''));
+
+	}
+
+	/**
+	 * Get all the sports class types as json
+	 */
+	function getSportsClassTypes(){
+		
+		$types = $this->classtype->getSportClassTypeNameIDs();
+		echo json_encode($types);
+
+	}
+	
+	/**
+	* Add new sport type
+	*/
+	function addSportType(){
+		if($this->tank_auth->is_admin()){
+			if (isset($_POST['class_type']) && isset($_POST['class_description']) && isset($_POST['category_id']) && isset($_POST['duration'])){
+				$data = array(
+					'class_type'		=>	$_POST['class_type'],
+					'class_description'	=>	$_POST['class_description'],
+					'category_id'		=>	$_POST['category_id'],
+					'is_sport'			=>	true,
+					'duration'			=>	$_POST['duration']
+					);
+
+				$this->classes->addNewClassType($data);
+				echo "Class Added";
+			}else{
+				echo "No values";
+			}
+
+		}
+	}
+	
+	/**
+	* Get all block booking details
+	*/
+	function getBlockBookingInformation(){
+		if($this->tank_auth->is_admin()){
+			echo json_encode($this->classtype->getBlockBookingInformation());
+		}
+	}
+
+
 	
 	/**
 	 * Add instances of a class type as classes
@@ -125,6 +185,7 @@ class class_type extends CI_Controller
 					return;
 				}
 
+
 				$newClass = array(
 					'class_type_id' => $_POST['class_type_id'],
 					'max_attendance' => $_POST['max_attendance'],
@@ -136,6 +197,10 @@ class class_type extends CI_Controller
 
 				$end_time = new DateTime($_POST['class_end_date']);
 				$end_time = $end_time->format('H:i:00');
+
+				$bid = $this->classtype->addNewBlockBooking($newClass, $start_time, $end_time);
+
+				$newClass['block_booking_id'] = $bid;
 
 				foreach ($_POST['repeat_dates'] as $key => $date) {
 					$date = new DateTime($date);
@@ -164,53 +229,6 @@ class class_type extends CI_Controller
 	}
 
 
-
-	/**
-	 * Checks whether supplied string is a valid date
-	 * @param	string
-	 * @return	bool
-	 */
-	
-	function _validDate($string) {
-		$date = date_parse($string);	
-		
-		return(!($date["month"] == '' && $date["day"]=='' && $date["year"] =='' && $date["hour"] == '' && $date["minute"]==''));
-
-	}
-
-	/**
-	 * Get all the sports class types as json
-	 */
-	function getSportsClassTypes(){
-		$this->load->model('classtype');
-		
-		$types = $this->classtype->getSportClassTypeNameIDs();
-		echo json_encode($types);
-
-	}
-	
-	/**
-	* Add new sport type
-	*/
-	function addSportType(){
-		if($this->tank_auth->is_admin()){
-			if (isset($_POST['class_type']) && isset($_POST['class_description']) && isset($_POST['category_id']) && isset($_POST['duration'])){
-				$data = array(
-					'class_type'		=>	$_POST['class_type'],
-					'class_description'	=>	$_POST['class_description'],
-					'category_id'		=>	$_POST['category_id'],
-					'is_sport'			=>	true,
-					'duration'			=>	$_POST['duration']
-					);
-
-				$this->classes->addNewClassType($data);
-				echo "Class Added";
-			}else{
-				echo "No values";
-			}
-
-		}
-	}
 
 
 
