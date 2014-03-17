@@ -33,11 +33,6 @@ label.editable{
   width: 33% !important;
 }
 
-div.list {
-  overflow-x: auto;
-  overflow-y: hidden;
-  white-space: nowrap;
-}
 div.list [class*="col-"] {
   display: inline-block;
   float: none; /* Very important */
@@ -90,13 +85,23 @@ h2.gtime {
   margin-bottom: 0px;
 }
 
+@media not print {
+
+  div.list {
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+  }
+
+}
+
 @media print {
 
   body {
     padding-top: 0px !important;
   }
-
-  h2.time {
+  
+   h2.time {
     font-size: 30px;
     line-height: 1;
     color: #999;
@@ -104,39 +109,28 @@ h2.gtime {
     margin-bottom: 0px;
   }
 
-  body{
-    padding-top: 0px;
-  }
-  
   .page-break {
-    float: none !important;
     display: block;
-
     page-break-after: always;
-  }
-
-  div.list {
-    float: none;
-    white-space: nowrap;
-    height: 100% !important;
-    width: 100%;
   }
   
   div.list [class*="col-"] {
-    float: none; /* Very important */
-    vertical-align:top;
     display: block !important;
+  }
+
+  html.firefox div.list {
+    float: none;
+    white-space: nowrap;
+    max-width: 100%;
+  }
+
+  div.classes {
+    vertical-align:top;
+    max-width: 100% !important;
     width: 100% !important;
+    max-height: 100% !important;
     height: 100% !important;
   }
-  
-  div.classes {
-   vertical-align:top;
-   overflow-y: visible!important;
-   width: 100% !important;
-   max-height: 100% !important;
-   height: 100% !important;
- }
 }
 
 .no-margin-btm{
