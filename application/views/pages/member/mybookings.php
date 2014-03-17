@@ -51,7 +51,7 @@
 			<td class="class_id"><?php echo $startDate ?></td>
 			<td class="class_id"><?php echo $endDate ?></td>
 			<td class="class_id"><?php echo $cancelled ?></td>
-			<?php echo form_open("/edit_bookings/cancelBooking", $form, $hidden); ?>
+			<?php echo form_open("/cancelbooking", $form, $hidden); ?>
   			<td class="class_id"><?php echo form_submit('cancelBooking', 'Cancel Booking', "class= btn btn-warning"); ?>
 			<?php echo form_close(); ?>
 															
