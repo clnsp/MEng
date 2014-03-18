@@ -11,6 +11,9 @@
 					
 					<div class="manage-panel">
 						<table id='class-types-table' class="table table-striped table-hover">
+
+	<?php if(count($bookings) != 0){ ?>
+
 							<tr>
 								<th>Class</th>
 								<th>Room</th>
@@ -48,13 +51,15 @@
 			<td class="class_id"><?php echo $startDate ?></td>
 			<td class="class_id"><?php echo $endDate ?></td>
 			<td class="class_id"><?php echo $cancelled ?></td>
-			<?php echo form_open("/edit_bookings/cancelBooking", $form, $hidden); ?>
+			<?php echo form_open("/cancelbooking", $form, $hidden); ?>
   			<td class="class_id"><?php echo form_submit('cancelBooking', 'Cancel Booking', "class= btn btn-warning"); ?>
 			<?php echo form_close(); ?>
 															
 		   </tr>
 							
 	<?php endforeach; ?>
+	<?php }else{
+		echo("<td class='nofound' colspan='6'><h2>No classes found</h2></td>");}?>
 </tbody>
 		</table>
 					</div>

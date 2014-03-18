@@ -1,5 +1,5 @@
 
-<html lang="en" data-site-url="<?php echo site_url();?>">
+<html lang="en" data-site-url="<?php echo site_url();?>/">
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
@@ -23,7 +23,6 @@
 
   <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/cal/fullcalendar.css"/>
   <link rel="stylesheet" href="<?php echo base_url();?>assets/css/bootstrap-timepicker.min.css" />
-
 
   <link rel="stylesheet" href="<?php echo base_url();?>assets/css/footable.core.min.css" >
 

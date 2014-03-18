@@ -97,7 +97,7 @@
 	<div class="row">
 		
 		
-		<div id="manage-classes" class="">
+		<div id="manage-classes" class="col-md-12">
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<h3 class="panel-title">Manage Class Types</h3>
@@ -125,129 +125,126 @@
 
 	<div class="row">		
 
-		<div class="">
-			<div id="add-block-classes" class=" ">
+		<div id="add-block-classes" class="col-md-12">
 
 
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<h3 class="panel-title">Add Block Bookings</h3>
-					</div>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">Add Block Bookings</h3>
+				</div>
 
 
-					<div class="panel-body" >						
-						<div class="col-md-6">
+				<div class="panel-body" >						
+					<div class="col-md-6">
 
-							<form id="add-block-classes-form" class="form-horizontal prevent" role="form">
-								<div class="form-group">
-									<label for="class_type_id" class="col-sm-3 control-label">Class Type</label>
-									<div class="col-sm-9">
-										<select name="class_type_id" type="dropdown" class="classtype form-control"></select>							</div>
-									</div>
-
-									<div class="form-group">
-										<label for="max_attendance" class="col-sm-3 control-label">Max Capacity</label>
-										<div class="col-sm-9">
-											<input name="max_attendance" type="text" class="form-control" placeholder="Maximum Capacity">
-										</div>
-									</div>
-
-									<div class="form-group">
-										<label for="class_start_date" class="col-sm-3 control-label">Class Start</label>
-
-										<div class="col-sm-4">
-											<div class='input-group'>
-												<input name="class_start_date" type='text' class="form-control timepicker" placeholder="00:00"/>
-												<span class="input-group-addon btn-default"><span class="glyphicon glyphicon-time"></span>
-											</span>
-										</div>
-									</div>
-								</div>
+						<form id="add-block-classes-form" class="form-horizontal prevent" role="form">
 
 
-								<div class="form-group">
-									<label for="class_end_date" class="col-sm-3 control-label">Class End</label>
-
-									<div class="col-sm-4">
-										<div class='input-group'>
-											<input name="class_end_date" type='text' class="form-control timepicker" placeholder="00:00" />
-											<span class="input-group-addon btn-default"><span class="glyphicon glyphicon-time"></span></span>
-										</div>
-
-									</div>
+							<div class="form-group">
+								<label for="class_type_id" class="col-sm-3 control-label">Class Type</label>
+								<div class="col-sm-9">
+									<select name="class_type_id" type="dropdown" class="classtype form-control"></select>							</div>
 								</div>
 
 								<div class="form-group">
 									<label for="room_id" class="col-sm-3 control-label">Room</label>
 									<div class="col-sm-9">
-										<select name="room_id" type="dropdown" class="rooms form-control"></select>							</div>
+										<select name="room_id" type="dropdown" class="rooms form-control"></select>
 									</div>
+								</div>
 
 
-									<div class="form-group">
-										<label for="repeat" class="col-sm-3 control-label">Repeat</label>
-										<div class="col-sm-9">
-											<select name="repeat" type="dropdown" class="form-control">
-												<option value="0">None (run once)</option>
-												<option value="days">Daily</option>
-												<option value="weeks">Weekly</option>
-												<option value="months">Monthly</option>
-												<option value="years">Yearly</option>
-											</select>							
-										</div>
+								<div class="form-group">
+									<label for="max_attendance" class="col-sm-3 control-label">Max Capacity</label>
+									<div class="col-sm-9">
+										<input name="max_attendance" type="text" class="form-control" placeholder="Maximum Capacity">
 									</div>
-									<input name="times" type="hidden" value="5">
+								</div>
 
-									<div class="form-group">
-										<label for="until" class="col-sm-3 control-label">Until</label>
-										
-										<div class="col-sm-9">
-										<div class="col-xs-6 no-pad-right no-pad-left pull-right">
-											<button id="apply-repeat-btn" type="button" class="btn btn-primary disabled" data-toggle="tooltip" data-placement="bottom" title="Click to show dates on calendar">Apply</button>
-											<button id="clear-cal-btn" type="button" class="btn btn-default">Clear</button>
-										</div>
-										
-											<div class="col-xs-5 no-pad-left input-group">
-												<input name="until" type="text" class="form-control datepicker" placeholder="DD/MM/YYYY" disabled>
-												<span class="input-group-addon btn-default"><span class="glyphicon glyphicon-calendar"></span></span>
-											</div>
-											
-										</div>
-										<div class="col-sm-3">
-											
-										</div>
+								<div class="form-group">
+									<label for="class_start_date" class="col-sm-3 control-label">Class Start</label>
 
+									<div class="col-sm-4">
+										<div class='input-group'>
+											<input name="class_start_date" type='text' class="form-control timepicker" placeholder="00:00"/>
+											<span class="input-group-addon btn-default"><span class="glyphicon glyphicon-time"></span>
+										</span>
 									</div>
-
-
-
-									<div class="form-group">
-										<div class="col-sm-offset-3 col-sm-9">
-											<button id="add-block-button" type="submit" class="btn btn-primary">Add Block</button>
-											
-											
-										</div>
-									</div>
-
-								</form>
+								</div>
 							</div>
 
 
+							<div class="form-group">
+								<label for="class_end_date" class="col-sm-3 control-label">Class End</label>
 
-							<div class="col-md-6">
-								<div id="date-selector"></div>
+								<div class="col-sm-4">
+									<div class='input-group'>
+										<input name="class_end_date" type='text' class="form-control timepicker" placeholder="00:00" />
+										<span class="input-group-addon btn-default"><span class="glyphicon glyphicon-time"></span></span>
+									</div>
+
+								</div>
 							</div>
 
-						</div>
+							<div class="form-group">
+								<label for="repeat" class="col-sm-3 control-label">Repeat</label>
+								<div class="col-sm-9">
+									<select name="repeat" type="dropdown" class="form-control">
+										<option value="0">None (run once)</option>
+										<option value="days">Daily</option>
+										<option value="weeks">Weekly</option>
+										<option value="months">Monthly</option>
+										<option value="years">Yearly</option>
+									</select>							
+								</div>
+							</div>
+							<input name="times" type="hidden" value="5">
+
+							<div class="form-group">
+								<label for="until" class="col-sm-3 control-label">Until</label>
+
+								<div class="col-sm-9">
+									<div class="col-xs-6 no-pad-right no-pad-left pull-right">
+										<button id="apply-repeat-btn" type="button" class="btn btn-primary disabled" data-toggle="tooltip" data-placement="top" title="Click to show dates on calendar">Apply</button>
+										<button id="clear-cal-btn" type="button" class="btn btn-default">Clear</button>
+									</div>
+
+									<div class="col-xs-5 no-pad-left input-group">
+										<input name="until" type="text" class="form-control datepicker" placeholder="DD/MM/YYYY" disabled>
+										<span class="input-group-addon btn-default"><span class="glyphicon glyphicon-calendar"></span></span>
+									</div>
+
+								</div>
+								<div class="col-sm-3"></div>
+
+							</div>
+
+							<hr/>
+
+
+							<div class="form-group">
+								<div class="col-sm-offset-3 col-sm-9">
+									<button id="import-block-button" class="prevent btn btn-default">Configure Previous Blocks</button>
+									<button id="add-block-button" type="submit" class="btn btn-primary">Save Block</button>
+								</div>
+							</div>
+
+						</form>
 					</div>
+
+
+
+					<div class="col-md-6">
+						<div id="date-selector"></div>
+					</div>
+
 				</div>
-
-
-
 			</div>
 		</div>
 
 	</div>
+
+</div>
 
 
 </div>
@@ -291,6 +288,39 @@
 	</div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+
+<div id="modal-manage-blocks" class="modal fade">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">Configure Block Bookings</h4>
+			</div>
+			<div class="modal-body">
+				<p>Select a previous block booking from the table below to configure</p>
+
+				<table class='table footable footable-sortable'>
+					<thead>
+						<tr>
+							<th>Room</th>
+							<th>Class Type</th>
+							<th>Start</th>
+							<th>End</th>
+							<th>Select</th>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</form>
+	</div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 </div><!--/container-->
 

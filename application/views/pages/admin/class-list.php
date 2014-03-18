@@ -3,7 +3,8 @@
 <div class="row visible-print"><div class="col-xs-12 col-sm-6"><h2 class="time"><small class="current-date pull-left"><?php echo $cDate ?></small></h2></div></div>
 <div id="<?php echo $class->class_id ?>" class="panel page-break" style="border-color: <?php echo $class->color?>;">
         <!-- Default panel contents -->
-        <div class="panel-heading" style="background-color: <?php echo $class->color?>; color: rgb(255,255,255);"><span>Class: <?php echo $class->title ?><span><span class="pull-right">S: <?php echo date("H:i",strtotime($class->start)) ?></span><br/><span>Room: <?php echo $class->room ?><span><span class="pull-right">F: <?php echo date("H:i",strtotime($class->end)) ?></span></div>
+<!-- Default panel contents -->
+ <div class="panel-heading" style="background-color: <?php echo $class->color?>; color: rgb(255,255,255);"><span>Class: <?php echo $class->title ?> </span><br/><span>Room: <?php echo $class->room ?></span><br/><span>Duration: <?php echo date("H:i",strtotime($class->start))?> - <?php echo date("H:i",strtotime($class->end)) ?></span></div>
 		<div class="classes">
 <?php if(count($class->attendees) > 0) {?>       
  <!-- Table -->

@@ -63,6 +63,7 @@ $route['booking/(:any)'] = 'booking/$1';
 $route['mybookings'] = 'pages/mybookings';
 $route['room/(:any)'] = 'pages/room/$1';
 $route['room/getRoomIDs'] = 'room/getRoomIDs';
+$route['cancelbooking'] = 'pages/cancelBooking';
 $route['manage'] = 'pages/manage';
 $route['manage-sports-hall'] = 'pages/view/manage-sports-hall';
 $route['admin-calendar'] = 'pages/admin_calendar';

@@ -242,16 +242,17 @@ class Bookings extends CI_Model
 
      }
 
-     function addMemberWaitingList($class_booking_id, $member_id){ 
+	/**
+	* Add a member to the waiting list
+	* @param int
+	* @param int
+	* @return bool
+	*/
+     function addMemberWaitingList($class_id, $member_id){ 
 
-     	$data = array(
-     		'member_id' => $member_id,
-     		'class_id' => $class_booking_id,
+     	$this->db->insert($this -> waiting_pool_tbl, array('member_id' => $member_id, 'class_id' => $class_id)); 	
 
-     		);
-
-     	$this->db->insert($this -> waiting_pool_tbl, $data); 	
-
+		return ($this->db->_error_number() == 0);
      }	
 
  	/**
@@ -284,5 +285,42 @@ class Bookings extends CI_Model
  		// echo $this->db->_error_message();
  		return $query->result_array();
  	}
+ 	
+    /**
+    * Remove a class if it is a sport
+    * @param int
+    * @return bool 
+    */
+    function waitingListFull($class_id, $max_attendance) {
+     	$this->config->load('gym_settings');
+	    
+	    $this->db->where('class_id', $class_id);
+        $this->db->from($this -> waiting_pool_tbl);
+ 		$this -> db -> join('class_tbl', 'waiting_pool_tbl.class_id = class_tbl.class_id');
+        $query = $this -> db -> get();
+        
+		$max = $max_attendance/100 * $this->config->item('max_waiting');
+		echo($max);
+		
+        return $this->db->count_all_results() > $max;
+
+  }
+  
+      /**
+      * Is a user already in a waiting list
+      * @param int
+      * @return bool 
+      */
+      function onWaitingList($member_id, $class_id) {
+         $this->config->load('gym_settings');
+       	    
+       	 $this->db->where('class_id', $class_id);
+       	 $this->db->where('member_id', $member_id);
+         $this->db->from($this -> waiting_pool_tbl);
+         $query = $this -> db -> get();
+       
+         return $this->db->count_all_results() > 0;  
+    }
+ 	
 
  }

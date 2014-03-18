@@ -349,7 +349,7 @@ assignDivPanel = (function() {
 
 
     fetchDivisibleRoomSetup = function(room_id){
-       $.getJSON('facilities/getDivisibleRoom/' + room_id, function(data) {
+     $.getJSON('facilities/getDivisibleRoom/' + room_id, function(data) {
         if(data.length>0){
             manage_sports.cols = parseInt(data[0].cols);
             manage_sports.rows = parseInt(data[0].rows);
@@ -361,14 +361,14 @@ assignDivPanel = (function() {
         divisions.html(ps.getDivisions(divdrop.val()));
     });
 
-   }
+ }
 
 
-   getSelectedSport = function(){
-      return sportlist.find('.active').data('class_type_id');
-  }
+ getSelectedSport = function(){
+  return sportlist.find('.active').data('class_type_id');
+}
 
-  getSelectedDivRoom = function(){
+getSelectedDivRoom = function(){
     return divdrop.val();
 }
 
@@ -388,7 +388,7 @@ var Restrictions = function() {
     var baseUrl, limits, blocks, restrictions, del;
 
     var init = function(){
-        baseUrl = 'court/';
+        baseUrl = siteUrl + 'court/';
         limits = $('<tbody>');
         blocks = $('<tbody>');
         delLimit = $('<td><button class="deleteLimit btn btn-xs btn-danger"><i class="glyphicon glyphicon-remove"></i></button></td>');
@@ -398,7 +398,7 @@ var Restrictions = function() {
     init();
 
     this.refresh = function(room_id){
-        $.getJSON('court/getRestrictions/' + room_id, function(json){
+        $.getJSON(baseUrl + 'getRestrictions/' + room_id, function(json){
             restrictions = json;
             update();
         });
@@ -445,7 +445,7 @@ var manageRestrictionsPanel = (function() {
     var  limitForm = container.find('#form-limit-restriction');
     var  blockForm = container.find('#form-block-restriction');   
     var  drop = container.find('select[type=dropdown].divisiblerooms');
-    var  baseUrl = 'court/';
+    var  baseUrl = siteUrl + 'court/';
     var restrictions = new Restrictions();
 
     $('#submit-limit').click(function(){
@@ -506,32 +506,32 @@ var manageRestrictionsPanel = (function() {
 
 var addSportPanel = (function() {
 	var urlBase = "class_type/";
-		var form = $('form#add-sport-type-form');
-		var categoryDropdown = form.find('select[name=category_id]');
-		
-		form.submit(function(){ sendForm() });
-		
-		var sendForm = function() {
+  var form = $('form#add-sport-type-form');
+  var categoryDropdown = form.find('select[name=category_id]');
 
-			$.post(urlBase + 'addSportType/', form.serialize())
-			.done(function( result ) { 
-				alert(result); 
-				resetAddForm();
-				classtypes.refresh();
-			})
-			.fail(function( result ) { alert(result); });			
-		}
+  form.submit(function(){ sendForm() });
 
-		
-		var resetAddForm = function () {
-			form[0].reset();
-		}
+  var sendForm = function() {
+
+     $.post(urlBase + 'addSportType/', form.serialize())
+     .done(function( result ) { 
+        alert(result); 
+        resetAddForm();
+        classtypes.refresh();
+    })
+     .fail(function( result ) { alert(result); });			
+ }
+
+
+ var resetAddForm = function () {
+     form[0].reset();
+ }
 
 
 })();
 
 
-	
+
 
 $(function(){
 

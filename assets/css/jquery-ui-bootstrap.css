@@ -134,7 +134,8 @@
   color: #ffffff!important;
 }
 
-.ui-state-highlight,.ui-widget-content .ui-state-highlight,.ui-widget-header .ui-state-highlight  {
+.ui-state-highlight,.ui-widget-content .ui-state-highlight,
+.ui-widget-header .ui-state-highlight  {
 
 
   position: relative;
