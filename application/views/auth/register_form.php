@@ -6,7 +6,7 @@ $firstname = array(
 	'maxlength'	=> 80,
 	'size'	=> 30,
 	'class' => 'form-control',
-	'placeholder' => 'Firstname',
+	'placeholder' => 'First name',
 	'readonly' => 'readonly',
 	);
 $secondname = array(
@@ -16,7 +16,7 @@ $secondname = array(
 	'maxlength'	=> 80,
 	'size'	=> 30,
 	'class' => 'form-control',
-	'placeholder' => 'Secondname',
+	'placeholder' => 'Second name',
 	'readonly' => 'readonly',
 	);
 

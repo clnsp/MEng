@@ -189,7 +189,7 @@ class Tank_auth
 	 * @param	bool
 	 * @return	array
 	 */
-	function create_user($username, $first_name, $second_name, $home_number, $twitter, $mobile_number, $email, $password, $member_type, $membership_type, $comms_preferences, $email_activation)
+	function create_user($username, $first_name, $second_name, $home_number, $twitter, $mobile_number, $email, $password, $member_type, $membership_type, $comms_preferences, $email_activation, $verified)
 	{
 		if ((strlen($username) > 0) AND !$this->ci->users->is_username_available($username)) {
 			$this->error = array('username' => 'auth_username_in_use');
@@ -216,7 +216,7 @@ class Tank_auth
 				'twitter'	=> $twitter,
 				'password'	=> $hashed_password,
 				'email'		=> strtolower($email),
-				'verified'	=> 1,
+				'verified'	=> $verified,
 				'member_type_id' => $member_type,
 				'membership_type_id' => $membership_type,
 				'last_ip'	=> $this->ci->input->ip_address(),

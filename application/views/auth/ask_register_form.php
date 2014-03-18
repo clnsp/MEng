@@ -105,6 +105,19 @@ $radio_graduate  = array(
     'checked'     => FALSE,
 );
 
+$radio_affiliate = array(
+    'name'        => 'type',
+    'id'          => 'affiliate-radio',
+    'value'       => '1',
+    'checked'     => FALSE,
+);
+
+$radio_affiliate_spouse  = array(
+    'name'        => 'type',
+    'id'          => 'retired-staff-radio',
+    'value'       => '2',
+    'checked'     => FALSE,
+);
 	
 $captcha = array(
 	'name'	=> 'captcha',
@@ -130,7 +143,7 @@ $form = array(
 		<div class="form-group">
 			<?php echo form_label('User *', $user_type['id'], $label); ?>
 			<div class="col-sm-10">
-				<?php echo form_radio($radio_associate) . " Affiliate   " ; echo  form_radio($radio_retired_staff) . "Spouse / Partner of Affiliate   ";?>
+				<?php echo form_radio($radio_affiliate) . " Affiliate   " ; echo  form_radio($radio_affiliate_spouse) . "Spouse / Partner of Affiliate   ";?>
 			</div>
 		</div>
 		
