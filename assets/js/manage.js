@@ -14,6 +14,14 @@ $( document ).ready(function() {
 			return this.getDates().length != 0;
 		}
 
+		this.clear = function() {
+			this.cal.multiDatesPicker('resetDates');
+		}
+
+		this.addDates = function(arr) {
+			this.cal..multiDatesPicker('addDates', arr);
+		}
+
 		this.repeatDates = function(repeatType, stop) {
 			if(stop != ''){
 				var calDates = this.cal.multiDatesPicker('getDates');
@@ -190,18 +198,44 @@ $( document ).ready(function() {
 	};
 
 	var importDialog = new function(){
-		var modal = $('#modal-manage-blocks');
-		var table = modal.find('tbody');
-		var tableBuffer = $('<tbody>');
+		var modal = $('#modal-manage-blocks');	
 		var urlBase = siteUrl + ('class_type/');
 
-		createRow = function (block) {
+		var table = modal.find('tbody');
+		var tableBuffer = $('<tbody>');
+		var button = $('<button>').html('Select').addClass("configure-block-btn btn btn-primary");
+		var $this = $this;
+
+		modal.on('click', '.configure-block-btn', function(){
+			$row = $(this).parents('tr');
+			$row.find()
+			addBlockClassesPanel.classTypeDrop.val($row.find('[data-class_type_id]').data('class_type_id'));
+			addBlockClassesPanel.roomDrop.val($row.find('[data-room_id]').data('room_id'));
+			addBlockClassesPanel.form.find('input[name=class_start_time]').val($row.find('[data-class_start_time]').data('class_start_time'));
+			addBlockClassesPanel.form.find('input[name=class_start_time]').val($row.find('[data-class_end_time]').data('class_end_time'));
+			addBlockClassesPanel.form.find('[type=submit]').attr('class', 'btn btn-warning').html('Save Changes');
+			
+			fetchBlockDates($(this).data('block_booking_id'));
+
+			modal.modal('hide');
+		});
+
+		var fetchBlockDates = function(bid){
+			$.getJSON(urlBase + 'getBlockBookingDates/' + bid , function(data) {
+				datepicker.clear();
+				console.log(data);
+			});
+
+			return 
+		}
+
+		var createRow = function (block) {
 			var tr = $('<tr>');
 			tr.append($('<td>').attr('data-room_id', block['room_id']).append(block['room']));
 			tr.append($('<td>').attr('data-class_type_id', block['class_type_id']).append(block['class_type']));
 			tr.append($('<td>').attr('data-class_start_time', block['class_start_time']).append(block['class_start_time']));
 			tr.append($('<td>').attr('data-class_end_time', block['class_end_time']).append(block['class_end_time']));
-
+			tr.append($('<td>').append(button.clone().attr('data-block_booking_id', block['block_booking_id'])));
 			return tr;
 		}
 
@@ -223,30 +257,31 @@ $( document ).ready(function() {
 		}
 
 
-		update = function(){
+		var update = function(){
 			table.html(tableBuffer.html());
 		}
 
-		clear = function(){
-			table.html('');
+		var clear = function(){
+			tableBuffer.html('');
 		}
 	};
 
 	var addBlockClassesPanel = new function() {
 		var container = $('#add-block-classes');
-		var form = container.find('#add-block-classes-form');
-		var classTypeDrop = form.find('select[name=class_type_id]');
-		var roomDrop = form.find('select[name=room_id]');
 		var urlBase = siteUrl + "class_type/";
 
-		var until = form.find('input[name=until]');
-		var repeat = form.find('select[name=repeat]');
+		this.form = container.find('#add-block-classes-form');
+		this.classTypeDrop = this.form.find('select[name=class_type_id]');
+		this.roomDrop = this.form.find('select[name=room_id]');
+		var until = this.form.find('input[name=until]');
+		var repeat = this.form.find('select[name=repeat]');
 
-		var resetbtn = form.find('button#clear-cal-btn');
+		var resetbtn = this.form.find('button#clear-cal-btn');
 		var repeatBtn = container.find('#apply-repeat-btn');
 		var importBtn = container.find('#import-block-button');
+		var formCopy = this.form;
 
-		form.submit(function() { 
+		this.form.submit(function() { 
 			if(datepicker.hasDates()){
 				bootbox.confirm("<h4 class='modal-title'>Confirmation</h2><p>Are you sure you want to add new bookable classes? You will add classes to the following dates:</p>" + datepicker.getDates().toString(), function(result) {
 					if(result)
@@ -287,7 +322,7 @@ $( document ).ready(function() {
 
 		sendForm = function () {
 
-			var formSz = form.serializeArray();
+			var formSz = formCopy.serializeArray();
 			var dates = datepicker.getDates();
 			dates.forEach(function(date) {
 				formSz.push({name: 'repeat_dates[]', value: date});

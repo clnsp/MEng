@@ -138,6 +138,15 @@ class class_type extends CI_Controller
 			echo json_encode($this->classtype->getBlockBookingInformation());
 		}
 	}
+	
+	/**
+	* Get all block booking dates
+	*/
+	function getBlockBookingDates($bid){
+		if($this->tank_auth->is_admin()){
+			echo json_encode($this->classes->getBlockBookingDates($bid));
+		}
+	}
 
 
 	

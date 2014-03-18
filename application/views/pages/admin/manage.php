@@ -306,6 +306,7 @@
 							<th>Class Type</th>
 							<th>Start</th>
 							<th>End</th>
+							<th>Select</th>
 						</tr>
 					</thead>
 					<tbody>
