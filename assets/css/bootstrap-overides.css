@@ -33,6 +33,13 @@ label.editable{
   width: 33% !important;
 }
 
+#booking .inline{
+  display: inline-block;
+  display: inline;
+}
+
+
+
 div.list {
   overflow-x: auto;
   overflow-y: hidden;
@@ -44,6 +51,9 @@ div.list [class*="col-"] {
   vertical-align:top;
 }
 
+#booking .no-margin{
+  margin: 0px!important;
+}
 
 
 div.classes {

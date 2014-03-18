@@ -35,7 +35,7 @@ $home_number = array(
 	'size'	=> 30,
 	'class' => 'form-control',
 	'placeholder' => 'Home Number (Excluding 0)',
-);
+	);
 $mobile_number = array(
 	'name'	=> 'mobile_number',
 	'id'	=> 'mobile_number',
@@ -44,7 +44,7 @@ $mobile_number = array(
 	'size'	=> 30,
 	'class' => 'form-control',
 	'placeholder' => 'Mobile Number (Excluding 0)',
-);
+	);
 $password = array(
 	'name'	=> 'password',
 	'id'	=> 'password',
@@ -78,34 +78,34 @@ $user_type = array(
 	);
 
 $radio_associate = array(
-    'name'        => 'member_type',
-    'id'          => 'associate-radio',
-    'value'       => '1',
-    'checked'     => FALSE,
-);
+	'name'        => 'member_type',
+	'id'          => 'associate-radio',
+	'value'       => '1',
+	'checked'     => FALSE,
+	);
 
 $radio_retired_staff  = array(
-    'name'        => 'member_type',
-    'id'          => 'retired-staff-radio',
-    'value'       => '2',
-    'checked'     => FALSE,
-);
+	'name'        => 'member_type',
+	'id'          => 'retired-staff-radio',
+	'value'       => '2',
+	'checked'     => FALSE,
+	);
 
 $radio_external_student   = array(
-    'name'        => 'member_type',
-    'id'          => 'external-student-radio',
-    'value'       => '3',
-    'checked'     => FALSE,
-);
+	'name'        => 'member_type',
+	'id'          => 'external-student-radio',
+	'value'       => '3',
+	'checked'     => FALSE,
+	);
 
 $radio_graduate  = array(
-    'name'        => 'member_type',
-    'id'          => 'graduate-radio',
-    'value'       => '4',
-    'checked'     => FALSE,
-);
+	'name'        => 'member_type',
+	'id'          => 'graduate-radio',
+	'value'       => '4',
+	'checked'     => FALSE,
+	);
 
-	
+
 $captcha = array(
 	'name'	=> 'captcha',
 	'id'	=> 'captcha',
@@ -169,8 +169,8 @@ $form = array(
 			<?php echo form_label('Home Number', $home_number['id'], $label); ?>
 			<div class="col-sm-10">
 				<div class="input-group">
-				<span class="input-group-addon">+44</span>
-				<?php echo form_input($home_number); ?>
+					<span class="input-group-addon">+44</span>
+					<?php echo form_input($home_number); ?>
 				</div>
 			</div>
 		</div>
@@ -179,8 +179,8 @@ $form = array(
 			<?php echo form_label('Mobile Number', $mobile_number['id'], $label); ?>
 			<div class="col-sm-10">
 				<div class="input-group">
-				<span class="input-group-addon">+44</span>
-				<?php echo form_input($mobile_number); ?>
+					<span class="input-group-addon">+44</span>
+					<?php echo form_input($mobile_number); ?>
 				</div>
 			</div>
 		</div>

@@ -19,7 +19,7 @@ $( document ).ready(function() {
 		}
 
 		this.addDates = function(arr) {
-			this.cal..multiDatesPicker('addDates', arr);
+			this.cal.multiDatesPicker('addDates', arr);
 		}
 
 		this.repeatDates = function(repeatType, stop) {
@@ -214,7 +214,6 @@ $( document ).ready(function() {
 			addBlockClassesPanel.form.find('input[name=class_start_time]').val($row.find('[data-class_start_time]').data('class_start_time'));
 			addBlockClassesPanel.form.find('input[name=class_start_time]').val($row.find('[data-class_end_time]').data('class_end_time'));
 			addBlockClassesPanel.form.find('[type=submit]').attr('class', 'btn btn-warning').html('Save Changes');
-			
 			fetchBlockDates($(this).data('block_booking_id'));
 
 			modal.modal('hide');
@@ -224,6 +223,13 @@ $( document ).ready(function() {
 			$.getJSON(urlBase + 'getBlockBookingDates/' + bid , function(data) {
 				datepicker.clear();
 				console.log(data);
+				var arr = new Array();
+				
+				for (var key in data) {
+					arr.push(new Date(data[key]['class_start_date']));
+				}
+
+				datepicker.addDates(arr);
 			});
 
 			return 

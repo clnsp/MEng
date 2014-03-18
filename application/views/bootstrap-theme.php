@@ -585,6 +585,31 @@ html.mobile #footer{
 
 /* @end */
 
+/* @group Attendance/Home*/
+#booking.home #category-dropdown{
+	display: inline-block;
+	display: inline;
+}
+
+#booking.home #attendance-buttons{
+	text-align: right;
+}
+
+#booking.home #attendance-buttons ul{
+	text-align: left;
+}
+
+@media (max-width: 768px){
+	#booking.home #attendance-buttons {
+		text-align: left;
+	}
+
+
+}
+
+
+
+/* @end */
 
 /* @group Loading Indicator */
 
@@ -963,7 +988,10 @@ ul.ui-autocomplete.popover.dropdown-menu{
 	#booking.user_booking #search-panel{
 		padding-right:0px;
 	}
+
+
 }
+
 
 html.mobile #booking.user_booking #search-panel input,
 html.mobile #booking.user_booking #search-panel select{
