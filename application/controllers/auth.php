@@ -142,8 +142,8 @@ class Auth extends CI_Controller
 			if ($use_username) {
 				//$this->form_validation->set_rules('username', 'Username', 'trim|required|xss_clean|min_length['.$this->config->item('username_min_length', 'tank_auth').']|max_length['.$this->config->item('username_max_length', 'tank_auth').']|alpha_numeric');
 			}
-			//$this->form_validation->set_rules('first_name', 'First Name', 'trim|xss_clean|alpha_dash');
-			//$this->form_validation->set_rules('second_name', 'Second Name', 'trim|xss_clean|alpha_dash');
+			$this->form_validation->set_rules('first_name', 'First Name', 'trim|xss_clean|alpha_dash');
+			$this->form_validation->set_rules('second_name', 'Second Name', 'trim|xss_clean|alpha_dash');
 			$this->form_validation->set_rules('email', 'Email', 'trim|required|xss_clean|valid_email');
 			$this->form_validation->set_rules('home_number', 'Home Number', 'trim|xss_clean|alpha_dash');
 			$this->form_validation->set_rules('mobile_number', 'Mobile Number', 'trim|xss_clean|alpha_dash');
@@ -177,7 +177,8 @@ class Auth extends CI_Controller
 					$this->form_validation->set_value('member_type'),
 					2,					// GUEST
 					$this->form_validation->set_value('comms_preference'),
-					$email_activation))) {									// success
+					$email_activation,
+					1))) {									// success
 
 					$data['site_name'] = $this->config->item('website_name', 'tank_auth');
 
@@ -218,14 +219,12 @@ class Auth extends CI_Controller
 				$data['fname'] = $ver['givenName'][0];
 				$data['sname'] = $ver['sn'][0];
 				$data['mail'] = $ver['mail'][0];
-				parse_temp('Register', $this->load->view('auth/register_form', $data, true));
+				parse_temp('DS Registeration', $this->load->view('auth/register_form', $data, true));
 			}			
 			//$this->load->view('auth/register_form', $data);
 
 		}
 	}
-
-
 
 	function ask_register()
 	{
@@ -239,10 +238,84 @@ class Auth extends CI_Controller
 			$this->_show_message($this->lang->line('auth_message_registration_disabled'));
 
 		} else {
-			$data = array();
-			parse_temp('Register', $this->load->view('auth/ask_register_form', $data, true));
-		}
+			$use_username = $this->config->item('use_username', 'tank_auth');
+			if ($use_username) {
+				$this->form_validation->set_rules('username', 'Username', 'trim|required|xss_clean|min_length['.$this->config->item('username_min_length', 'tank_auth').']|max_length['.$this->config->item('username_max_length', 'tank_auth').']|alpha_dash');
+			}
+$this->form_validation->set_rules('first_name', 'First Name', 'trim|xss_clean|alpha_dash');
+			$this->form_validation->set_rules('second_name', 'Second Name', 'trim|xss_clean|alpha_dash');
+			$this->form_validation->set_rules('email', 'Email', 'trim|required|xss_clean|valid_email');
+			$this->form_validation->set_rules('home_number', 'Home Number', 'trim|xss_clean|alpha_dash');
+			$this->form_validation->set_rules('mobile_number', 'Mobile Number', 'trim|xss_clean|alpha_dash');
+			$this->form_validation->set_rules('password', 'Password', 'trim|required|xss_clean|min_length['.$this->config->item('password_min_length', 'tank_auth').']|max_length['.$this->config->item('password_max_length', 'tank_auth').']|alpha_dash');
+			$this->form_validation->set_rules('confirm_password', 'Confirm Password', 'trim|required|xss_clean|matches[password]');
+			$this->form_validation->set_rules('member_type', 'Member Type', 'trim|xss_clean');
+			$this->form_validation->set_rules('comms_preference', 'Communication Preferences', 'trim|xss_clean');
 
+			$captcha_registration	= $this->config->item('captcha_registration', 'tank_auth');
+			$use_recaptcha			= $this->config->item('use_recaptcha', 'tank_auth');
+			if ($captcha_registration) {
+				if ($use_recaptcha) {
+					$this->form_validation->set_rules('recaptcha_response_field', 'Confirmation Code', 'trim|xss_clean|required|callback__check_recaptcha');
+				} else {
+					$this->form_validation->set_rules('captcha', 'Confirmation Code', 'trim|xss_clean|required|callback__check_captcha');
+				}
+			}
+			$data['errors'] = array();
+
+			$email_activation = $this->config->item('email_activation', 'tank_auth');
+
+			if ($this->form_validation->run()) {								// validation ok
+				if (!is_null($data = $this->tank_auth->create_user(
+					$this->form_validation->set_value('first_name'),
+					$this->form_validation->set_value('second_name'),
+					$this->form_validation->set_value('home_number'),
+					$this->form_validation->set_value('mobile_number'),
+					$this->form_validation->set_value('email'),
+					$this->form_validation->set_value('password'),
+					$this->form_validation->set_value('member_type'),
+					2,					// GUEST
+					$this->form_validation->set_value('comms_preference'),
+					$email_activation,
+					0))) {									// success
+
+					$data['site_name'] = $this->config->item('website_name', 'tank_auth');
+
+					if ($email_activation) {									// send "activate" email
+						$data['activation_period'] = $this->config->item('email_activation_expire', 'tank_auth') / 3600;
+
+						$this->_send_email('activate', $data['email'], $data);
+
+						unset($data['password']); // Clear password (just for any case)
+
+						$this->_show_message($this->lang->line('auth_message_registration_completed_1'));
+
+					} else {
+						if ($this->config->item('email_account_details', 'tank_auth')) {	// send "welcome" email
+
+							$this->_send_email('welcome', $data['email'], $data);
+						}
+						unset($data['password']); // Clear password (just for any case)
+
+						$this->_show_message($this->lang->line('auth_message_registration_completed_2').' '.anchor('/auth/login/', 'Login'));
+					}
+				} else {
+					$errors = $this->tank_auth->get_error_message();
+					foreach ($errors as $k => $v)	$data['errors'][$k] = $this->lang->line($v);
+				}
+			}
+			if ($captcha_registration) {
+				if ($use_recaptcha) {
+					$data['recaptcha_html'] = $this->_create_recaptcha();
+				} else {
+					$data['captcha_html'] = $this->_create_captcha();
+				}
+			}
+			$data['use_username'] = $use_username;
+			$data['captcha_registration'] = $captcha_registration;
+			$data['use_recaptcha'] = $use_recaptcha;
+			$this->load->view('auth/ask_register_form', $data);
+		}
 	}
 
 	/**

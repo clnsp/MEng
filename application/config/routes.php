@@ -45,6 +45,7 @@ $route['auth/(:any)'] = 'auth/$1';
 $route['login'] = 'auth/login';
 $route['logout'] = 'auth/logout';
 $route['register'] = 'auth/register';
+$route['ask_register'] = 'auth/ask_register';
 $route['404_override'] = 'pages/view/page-not-found';
 $route['users'] = 'pages/users';
 $route['rooms'] = 'pages/rooms';
@@ -54,6 +55,7 @@ $route['links'] = 'pages/links';
 //$route['pages/admin/'] = 'pages/users';
 
 $route['member'] = 'member';
+$route['registration'] = 'pages/registration';
 
 $route['updateClasses'] = 'pages/updateClasses';
 $route['users_fetch'] = 'users_fetch';

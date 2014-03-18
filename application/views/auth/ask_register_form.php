@@ -105,6 +105,19 @@ $radio_graduate  = array(
 	'checked'     => FALSE,
 	);
 
+$radio_affiliate = array(
+	'name'        => 'type',
+	'id'          => 'affiliate-radio',
+	'value'       => '1',
+	'checked'     => FALSE,
+	);
+
+$radio_affiliate_spouse  = array(
+	'name'        => 'type',
+	'id'          => 'retired-staff-radio',
+	'value'       => '2',
+	'checked'     => FALSE,
+	);
 
 $captcha = array(
 	'name'	=> 'captcha',
@@ -130,12 +143,12 @@ $form = array(
 		<div class="form-group">
 			<?php echo form_label('User *', $user_type['id'], $label); ?>
 			<div class="col-sm-10">
-				<?php echo form_radio($radio_associate) . " Affiliate   " ; echo  form_radio($radio_retired_staff) . " Spouse/Partner   ";?>
+				<?php echo form_radio($radio_affiliate) . " Affiliate   " ; echo  form_radio($radio_affiliate_spouse) . "Spouse / Partner of Affiliate   ";?>
 			</div>
 		</div>
 		
 		<div class="form-group">
-			<?php echo form_label('User Type *', $user_type['id'], $label); ?>
+			<?php echo form_label('Affiliate  Type *', $user_type['id'], $label); ?>
 			<div class="col-sm-10">
 				<?php echo form_radio($radio_associate) . " Associate   " ; echo  form_radio($radio_retired_staff) . " Retired Staff    "; echo form_radio($radio_external_student) . " External Student    " ; echo  form_radio($radio_graduate) . " Graduate   ";?>
 			</div>
@@ -143,7 +156,7 @@ $form = array(
 		
 		<?php echo form_error($firstname['name']); ?>
 		<div class="form-group">
-			<?php echo form_label('First Name', $firstname['id'], $label); ?>
+			<?php echo form_label('First Name *', $firstname['id'], $label); ?>
 			<div class="col-sm-10">
 				<?php echo form_input($firstname); ?>
 			</div>
@@ -151,7 +164,7 @@ $form = array(
 
 		<?php echo form_error($secondname['name']); ?>
 		<div class="form-group">
-			<?php echo form_label('Second Name', $secondname['id'], $label); ?>
+			<?php echo form_label('Second Name *', $secondname['id'], $label); ?>
 			<div class="col-sm-10">
 				<?php echo form_input($secondname); ?>
 			</div>
@@ -257,7 +270,4 @@ $form = array(
 	</div>
 
 	<?php echo form_close(); ?>
-
-
-
 </div>
