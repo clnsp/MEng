@@ -158,7 +158,6 @@ class Users extends CI_Model
 	 */
 	function create_user($data, $activated = TRUE)
 	{
-		print_r ($data);
 		$data['created'] = date('Y-m-d H:i:s');
 		$data['activated'] = $activated ? 1 : 0;
 
@@ -432,7 +431,7 @@ class Users extends CI_Model
 		$this->db->update($this->table_name, array(
 			'banned'		=> 1,
 			'ban_reason'	=> $reason,
-		));
+			));
 	}
 
 	/**
@@ -447,7 +446,7 @@ class Users extends CI_Model
 		$this->db->update($this->table_name, array(
 			'banned'		=> 0,
 			'ban_reason'	=> NULL,
-		));
+			));
 	}
 
 	/**
