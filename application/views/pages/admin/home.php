@@ -11,9 +11,7 @@
 	<div class="col-sm-4 col-xs-12 ">
 
 		<ul id="attendance-buttons" class="no-pad-left">
-			<div class="btn-group">
-				<button class="btn btn-default" onClick="window.print()" type="button" id="print-btn"> <span class="glyphicon glyphicon-print"></span></button>
-			</div>
+			
 			<div class="btn-group">
 				<button class="btn btn-sm btn-default dropdown-toggle" type="button" id="category-dropdown-btn" data-toggle="dropdown">Rooms<span class="caret"></span></button>
 				<ul class="dropdown-menu multi-select" role="menu">
@@ -34,7 +32,10 @@
 						</a>
 					</li><?php endforeach; ?>
 				</ul>
-			</li>
+			</div>
+			<div class="btn-group">
+				<button class="btn btn-default" onClick="window.print()" type="button" id="print-btn"> <span class="glyphicon glyphicon-print"></span></button>
+			</div>
 
 		</ul>
 	</div>

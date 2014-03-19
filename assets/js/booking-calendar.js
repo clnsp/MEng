@@ -602,10 +602,11 @@ $('form#addGuestForm').submit(function(e){
     url: "calendar/addGuestToClass/" + eventid,
     type: "POST",
     data:  postdata,
-    success: function() {
+    success: function(result) {
      load_event_attendants(false);
      addGuestModal.modal('hide');
      teardown_add_guest_modal();
+     alert(result);
    },
    error: function(){
      alert('Error occurred');
