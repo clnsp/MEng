@@ -289,7 +289,7 @@ $( document ).ready(function() {
 
 		this.form.submit(function() { 
 			if(datepicker.hasDates()){
-				bootbox.confirm("<h4 class='modal-title'>Confirmation</h2><p>Are you sure you want to add new bookable classes? You will add classes to the following dates:</p>" + datepicker.getDates().toString(), function(result) {
+				bootbox.confirm("<h4 class='modal-title'>Confirmation</h2><p>Are you sure you want to add new bookable classes? You will add classes for all the dates on the current calendar, please make sure to review these before saving."/*to the following dates:</p>" + datepicker.getDates().toString()*/, function(result) {
 					if(result)
 						sendForm();
 				}); 
