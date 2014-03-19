@@ -1004,3 +1004,7 @@ html.mobile #booking.user_booking #search-panel select{
 	vertical-align: middle;
 	line-height: 35px;
 }
+
+#booking.users table#member tbody tr{
+	cursor: pointer;
+}
