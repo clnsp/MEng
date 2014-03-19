@@ -51,10 +51,14 @@
 	})
 
  .on('keypress', '.checkbox-group input.editable', function(e) {
+ 	//prevent from submitting any other nearby forms when enter is pressed
+ 	if(e.which == 13){
  		e.preventDefault();
-	 	e.stopImmediatePropagation();
-	 	$(this).blur();
-	});
+ 		e.stopImmediatePropagation();
+ 		$(this).blur();
+ 	}
+ 	
+ });
 
 
 
