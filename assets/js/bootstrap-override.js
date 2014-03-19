@@ -48,6 +48,12 @@
  		return '<span class="editable">' + $(this).val() + '</span>';
  	});
 	 //	e.stopImmediatePropagation();
+	})
+
+ .on('keypress', '.checkbox-group input.editable', function(e) {
+ 		e.preventDefault();
+	 	e.stopImmediatePropagation();
+	 	$(this).blur();
 	});
 
 

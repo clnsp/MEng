@@ -70,7 +70,7 @@ $( document ).ready(function() {
 		/* Select anywhere along a checkbox-group row  */
 		$('#manage-categories').on('blur', 'input.editable', function(e) {
 			if($(this).val() != $(this).data('previous'))
-				storename($(this).parent('.list-group-item').data('category_id'), this.value );
+				storename($(this).siblings('[name="category_id[]"]').val(), this.value );
 		});
 
 
