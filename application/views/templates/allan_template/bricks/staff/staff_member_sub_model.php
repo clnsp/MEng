@@ -1,10 +1,21 @@
-<div id="SubMemberDetails" class="modal-content sub-modal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index:4;">
-    <div class="modal-content">
-        <div class="modal-body">
-		<!-- BODY MAIN CONTENT -->
-        </div>
-        <div class="modal-footer">
-		<!-- FOOTER E.G. BUTTONS-->
-        </div>
-    </div>
+<div id="SubMemberDetails" class="modal submodal fade in" data-backdrop="static" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class='modal-title'></h4>
+			</div>
+			<div class="modal-body">
+
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-default btn-sm" data-dismiss="modal" aria-hidden="true">Cancel</button>
+				<button id="submitState" class="btn btn-sm btn-danger submit" data-dismiss="submodal">Submit</button>
+			</div>
+		</div>
+	</div>
 </div>
+
+
+
+

@@ -571,10 +571,11 @@ html.mobile #footer{
 	overflow: hidden;
 	outline-color: transparent!important;
 	outline:none;
+	z-index: 1051!important;
 }
 
 .modal.submodal .modal-dialog{
-	width: 100%
+	width: 95%;
 }
 
 .modal.submodal .modal-content{
