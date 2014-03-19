@@ -7,7 +7,7 @@ class booking extends CI_Controller{
 		parent::__construct();
 		
 		$this->load->Model('classes');
-		$this->load->Helper('booking');
+		$this->load->Helper('book');
 
 	}
 	

@@ -58,7 +58,8 @@
     */
   	function isClassBookedOut($class_booking_id){
   		$ci = get_instance();
-  		$ci->load->model('Bookings');
+  		$ci->load->model('bookings');
+      $ci->load->model('classes');
 
   		$capacity = $ci->classes->getClassCapacity($class_booking_id);
   		$attending = $ci->bookings->countBookingAttendants($class_booking_id);
