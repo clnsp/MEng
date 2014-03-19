@@ -37,11 +37,8 @@ $('#booking').on('click', '#event-cancel-class-btn, #event-uncancel-class-btn', 
           url: "calendar/cancelClass/" + activeEvent.cancelled,
           type: "POST",
           data: { 'class_booking_id':eventid, 'cancel_message':msg },
-          success: function() {
-            if(activeEvent.cancelled)
-              alert('Message sent, class reopened');
-            else
-              alert('Message sent, class cancelled');
+          success: function(result) {
+            alert(result);
 
             $('#calendar').fullCalendar( 'refetchEvents' );
             eventModal.modal('hide');
@@ -132,6 +129,15 @@ $('#booking').on('click', '#event-cancel-class-btn, #event-uncancel-class-btn', 
 
   }
 
+  /**
+   * Render the room
+   */
+   function disable_buttons(past) {
+    eventModal.find('.btn.disable-past').each(function(){
+      $(this).prop('disabled', past);
+    });
+  }
+
 /**
  * Disable/Enable the add member functionality
  */
@@ -212,15 +218,16 @@ $('#calendar').fullCalendar({
     	render_cancelled_banner(calEvent.cancelled);
     	render_cancel_button(calEvent.cancelled);
     	disable_cancel_button(calEvent.past);
-    	render_date(calEvent.start, calEvent.end, calEvent.allDay);
-    	render_attendance_numbers(calEvent.attending, calEvent.max_attendance);
-    	render_color(calEvent.color);
-    	render_room(calEvent.room_id, calEvent.room);
-    	load_event_attendants(calEvent.past || calEvent.cancelled);
-    	disable_add_member(calEvent.past || calEvent.cancelled);
+      disable_buttons(calEvent.past);
+      render_date(calEvent.start, calEvent.end, calEvent.allDay);
+      render_attendance_numbers(calEvent.attending, calEvent.max_attendance);
+      render_color(calEvent.color);
+      render_room(calEvent.room_id, calEvent.room);
+      load_event_attendants(calEvent.past || calEvent.cancelled);
+      disable_add_member(calEvent.past || calEvent.cancelled);
 
-    	/*setup form*/
-    	eventModal.modal('show');
+      /*setup form*/
+      eventModal.modal('show');
     },
 
     eventRender: function(event, element, view) {
@@ -300,12 +307,14 @@ $('#calendar .fc-header .fc-header-center').before($('#rooms-dropdown').remove()
  * Render the room
  */
  function render_room(room_id, room) {
- 	if(exists(room_id)){
- 		eventLocation.html('<a href="room/' + room_id + '">' + room + '</a>');
- 	}else{
- 		eventLocation.text(calEvent.room);
- 	}
- }
+  if(exists(room_id)){
+    eventLocation.html('<a href="room/' + room_id + '">' + room + '</a>');
+  }else{
+    eventLocation.text(calEvent.room);
+  }
+}
+
+
 
 /**
  * Render the category color

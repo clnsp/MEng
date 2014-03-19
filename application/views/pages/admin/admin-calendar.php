@@ -84,7 +84,7 @@
 						<form class="prevent" id="event-remove-member-form" method="post" action="">
 							<ul class="list-group checkbox-group"></ul>
 						</div>
-						<button type="submit" id="event-remove-member-button" class="btn btn-sm">Remove</button>
+						<button type="submit" id="event-remove-member-button" class="btn btn-sm disable-past">Remove</button>
 
 					</form>
 					
@@ -98,14 +98,14 @@
 							<input type="hidden" id="class-booking-id" name="class_booking_id" value="" />
 							<input id="search-users" type="text" class="form-control" name="member_name" data-member-id="" placeholder="Enter name">
 							<span class="input-group-btn">
-								<button class="btn btn-default" id="btn-add-member" type="submit">Add</button>
+								<button class="btn btn-default disable-past" id="btn-add-member" type="submit">Add</button>
 							</span>
 						</div>
 						<!-- /input-group -->
 					</form>
-					<div class="button-group">
-						<button data-toggle="modal" data-target="#addGuestModal" class="btn btn-default" id="btn-add-guest-member" type="submit"><i class="glyphicon glyphicon-user"></i> Add Guest</button>
-						<button class="btn btn-default" id="btn-view-waiting-list" type="submit"><i class="glyphicon glyphicon-list-alt"></i> Waiting List</button>
+					<div class="button-group ">
+						<button data-toggle="modal" data-target="#addGuestModal" class="btn btn-default disable-past" id="btn-add-guest-member" type="submit"><i class="glyphicon glyphicon-user"></i> Add Guest</button>
+						<button class="btn btn-default" id="btn-view-waiting-list" type="submit"><i class="disable-past glyphicon glyphicon-list-alt"></i> Waiting List</button>
 					</div>
 				</div>
 				
@@ -119,8 +119,8 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				<button id="event-cancel-class-btn" type="button" class="btn btn-danger">Cancel Class</button>
-				<button id="event-uncancel-class-btn"  type="button" class="btn btn-success">Reopen Class</button>
+				<button id="event-cancel-class-btn" type="button" class="disable-past btn btn-danger">Cancel Class</button>
+				<button id="event-uncancel-class-btn"  type="button" class="disable-past btn btn-success">Reopen Class</button>
 				
 			</div>
 		</div><!-- /.modal-content -->
@@ -167,7 +167,7 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-					<input type="submit" value="Add New Member" class="btn btn-primary">
+					<input type="submit" value="Add New Member" class="disable-past btn btn-primary">
 				</form>
 			</div>
 		</div><!-- /.modal-content -->

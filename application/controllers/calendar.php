@@ -123,27 +123,41 @@ class Calendar extends CI_Controller{
 
     /**
      * Cancel a class
+     * @param bool
      */
     function cancelClass($cancelled){
-      $cancelled = $cancelled == "true";
+        if(check_admin()){
+            $cancelled = $cancelled == "true";
 
-      if (isset($_POST['class_booking_id'])){
-       $this->load->model('classes');
+            if (isset($_POST['class_booking_id'])){
+                $this->load->model('classes');
 
-       $bid = $_POST['class_booking_id'];
-       $msg = '';
+                $bid = $_POST['class_booking_id'];
+                $msg = '';
 
-       if (isset($_POST['cancel_message'])){
-         $msg = $_POST['cancel_message'];
-     }
+                if(isclassinPast($bid)){
+                  echo "Cannot change the status of a class in the past";
+                  return;  
+              }
+              if (isset($_POST['cancel_message'])){
+                $msg = $_POST['cancel_message'];
+            }
 
-     $iscancelled = $this->classes->isClassCancelled($bid);          
+            $iscancelled = $this->classes->isClassCancelled($bid);          
 
-     if($cancelled == $iscancelled){
-         echo "change status";
-         $this->changeClassStatus($bid, $msg, !$cancelled);
-     }
- }
+            if($cancelled == $iscancelled){
+                $this->changeClassStatus($bid, $msg, !$cancelled);
+                if($cancelled){
+                  echo('Message sent, class reopened');
+
+              }
+              else{
+                  echo 'Message sent, class cancelled';
+              }
+          }
+      }
+  }
+
 }
 
 

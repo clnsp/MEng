@@ -87,12 +87,11 @@ class Bookings extends CI_Model
 	 * @return	object
 	 */
 	function getBookingByClassID($class_id){
-		if(check_admin()){
-			$this->db->where('class_id', $class_id);
+		$this->db->where('class_id', $class_id);
 
-			$query = $this -> db -> get($this -> class_booking_tbl);
-			return $query -> result();
-		}
+		$query = $this -> db -> get($this -> class_booking_tbl);
+		return $query -> result();
+		
 	}
 	
 	/**
@@ -248,12 +247,12 @@ class Bookings extends CI_Model
 	* @param int
 	* @return bool
 	*/
-     function addMemberWaitingList($class_id, $member_id){ 
+	function addMemberWaitingList($class_id, $member_id){ 
 
-     	$this->db->insert($this -> waiting_pool_tbl, array('member_id' => $member_id, 'class_id' => $class_id)); 	
+		$this->db->insert($this -> waiting_pool_tbl, array('member_id' => $member_id, 'class_id' => $class_id)); 	
 
 		return ($this->db->_error_number() == 0);
-     }	
+	}	
 
  	/**
  	* Determine whether a user is already booked into a class or sport at particular time
@@ -292,35 +291,35 @@ class Bookings extends CI_Model
     * @return bool 
     */
     function waitingListFull($class_id, $max_attendance) {
-     	$this->config->load('gym_settings');
-	    
-	    $this->db->where('class_id', $class_id);
-        $this->db->from($this -> waiting_pool_tbl);
- 		$this -> db -> join('class_tbl', 'waiting_pool_tbl.class_id = class_tbl.class_id');
-        $query = $this -> db -> get();
-        
-		$max = $max_attendance/100 * $this->config->item('max_waiting');
-		echo($max);
-		
-        return $this->db->count_all_results() > $max;
+    	$this->config->load('gym_settings');
+    	
+    	$this->db->where('class_id', $class_id);
+    	$this->db->from($this -> waiting_pool_tbl);
+    	$this -> db -> join('class_tbl', 'waiting_pool_tbl.class_id = class_tbl.class_id');
+    	$query = $this -> db -> get();
+    	
+    	$max = $max_attendance/100 * $this->config->item('max_waiting');
+    	echo($max);
+    	
+    	return $this->db->count_all_results() > $max;
 
-  }
-  
+    }
+    
       /**
       * Is a user already in a waiting list
       * @param int
       * @return bool 
       */
       function onWaitingList($member_id, $class_id) {
-         $this->config->load('gym_settings');
-       	    
-       	 $this->db->where('class_id', $class_id);
-       	 $this->db->where('member_id', $member_id);
-         $this->db->from($this -> waiting_pool_tbl);
-         $query = $this -> db -> get();
-       
-         return $this->db->count_all_results() > 0;  
-    }
- 	
+      	$this->config->load('gym_settings');
+      	
+      	$this->db->where('class_id', $class_id);
+      	$this->db->where('member_id', $member_id);
+      	$this->db->from($this -> waiting_pool_tbl);
+      	$query = $this -> db -> get();
+      	
+      	return $this->db->count_all_results() > 0;  
+      }
+      
 
- }
+  }
