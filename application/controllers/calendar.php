@@ -212,6 +212,7 @@ class Calendar extends CI_Controller{
         $this->load->model('members');
 
         if(isset($class_id)){ 
+
             if (isset($_POST['guest_first_name'])){
                 $first = strtolower($_POST['guest_first_name']);       
             } else{
