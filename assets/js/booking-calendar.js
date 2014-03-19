@@ -518,13 +518,21 @@ $('#calendar .fc-header .fc-header-center').before($('#rooms-dropdown').remove()
  		}
  	},
 
- 	response: function(event, ui) {
- 		if (!ui.content.length) {
- 			var noResult = { value:"",label:noResultsLabel };
- 			ui.content.push(noResult);
- 		}
- 	}
- });
+  search: function( event, ui ) {
+    $('.tooltip').remove();//remove any stuck tooltips
+  },
+
+  close: function( event, ui ) {
+    $('.tooltip').remove();//remove any stuck tooltips
+  },
+
+  response: function(event, ui) {
+   if (!ui.content.length) {
+    var noResult = { value:"",label:noResultsLabel };
+    ui.content.push(noResult);
+  }
+}
+});
 
  /*override the autocomp dropdown results display*/
  $.ui.autocomplete.prototype._renderMenu = function( ul, items ) {
