@@ -154,6 +154,7 @@ class booking extends CI_Controller{
 	function joinWaiting(){
 		if(check_member()){
 			$this->load->model('bookings');
+			$this->load->model('waiting');
 
 			/* class confirm */
 			if(isset($_POST['class_id'])){
@@ -163,7 +164,7 @@ class booking extends CI_Controller{
 				
 				$classInfo = $this->classes->getClassInformation($b);
 				
-				if($this->bookings->waitingListFull($b, $classInfo['max_attendance'])){
+				if($this->waiting->waitingListFull($b, $classInfo['max_attendance'])){
 					$this->_bookingFail('There are unfortunately no more spaces on the waiting list.');
 					return;
 				}
@@ -174,7 +175,7 @@ class booking extends CI_Controller{
 					return;
 				}
 				
-				if($this->bookings->addMemberWaitingList($b, $m)){
+				if($this->waiting->addMemberWaitingList($b, $m)){
 					emailMemberAddedToWaitingList($m, $classInfo);
 					parse_temp('booking-wait-success', $this->load->view('pages/booking-wait-success', $classInfo, true));
 				}else{

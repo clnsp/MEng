@@ -465,8 +465,18 @@ $('#calendar .fc-header .fc-header-center').before($('#rooms-dropdown').remove()
           load_event_attendants();
 
       },
-      error: function(){
-        show_error('User already exists');
+      error: function(data){
+        if(data.status == 305){
+            bootbox.confirm("Class is full would you like to add user to waiting list?", function(result) {
+                if(result){
+                    $.post( siteUrl + 'waiting_list/addWaiting', {  member_id: mid, class_id:eventid })
+                    .done(function( result ) {
+                        alert(result);
+                    });
+                }
+            }); 
+        }
+        
         memberinputbox.attr('data-member-id', '').val('');
     },
 });

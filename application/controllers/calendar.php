@@ -82,6 +82,7 @@ class Calendar extends CI_Controller{
 
       if(isClassBookedOut($booking_id)){
         echo "This class is booked out";
+        header('HTTP/ 305 Class booked out');
         return;
     }
 
@@ -175,22 +176,22 @@ class Calendar extends CI_Controller{
      * @param bool
      */
     function changeClassStatus($bid, $msg, $cancel) {
-       $this->load->helper('email');
+     $this->load->helper('email');
 
-       $this->classes->cancelClass($bid, $cancel);
+     $this->classes->cancelClass($bid, $cancel);
 
-       $emails = $this->bookings->getBookingEmails($bid);
+     $emails = $this->bookings->getBookingEmails($bid);
 
-       if($cancel){
-          "Your class has been cancelled. " + $msg;
-      }else{
-          "Your class has been reopened. " + $msg;
-      }
-
-      foreach ($emails as $email){   
-          send_email($email['email'],'Update to your class',$msg );
-      }
+     if($cancel){
+      "Your class has been cancelled. " + $msg;
+  }else{
+      "Your class has been reopened. " + $msg;
   }
+
+  foreach ($emails as $email){   
+      send_email($email['email'],'Update to your class',$msg );
+  }
+}
 
 
     /**

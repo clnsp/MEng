@@ -13,7 +13,6 @@ class Classes extends CI_Model{
     private $class_tbl         = 'class_tbl';	
     private $class_type_tbl     = 'class_type_tbl';	
     private $class_info_view    = 'class_info_view';    
-    private $waiting_pool_tbl   = 'waiting_pool_tbl';	
 
     function __construct(){
         parent::__construct();
@@ -257,24 +256,7 @@ class Classes extends CI_Model{
 
     }
 
-    /**
-    * Returns an array of those waiting for a position
-    * @param int
-    * @return array
-    */
-    function getWaiting($class_id){
-        $this -> db -> select('first_name, second_name');
 
-        $this->db->from($this -> waiting_pool_tbl);
-
-        $this->db->join('users', 'users.id = waiting_pool_tbl.member_id');
-        $this->db->where('class_id', $class_id);
-
-        $query = $this -> db -> get();
-        return $query->result_array();
-
-
-    }	
 
     /**
     * Returns an array of classes with type and between two different times
