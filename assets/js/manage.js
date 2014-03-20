@@ -58,6 +58,7 @@ $( document ).ready(function() {
 	var categoriesPanel = new function() {
 
 		var categorylist 	= $("#class-categories-list");
+		var container 	= $("#manage-categories");
 		var currentColor 	= null;
 		var addForm 		= $("#add-category-form");
 		var removeForm 		= $('form#remove-category-form');
@@ -68,9 +69,22 @@ $( document ).ready(function() {
 		removeForm.submit(function(){ removeCategory() });
 
 		/* Select anywhere along a checkbox-group row  */
-		$('#manage-categories').on('blur', 'input.editable', function(e) {
+		container
+		.on('blur', 'input.editable', function(e) {
 			if($(this).val() != $(this).data('previous'))
 				storename($(this).siblings('[name="category_id[]"]').val(), this.value );
+		}).on('click', '.toggle.on', function() {
+			$(this).toggleClass('on off');
+			categorylist.find('li:not(.selected)').each(function(){
+				$(this).click();
+			}) 	
+		})
+
+		.on('click', '.toggle.off', function() {
+			$(this).toggleClass('on off');
+			categorylist.find('li.selected').each(function(){
+				$(this).click();
+			}) 	
 		});
 
 

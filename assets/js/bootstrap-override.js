@@ -28,21 +28,20 @@
  		})
  	});
 
- 	var toggleBtn = '<li class="btn-group btn-group-justified"><button class="btn toggle off">Check All/None</button></li>';
+ 	var toggleBtn = '<li class="btn-group btn-group-justified"><button type="button" class="btn toggle off">Check All/None</button></li>';
  	
  	$('ul.dropdown-menu.multi-select').append(toggleBtn);
  }
 
  var CheckboxListGroup = new function(){
 
- 	$('#page-body')
 
+ 	$('#body-wrapper')
  	/* Select anywhere along a checkbox-group row  */
  	.on('click', '.checkbox-group.list-group .list-group-item', function() {
  		$(this).find('input[type=checkbox]').trigger('click');
  	})
 
- 
  	/* when checked add selected to the list item */
  	.on('click', '.checkbox-group.list-group .list-group-item input[type=checkbox]', function() {
  		$(this).parent('.list-group-item').toggleClass('selected');
@@ -109,7 +108,7 @@
  $('INPUT.minicolors-inline').minicolors({ theme: 'bootstrap', control: 'wheel' });
  
  /* prevent forms submitting */
- $(document).on('submit', 'form.prevent', function(e) {
+ $(document).on('submit', '.prevent', function(e) {
  	e.preventDefault();
  });
 
