@@ -116,18 +116,6 @@ class booking extends CI_Controller{
 
 
 	/**
-	* Determine whether a class has past
-	* @param int
-	* @return bool
-	*/
-	function isClassInPast($class_booking_id){
-		$end = $this->classes->getClassEndDate($class_booking_id);
-		return (time() >  strtotime($end));
-	}
-
-
-
-	/**
 	 * Index page for user booking
 	 **/
 	function index() {
