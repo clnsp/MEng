@@ -9,41 +9,41 @@ class Calendar extends CI_Controller{
     $this->load->model('classes');
     $this->load->helper('book');
 
-}
+  }
 
     /**
      * Get users that match a partial term. Used for autocomplete
      */
     function getUsers(){
-        if(check_admin()){
-            $this->load->model('members');
+      if(check_admin()){
+        $this->load->model('members');
 
-            if (isset($_GET['term'])){
-                $q = strtolower($_GET['term']);
-                $terms = explode(" ", $q);
+        if (isset($_GET['term'])){
+          $q = strtolower($_GET['term']);
+          $terms = explode(" ", $q);
 
-                $matched = array();
-                foreach($terms as $term){
-                    if($term==''){
-                        continue;
-                    }
-                    $query = $this->members->getUserLike($term)->result_array();
-                    $matched = array_merge($matched, $query);
-                }
-
-                $matched = array_unique($matched, SORT_REGULAR);
-
-                foreach ($matched as $match){
-                    $new_row['label']=htmlentities(stripslashes($match['name']));
-                    $new_row['user_id']=htmlentities(stripslashes($match['id']));
-                    $new_row['email']=htmlentities(stripslashes($match['email']));
-                    $row_set[] = $new_row; //build an array
-                }
-                echo json_encode($row_set); //format the array into json data
+          $matched = array();
+          foreach($terms as $term){
+            if($term==''){
+              continue;
             }
-        }
+            $query = $this->members->getUserLike($term)->result_array();
+            $matched = array_merge($matched, $query);
+          }
 
-    }
+          $matched = array_unique($matched, SORT_REGULAR);
+
+          foreach ($matched as $match){
+            $new_row['label']=htmlentities(stripslashes($match['name']));
+            $new_row['user_id']=htmlentities(stripslashes($match['id']));
+            $new_row['email']=htmlentities(stripslashes($match['email']));
+                    $row_set[] = $new_row; //build an array
+                  }
+                echo json_encode($row_set); //format the array into json data
+              }
+            }
+
+          }
 
 
 
@@ -51,10 +51,10 @@ class Calendar extends CI_Controller{
      * Get users from associated with a class booking
      */
     function getClassAttendants(){
-        if (isset($_GET['class'])){
-            $q = strtolower($_GET['class']);
-            echo json_encode($this->bookings->getBookingAttendants($q));       
-        }
+      if (isset($_GET['class'])){
+        $q = strtolower($_GET['class']);
+        echo json_encode($this->bookings->getBookingAttendants($q));       
+      }
     }
 
 
@@ -70,33 +70,40 @@ class Calendar extends CI_Controller{
           $b = strtolower($_POST['class_booking_id']);
 
           $this->_addMember($b, $m);
-      }    
-  }
+        }    
+      }
 
-}
+    }
 
     /**
     * Add a member to a class
     */
     function _addMember($booking_id, $member_id){
 
-        if(isClassBookedOut($booking_id)){
-            echo "This class is booked out";
-            return;
-        }
+      if(isClassBookedOut($booking_id)){
+        echo "This class is booked out";
+        return;
+      }
 
-        if(isclassinPast($booking_id)){
-            echo "This class is past";
-            return;
-        }
+      if(isclassinPast($booking_id)){
+        echo "This class is past";
+        return;
+      }
+      $classDetails = $this->classes->getClassInformation($booking_id);
 
-        $classDetails = $this->classes->getClassInformation($booking_id);
-        if($this->bookings->addMember($booking_id, $member_id)){
-            emailMemberAddedToClass($member_id, $classDetails);
-            echo "Member added";
-        } else{
-            echo "<br> Member not added to class.";
-        }
+      if(bookedOut($member_id, new DateTime($classDetails['class_start_date']), new DateTime($classDetails['class_end_date']))){
+        echo "This user is already booked into a class at this time";
+        return;
+      }
+
+
+
+      if($this->bookings->addMember($booking_id, $member_id)){
+        emailMemberAddedToClass($member_id, $classDetails);
+        echo "Member added";
+      } else{
+        echo "<br> Member not added to class.";
+      }
 
     }
 
@@ -116,49 +123,49 @@ class Calendar extends CI_Controller{
             $this->bookings->removeMember($b, $m);
             emailMemberRemovedClass($m, $b);
             
+          }
         }
+      }
     }
-}
-}
 
     /**
      * Cancel a class
      * @param bool
      */
     function cancelClass($cancelled){
-        if(check_admin()){
-            $cancelled = $cancelled == "true";
+      if(check_admin()){
+        $cancelled = $cancelled == "true";
 
-            if (isset($_POST['class_booking_id'])){
-                $this->load->model('classes');
+        if (isset($_POST['class_booking_id'])){
+          $this->load->model('classes');
 
-                $bid = $_POST['class_booking_id'];
-                $msg = '';
+          $bid = $_POST['class_booking_id'];
+          $msg = '';
 
-                if(isclassinPast($bid)){
-                  echo "Cannot change the status of a class in the past";
-                  return;  
-              }
-              if (isset($_POST['cancel_message'])){
-                $msg = $_POST['cancel_message'];
-            }
-
-            $iscancelled = $this->classes->isClassCancelled($bid);          
-
-            if($cancelled == $iscancelled){
-                $this->changeClassStatus($bid, $msg, !$cancelled);
-                if($cancelled){
-                  echo('Message sent, class reopened');
-
-              }
-              else{
-                  echo 'Message sent, class cancelled';
-              }
+          if(isclassinPast($bid)){
+            echo "Cannot change the status of a class in the past";
+            return;  
           }
-      }
-  }
+          if (isset($_POST['cancel_message'])){
+            $msg = $_POST['cancel_message'];
+          }
 
-}
+          $iscancelled = $this->classes->isClassCancelled($bid);          
+
+          if($cancelled == $iscancelled){
+            $this->changeClassStatus($bid, $msg, !$cancelled);
+            if($cancelled){
+              echo('Message sent, class reopened');
+
+            }
+            else{
+              echo 'Message sent, class cancelled';
+            }
+          }
+        }
+      }
+
+    }
 
 
     /**
@@ -176,14 +183,14 @@ class Calendar extends CI_Controller{
 
      if($cancel){
       "Your class has been cancelled. " + $msg;
-  }else{
+    }else{
       "Your class has been reopened. " + $msg;
-  }
+    }
 
-  foreach ($emails as $email){   
+    foreach ($emails as $email){   
       send_email($email['email'],'Update to your class',$msg );
+    }
   }
-}
 
 
     /**
@@ -203,78 +210,78 @@ class Calendar extends CI_Controller{
           $d = $this->classes->getClassesWithRoomBetween($s, $e, $params['room']);
           echo json_encode($d);
 
-      }else{
+        }else{
           echo json_encode(($this->Classes->getClassesBetween($s, $e)));
+
+        }
 
       }
 
-  }
+      else{
+        echo "not set";     
+        echo json_encode(($this->Calendar->fetchAllData()));
 
-  else{
-    echo "not set";     
-    echo json_encode(($this->Calendar->fetchAllData()));
-
-}
-}
+      }
+    }
 
     /**
      * Add guest to class
      * @param int - class_id to add guest to
      */
     function addGuestToClass($class_id){
-        $this->load->model('tank_auth/users');
-        $this->load->model('members');
+      $this->load->model('tank_auth/users');
+      $this->load->model('members');
 
-        if(isset($class_id)){ 
+      if(isset($class_id)){ 
 
-            if (isset($_POST['guest_first_name'])){
-                $first = strtolower($_POST['guest_first_name']);       
-            } else{
-                return;
-            }
-
-            if (isset($_POST['guest_last_name'])){
-                $last = strtolower($_POST['guest_last_name']);       
-            } else{
-                return;
-            }
-
-            if (isset($_POST['guest_email'])){
-                $email = strtolower($_POST['guest_email']);       
-            } 
-            else{
-                return;
-            }
-
-            if (isset($_POST['guest_phone'])){
-                $phone = strtolower($_POST['guest_phone']);       
-            } 
-            else{
-                return;
-            }
-
-            $data = array(
-                'membership_type_id' => 2,
-                'first_name' => $first ,
-                'second_name' => $last,
-                'email'   => $email,
-                'home_number' =>$phone
-                );
-
-            $newuserid = $this->users->create_user($data);
-            $newuserid = $newuserid['user_id'];
-            if(!is_null($newuserid)){
-                $this->_addMember($class_id, $newuserid);
-            }else{
-                echo "Error adding new user";
-            }
-
+        if (isset($_POST['guest_first_name'])){
+          $first = strtolower($_POST['guest_first_name']);       
+        } else{
+          return;
         }
+
+        if (isset($_POST['guest_last_name'])){
+          $last = strtolower($_POST['guest_last_name']);       
+        } else{
+          return;
+        }
+
+        if (isset($_POST['guest_email'])){
+          $email = strtolower($_POST['guest_email']);       
+        } 
+        else{
+          return;
+        }
+
+        if (isset($_POST['guest_phone'])){
+          $phone = strtolower($_POST['guest_phone']);       
+        } 
+        else{
+          return;
+        }
+
+        $data = array(
+          'membership_type_id' => 2,
+          'first_name' => $first ,
+          'second_name' => $last,
+          'email'   => $email,
+          'home_number' =>$phone
+          );
+
+        $newuserid = $this->users->create_user($data);
+        $newuserid = $newuserid['user_id'];
+        if(!is_null($newuserid)){
+          $this->_addMember($class_id, $newuserid);
+        }else{
+          echo "Error adding new user";
+        }
+
+      }
 
     }
 
 
-}
+  }
 
 /*
  * Get paramters from the url

@@ -61,11 +61,11 @@
   		$ci->load->model('bookings');
       $ci->load->model('classes');
 
-  		$capacity = $ci->classes->getClassCapacity($class_booking_id);
-  		$attending = $ci->bookings->countBookingAttendants($class_booking_id);
+      $capacity = $ci->classes->getClassCapacity($class_booking_id);
+      $attending = $ci->bookings->countBookingAttendants($class_booking_id);
 
-  		return ($attending >= $capacity);
-  	}
+      return ($attending >= $capacity);
+    }
 
 
     /**
@@ -78,6 +78,21 @@
     	$end = $ci->classes->getClassEndDate($class_booking_id);
 
     	return (time() >  strtotime($end));
+    }
+
+    /**
+    * Check already booked classes
+    * @param int
+    * @param DateTime
+    * @param DateTime
+    * @return bool
+    */
+    function bookedOut($user_id, $start, $end){
+      $ci = get_instance();
+      $bookedOut = $ci->bookings
+      ->isMemberBookedOut($user_id, $start->format("Y-m-d"), $start->format("H:i:s"), $end->format("H:i:s"));
+
+      return count($bookedOut) > 0;
     }
 
 

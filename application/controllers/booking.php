@@ -24,7 +24,7 @@ class booking extends CI_Controller{
 				$user_id = $this->tank_auth->get_user_id();
 				$classInfo = $this->classes->getClassInformation($_POST['classid']);
 
-				if(!$this->_bookedOut($user_id, new DateTime($classInfo['class_start_date']), new DateTime($classInfo['class_end_date']))){
+				if(!bookedOut($user_id, new DateTime($classInfo['class_start_date']), new DateTime($classInfo['class_end_date']))){
 					$this->_addMember($_POST['classid'], $user_id, $classInfo);
 				}
 			}else{
@@ -72,24 +72,7 @@ class booking extends CI_Controller{
 
 	}
 
-	/**
-	* Check already booked classes
-	* @param int
-	* @param DateTime
-	* @param DateTime
-	* @return bool
-	*/
-	function _bookedOut($user_id, $start, $end){
-		$bookedOut = $this->bookings
-		->isMemberBookedOut($user_id, $start->format("Y-m-d"), $start->format("H:i:s"), $end->format("H:i:s"));
 
-		if(count($bookedOut)>0){
-			$this->_bookingFail('You are already booked into classes at this time');
-			return true;
-		}
-		return false;
-
-	}
 
 	/**
 	* Handle booking failuires
@@ -120,10 +103,13 @@ class booking extends CI_Controller{
 
 
 			$uid = $this->tank_auth->get_user_id();
-			if(!$this->_bookedOut($uid, new DateTime($_POST['start']), new DateTime($_POST['end']))){
+			if(!bookedOut($uid, new DateTime($_POST['start']), new DateTime($_POST['end']))){
 				$id = $this->classes->insertClass($data);
 				$data = $this->classes->getClassInformation($id);
 				$this->_addMember($id, $this->tank_auth->get_user_id(), $data);	
+			}else{
+				$this->_bookingFail('You are already booked into classes at this time');
+
 			}
 		}
 	}
@@ -157,7 +143,7 @@ class booking extends CI_Controller{
 			/* class confirm */
 			if(isset($_POST['class_id'])){	
 				$data = $this->classes->getClassInformation($_POST['class_id']);
-				if(!isclassBooKedouT($_POST['class_id'])){
+				if(!isclassBookedOut($_POST['class_id'])){
 					parse_temp('booking_confirm', $this->load->view('pages/booking-confirm', $data, true));
 				}
 				else{
@@ -195,7 +181,7 @@ class booking extends CI_Controller{
 				}
 				
 				
-				if(!isclassBooKedouT($b)){
+				if(!isclassBookedOut($b)){
 					parse_temp('booking-confirm', $this->load->view('pages/booking-confirm', $classInfo, true));
 					return;
 				}
