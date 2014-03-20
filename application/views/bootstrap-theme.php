@@ -534,6 +534,12 @@ html.tablet #booking.user #page-wrapper:after {
 	height: 155px;
 }
 
+#booking .booking-panel{
+	max-height: 400px;
+	overflow-y: auto;
+	margin-bottom: 15px;
+}
+
 #booking .username{
 	text-transform: capitalize;
 }

@@ -428,8 +428,9 @@
  var divisiblerooms = new DivisibleRooms();
 
  /* responsive tables */
+ 
+  
  $('.footable').footable();
-
 
  Modernizr.Detectizr.detect({
  	detectScreen:true,
