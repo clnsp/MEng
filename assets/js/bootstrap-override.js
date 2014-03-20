@@ -12,19 +12,16 @@
 
 
  var MultiSelectDropdowns = new function() {
- 	$('#page-body')
- 	.on('click', '.dropdown-menu.multi-select li', function(e) {
+ 	$('#page-body').on('click', '.dropdown-menu.multi-select li', function(e) {
  		e.preventDefault();
  		e.stopPropagation();
  		$(this).toggleClass('selected');
- 	})
- 	.on('click', '.dropdown-menu.multi-select button.toggle.on', function(e) {
+ 	}).on('click', '.dropdown-menu.multi-select button.toggle.on', function(e) {
  		$(this).toggleClass('on off');
  		$(this).parents('ul.dropdown-menu.multi-select').find('li:not(.selected)').each(function(){
  			$(this).click();
  		})
- 	})
- 	.on('click', '.dropdown-menu.multi-select button.toggle.off', function(e) {
+ 	}).on('click', '.dropdown-menu.multi-select button.toggle.off', function(e) {
  		$(this).toggleClass('on off');
  		$(this).parents('ul.dropdown-menu.multi-select').find('li.selected').each(function(){
  			$(this).click();
@@ -33,53 +30,45 @@
 
  	var toggleBtn = '<li class="btn-group btn-group-justified"><button class="btn toggle off">Check All/None</button></li>';
  	
-
-
  	$('ul.dropdown-menu.multi-select').append(toggleBtn);
-
  }
 
+ var CheckboxListGroup = new function(){
 
+ 	$('#page-body')
 
- $('#page-body')
+ 	/* Select anywhere along a checkbox-group row  */
+ 	.on('click', '.checkbox-group.list-group .list-group-item', function() {
+ 		$(this).find('input[type=checkbox]').trigger('click');
+ 	})
 
- /* Select anywhere along a checkbox-group row  */
- .on('click', '.checkbox-group.list-group .list-group-item', function() {
- 	$(this).find('input[type=checkbox]').trigger('click');
- })
+ 
+ 	/* when checked add selected to the list item */
+ 	.on('click', '.checkbox-group.list-group .list-group-item input[type=checkbox]', function() {
+ 		$(this).parent('.list-group-item').toggleClass('selected');
+ 	})
 
- .on('click', '.checkbox-group.list-group .list-group-item', function() {
- 	$(this).find('input[type=checkbox]').trigger('click');
- })
+ 	/* allow checkboxs to click itself inside a checkbox group */
+ 	.on('click', '.checkbox-group.list-group .list-group-item input', function(e) {
+ 		e.stopImmediatePropagation();
+ 	})
 
+ 	/* change an editable span into an input box */
+ 	.on('click', '.checkbox-group span.editable', function(e) {
+ 		var contents = $(this).html();
+ 		$(this).replaceWithAndReturnNew('<input class="form-control input-sm editable" data-previous="' + contents +'" type="text" value=\"' + contents + '" />').focus();
+ 		e.stopImmediatePropagation();
+ 	})
 
-
- /* when checked add selected to the list item */
- .on('click', '.checkbox-group.list-group .list-group-item input[type=checkbox]', function() {
- 	$(this).parent('.list-group-item').toggleClass('selected');
- })
-
- /* allow checkboxs to click itself inside a checkbox group */
- .on('click', '.checkbox-group.list-group .list-group-item input', function(e) {
- 	e.stopImmediatePropagation();
- })
-
- /* change an editable span into an input box */
- .on('click', '.checkbox-group span.editable', function(e) {
- 	var contents = $(this).html();
- 	$(this).replaceWithAndReturnNew('<input class="form-control input-sm editable" data-previous="' + contents +'" type="text" value=\"' + contents + '" />').focus();
- 	e.stopImmediatePropagation();
- })
-
- /* change an editable input box back into an span */
- .on('blur', '.checkbox-group input.editable', function(e) {
- 	$(this).replaceWith(function () {
- 		return '<span class="editable">' + $(this).val() + '</span>';
- 	});
+ 	/* change an editable input box back into an span */
+ 	.on('blur', '.checkbox-group input.editable', function(e) {
+ 		$(this).replaceWith(function () {
+ 			return '<span class="editable">' + $(this).val() + '</span>';
+ 		});
 	 //	e.stopImmediatePropagation();
 	})
 
- .on('keypress', '.checkbox-group input.editable', function(e) {
+ 	.on('keypress', '.checkbox-group input.editable', function(e) {
  	//prevent from submitting any other nearby forms when enter is pressed
  	if(e.which == 13){
  		e.preventDefault();
@@ -88,6 +77,12 @@
  	}
  	
  });
+
+ }
+
+
+
+
 
 
 
