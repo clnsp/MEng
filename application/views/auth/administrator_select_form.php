@@ -46,7 +46,7 @@ $js = 'class="form-control"';
 		<div class="form-group">
 		<?php echo form_label('Administrators', $new_admins['id'], $label); ?>
 			<div class="col-sm-10">
-				<?php echo form_multiselect($new_admins['name'], $admin_users, $js); ?>
+				<?php if (isset($admin_users)) { echo form_multiselect($new_admins['name'], $admin_users, $js); } ?>
 			</div>
 		</div>
 		
