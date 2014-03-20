@@ -10,25 +10,54 @@
 
  var siteUrl = $('html').data('site-url');
 
+
+ var MultiSelectDropdowns = new function() {
+ 	$('#page-body')
+ 	.on('click', '.dropdown-menu.multi-select li', function(e) {
+ 		e.preventDefault();
+ 		e.stopPropagation();
+ 		$(this).toggleClass('selected');
+ 	})
+ 	.on('click', '.dropdown-menu.multi-select button.toggle.on', function(e) {
+ 		$(this).toggleClass('on off');
+ 		$(this).parents('ul.dropdown-menu.multi-select').find('li:not(.selected)').each(function(){
+ 			$(this).click();
+ 		})
+ 	})
+ 	.on('click', '.dropdown-menu.multi-select button.toggle.off', function(e) {
+ 		$(this).toggleClass('on off');
+ 		$(this).parents('ul.dropdown-menu.multi-select').find('li.selected').each(function(){
+ 			$(this).click();
+ 		})
+ 	});
+
+ 	var toggleBtn = '<li class="btn-group btn-group-justified"><button class="btn toggle off">Check All/None</button></li>';
+ 	
+
+
+ 	$('ul.dropdown-menu.multi-select').append(toggleBtn);
+
+ }
+
+
+
  $('#page-body')
- 
+
  /* Select anywhere along a checkbox-group row  */
  .on('click', '.checkbox-group.list-group .list-group-item', function() {
  	$(this).find('input[type=checkbox]').trigger('click');
-
  })
 
- .on('click', '.dropdown-menu.multi-select li', function(e) {
- 	e.preventDefault();
- 	e.stopPropagation();
- 	$(this).toggleClass('selected');
+ .on('click', '.checkbox-group.list-group .list-group-item', function() {
+ 	$(this).find('input[type=checkbox]').trigger('click');
  })
+
+
 
  /* when checked add selected to the list item */
  .on('click', '.checkbox-group.list-group .list-group-item input[type=checkbox]', function() {
  	$(this).parent('.list-group-item').toggleClass('selected');
  })
-
 
  /* allow checkboxs to click itself inside a checkbox group */
  .on('click', '.checkbox-group.list-group .list-group-item input', function(e) {
@@ -105,7 +134,7 @@
  }
 
 
- var ClassTypes = function() {
+ var classtypes = new function() {
  	var table, drop, list, urlBase, sportsdrop, sportslist;
  	
  	var init = function() {
@@ -196,7 +225,6 @@
 
  };
 
- var classtypes = new ClassTypes();
 
 
 

@@ -868,6 +868,12 @@ ul.ui-autocomplete.popover.dropdown-menu{
 	padding-right: 2px;
 }
 
+#booking .dropdown-menu.multi-select li button.toggle{
+	width:100%;
+	border-radius: 0;
+	border: 0;
+}
+
 .dropdown-menu.multi-select>li>a {
 	padding: 3px 10px;
 }
