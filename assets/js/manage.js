@@ -123,7 +123,10 @@ $( document ).ready(function() {
 		}
 
 		removeCategory = function() {
-
+			if(removeForm.serialize()==""){
+				alert("No categories selected");
+				return;
+			}
 			$.post( urlBase + "removeCategories/", removeForm.serialize())
 			.done(function(result, textStatus, jqXHR) {
 				if(jqXHR.status == 304){

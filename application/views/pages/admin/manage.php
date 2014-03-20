@@ -44,14 +44,12 @@
 
 								</ul>
 							</div>
-							<button type="button" class="btn btn-default toggle on">Check All/None</button>
+							<button type="button" class="btn btn-sm btn-default toggle on">Check All/None</button>
 
-							<button type="submit" class="btn btn-danger pull-right">Remove</button>
+							<button type="submit" class="btn btn-sm btn-danger pull-right">Remove</button>
 						</form>
 					</div>
-					
-					
-					
+						
 				</div>
 			</div>
 		</div>
