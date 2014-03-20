@@ -47,7 +47,6 @@
 						<h3 class="modal-title" id="event-title">Class Title</h3>
 					</div>
 					<div class="col-xs-4">
-						<h3 class="modal-title pull-right" id='cancelled-banner'><i style='font-size:20px;' class='glyphicon glyphicon-minus-sign'></i> Cancelled</h3>
 
 						<i id="eventColor" class="pull-right glyphicon glyphicon-stop"></i>
 					</div>

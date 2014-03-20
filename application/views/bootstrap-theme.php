@@ -824,6 +824,22 @@ border: 2px solid #000;
 	text-transform: capitalize;
 }
 
+#booking .modal.cancelled .modal-header{
+	color: #fff;
+}
+
+#booking .modal.cancelled #event-title:after{
+	content: " : Cancelled";
+	font-weight: bold;
+	font-style: italic;
+}
+
+#booking .modal.cancelled .modal-content
+ {
+	background-color: #505050;
+
+}
+
 #booking .fc-event.cancelled{
 	background-image: -webkit-linear-gradient(45deg,rgba(255, 255, 255, 0.15) 25%,rgba(0, 0, 0, 0.5) 25%,rgba(0, 0, 0, 0.5) 50%,rgba(255, 255, 255, 0.15) 50%,rgba(255, 255, 255, 0.15) 75%,rgba(0, 0, 0, 0.5) 75%,rgba(0, 0, 0, 0.5));
 	background-image: linear-gradient(45deg,rgba(255, 255, 255, 0.15) 25%,rgba(0, 0, 0, 0.5) 25%,rgba(0, 0, 0, 0.5) 50%,rgba(255, 255, 255, 0.15) 50%,rgba(255, 255, 255, 0.15) 75%,rgba(0, 0, 0, 0.5) 75%,rgba(0, 0, 0, 0.5));

@@ -215,22 +215,26 @@ $('#calendar').fullCalendar({
     	activeEvent = calEvent;
     	eventid = calEvent.class_id;
     	render_title(calEvent.title);
-    	render_cancelled_banner(calEvent.cancelled);
-    	render_cancel_button(calEvent.cancelled);
-    	disable_cancel_button(calEvent.past);
-      disable_buttons(calEvent.past);
-      render_date(calEvent.start, calEvent.end, calEvent.allDay);
-      render_attendance_numbers(calEvent.attending, calEvent.max_attendance);
-      render_color(calEvent.color);
-      render_room(calEvent.room_id, calEvent.room);
-      load_event_attendants(calEvent.past || calEvent.cancelled);
-      disable_add_member(calEvent.past || calEvent.cancelled);
+    	if(calEvent.cancelled){
+            eventModal.addClass('cancelled');
+        }else{
+            eventModal.removeClass('cancelled');
+        }
+        render_cancel_button(calEvent.cancelled);
+        disable_cancel_button(calEvent.past);
+        disable_buttons(calEvent.past);
+        render_date(calEvent.start, calEvent.end, calEvent.allDay);
+        render_attendance_numbers(calEvent.attending, calEvent.max_attendance);
+        render_color(calEvent.color);
+        render_room(calEvent.room_id, calEvent.room);
+        load_event_attendants(calEvent.past || calEvent.cancelled);
+        disable_add_member(calEvent.past || calEvent.cancelled);
 
-      /*setup form*/
-      eventModal.modal('show');
-  },
+        /*setup form*/
+        eventModal.modal('show');
+    },
 
-  eventRender: function(event, element, view) {
+    eventRender: function(event, element, view) {
 
      if(event.end <  new Date()){
       event.past = true;
@@ -365,18 +369,6 @@ $('#calendar .fc-header .fc-header-center').before($('#rooms-dropdown').remove()
  	eventTitle.text(title); 
  }
  
- /**
- * Add a cancelled banner
- */
- function render_cancelled_banner(render) {
- 	var banner = eventModal.find('#cancelled-banner');
- 	if(render){
- 		banner.removeClass('hidden');
- 	}else{
- 		banner.addClass('hidden');
-
- 	}
- }
  
  /**
  * Render the attendance numbers
