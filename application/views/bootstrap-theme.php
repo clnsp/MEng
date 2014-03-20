@@ -596,6 +596,16 @@ html.mobile #footer{
 	text-align: right;
 }
 
+
+#booking.home .class-panel .panel-heading .duration{
+	font-weight: bold;
+}
+
+#booking.home .class-panel {
+	max-height: 100%;
+}
+
+
 #booking.home #attendance-buttons ul{
 	text-align: left;
 }

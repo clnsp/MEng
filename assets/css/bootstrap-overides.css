@@ -40,31 +40,6 @@ label.editable{
 
 
 
-div.list {
-  overflow-x: auto;
-  overflow-y: hidden;
-  white-space: nowrap;
-}
-div.list [class*="col-"] {
-  display: inline-block;
-  float: none; /* Very important */
-  vertical-align:top;
-}
-
-#booking .no-margin{
-  margin: 0px!important;
-}
-
-
-div.classes {
-	clear:both;
-  overflow-y: auto;
-  overflow-x: hidden;
-  vertical-align:top;
-  z-index: 2;
-}
-
-
 /*http://stackoverflow.com/questions/3387489/make-child-visible-outside-an-overflowhidden-parent*/
 .clearfix:before,
 .clearfix:after {
@@ -91,6 +66,8 @@ h2.gtime {
   margin-top: -10px;
   margin-bottom: 0px;
 }
+
+
 
 @media not print {
 
@@ -121,6 +98,11 @@ h2.gtime {
     margin-top: -10px;
     margin-bottom: 0px;
   }
+}
+
+#booking.home .panel-heading{
+	overflow-x: hidden;
+	text-overflow: ellipsis;
 }
 
 @media print {
@@ -164,6 +146,10 @@ h2.gtime {
 
 .no-margin-btm{
   margin-bottom: 0!important;
+}
+
+#booking .no-margin{
+	margin: 0px;;
 }
 
 

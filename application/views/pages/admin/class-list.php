@@ -8,10 +8,14 @@
     </div>
   </div>
   
-  <div id="<?php echo $class->class_id ?>" class="panel page-break" style="border-color: <?php echo $class->color?>;">
+  <div id="<?php echo $class->class_id ?>" class="class-panel panel page-break" style="border-color: <?php echo $class->color?>;">
     <!-- Default panel contents -->
-    <div class="panel-heading" style="background-color: <?php echo $class->color?>; color: rgb(255,255,255);"><span>Class: <?php echo $class->title ?> </span><br/><span>Room: <?php echo $class->room ?></span><br/><span>Duration: <?php echo date("H:i",strtotime($class->start))?> - <?php echo date("H:i",strtotime($class->end)) ?></span></div>
-    <div class="classes">
+    <div class="panel-heading" style="background-color: <?php echo $class->color?>; color: rgb(255,255,255);">
+	    <h3 class="class no-margin block"><?php echo $class->title ?> </h3>
+	    <span class="duration inline pull-right"><?php echo date("H:i",strtotime($class->start))?> - <?php echo date("H:i",strtotime($class->end)) ?></span>
+	    <span class="room"><?php echo $class->room ?></span>
+    </div>
+    <div class="classes class-body">
       <?php if(count($class->attendees) > 0) {?>       
       <!-- Table -->
       <table class="table" style="margin-bottom: 0px !important;">
@@ -33,7 +37,7 @@
             <td class="visible-print"><?php echo strtolower($attendee->email); ?></td>
             <td class="visible-print"></td>
           </tr>
-          <?php $i++;	}?>
+          <?php $i++; }?>
         </tbody>
       </table>
       <?php }else{?>
