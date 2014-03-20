@@ -119,7 +119,7 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				<button id="event-cancel-class-btn" type="button" class="disable-past btn btn-danger">Cancel Class</button>
+				<button id="event-cancel-class-btn" type="button" class="pull-left disable-past btn btn-danger">Cancel Class</button>
 				<button id="event-uncancel-class-btn"  type="button" class="disable-past btn btn-success">Reopen Class</button>
 				
 			</div>

@@ -2,10 +2,10 @@
 if($('#booking').is('.admin-calendar')){
 
   function exists(variable){
-     if(typeof variable == 'undefined' || variable == null){
-        return false;
-    }
-    return true;
+   if(typeof variable == 'undefined' || variable == null){
+    return false;
+}
+return true;
 }
 
 var eventModal, eventTitle, eventdate1, eventdate2, eventSpacesMax, eventSpacesTaken, eventColor, eventLocation, eventMembers, eventid;
@@ -14,41 +14,41 @@ var activeEvent, addGuestModal;
 
 $('#booking').on('click', '#event-cancel-class-btn, #event-uncancel-class-btn', function(){
 
-   bootbox.dialog({
-      message: "Please provide a message to members regarding the change of class status <p><textarea  class='form-control' rows='3' id='cancelMessage'></textarea></p>",
-      title: "Reason for Class Change",
-      buttons: {
+ bootbox.dialog({
+  message: "Please provide a message to members regarding the change of class status <p><textarea  class='form-control' rows='3' id='cancelMessage'></textarea></p>",
+  title: "Reason for Class Change",
+  buttons: {
 
-        main: {
-          label: "Cancel",
-          className: "btn-default",
-          callback: function() {
+    main: {
+      label: "Cancel",
+      className: "btn-default",
+      callback: function() {
 
-          }
-      },
+      }
+  },
 
-      success: {
-          label: "Confirm",
-          className: "btn-danger",
-          callback: function() {
-            var msg = $('textarea#cancelMessage').html();
+  success: {
+      label: "Confirm",
+      className: "btn-danger",
+      callback: function() {
+        var msg = $('textarea#cancelMessage').html();
 
-            $.ajax({
-              url: "calendar/cancelClass/" + activeEvent.cancelled,
-              type: "POST",
-              data: { 'class_booking_id':eventid, 'cancel_message':msg },
-              success: function(result) {
-                alert(result);
+        $.ajax({
+          url: "calendar/cancelClass/" + activeEvent.cancelled,
+          type: "POST",
+          data: { 'class_booking_id':eventid, 'cancel_message':msg },
+          success: function(result) {
+            alert(result);
 
-                $('#calendar').fullCalendar( 'refetchEvents' );
-                eventModal.modal('hide');
-            },
-            error: function(){
-                alert("Error Occurred");
-            },
-        });
-        }
+            $('#calendar').fullCalendar( 'refetchEvents' );
+            eventModal.modal('hide');
+        },
+        error: function(){
+            alert("Error Occurred");
+        },
+    });
     }
+}
 
 },
 });
@@ -232,7 +232,7 @@ $('#calendar').fullCalendar({
 
   eventRender: function(event, element, view) {
 
-   if(event.end <  new Date()){
+     if(event.end <  new Date()){
       event.past = true;
       element.css('opacity', '0.35');
   }
@@ -536,7 +536,7 @@ close: function( event, ui ) {
 },
 
 response: function(event, ui) {
- if (!ui.content.length) {
+   if (!ui.content.length) {
     var noResult = { value:"",label:noResultsLabel };
     ui.content.push(noResult);
 }
@@ -613,8 +613,8 @@ $('#btn-view-waiting-list').click(function(){
 });
   },
   error: function(){
-   alert('Error occurred');
-},
+     alert('Error occurred');
+ },
 });
 
 
@@ -629,14 +629,14 @@ $('form#addGuestForm').submit(function(e){
     type: "POST",
     data:  postdata,
     success: function(result) {
-       load_event_attendants(false);
-       addGuestModal.modal('hide');
-       teardown_add_guest_modal();
-       alert(result);
-   },
-   error: function(){
-       alert('Error occurred');
-   },
+     load_event_attendants(false);
+     addGuestModal.modal('hide');
+     teardown_add_guest_modal();
+     alert(result);
+ },
+ error: function(){
+     alert('Error occurred');
+ },
 });
 
 
