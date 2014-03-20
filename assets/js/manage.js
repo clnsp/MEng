@@ -359,6 +359,7 @@ $('#add-block-button').hover(function(){
 	$('#apply-repeat-btn:not(.disabled)').tooltip('show');
 });
 
-$('#page-body').on('click', '.minicolors-swatch-color', function(e) {
+$('#manage-categories').on('click', '.minicolors-swatch, .minicolors-panel', function(e) {
 	e.stopImmediatePropagation();
+	e.preventDefault();
 });

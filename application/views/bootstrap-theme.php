@@ -875,6 +875,7 @@ ul.ui-autocomplete.popover.dropdown-menu{
 	min-height: 250px;
 	max-height: 450px;
 	overflow-y: auto;
+	overflow-x: hidden;
 }
 
 .manage-inner-panel{

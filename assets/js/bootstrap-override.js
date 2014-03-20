@@ -236,10 +236,18 @@
  	}
 
  	var initColors = function() {
- 		$('INPUT.minicolors').minicolors({
- 			hide: saveColor,
- 			show: storeColor,
- 		});
+ 		$('INPUT.minicolors').each(function(index, element) {
+ 			var pos = "top left";
+ 			if(index<4){
+ 				pos= "bottom left"
+ 			}
+ 			
+ 			$(element).minicolors({
+ 				hide: saveColor,
+ 				show: storeColor,
+ 				position:pos
+ 			});
+ 		})
  	}
  	
  	var update = function() {
@@ -270,10 +278,11 @@
  			.append($('<input>')
  				.attr({
  					type: 'hidden',
- 					class: 'minicolors',
+ 					class: 'minicolors minicolors-input',
  					value: color,
  					size: 7,
- 					'data-category_id': id
+ 					'data-category_id': id,
+ 					'data-position' : 'top right'
  				}))
 
  			.append('<span class="editable">' + name + '</span>');
