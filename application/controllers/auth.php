@@ -149,7 +149,7 @@ class Auth extends CI_Controller
 			$this->form_validation->set_rules('mobile_number', 'Mobile Number', 'trim|xss_clean|alpha_dash');
 			$this->form_validation->set_rules('password', 'Password', 'trim|required|xss_clean|min_length['.$this->config->item('password_min_length', 'tank_auth').']|max_length['.$this->config->item('password_max_length', 'tank_auth').']|alpha_dash');
 			$this->form_validation->set_rules('confirm_password', 'Confirm Password', 'trim|required|xss_clean|matches[password]');
-			$this->form_validation->set_rules('member_type', 'Member Type', 'trim|xss_clean');
+			$this->form_validation->set_rules('member_type', 'Member Type', 'required|xss_clean');
 			$this->form_validation->set_rules('comms_preference', 'Communication Preferences', 'trim|xss_clean');
 
 			$captcha_registration	= $this->config->item('captcha_registration', 'tank_auth');
@@ -165,14 +165,26 @@ class Auth extends CI_Controller
 			
 			$email_activation = $this->config->item('email_activation', 'tank_auth');	
 			
+			if($this->form_validation->set_value('member_type')>2){
+			$det['uid'] = $ver['uid'][0].'SP';
+			$det['fn'] = $this->form_validation->set_value('first_name');
+			$det['sn'] = $this->form_validation->set_value('second_name');
+
+}else{
+			$det['uid'] = $ver['uid'][0];
+			$det['fn'] = $ver['givenName'][0];
+			$det['sn'] = $ver['sn'][0];
+}
+
 			if ($this->form_validation->run()) {								// validation ok
 				if (!is_null($data = $this->tank_auth->create_user(
-					$ver['uid'][0], //$this->form_validation->set_value('username'),
-					$ver['givenName'][0], //$this->form_validation->set_value('first_name'),
-					$ver['sn'][0], // $this->form_validation->set_value('second_name'),
+					$det['uid'],
+					$det['fn'],
+					$det['sn'],
 					$this->form_validation->set_value('home_number'),
 					$this->form_validation->set_value('mobile_number'),
 					$this->form_validation->set_value('email'),
+					$this->form_validation->set_value('twitter'),
 					$this->form_validation->set_value('password'),
 					$this->form_validation->set_value('member_type'),
 					2,					// GUEST
@@ -314,7 +326,7 @@ $this->form_validation->set_rules('first_name', 'First Name', 'trim|xss_clean|al
 			$data['use_username'] = $use_username;
 			$data['captcha_registration'] = $captcha_registration;
 			$data['use_recaptcha'] = $use_recaptcha;
-			$this->load->view('auth/ask_register_form', $data);
+			parse_temp('Alternative Registeration', $this->load->view('auth/ask_register_form', $data, true));
 		}
 	}
 

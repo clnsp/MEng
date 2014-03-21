@@ -68,7 +68,7 @@ $password = array(
 	);
 $confirm_password = array(
 	'name'	=> 'confirm_password',
-	'id'	=> 'confirm_password',
+	'id'	=> 'confirm_t time.password',
 	'value' => set_value('confirm_password'),
 	'maxlength'	=> $this->config->item('password_max_length', 'tank_auth'),
 	'size'	=> 30,
@@ -92,28 +92,28 @@ $radio_student = array(
     'name'        => 'member_type',
     'id'          => 'student-radio',
     'value'       => '1',
-    'checked'     => FALSE,
+    'checked'     => set_radio('member_type', '1'),
 );
 
 $radio_staff = array(
     'name'        => 'member_type',
     'id'          => 'staff-radio',
     'value'       => '2',
-    'checked'     => FALSE,
+    'checked'     => set_radio('member_type', '2'),
 );
 
 $radio_student_partner = array(
     'name'        => 'member_type',
     'id'          => 'student-radio',
     'value'       => '3',
-    'checked'     => FALSE,
+    'checked'     => set_radio('member_type', '3'),
 );
 
 $radio_staff_partner = array(
     'name'        => 'member_type',
     'id'          => 'staff-radio',
     'value'       => '4',
-    'checked'     => FALSE,
+    'checked'     => set_radio('member_type', '4'),
 );
 
 	
@@ -138,9 +138,10 @@ $form = array(
 	<div class="well well-lg  div-center">
 		<?php echo form_open($this->uri->uri_string(), $form); ?>
 		<div class="form-group">
+					<?php echo form_error($user_type['name']); ?>
 			<?php echo form_label('User Type *', $user_type['id'], $label); ?>
 			<div class="col-sm-10">
-				<?php echo form_radio($radio_student) . " Student   " ; echo  form_radio($radio_staff) . " Staff   "; echo form_radio($radio_student_partner) . " Student Partner/Spouse   " ; echo form_radio($radio_student_partner) . " Staff Partner/Spouse   " ;?>
+				<?php echo form_radio($radio_student) . " Student   " ; echo  form_radio($radio_staff) . " Staff   "; echo form_radio($radio_student_partner) . " Student Partner/Spouse   " ; echo form_radio($radio_staff_partner) . " Staff Partner/Spouse   " ;?>
 			</div>
 		</div>
 
