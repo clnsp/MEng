@@ -204,7 +204,7 @@ $('#calendar').fullCalendar({
     },
 
 
-    defaultView: 'agendaWeek',
+    defaultView: 'agendaDay',
     allDayDefault: false,
     allDaySlot: false,
     selectHelper: true, 
