@@ -6,7 +6,6 @@ $( document ).ready(function() {
 	});
 
 
-
 	$('#tabs li').click(function(){
 		if(!$(this).hasClass('active')){
 			$('#tab-content .form-group.toggleInput').toggleClass('hidden');
@@ -46,7 +45,15 @@ $( document ).ready(function() {
 			alert(data);
 		});
 		
-	});
+	}).on('click', 'input.cancelbooking', function(e) {
+		e.preventDefault();
+		bootbox.confirm("Are you sure you wish to cancel this class?", function(result) {
+			if(result){
+				console.log($(this);
+			}
+		}); 
+				
+			});
 
 //
 //	 $('#courts').click();

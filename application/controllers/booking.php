@@ -220,6 +220,13 @@ class booking extends CI_Controller{
 		}else{
 			$start_date = new DateTime($_POST['date']);
 			$end_date = new DateTime($_POST['date']);
+
+			$today = new DateTime();
+			if($start_date > $today->modify($this->config->item('class_booking_window'))){
+				echo "<td colspan='6'><b>Classes can only be booked a day in advance</b></td>";
+				return;
+			}
+			
 		}
 
 		$end_date = $end_date->format("Y-m-d");

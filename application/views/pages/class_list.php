@@ -1,8 +1,5 @@
 
 
-
-<div class="container">
-
   <?php 
   foreach($class_types as $key => $type): ?>
 
@@ -30,4 +27,3 @@
 
 <?php endforeach; ?>
 
-</div>

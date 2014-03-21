@@ -525,6 +525,7 @@ html, body, #booking {
 	height: 100%;
 	/* Negative indent footer by it's height */
 	margin: 0 auto -155px;
+	overflow-y: auto;
 }
 
 html.desktop #booking.user #page-wrapper:after,
