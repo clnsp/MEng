@@ -17,8 +17,8 @@ class booking extends CI_Controller{
 	*/
 	function bookClass(){
 		if(check_member()){
-			if(isset($_POST['classid'])){
 
+			if(isset($_POST['classid'])){
 				$this->load->model('bookings');
 
 				$user_id = $this->tank_auth->get_user_id();
@@ -26,6 +26,9 @@ class booking extends CI_Controller{
 
 				if(!bookedOut($user_id, new DateTime($classInfo['class_start_date']), new DateTime($classInfo['class_end_date']))){
 					$this->_addMember($_POST['classid'], $user_id, $classInfo);
+				}else{
+					$this->_bookingFail('You are already booked into classes at this time');
+
 				}
 			}else{
 				$this->index();
