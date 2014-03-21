@@ -242,7 +242,7 @@ class Auth extends CI_Controller
 			if ($use_username) {
 				$this->form_validation->set_rules('username', 'Username', 'trim|required|xss_clean|min_length['.$this->config->item('username_min_length', 'tank_auth').']|max_length['.$this->config->item('username_max_length', 'tank_auth').']|alpha_dash');
 			}
-$this->form_validation->set_rules('first_name', 'First Name', 'trim|xss_clean|alpha_dash');
+			$this->form_validation->set_rules('first_name', 'First Name', 'trim|xss_clean|alpha_dash');
 			$this->form_validation->set_rules('second_name', 'Second Name', 'trim|xss_clean|alpha_dash');
 			$this->form_validation->set_rules('email', 'Email', 'trim|required|xss_clean|valid_email');
 			$this->form_validation->set_rules('home_number', 'Home Number', 'trim|xss_clean|alpha_dash');
@@ -282,9 +282,9 @@ $this->form_validation->set_rules('first_name', 'First Name', 'trim|xss_clean|al
 					$data['site_name'] = $this->config->item('website_name', 'tank_auth');
 
 					if ($email_activation) {									// send "activate" email
-						$data['activation_period'] = $this->config->item('email_activation_expire', 'tank_auth') / 3600;
+					$data['activation_period'] = $this->config->item('email_activation_expire', 'tank_auth') / 3600;
 
-						$this->_send_email('activate', $data['email'], $data);
+					$this->_send_email('activate', $data['email'], $data);
 
 						unset($data['password']); // Clear password (just for any case)
 
@@ -293,8 +293,8 @@ $this->form_validation->set_rules('first_name', 'First Name', 'trim|xss_clean|al
 					} else {
 						if ($this->config->item('email_account_details', 'tank_auth')) {	// send "welcome" email
 
-							$this->_send_email('welcome', $data['email'], $data);
-						}
+						$this->_send_email('welcome', $data['email'], $data);
+					}
 						unset($data['password']); // Clear password (just for any case)
 
 						$this->_show_message($this->lang->line('auth_message_registration_completed_2').' '.anchor('/auth/login/', 'Login'));
@@ -314,7 +314,8 @@ $this->form_validation->set_rules('first_name', 'First Name', 'trim|xss_clean|al
 			$data['use_username'] = $use_username;
 			$data['captcha_registration'] = $captcha_registration;
 			$data['use_recaptcha'] = $use_recaptcha;
-			$this->load->view('auth/ask_register_form', $data);
+			parse_temp('register', $this->load->view('auth/ask_register_form', $data, true));
+
 		}
 	}
 
@@ -379,19 +380,19 @@ $this->form_validation->set_rules('first_name', 'First Name', 'trim|xss_clean|al
 	function admin()
 	{
 	  if (!$this->tank_auth->is_logged_in()) {								// not logged in or not activated
-			redirect('/auth/login/');
+	  	redirect('/auth/login/');
 
-		} else {
-			$this->form_validation->set_rules('first_name', 'First Name', 'trim|required|xss_clean');
-			
-			$data['errors'] = array();
+	  } else {
+	  	$this->form_validation->set_rules('first_name', 'First Name', 'trim|required|xss_clean');
+	  	
+	  	$data['errors'] = array();
 
-            $this->load->Model('Members');
-            $admin = $this->Members->getAdminUsers();
-            $data['admin'] = $admin;
+	  	$this->load->Model('Members');
+	  	$admin = $this->Members->getAdminUsers();
+	  	$data['admin'] = $admin;
 
-            $super = $this->Members->getSuperAdminUsers();
-            $data['super'] = $super;
+	  	$super = $this->Members->getSuperAdminUsers();
+	  	$data['super'] = $super;
 
 			if ($this->form_validation->run()) {								// validation ok
 				if ($this->tank_auth->change_password(
@@ -412,25 +413,25 @@ $this->form_validation->set_rules('first_name', 'First Name', 'trim|xss_clean|al
 	function load_details()
 	{
 	  if (!$this->tank_auth->is_logged_in()) {								// not logged in or not activated
-			redirect('/auth/login/');
+	  	redirect('/auth/login/');
 
-		} else {
-			$this->form_validation->set_rules('first_name', 'First Name', 'trim|required|xss_clean');
-			$this->form_validation->set_rules('second_name', 'Surname', 'trim|required|xss_clean');
-			$this->form_validation->set_rules('home_number', 'Home Phone Number', 'trim|required|xss_clean');
-			$this->form_validation->set_rules('mobile_number', 'Mobile Phone Number', 'trim|required|xss_clean');
-			$this->form_validation->set_rules('comms_preference', 'Communications', 'trim|required|xss_clean');
-			
-			$data['errors'] = array();
+	  } else {
+	  	$this->form_validation->set_rules('first_name', 'First Name', 'trim|required|xss_clean');
+	  	$this->form_validation->set_rules('second_name', 'Surname', 'trim|required|xss_clean');
+	  	$this->form_validation->set_rules('home_number', 'Home Phone Number', 'trim|required|xss_clean');
+	  	$this->form_validation->set_rules('mobile_number', 'Mobile Phone Number', 'trim|required|xss_clean');
+	  	$this->form_validation->set_rules('comms_preference', 'Communications', 'trim|required|xss_clean');
+	  	
+	  	$data['errors'] = array();
 
-            $this->load->Model('Members');
-            $this->load->Model('Comms_Preference');
-            
-            $members = $this->Members->getUserByID($this->tank_auth->get_user_id());
-            $data['member'] = $members['0']; 
-            
-            $prefs = $this->Comms_Preference->getPreferences();
-            $data['comm_prefs'] = $prefs;
+	  	$this->load->Model('Members');
+	  	$this->load->Model('Comms_Preference');
+	  	
+	  	$members = $this->Members->getUserByID($this->tank_auth->get_user_id());
+	  	$data['member'] = $members['0']; 
+	  	
+	  	$prefs = $this->Comms_Preference->getPreferences();
+	  	$data['comm_prefs'] = $prefs;
 
 			if ($this->form_validation->run()) {								// validation ok
 				if ($this->tank_auth->change_password(
@@ -602,8 +603,8 @@ $this->form_validation->set_rules('first_name', 'First Name', 'trim|xss_clean|al
 		}
 		//$this->load->view('auth/change_email_form', $data);
 		parse_temp('Change Email', $this->load->view('auth/account_settings', '', true) . $this->load->view('auth/change_email_form', $data, true));
-		}
 	}
+}
 
 	/**
 	 * Replace user email with a new one.
@@ -628,7 +629,7 @@ $this->form_validation->set_rules('first_name', 'First Name', 'trim|xss_clean|al
 	}
 
 	
-		
+	
 	// MOBILE NUMBER - SMS
 
 	function change_mobile_number()
@@ -639,7 +640,7 @@ $this->form_validation->set_rules('first_name', 'First Name', 'trim|xss_clean|al
 
 
 
-	}
+		}
 	}
 
 	function reset_mobile_number()
@@ -843,11 +844,11 @@ $this->form_validation->set_rules('first_name', 'First Name', 'trim|xss_clean|al
 	function account_settings(){
 
 	if (!$this->tank_auth->is_logged_in()) {									// logged in
-			redirect('');
+		redirect('');
 
-		}	
-		parse_temp('login', $this->load->view('auth/account_settings', '', true));
-	}
+	}	
+	parse_temp('login', $this->load->view('auth/account_settings', '', true));
+}
 
 
 
