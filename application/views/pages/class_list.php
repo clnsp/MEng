@@ -1,38 +1,33 @@
-   <div id="wrapper">
 
-    <div id="page-wrapper">
-      
-      <div class="panel panel-default">
+
+
+<div class="container">
+
+  <?php 
+  foreach($class_types as $key => $type): ?>
+
+  <?php if($key % 2 == 0) { ?>
+  <div class="row">
+    <?php } ?>
+
+    <div class="col-md-6">
+      <div class="panel panel-default panel-class">
         <div class="panel-heading">
-          <h3 class="panel-title">Class Types</h3>
+          <h3 class="panel-title"><?php echo $type['class_type'] ?></h3>
         </div>
         <div class="panel-body">            
-          
-          <div class="manage-panel">
-            <table id='class-types-table' class="table table-striped table-hover">
-              <tr>
-                <th>Title</th>
-                <th>Description</th>
-              </tr>
-              
-              <tbody>
-                <?php foreach($class_types as $type):  ?>
-                  
-                  <tr  data-class_type_id="<?php echo $type['class_type_id'] ?>"> 
-                    
-                    <td class="class_type"><?php echo $type['class_type'] ?></td>
-                    <td class="class_description"><?php echo $type['class_description'] ?></td>
-                    
-                  </tr>
-                  
-                <?php endforeach; ?>
-              </tbody>
-            </table>
-          </div>
-          
+
+          <?php echo $type['class_description'] ?>
+
         </div>
       </div>
-      
     </div>
-
+    <?php if($key % 2 != 0) { ?>
   </div>
+  <?php } ?>
+
+
+
+<?php endforeach; ?>
+
+</div>
