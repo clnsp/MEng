@@ -47,13 +47,17 @@ $( document ).ready(function() {
 		
 	}).on('click', 'input.cancelbooking', function(e) {
 		e.preventDefault();
-		bootbox.confirm("Are you sure you wish to cancel this class?", function(result) {
+		var $this = this;
+		bootbox.cancelbookingbtn = $this;
+		bootbox.confirm("Are you sure you wish to cancel this class?", function(result, $this) {
 			if(result){
-				console.log($(this);
+				bootbox.cancelbookingbtn.form.submit();
+			}else{
+				bootbox.cancelbookingbtn = "";
 			}
 		}); 
-				
-			});
+
+	});
 
 //
 //	 $('#courts').click();

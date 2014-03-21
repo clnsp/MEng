@@ -36,9 +36,9 @@ if(!$this->tank_auth->is_admin()){ ?>
      <script src="<?php echo base_url();?>assets/datatab/js/user_custom.js"></script>
      <?php }?>
 
-<?php if($page_title=="DS Registeration"){?>
-  <script src="<?php echo base_url();?>assets/js/ds_registration.js"></script>
-<?php }?>
+     <?php if($page_title=="DS Registeration"){?>
+     <script src="<?php echo base_url();?>assets/js/ds_registration.js"></script>
+     <?php }?>
 
      <script src="<?php echo base_url();?>assets/js/jquery-ui-autocomplete.custom.min.js"></script>
      <script src="<?php echo base_url();?>assets/cal/fullcalendar.min.js"></script>
@@ -75,10 +75,8 @@ if(!$this->tank_auth->is_admin()){ ?>
      
      <?php } ?>
      
-     <?php if($page_title=="user_booking" || $page_title=="search_results"){ ?>
      <script type="text/javascript" src="<?php echo base_url();?>assets/js/user-booking.js"></script>
 
-     <?php }?>
      
 
      

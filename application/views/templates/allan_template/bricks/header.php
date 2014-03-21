@@ -99,8 +99,12 @@
              <?php
              if($logged_in){ 
               if(isset($user)){
-                if($user){ $this->load->view('templates/allan_template/bricks/staff/staff_header_menu'); }
-                else if(!$user) { $this->load->view('templates/allan_template/bricks/student/student_header_menu'); }
+                if($user){ 
+                  $this->load->view('templates/allan_template/bricks/staff/staff_header_menu'); 
+                }
+                else if(!$user) { 
+                  $this->load->view('templates/allan_template/bricks/student/student_header_menu');
+                }
               }
             }
 
