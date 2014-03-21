@@ -9,6 +9,7 @@ if ( ! function_exists('parse_temp')){
 	 */
 	function parse_temp($page = 'home', $page_body) {
 
+
 		$ci = get_instance();
 		$session_data = $ci->session->userdata('logged_in');
 
@@ -25,12 +26,13 @@ if ( ! function_exists('parse_temp')){
 		$data['user_name'] = $ci->tank_auth->get_username();
 
 		$ci->load->Model($page = 'links');
-		$ci->load->Model($page = 'contact');
+		$ci->load->Model($page = 'contact_us');
 		$ci->load->Model($page = 'media');
 		
 		$data['links'] = $ci->links->get_all();
-		$data['contacts'] = $ci->contact->get_all();
+		$data['contacts'] = $ci->contact_us->get_all();
 		$data['media'] = $ci->media->get_all();
+
 		
 		$ci->parser->parse(template_url(), $data);
 		$ci->load->view('templates/allan_template/bricks/footer', $data);

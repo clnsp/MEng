@@ -15,7 +15,7 @@ $.pageManager = (function () {
 			$(".list").css('height',$(window).height() - $('.list').eq(0).offset().top);
 			if($('.classes')[0] != undefined){
 				// Get Max Height //http://stackoverflow.com/questions/6060992/element-with-the-max-height-from-a-set-of-elements
-				$maxHeight = Math.max.apply(null, $(".classes").map(function () { return ($(this).offset().top-$(this).siblings(".panel-heading").eq(0).height()+20);}).get());
+				$maxHeight = Math.max.apply(null, $(".classes").map(function () { return ($(this).offset().top-$(this).siblings(".panel-heading").eq(0).height()+50);}).get());
 				$(".classes").css('max-height',$(window).height() - $maxHeight);
 			}
 		}

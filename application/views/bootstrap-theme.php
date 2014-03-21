@@ -534,6 +534,12 @@ html.tablet #booking.user #page-wrapper:after {
 	height: 155px;
 }
 
+#booking .booking-panel{
+	max-height: 400px;
+	overflow-y: auto;
+	margin-bottom: 15px;
+}
+
 #booking .username{
 	text-transform: capitalize;
 }
@@ -571,10 +577,11 @@ html.mobile #footer{
 	overflow: hidden;
 	outline-color: transparent!important;
 	outline:none;
+	z-index: 1051!important;
 }
 
 .modal.submodal .modal-dialog{
-	width: 100%
+	width: 95%;
 }
 
 .modal.submodal .modal-content{
@@ -585,6 +592,41 @@ html.mobile #footer{
 
 /* @end */
 
+/* @group Attendance/Home*/
+#booking.home #category-dropdown{
+	display: inline-block;
+	display: inline;
+}
+
+#booking.home #attendance-buttons{
+	text-align: right;
+}
+
+
+#booking.home .class-panel .panel-heading .duration{
+	font-weight: bold;
+}
+
+#booking.home .class-panel {
+	max-height: 100%;
+}
+
+
+#booking.home #attendance-buttons ul{
+	text-align: left;
+}
+
+@media (max-width: 768px){
+	#booking.home #attendance-buttons {
+		text-align: left;
+	}
+
+
+}
+
+
+
+/* @end */
 
 /* @group Loading Indicator */
 
@@ -678,8 +720,12 @@ i.square{
 	border-bottom-color: <?php echo $brandSecondary;?>;
 }
 
+#booking .navbar-nav .caret{
+	border-top-color: #FFF;
+}
+
 #booking .navbar .dropdown-menu::after {
-	position: absolute;
+<!-- 	position: absolute;
 	top: -6px;
 	right: 20px;
 	display: inline-block;
@@ -687,7 +733,7 @@ i.square{
 	border-bottom: 6px solid white;
 	border-left: 6px solid transparent;
 	content: '';
-	color: rgba(65, 128, 123, 0.63);
+	color: rgba(65, 128, 123, 0.63); -->
 }
 
 #booking #page-body.page-login div.input-group{
@@ -788,6 +834,22 @@ border: 2px solid #000;
 	text-transform: capitalize;
 }
 
+#booking .modal.cancelled .modal-header{
+	color: #fff;
+}
+
+#booking .modal.cancelled #event-title:after{
+	content: " : Cancelled";
+	font-weight: bold;
+	font-style: italic;
+}
+
+#booking .modal.cancelled .modal-content
+ {
+	background-color: #505050;
+
+}
+
 #booking .fc-event.cancelled{
 	background-image: -webkit-linear-gradient(45deg,rgba(255, 255, 255, 0.15) 25%,rgba(0, 0, 0, 0.5) 25%,rgba(0, 0, 0, 0.5) 50%,rgba(255, 255, 255, 0.15) 50%,rgba(255, 255, 255, 0.15) 75%,rgba(0, 0, 0, 0.5) 75%,rgba(0, 0, 0, 0.5));
 	background-image: linear-gradient(45deg,rgba(255, 255, 255, 0.15) 25%,rgba(0, 0, 0, 0.5) 25%,rgba(0, 0, 0, 0.5) 50%,rgba(255, 255, 255, 0.15) 50%,rgba(255, 255, 255, 0.15) 75%,rgba(0, 0, 0, 0.5) 75%,rgba(0, 0, 0, 0.5));
@@ -832,6 +894,12 @@ ul.ui-autocomplete.popover.dropdown-menu{
 	padding-right: 2px;
 }
 
+#booking .dropdown-menu.multi-select li button.toggle{
+	width:100%;
+	border-radius: 0;
+	border: 0;
+}
+
 .dropdown-menu.multi-select>li>a {
 	padding: 3px 10px;
 }
@@ -849,6 +917,7 @@ ul.ui-autocomplete.popover.dropdown-menu{
 	min-height: 250px;
 	max-height: 450px;
 	overflow-y: auto;
+	overflow-x: hidden;
 }
 
 .manage-inner-panel{
@@ -963,7 +1032,10 @@ ul.ui-autocomplete.popover.dropdown-menu{
 	#booking.user_booking #search-panel{
 		padding-right:0px;
 	}
+
+
 }
+
 
 html.mobile #booking.user_booking #search-panel input,
 html.mobile #booking.user_booking #search-panel select{
@@ -974,4 +1046,8 @@ html.mobile #booking.user_booking #search-panel select{
 	font-size: 16px;
 	vertical-align: middle;
 	line-height: 35px;
+}
+
+#booking.users table#member tbody tr{
+	cursor: pointer;
 }

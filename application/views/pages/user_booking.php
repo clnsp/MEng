@@ -89,7 +89,7 @@ $js = 'class="form-control"';
 
 					<?php
 
-					echo form_dropdown('class_type_id',array('-1' => 'Choose a class...') + $classTypes, '' , 'class="form-control classes"');	 ?>
+					echo form_dropdown('class_type_id',array('-1' => 'All Classes') + $classTypes, '' , 'class="form-control classes"');	 ?>
 				</div>
 
 				<div class="toggleInput form-group hidden">
@@ -124,7 +124,7 @@ $js = 'class="form-control"';
 
 	<div class="col-sm-9">
 
-		<table class="footable table table table-striped table-hover table-bordered classes hidden">
+		<table class="footable table table-striped table-hover table-bordered classes hidden">
 			<thead>
 				<tr>
 					<th>Activity</th>

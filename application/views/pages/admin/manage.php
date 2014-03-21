@@ -40,14 +40,16 @@
 						<h5>Edit Categories</h5>
 						<div class="manage-panel form-group">
 							<form id="remove-category-form" class="prevent">
-								<ul id='class-categories-list' class="categories no-margin-btm list-group checkbox-group"></ul>
+								<ul id='class-categories-list' class="categories no-margin-btm list-group checkbox-group">
+
+								</ul>
 							</div>
-							<button type="submit" class="btn btn-danger pull-right">Remove</button>
+							<button type="button" class="btn btn-sm btn-default toggle on">Check All/None</button>
+
+							<button type="submit" class="btn btn-sm btn-danger pull-right">Remove</button>
 						</form>
 					</div>
-					
-					
-					
+						
 				</div>
 			</div>
 		</div>

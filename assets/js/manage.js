@@ -19,7 +19,7 @@ $( document ).ready(function() {
 		}
 
 		this.addDates = function(arr) {
-			this.cal..multiDatesPicker('addDates', arr);
+			this.cal.multiDatesPicker('addDates', arr);
 		}
 
 		this.repeatDates = function(repeatType, stop) {
@@ -58,6 +58,7 @@ $( document ).ready(function() {
 	var categoriesPanel = new function() {
 
 		var categorylist 	= $("#class-categories-list");
+		var container 	= $("#manage-categories");
 		var currentColor 	= null;
 		var addForm 		= $("#add-category-form");
 		var removeForm 		= $('form#remove-category-form');
@@ -68,9 +69,22 @@ $( document ).ready(function() {
 		removeForm.submit(function(){ removeCategory() });
 
 		/* Select anywhere along a checkbox-group row  */
-		$('#manage-categories').on('blur', 'input.editable', function(e) {
+		container
+		.on('blur', 'input.editable', function(e) {
 			if($(this).val() != $(this).data('previous'))
-				storename($(this).parent('.list-group-item').data('category_id'), this.value );
+				storename($(this).siblings('[name="category_id[]"]').val(), this.value );
+		}).on('click', '.toggle.on', function() {
+			$(this).toggleClass('on off');
+			categorylist.find('li:not(.selected)').each(function(){
+				$(this).click();
+			}) 	
+		})
+
+		.on('click', '.toggle.off', function() {
+			$(this).toggleClass('on off');
+			categorylist.find('li.selected').each(function(){
+				$(this).click();
+			}) 	
 		});
 
 
@@ -109,7 +123,10 @@ $( document ).ready(function() {
 		}
 
 		removeCategory = function() {
-
+			if(removeForm.serialize()==""){
+				alert("No categories selected");
+				return;
+			}
 			$.post( urlBase + "removeCategories/", removeForm.serialize())
 			.done(function(result, textStatus, jqXHR) {
 				if(jqXHR.status == 304){
@@ -214,7 +231,6 @@ $( document ).ready(function() {
 			addBlockClassesPanel.form.find('input[name=class_start_time]').val($row.find('[data-class_start_time]').data('class_start_time'));
 			addBlockClassesPanel.form.find('input[name=class_start_time]').val($row.find('[data-class_end_time]').data('class_end_time'));
 			addBlockClassesPanel.form.find('[type=submit]').attr('class', 'btn btn-warning').html('Save Changes');
-			
 			fetchBlockDates($(this).data('block_booking_id'));
 
 			modal.modal('hide');
@@ -224,6 +240,13 @@ $( document ).ready(function() {
 			$.getJSON(urlBase + 'getBlockBookingDates/' + bid , function(data) {
 				datepicker.clear();
 				console.log(data);
+				var arr = new Array();
+				
+				for (var key in data) {
+					arr.push(new Date(data[key]['class_start_date']));
+				}
+
+				datepicker.addDates(arr);
 			});
 
 			return 
@@ -283,7 +306,7 @@ $( document ).ready(function() {
 
 		this.form.submit(function() { 
 			if(datepicker.hasDates()){
-				bootbox.confirm("<h4 class='modal-title'>Confirmation</h2><p>Are you sure you want to add new bookable classes? You will add classes to the following dates:</p>" + datepicker.getDates().toString(), function(result) {
+				bootbox.confirm("<h4 class='modal-title'>Confirmation</h2><p>Are you sure you want to add new bookable classes? You will add classes for all the dates on the current calendar, please make sure to review these before saving."/*to the following dates:</p>" + datepicker.getDates().toString()*/, function(result) {
 					if(result)
 						sendForm();
 				}); 
@@ -353,6 +376,7 @@ $('#add-block-button').hover(function(){
 	$('#apply-repeat-btn:not(.disabled)').tooltip('show');
 });
 
-$('#page-body').on('click', '.minicolors-swatch-color', function(e) {
+$('#manage-categories').on('click', '.minicolors-swatch, .minicolors-panel', function(e) {
 	e.stopImmediatePropagation();
+	e.preventDefault();
 });

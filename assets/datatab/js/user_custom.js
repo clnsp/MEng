@@ -5,15 +5,20 @@
 
 		$.member = (function(){
 			$member=false;
-			$modal="MemberDetails";
+			$modal=$("#MemberDetails");
 			$subModal ="#SubMemberDetails";
+
+			$subModalObject = $("#SubMemberDetails");
+			$subModalHeaderObject = $subModalObject.find('.modal-header .modal-title');
+			$subModalBodyObject = $subModalObject.find('.modal-body');
+			$subModalFooterObject = $subModalObject.find('.modal-footer');
+
 			/*Controllers*/
 			$baseUrl ={member:'member/'};
 			/*Functions*/
 			$functionUrl={getUser:'getUserDetails/',updateUser:'updateUserDetails',contactUser:'contactUser',deleteUser:'deleteUser',updateUserMembership:'updateUserMembership',userMembership:'getMembershipOptions',getAttendance:'getAttendance/', getBookings:'getBookings/'};
 			$warnClass={text:{e:"text-danger",s:"text-success",w:"text-warning"},form:{e:"has-error",s:"has-success",w:"has-warning"}};
 			
-			var footer = '<button class="btn btn-sm" data-dismiss="submodal" aria-hidden="true">Cancel</button><button id="submitState" class="btn btn-sm btn-danger submit" data-dismiss="submodal">Submit</button>';
 			
 	// Load Member to Modal
 	load = function ($id){ 		
@@ -42,11 +47,11 @@
 		//END TO MOVE
 
 		$changes = false;
-				$('#'+$modal).modal('show'); // only show are parsing complete
+				$modal.modal('show'); // only show are parsing complete
 			} else { alert("Member No Longer Exist"); }
 			
 		});
-		} else { $('#'+$modal).modal('show'); } // Data already stored
+		} else { $modal.modal('show'); } // Data already stored
 	},
 	
 	// Swap Modes
@@ -75,7 +80,7 @@
 	formatedDate = function (d){
 		if(isNaN(d.getDate())){return "N/A";}
 		else{return d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear();}},
-	
+
 	// Add Form Error
 	addFormError = function (element,type,message) {
 		$(element).parent('.form-group').addClass(type);
@@ -117,7 +122,7 @@
 			$changes.push($id);
 		},		
 		// Discard Changes
-		$('#'+$modal).on('hide.bs.modal', function (e) { if ($changes){ return window.confirm("Discard, Unsaved Changes?");} });		
+		$modal.on('hide.bs.modal', function (e) { if ($changes){ return window.confirm("Discard, Unsaved Changes?");} });		
 	})();	
 
 	// member status 		$statusChange = false;
@@ -127,21 +132,23 @@
 	contactMemberMod = (function () {
 		var $selector = $("#contact");
 		var $message = $('#message');
-		var body = '<h3>Contact:</h3><form class="form-horizontal"><div class="form-group"><label class="control-label" for="inputEmail">Message: </label><textarea id="message" class="form-control" rows="3"></textarea><span class="help-block">Length: <span id="length">0</span> Characters <span class="pull-right" id="warning-message"></span></span></div></form>';
-		var footer = '<button class="btn btn-sm" data-dismiss="submodal" aria-hidden="true">Cancel</button><button class="btn btn-sm btn-danger submit" data-dismiss="submodal">Submit</button>';
+		var header = "Contact";
+		var body = '<form class="form"><div class="form-group"><label class="control-label" for="inputEmail">Message: </label><textarea id="message" class="form-control" rows="3"></textarea><span class="help-block">Length: <span id="length">0</span> Characters <span class="pull-right" id="warning-message"></span></span></div></form>';
+		var footer = '<button class="btn btn-default btn-sm" data-dismiss="modal" aria-hidden="true">Cancel</button><button class="btn btn-sm btn-danger submit" data-dismiss="submodal">Submit</button>';
 		
 		// Create UI
 		generateUI = function () {
 			// Display Contact
-			$($subModal + " .modal-content").children('.modal-body').html(body);
-			$($subModal + " .modal-content").children('.modal-footer').html(footer);
+			$subModalHeaderObject.html(header);
+			$subModalBodyObject.html(body);
+
 			// Listener
 			console.log("TEST");
 			$message = $('#message'); // Point to New Element
 			
-			$($subModal + " .submit").on( "click", function() {sendMessage(); });
+			$($subModal + " .submit").off().on( "click", function() {sendMessage(); });
 			$($subModal + " .modal-content").on('keyup keydown', $message, function () {
-			$('#length').html($message.val().length);
+				$('#length').html($message.val().length);
 			});
 		},
 		// SEND MESSAGE
@@ -154,13 +161,16 @@
 	
 	// Update Members Status
 	updateStatusMod = (function () {
-		var accountBody = '<div class="row"><div class="col-sm-6"><span>Status: <strong class="mem-status"><span class="text-success">Active</span></strong></span></div><div class="col-sm-6"><form class="form-horizontal"><div id="mem-options"  style="padding-right: 12px;" class="form-group pull-right" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Change Status"><div id="status-choice" class="btn-group" data-toggle="buttons"><label class="btn btn-success btn-xs" id="active-btn"><input type="radio" name="options"> Active</label><label class="btn btn-warning btn-xs" id="pending-label"><input type="radio" name="options" id="pending-btn"> Pending</label><label class="btn btn-danger btn-xs" id="banned-btn"><input type="radio" name="options"> Banned</label></div></div></div></div><form class="form-horizontal"><div class="form-group"><label class="control-label" for="banReason">Reason for Blocking: </label><textarea id="bad_reason" class="form-control" rows="3" disabled>N/A: Account is still Active</textarea></div></form>';
+		var accountBody = '<div class="col-sm-6 no-pad-left"><span>Status: <strong class="mem-status"><span class="text-success">Active</span></strong></span></div><div class="col-sm-6"><form class="form"><div id="mem-options"  style="padding-right: 12px;" class="form-group pull-right" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Change Status"><div id="status-choice" class="btn-group" data-toggle="buttons"><label class="btn btn-success btn-xs" id="active-btn"><input type="radio" name="options"> Active</label><label class="btn btn-warning btn-xs" id="pending-label"><input type="radio" name="options" id="pending-btn"> Pending</label><label class="btn btn-danger btn-xs" id="banned-btn"><input type="radio" name="options"> Banned</label></div></div></div></div><form class="form-horizontal"><div class="form-group"><label class="control-label" for="banReason">Reason for Blocking: </label><textarea id="bad_reason" class="form-control" rows="3" disabled>N/A: Account is still Active</textarea></form>';
 
 		loadStatusEditor = function()
 		{
 			$statusChange = false;
-			$($subModal + " .modal-content").children('.modal-body').html(accountBody);
-			$($subModal + " .modal-content").children('.modal-footer').html(footer);
+
+			$subModalHeaderObject.html("Update Status");
+			$subModalBodyObject.html(accountBody);
+
+
 			// Listener
 			$message = $('#message'); // Point to New Element
 			if($member.activated == 1 && $member.banned == 0){$(".mem-status").html('<span class="text-success">Active</span>'); $('#pending-label').hide();$('#banned-btn').toggleClass('btn-danger').toggleClass('btn-default'); $('#active-btn').button('toggle'); $('#active-btn').attr("disabled", "disabled"); $('#mem-options').tooltip();}else if ($member.activated == 0){$(".mem-status").html('<span class="text-warning" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Email not Verified">Pending</span>'); $('.mem-status span').tooltip(); $('#pending-label').show();$('#banned-btn').toggleClass('btn-danger').toggleClass('btn-default'); $('#active-btn').toggleClass('btn-success').toggleClass('btn-default'); $('#bad_reason').val('N/A: Account currently pending users email being verified'); $('#pending-label').button('toggle'); $('#active-btn').attr("disabled", "disabled"); $('#banned-btn').attr("disabled", "disabled");} 
@@ -214,17 +224,20 @@
 	
 	// DELETING A MEMBER
 	DeleteMemberMod = (function () {
-		var deleteBody = '<div class="row"><div class="col-sm-12"><span>Delete: <strong id="mem-name">Default</strong></span></div></div><form class="form-horizontal"><div class="form-group"><label class="control-label" for="banReason">Members Full Name: </label><input type="email" class="form-control dcap third" id="full-name" placeholder="{Firstname} {Secondname}"></div><div class="form-group"><label class="control-label" for="banReason">Reason for Deleting: </label><textarea id="delete_reason" class="form-control" rows="3" disabled>N/A: Please confirm the complete members name</textarea></div></form>';
+		var deleteBody = '<div class="col-sm-12"><strong id="mem-name">Default</strong></div></div><form class="form"><div class="form-group"><label class="control-label" for="banReason">Members Full Name: </label><input type="email" class="form-control dcap third" style="width:100%!important;" id="full-name" placeholder="{Firstname} {Secondname}"></div><div class="form-group"><label class="control-label" for="banReason">Reason for Deleting: </label><textarea id="delete_reason" class="form-control" rows="3" disabled>N/A: Please confirm the complete members name</textarea></form>';
 
 		loadDelete = function(){
-			$($subModal + " .modal-content").children('.modal-body').html(deleteBody);
-			$($subModal + " .modal-content").children('.modal-footer').html(footer);
+
+			$subModalHeaderObject.html("Delete Member");
+			$subModalBodyObject.html(deleteBody);
+
+
 			$member.fullname = (($member.first_name.toLowerCase().trim()) + " " + ($member.second_name.toLowerCase().trim())).trim();		
 			$('#mem-name').html(cFirst($member.first_name) + " " + cFirst($member.second_name));
 			$('#full-name').on('keyup keydown', function () { validate($(this)); });
 		// http://stackoverflow.com/questions/1226574/disable-copy-paste-into-html-form-using-javascript
 		$('input.dcap').bind('copy paste', function (e) { e.preventDefault(); });
-		$($subModal + " .submit").on( "click", function() {send(); });
+		$($subModal + " .submit").off().on( "click", function() {send(); });
 	},
 	
 	validate = function($name) {
@@ -278,15 +291,17 @@
 	// UPDATING A MEMBERS MEMBERSHIP
 	updateMembershipMod = (function () { 
 		
-		var membershipbody = '<h3>Update Membership:</h3><div class="row"><div class="panel panel-primary col-lg-6" style="padding:0px;"><div class="panel-heading"><h3 class="panel-title views">Change Membership</h3></div><div class="panel-body"><span>Current Membership: <span class="pull-right"><span id="memType">N/A</span> <span id="memShipType">N/A</span></span></span><br/><div class="row"><div class="col-md-4">Validity:</div><div class="col-md-8 text-right">From: <strong id="dateStart">01/02/03</strong> To: <strong id="dateEnd">06/07/08</strong></div></div><form role="form"><div class="form-group"><label for="memberships">Avaliable Membership Types:</label><select id="membershipSelect"class="form-control"></select></div></div></div><div class="panel panel-primary col-lg-6" style="padding:0px;"><div class="panel-heading"><h3 class="panel-title views">Custom Membership </h3></div> <div class="panel-body"><div id="date-selector"></div></div></div>';
+		var membershipbody = '<div class="panel panel-default col-lg-6" style="padding:0px;"><div class="panel-heading"><h3 class="panel-title views">Change Membership</h3></div><div class="panel-body"><span>Current Membership: <span class="pull-right"><span id="memType">N/A</span> <span id="memShipType">N/A</span></span></span><br/><div class="row"><div class="col-md-4">Validity:</div><div class="col-md-8 text-right">From: <strong id="dateStart">01/02/03</strong> To: <strong id="dateEnd">06/07/08</strong></div></div><form role="form"><div class="form-group"><label for="memberships">Avaliable Membership Types:</label><select id="membershipSelect"class="form-control"></select></div></div></div><div class="panel panel-default col-lg-6" style="padding:0px;"><div class="panel-heading"><h3 class="panel-title views">Custom Membership </h3></div> <div class="panel-body"><div id="date-selector"></div></div>';
 		
 		loadMembership = function(){
-			$($subModal + " .modal-content").children('.modal-body').html(membershipbody);
-			$($subModal + " .modal-content").children('.modal-footer').html(footer);
+
+			$subModalHeaderObject.html("Update Membership");
+			$subModalBodyObject.html(membershipbody);
+
 			getPossibleType();
 			datepicker.draw();
 			datepicker.options('disable');
-			$($subModal + " .submit").on( "click", function() {updateMembershipType(); });
+			$($subModal + " .submit").off().on( "click", function() {updateMembershipType(); });
 		},
 		
 		getPossibleType = function () {
@@ -308,129 +323,129 @@
 					option.tooltip();
 					$('#membershipSelect').append(option);
 				}
-					var option = $('<option/>'); 								
+				var option = $('<option/>'); 								
 					option.attr({ 'value': -1}).text("Custom Membership"); // Custom Membership Option
 					option.attr('data-toggle','tooltip');
 					option.attr('data-placement','left');
 					option.attr('data-original-title','Create Custom membership (Provide Start/End Dates)');
 					option.tooltip();
-				$('#membershipSelect').tooltip();
-				$('#membershipSelect').append(option);
-			});
-			
-			$('#membershipSelect').on('change', function() {
-				if($( "#membershipSelect option:selected" ).val() == -1){datepicker.options("enable");}
-				else{datepicker.options("disable");}
-			});
-		},
-		
-		updateMembershipType = function () {
-			var memship = $("#membershipSelect option:selected").val();
-			var op=new Object();
-			if(memship == -1 && datepicker.hasDates()){var date = datepicker.getDates(); op.start = date[0]; op.end= date[1];}
-
-			var i = {id: $member.id, membership:memship, options: op};
-			console.log(i);
-			$.post($baseUrl.member+$functionUrl.updateUserMembership, {id: $member.id, membership:memship, options: op}, function (data){
-				console.log(data);
-			});			
-		},	
-		
-		$('.membership').on("click", function () { loadMembership(); });
-	})();
-	
-	attendance = (function(){
-	
-		var attendbody = '<div id="mainContent" class="row" style="z-index:2;"><div class="panel panel-primary col-lg-6" style="padding:0px;"><div class="panel-heading"><h3 class="panel-title">Attendance</h3></div> <div class="panel-body"><div class="row"><div class="col-md-6"><span>Class Bookings:  <strong>10</strong></span><br/><br/><span>Popular Class:  <strong>Zumba</strong></span><br/></div><div class="col-md-6"><span>Class Attendance: <strong>50%</strong></span><br/><br/><span>Popular Time:  <strong>Tuesday, 5:00</strong></span><br/></div></div></div></div><div class="panel panel-primary col-lg-6" style="padding:0px;"><div class="panel-heading"><h3 class="panel-title">Bookings</h3></div><div class="panel-body"><div class="panel-group" id="accordion"></div></div></div></div></div>';
-	
-		loadAttendacne = function(){
-			$($subModal + " .modal-content").children('.modal-body').html(attendbody);
-			$($subModal + " .modal-content").children('.modal-footer').html(footer);
-			getBookings();
-			$($subModal + " .submit").on( "click", function() { });
-		},
-	
-		getBookings = function () {
-			$.get($baseUrl.member+$functionUrl.getBookings,{id:$member.id},function (data){
-				$('#accordion').html(data);
-			});	
-		},
-		
-		$('#attendance').on("click", function () { loadAttendacne(); });
-	})();
-	
-	datepicker = (function() {
-
-		var cal;
-
-		draw = function() {
-			cal = $('#date-selector').multiDatesPicker({numberOfMonths: 2,maxPicks: 2});
-		},
-		
-		getDates = function() {
-			return cal.multiDatesPicker('getDates');
-		},
-
-		hasDates = function() {
-			return getDates().length != 0;
-		},
-
-		repeatDates = function(repeatType, stop) {
-			if(stop != ''){
-				var calDates = cal.multiDatesPicker('getDates');
-				var newDates = new Array();
-				var stopDate = Date.parse(stop);
-
-				calDates.forEach(function(entry) {
-					var day = Date.parse(entry);
-					while(Date.compare(day, stopDate) != 1){
-
-						newDates.push(day.clone());
-
-						if(repeatType == 'days')
-							day.add(1).days();
-
-						else if (repeatType == 'weeks')
-							day.add(1).weeks();
-
-						else if (repeatType == 'months')
-							day.add(1).months();
-
-						else if (repeatType == 'years')
-							day.add(1).years();
-					}
+					$('#membershipSelect').tooltip();
+					$('#membershipSelect').append(option);
 				});
 
-				if(newDates.length > 0)
-					cal.multiDatesPicker('addDates', newDates);
-			}
-		},
-		
-		alternate = function(){
-			if(cal.multiDatesPicker('isDisabled')){
-				options('enable');
-			}else {	
-				options('disable');
-			}
-		},
-		
-		options = function(o){
-			cal.datepicker(o);
-		}
-		
-		return { 
-			draw: draw,
-			cal:cal, 
-			options: options,
-			hasDates: hasDates,
-			repeatDates: repeatDates,
-			getDates : getDates,
-			alternate: alternate,
-		};
+		$('#membershipSelect').on('change', function() {
+			if($( "#membershipSelect option:selected" ).val() == -1){datepicker.options("enable");}
+			else{datepicker.options("disable");}
+		});
+	},
 
-	})();
+	updateMembershipType = function () {
+		var memship = $("#membershipSelect option:selected").val();
+		var op=new Object();
+		if(memship == -1 && datepicker.hasDates()){var date = datepicker.getDates(); op.start = date[0]; op.end= date[1];}
+
+		var i = {id: $member.id, membership:memship, options: op};
+		console.log(i);
+		$.post($baseUrl.member+$functionUrl.updateUserMembership, {id: $member.id, membership:memship, options: op}, function (data){
+			console.log(data);
+		});			
+	},	
+
+	$('.membership').on("click", function () { loadMembership(); });
+})();
+
+attendance = (function(){
 	
+	var attendbody = '<div id="mainContent" style="z-index:2;"><div class="panel panel-default col-lg-6" style="padding:0px;"><div class="panel-heading"><h3 class="panel-title">Attendance</h3></div> <div class="panel-body"><div class="col-md-6"><span>Class Bookings:  <strong>10</strong></span><br/><br/><span>Popular Class:  <strong>Zumba</strong></span><br/></div><div class="col-md-6"><span>Class Attendance: <strong>50%</strong></span><br/><br/><span>Popular Time:  <strong>Tuesday, 5:00</strong></span><br/></div></div></div></div><div class="panel panel-default col-lg-6" style="padding:0px;"><div class="panel-heading"><h3 class="panel-title">Bookings</h3></div><div class="panel-body"><div class="panel-group" id="accordion"></div></div></div></div>';
 	
+	loadAttendacne = function(){
+		$subModalHeaderObject.html("Attendance");
+		$subModalBodyObject.html(attendbody);
+		getBookings();
+		$($subModal + " .submit").off().on( "click", function() { });
+	},
+	
+	getBookings = function () {
+		$.get($baseUrl.member+$functionUrl.getBookings,{id:$member.id},function (data){
+			$('#accordion').html(data);
+		});	
+	},
+
+	$('#attendance').on("click", function () { loadAttendacne(); });
+})();
+
+datepicker = (function() {
+
+	var cal;
+
+	draw = function() {
+		cal = $('#date-selector').multiDatesPicker({numberOfMonths: 2,maxPicks: 2});
+	},
+
+	getDates = function() {
+		return cal.multiDatesPicker('getDates');
+	},
+
+	hasDates = function() {
+		return getDates().length != 0;
+	},
+
+	repeatDates = function(repeatType, stop) {
+		if(stop != ''){
+			var calDates = cal.multiDatesPicker('getDates');
+			var newDates = new Array();
+			var stopDate = Date.parse(stop);
+
+			calDates.forEach(function(entry) {
+				var day = Date.parse(entry);
+				while(Date.compare(day, stopDate) != 1){
+
+					newDates.push(day.clone());
+
+					if(repeatType == 'days')
+						day.add(1).days();
+
+					else if (repeatType == 'weeks')
+						day.add(1).weeks();
+
+					else if (repeatType == 'months')
+						day.add(1).months();
+
+					else if (repeatType == 'years')
+						day.add(1).years();
+				}
+			});
+
+			if(newDates.length > 0)
+				cal.multiDatesPicker('addDates', newDates);
+		}
+	},
+
+	alternate = function(){
+		if(cal.multiDatesPicker('isDisabled')){
+			options('enable');
+		}else {	
+			options('disable');
+		}
+	},
+
+	options = function(o){
+		cal.datepicker(o);
+	}
+
+	return { 
+		draw: draw,
+		cal:cal, 
+		options: options,
+		hasDates: hasDates,
+		repeatDates: repeatDates,
+		getDates : getDates,
+		alternate: alternate,
+	};
+
+})();
+
+
 	// USER INTERFACE CONNECTIONS
 	
 	uiConnections = function () {
@@ -444,14 +459,14 @@
 		$(".views").on("click", function () { swapMode(); });
 
 		// Swap back to Summary Mode on Close
-		$('#'+$modal).on('hidden.bs.modal', function (e) {
+		$modal.on('hidden.bs.modal', function (e) {
 			$("input[type=text].editable").replaceWith(function () {
 				return "<label class=\"editable\" id=\"" + $(this).attr('id') + "\">" + $(this).val() + "</label>";
 			});
 			$('#mySubModal').hide();
 		});
 		// Notify of data edit
-		$('#'+$modal).on("change", ":input.editable", function () { recordChanges($(this).attr('id')); 
+		$modal.on("change", ":input.editable", function () { recordChanges($(this).attr('id')); 
 	});
 		
 	},		

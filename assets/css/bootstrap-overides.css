@@ -16,7 +16,8 @@
 }
 
 label.editable{
-  padding-top: 7px
+  padding-top: 7px;
+  font-weight: normal;
 }
 
 .tooltip{
@@ -25,34 +26,19 @@ label.editable{
 
 /*Colin Modal*/
 
-#MemberDetails .modal-dialog{
-  width: 80% !important;
-}
+
 
 .third{
   width: 33% !important;
 }
 
-div.list {
-  overflow-x: auto;
-  overflow-y: hidden;
-  white-space: nowrap;
-}
-div.list [class*="col-"] {
+
+#booking .inline{
   display: inline-block;
-  float: none; /* Very important */
-  vertical-align:top;
+  display: inline;
 }
 
 
-
-div.classes {
-	clear:both;
-  overflow-y: auto;
-  overflow-x: hidden;
-  vertical-align:top;
-  z-index: 2;
-}
 
 /*http://stackoverflow.com/questions/3387489/make-child-visible-outside-an-overflowhidden-parent*/
 .clearfix:before,
@@ -64,15 +50,6 @@ div.classes {
 }
 .clearfix:after {clear: both;}
 .clearfix {zoom: 1;} /* IE < 8 */
-
-h2.time {
-	font-size: 30px;
-	line-height: 1;
-	color: #999;
-	margin-top: -10px;
-	margin-bottom: 0px;
-}
-
 
 .no-pad-left{
   padding-left: 0!important;
@@ -90,13 +67,51 @@ h2.gtime {
   margin-bottom: 0px;
 }
 
+
+
+@media not print {
+
+  div.list {
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+  }
+
+  div.list [class*="col-"] {
+    display: inline-block;
+    float: none; /* Very important */
+    vertical-align:top;
+  }
+
+  div.classes {
+    clear:both;
+    overflow-y: auto;
+    overflow-x: hidden;
+    vertical-align:top;
+    z-index: 2;
+  }
+
+  h2.time {
+    font-size: 30px;
+    line-height: 1;
+    color: #999;
+    margin-top: -10px;
+    margin-bottom: 0px;
+  }
+}
+
+#booking.home .panel-heading{
+	overflow-x: hidden;
+	text-overflow: ellipsis;
+}
+
 @media print {
 
   body {
     padding-top: 0px !important;
   }
-
-  h2.time {
+  
+   h2.time {
     font-size: 30px;
     line-height: 1;
     color: #999;
@@ -104,43 +119,37 @@ h2.gtime {
     margin-bottom: 0px;
   }
 
-  body{
-    padding-top: 0px;
-  }
-  
   .page-break {
     float: none !important;
     display: block;
-
     page-break-after: always;
-  }
-
-  div.list {
-    float: none;
-    white-space: nowrap;
-    height: 100% !important;
-    width: 100%;
   }
   
   div.list [class*="col-"] {
+    display: block;
     float: none; /* Very important */
     vertical-align:top;
-    display: block !important;
-    width: 100% !important;
-    height: 100% !important;
+    width: 100%;
   }
-  
+
   div.classes {
-   vertical-align:top;
-   overflow-y: visible!important;
-   width: 100% !important;
-   max-height: 100% !important;
-   height: 100% !important;
- }
+    vertical-align:top;
+    max-height: 100% !important;
+  }
+
+  html.firefox div.list [class*="col-"] {
+    display: block;
+    vertical-align:top;
+    width: 80%;
+  }
 }
 
 .no-margin-btm{
   margin-bottom: 0!important;
+}
+
+#booking .no-margin{
+	margin: 0px;;
 }
 
 

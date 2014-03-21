@@ -7,6 +7,7 @@ class booking extends CI_Controller{
 		parent::__construct();
 		
 		$this->load->Model('classes');
+		$this->load->Helper('book');
 
 	}
 	
@@ -16,15 +17,19 @@ class booking extends CI_Controller{
 	*/
 	function bookClass(){
 		if(check_member()){
-			if(isset($_POST['classid'])){
 
+			if(isset($_POST['classid'])){
 				$this->load->model('bookings');
 
 				$user_id = $this->tank_auth->get_user_id();
 				$classInfo = $this->classes->getClassInformation($_POST['classid']);
 
-				if(!$this->_bookedOut($user_id, new DateTime($classInfo['class_start_date']), new DateTime($classInfo['class_end_date']))){
+				if(!bookedOut($user_id, new DateTime($classInfo['class_start_date']), new DateTime($classInfo['class_end_date']))){
 					$this->_addMember($_POST['classid'], $user_id, $classInfo);
+
+				}else{
+					$this->_bookingFail('You are already booked into classes at this time');
+
 				}
 			}else{
 				$this->index();
@@ -46,8 +51,8 @@ class booking extends CI_Controller{
 		$m = $user_id;
 		$b = $classid;
 
-		$full = $this->_isClassBookedOut($b);
-		$past = $this->isClassInPast($b);
+		$full = isclassBooKedouT($b);
+		$past = isclassinPast($b);
 
 		$start = new DateTime($classInfo['class_start_date']);
 		$end = new DateTime($classInfo['class_start_date']);
@@ -56,9 +61,10 @@ class booking extends CI_Controller{
 		if(!$full && !$past){
 			if($this->bookings->addMember($b, $m)){
 
-				$this->_emailMemberAddedToClass($m, $classInfo);
 				$data['classinfo'] = $classInfo;
 				parse_temp('booking-success', $this->load->view('pages/booking-success', $data, true));
+				emailMemberAddedToClass($m, $classInfo);
+
 			}else{
 				$this->_bookingFail('You are already booked into this class');
 			}
@@ -71,24 +77,7 @@ class booking extends CI_Controller{
 
 	}
 
-	/**
-	* Check already booked classes
-	* @param int
-	* @param DateTime
-	* @param DateTime
-	* @return bool
-	*/
-	function _bookedOut($user_id, $start, $end){
-		$bookedOut = $this->bookings
-		->isMemberBookedOut($user_id, $start->format("Y-m-d"), $start->format("H:i:s"), $end->format("H:i:s"));
 
-		if(count($bookedOut)>0){
-			$this->_bookingFail('You are already booked into classes at this time');
-			return true;
-		}
-		return false;
-
-	}
 
 	/**
 	* Handle booking failuires
@@ -119,41 +108,17 @@ class booking extends CI_Controller{
 
 
 			$uid = $this->tank_auth->get_user_id();
-			if(!$this->_bookedOut($uid, new DateTime($_POST['start']), new DateTime($_POST['end']))){
+			if(!bookedOut($uid, new DateTime($_POST['start']), new DateTime($_POST['end']))){
 				$id = $this->classes->insertClass($data);
 				$data = $this->classes->getClassInformation($id);
 				$this->_addMember($id, $this->tank_auth->get_user_id(), $data);	
+			}else{
+				$this->_bookingFail('You are already booked into classes at this time');
+
 			}
 		}
 	}
 
-
-	/**
-	* Determine whether a class has past
-	* @param int
-	* @return bool
-	*/
-	function isClassInPast($class_booking_id){
-		$end = $this->classes->getClassEndDate($class_booking_id);
-		return (time() >  strtotime($end));
-	}
-
-	function _emailMemberAddedToClass($member_id, $classDetails) {
-		$this->load->helper('comms');
-
-		$d = new DateTime($classDetails['class_start_date']);
-		$msg = 'You have booked into the following class: ' . $classDetails['class_type'] . ' on '. $d->format("jS F Y") . ' starting at '. $d->format("H:i") . ' in the following room: '. $classDetails['room'];
-		contact_user(array($member_id), $msg);
-	}
-
-
-	function _emailMemberAddedToWaitingList($member_id, $classDetails) {
-		$this->load->helper('comms');
-		
-		$d = new DateTime($classDetails['class_start_date']);
-		$msg = 'You have been added to the waiting list for the following class: ' . $classDetails['class_type'] . ' on '. $d->format("jS F Y") . ' starting at '. $d->format("H:i") . ' in the following room: '. $classDetails['room'] .'. You will be notified when a space becomes available, and  be given the chance to book again. Please note when a space becomes available it will be filled on a first come first serve basis.';
-		contact_user(array($member_id), $msg);
-		}
 
 	/**
 	 * Index page for user booking
@@ -170,17 +135,18 @@ class booking extends CI_Controller{
 		if(check_member()){
 			/* class confirm */
 			if(isset($_POST['class_id'])){	
+
 				$data = $this->classes->getClassInformation($_POST['class_id']);
-				if(!$this->_isClassBookedOut($_POST['class_id'])){
+				if(!isclassBookedOut($_POST['class_id'])){
 					parse_temp('booking_confirm', $this->load->view('pages/booking-confirm', $data, true));
 				}
 				else{
 					parse_temp('booking_wait', $this->load->view('pages/booking-wait', $data, true));
 				}
-			/* sports confirm */
+				/* sports confirm */
 			}elseif(isset($_POST['class_type_id'])){
-					$_POST['is_sport'] = 1;
-					parse_temp('booking-confirm', $this->load->view('pages/booking-confirm', $_POST, true));	
+				$_POST['is_sport'] = 1;
+				parse_temp('booking-confirm', $this->load->view('pages/booking-confirm', $_POST, true));	
 			}else{
 				$this->_bookingFail('No class was supplied to book');
 				return;
@@ -194,31 +160,29 @@ class booking extends CI_Controller{
 	function joinWaiting(){
 		if(check_member()){
 			$this->load->model('bookings');
-		
+			$this->load->model('waiting');
+
 			/* class confirm */
 			if(isset($_POST['class_id'])){
-			
+
 				$b = $_POST['class_id'];
 				$m = $this->tank_auth->get_user_id();
 				
 				$classInfo = $this->classes->getClassInformation($b);
 				
-				if($this->bookings->waitingListFull($b, $classInfo['max_attendance'])){
+				if($this->waiting->waitingListFull($b, $classInfo['max_attendance'])){
 					$this->_bookingFail('There are unfortunately no more spaces on the waiting list.');
 					return;
 				}
 				
 				
-				
-				if(!$this->_isClassBookedOut($b)){
+				if(!isclassBookedOut($b)){
 					parse_temp('booking-confirm', $this->load->view('pages/booking-confirm', $classInfo, true));
 					return;
 				}
-
 				
-				
-				if($this->bookings->addMemberWaitingList($b, $m)){
-					$this->_emailMemberAddedToWaitingList($m, $classInfo);
+				if($this->waiting->addMemberWaitingList($b, $m)){
+					emailMemberAddedToWaitingList($m, $classInfo);
 					parse_temp('booking-wait-success', $this->load->view('pages/booking-wait-success', $classInfo, true));
 				}else{
 					$this->_bookingFail('You are already on the waiting list for this class.');
@@ -230,7 +194,7 @@ class booking extends CI_Controller{
 				$this->_bookingFail('No class was supplied');
 				return;
 			}		
-		
+
 		}
 	}
 
@@ -276,7 +240,7 @@ class booking extends CI_Controller{
 		}
 
 		if(isset($_POST['is_sport'])){
-		
+
 			$data['classes'] = $this->_fetchSportsClasses($_POST['class_type_id'], $start_date, $end_date, $start_time, $end_time);
 
 		}else{
@@ -405,19 +369,7 @@ class booking extends CI_Controller{
 	}
 
 
-	/**
-	* determines whether a class is booked out
-	* @param int
-	* @param bool
-	*/
-	function _isClassBookedOut($class_booking_id){
-		$this->load->model('Bookings');
 
-		$capacity = $this->classes->getClassCapacity($class_booking_id);
-		$attending = $this->Bookings->countBookingAttendants($class_booking_id);
-
-		return ($attending >= $capacity);
-	}
 
 }
 ?>

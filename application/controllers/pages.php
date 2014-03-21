@@ -147,16 +147,11 @@
 				$this->load->Model($page = 'rooms');
 
 				$data['rooms'] = $this->rooms->getRooms();
-/*
-			$data['room_id'] = $this->facilities->retrieve_ids();
-			$data['room'] = $this->facilities->retrieve_titles();
-			$data['description'] = $this->facilities->retrieve_descriptions();
+				parse_temp('room', $this->load->view('pages/member/rooms', $data, true));
 
-*/			parse_temp('room', $this->load->view('pages/member/rooms', $data, true));
+			}
 
 		}
-
-	}
 
 
 
