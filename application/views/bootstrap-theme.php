@@ -720,8 +720,12 @@ i.square{
 	border-bottom-color: <?php echo $brandSecondary;?>;
 }
 
+#booking .navbar-nav .caret{
+	border-top-color: #FFF;
+}
+
 #booking .navbar .dropdown-menu::after {
-	position: absolute;
+<!-- 	position: absolute;
 	top: -6px;
 	right: 20px;
 	display: inline-block;
@@ -729,7 +733,7 @@ i.square{
 	border-bottom: 6px solid white;
 	border-left: 6px solid transparent;
 	content: '';
-	color: rgba(65, 128, 123, 0.63);
+	color: rgba(65, 128, 123, 0.63); -->
 }
 
 #booking #page-body.page-login div.input-group{
