@@ -45,7 +45,7 @@ class Member extends CI_Controller{
 	}
 
 	function createUserChanges(){ // ISSET CHECKS 
-	if(check_admin()){
+	if(check_member()){
 		$this->load->model('members');
 		$this->load->library('tank_auth');
 		
