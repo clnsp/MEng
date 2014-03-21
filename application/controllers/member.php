@@ -45,12 +45,12 @@ class Member extends CI_Controller{
 	}
 
 	function createUserChanges(){ // ISSET CHECKS 
-		if(check_admin()){
-			$this->load->model('members');
-			$this->load->library('tank_auth');
-			
-			$new_details['first_name']       = $_POST['first_name'];
-			$new_details['second_name']      = $_POST['second_name'];
+	if(check_member()){
+		$this->load->model('members');
+		$this->load->library('tank_auth');
+		
+		$new_details['first_name']       = $_POST['first_name'];
+		$new_details['second_name']      = $_POST['second_name'];
 		//$new_details['email']            = $_POST['email'];
 			if($_POST['comms_preference']==2){
 			//TWITTER VALIDATION
