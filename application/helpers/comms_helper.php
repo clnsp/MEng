@@ -12,10 +12,12 @@
 if (!function_exists('contact_user'))
 {
 	function contact_user($id,$message,$service=false){
+
+
 		if(!is_array($id)){$id = array($id);}
 		if(!is_array($message)){$message =  array('email'=>$message,'sms'=>$message,'twitter'=>$message);}
 		$ci =& get_instance();
-		if(check_admin()){
+		if(check_member()){
 			$ci->load->model('members');
 			// Fetch User Preference
 			$list = array('email'=>array(),'sms'=>array(),'twitter'=>array());

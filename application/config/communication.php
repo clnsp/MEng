@@ -29,7 +29,7 @@ $config['email_footer'] = "THIS IS A FOOTER \r\n Regards CSR";
 |--------------------------------------------------------------------------
 */
 $config['sms_limit'] = 1; // Max Number of texts per Message
-$config['sms_allow'] = FALSE;
+$config['sms_allow'] = TRUE;
 
 /*
 |--------------------------------------------------------------------------

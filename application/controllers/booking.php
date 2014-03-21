@@ -26,6 +26,7 @@ class booking extends CI_Controller{
 
 				if(!bookedOut($user_id, new DateTime($classInfo['class_start_date']), new DateTime($classInfo['class_end_date']))){
 					$this->_addMember($_POST['classid'], $user_id, $classInfo);
+
 				}else{
 					$this->_bookingFail('You are already booked into classes at this time');
 
@@ -60,9 +61,10 @@ class booking extends CI_Controller{
 		if(!$full && !$past){
 			if($this->bookings->addMember($b, $m)){
 
-				emailMemberAddedToClass($m, $classInfo);
 				$data['classinfo'] = $classInfo;
 				parse_temp('booking-success', $this->load->view('pages/booking-success', $data, true));
+				emailMemberAddedToClass($m, $classInfo);
+
 			}else{
 				$this->_bookingFail('You are already booked into this class');
 			}
@@ -133,6 +135,7 @@ class booking extends CI_Controller{
 		if(check_member()){
 			/* class confirm */
 			if(isset($_POST['class_id'])){	
+
 				$data = $this->classes->getClassInformation($_POST['class_id']);
 				if(!isclassBookedOut($_POST['class_id'])){
 					parse_temp('booking_confirm', $this->load->view('pages/booking-confirm', $data, true));
