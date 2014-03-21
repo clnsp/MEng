@@ -10,7 +10,6 @@
 class Bookings extends CI_Model
 {
 	private $class_booking_tbl	= 'class_booking_tbl';			// user accounts
-    private $waiting_pool_tbl	= 'waiting_pool_tbl';		//waiting list
 
     function __construct()
     {
@@ -87,12 +86,11 @@ class Bookings extends CI_Model
 	 * @return	object
 	 */
 	function getBookingByClassID($class_id){
-		if(check_admin()){
-			$this->db->where('class_id', $class_id);
+		$this->db->where('class_id', $class_id);
 
-			$query = $this -> db -> get($this -> class_booking_tbl);
-			return $query -> result();
-		}
+		$query = $this -> db -> get($this -> class_booking_tbl);
+		return $query -> result();
+		
 	}
 	
 	/**
@@ -223,36 +221,7 @@ class Bookings extends CI_Model
 		}
 	}
 
-     /**
-    * Returns an array of those waiting for a position
-    * @param int
-    * @return array
-    */
-     function getWaiting($class_id){
-     	$this -> db -> select('first_name, second_name');
 
-     	$this->db->from($this -> waiting_pool_tbl);
-
-     	$this->db->join('users', 'users.id = waiting_pool_tbl.member_id');
-     	$this->db->where('class_id', $class_id);
-
-     	$query = $this -> db -> get();
-     	return $query->result_array();
-
-
-     }
-
-     function addMemberWaitingList($class_booking_id, $member_id){ 
-
-     	$data = array(
-     		'member_id' => $member_id,
-     		'class_id' => $class_booking_id,
-
-     		);
-
-     	$this->db->insert($this -> waiting_pool_tbl, $data); 	
-
-     }	
 
  	/**
  	* Determine whether a user is already booked into a class or sport at particular time
@@ -284,5 +253,9 @@ class Bookings extends CI_Model
  		// echo $this->db->_error_message();
  		return $query->result_array();
  	}
+ 	
 
- }
+
+      
+
+  }

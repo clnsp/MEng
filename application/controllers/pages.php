@@ -142,17 +142,12 @@
 		 */
 		public function rooms(){
 
-		if(check_member()){
+			if(check_member()){
 
-			$this->load->Model($page = 'rooms');
-			
-			$data['rooms'] = $this->rooms->getRooms();
-/*
-			$data['room_id'] = $this->facilities->retrieve_ids();
-			$data['room'] = $this->facilities->retrieve_titles();
-			$data['description'] = $this->facilities->retrieve_descriptions();
+				$this->load->Model($page = 'rooms');
 
-*/			parse_temp('room', $this->load->view('pages/member/rooms', $data, true));
+				$data['rooms'] = $this->rooms->getRooms();
+				parse_temp('room', $this->load->view('pages/member/rooms', $data, true));
 
 			}
 
@@ -160,17 +155,17 @@
 
 
 
-				/**
-		 * User Past Bookings List
-		 */
-		public function mybookings(){
+	/**
+	 * User Past Bookings List
+	 */
+	public function mybookings(){
 
 		if(check_member()){
 
 			$member_id = $this->tank_auth->get_user_id();
 
 			$this->load->Model($page = 'bookings');
-			
+
 			$data['bookings'] = $this->bookings->getClassBookingByMember($member_id);
 			$data['bookingsPast'] = $this->bookings->getClassBookingByMember($member_id);
 			$data['bookingMember'] = $member_id;
@@ -185,9 +180,9 @@
 				if(time() > strtotime($end)){
 
 					unset($data['bookings'][$rowCount]);				
-				
+
 				}
-				
+
 				$rowCount++;			
 
 			}
@@ -199,18 +194,18 @@
 				if(time() < strtotime($end)){
 
 					unset($data['bookingsPast'][$rowCounter]);				
-				
+
 				}
-				
+
 				$rowCounter++;			
 
 			}
-			
+
 			parse_temp($page, $this->load->view('pages/member/mybookings', $data, true));
 
-			}
-
 		}
+
+	}
 
 
 		/**
@@ -266,12 +261,12 @@
         */
 		public function user_booking($page = 'user_booking'){
 
-		if(check_member()){
+			if(check_member()){
 
-			$data = setupClassSearchForm();
+				$data = setupClassSearchForm();
 
-			parse_temp($page, $this->load->view('pages/'.$page, $data, true));
-		}
+				parse_temp($page, $this->load->view('pages/'.$page, $data, true));
+			}
 
 		}
 
@@ -280,23 +275,82 @@
 		 */
 		public function class_list($page = 'class_list'){
 
-		if(check_member()){
+			if(check_member()){
 
 
-			$this->load->Model('Categories');
-			$this->load->Model('classes');
+				$this->load->Model('Categories');
+				$this->load->Model('classtype');
 
 
 
-			$data['categories'] = $this->Categories->getCategories();
-			$data['class_types'] = $this->classes->getClassTypes();
+				$data['categories'] = $this->Categories->getCategories();
+				$data['class_types'] = $this->classtype->getClasstype();
 
-			parse_temp($page, $this->load->view('pages/'.$page, $data, true));
+				parse_temp($page, $this->load->view('pages/'.$page, $data, true));	
+
+			}
+
+		}
+
+		function cancelBooking(){
+
+			if(check_member()){
+
+				$this->load->Model($page = 'bookings');
+				$this->load->Model($page = 'classes');
+
+				$class_booking_id = $this->input->post('class_booking_id');
+				$member_id = $this->input->post('member_id');
+				$this->bookings->removeMember($class_booking_id, $member_id);
+				$this->classes->removeSportClass($class_booking_id); //if class is a sport need to remove the class as well
+
+
+//		echo "member id: ".$member_id." class id: ".$class_booking_id;
+
+				$member_id = $this->tank_auth->get_user_id();
+
+				$data['bookings'] = $this->bookings->getClassBookingByMember($member_id);
+				$data['bookingsPast'] = $this->bookings->getClassBookingByMember($member_id);
+				$data['bookingMember'] = $member_id;
+
+				$rowCount = 0;
+				$rowCounter = 0;
+
+				foreach ($data['bookings'] as $row){
+
+					$end = $row['end'];
+
+					if(time() > strtotime($end)){
+
+						unset($data['bookings'][$rowCount]);				
+
+					}
+
+					$rowCount++;			
+
+				}
+
+				foreach ($data['bookingsPast'] as $row){
+
+					$end = $row['end'];
+
+					if(time() < strtotime($end)){
+
+						unset($data['bookingsPast'][$rowCounter]);				
+
+					}
+
+					$rowCounter++;			
+
+				}
+
+				parse_temp($page, $this->load->view('pages/member/mybookings', $data, true));
 
 			}
 
 		}
 
 	}
+
 
 	?>

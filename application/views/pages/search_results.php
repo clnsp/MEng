@@ -1,7 +1,3 @@
-<?php $form = array(
-'role' => 'form'); ?>
-
-
 
 <?php
 
@@ -21,36 +17,44 @@ foreach($classes as $row): ?>
 	
 	?>
 
-	<td data-title="Activity"><?php echo $row['class_type'];?></td>
-	<td data-value='<?php echo $start_stamp; ?>' data-title="Date"><?php echo $start_date->format('jS F Y'); ?></td>
-	<td data-value='<?php echo $start_stamp; ?>' data-title="Start" ><?php echo $start_date->format('h.i A'); ?></td>
-	<td data-value='<?php echo $end_stamp; ?>' data-title="End"><?php echo $end_date->format('h.i A'); ?></td>
-	<td data-title="Room"><?php echo $row['room'];?></td>    	
+	<td data-title="Activity">
+		<?php echo $row['class_type'];?>
+	</td>
+	<td data-value='<?php echo $start_stamp; ?>' data-title="Date">
+		<?php echo $start_date->format('jS F Y'); ?>
+	</td>
+	<td data-value='<?php echo $start_stamp; ?>' data-title="Start" >
+		<?php echo $start_date->format('h.i A'); ?>
+	</td>
+	<td data-value='<?php echo $end_stamp; ?>' data-title="End">
+		<?php echo $end_date->format('h.i A'); ?>
+	</td>
+	<td data-title="Room">
+		<?php echo $row['room'];?>
+	</td>    	
+	
 	<td data-title="Book" data-sort-ignore="true">		
 		
 		<?php 
-		if(isset($_POST['is_sport'])){
-			$hidden = array(
-				'class_type_id' =>  $row['class_type_id'],
-				'start' => $row['date'] . " " .$row['class_start_date'],
-				'end' => $row['date'] . " " . $row['class_end_date'],
-				'room_id' => $row['room_id']
+			echo form_open("/booking/confirm");
+			if(isset($row['is_sport'])){
+				$hidden = array(
+					'class_type_id' =>  $row['class_type_id'],
+					'class_start_date' => $row['class_start_date'],
+					'class_end_date' => $row['class_end_date'],
+					'room_id' => $row['room_id'],
+					'room' => $row['room'],
+					'class_type' => $row['class_type'],
 				);
-			echo form_open("/booking/bookSport", $form);			
-		}else{
-			$hidden = array(
-				'classid' =>  $row['class_id'],
-				'fully_booked' => $row['fully_booked']);
-			echo form_open("/booking/bookClass", $form);
-		}
-
-		echo form_hidden($hidden);
-
-		if(isset($row['fully_booked']) && $row['fully_booked']){
-			echo form_submit('submit', 'Wait', "class='btn btn-warning'");
-		}else{
+			}else{
+				$hidden = array(
+					'class_id' =>  $row['class_id']
+				);
+			}
+				echo form_hidden($hidden);
+		
+			
 			echo form_submit('submit', 'Book', "class='btn btn-primary'");
-		}
 		?>
 	</td>
 	<?php echo form_close(); ?>

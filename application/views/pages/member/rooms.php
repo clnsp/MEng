@@ -1,39 +1,32 @@
 
-   <div id="wrapper">
 
-      <div id="page-wrapper">
-      	
-<div class="panel panel-default">
+<div class="container">
+
+	<?php 
+	foreach($rooms as $key => $d): ?>
+
+	<?php if($key % 2 == 0) { ?>
+	<div class="row">
+		<?php } ?>
+
+		<div class="col-md-6">
+			<div class="panel panel-default panel-room">
 				<div class="panel-heading">
-					<h3 class="panel-title">Rooms</h3>
+					<h3 class="panel-title"><?php echo $d['room'] ?></h3>
 				</div>
 				<div class="panel-body">						
-					
-					<div class="manage-panel">
-						<table id='class-types-table' class="table table-striped table-hover">
-							<tr>
-								<th>Room</th>
-								<th>Description</th>
-							</tr>
-							
-							<tbody>
-	<?php foreach($rooms as $d): ?>
-							
-	<tr  data-room_id="<?php echo $d['room_id'] ?>"> 
-															
-		<td class="room_type"><?php echo $d['room'] ?></td>
-			<td class="room_description"><?php echo $d['description'] ?></td>
-															
-		   </tr>
-							
-	<?php endforeach; ?>
-</tbody>
-		</table>
-					</div>
-					
+
+					<?php echo $d['description'] ?>
+
 				</div>
 			</div>
-      
-	    </div>
+		</div>
+		<?php if($key % 2 != 0) { ?>
+	</div>
+	<?php } ?>
 
-    </div>
+
+
+<?php endforeach; ?>
+
+</div>

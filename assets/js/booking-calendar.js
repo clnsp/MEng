@@ -4,8 +4,8 @@ if($('#booking').is('.admin-calendar')){
   function exists(variable){
    if(typeof variable == 'undefined' || variable == null){
     return false;
-  }
-  return true;
+}
+return true;
 }
 
 var eventModal, eventTitle, eventdate1, eventdate2, eventSpacesMax, eventSpacesTaken, eventColor, eventLocation, eventMembers, eventid;
@@ -25,9 +25,9 @@ $('#booking').on('click', '#event-cancel-class-btn, #event-uncancel-class-btn', 
       callback: function() {
 
       }
-    },
+  },
 
-    success: {
+  success: {
       label: "Confirm",
       className: "btn-danger",
       callback: function() {
@@ -37,23 +37,20 @@ $('#booking').on('click', '#event-cancel-class-btn, #event-uncancel-class-btn', 
           url: "calendar/cancelClass/" + activeEvent.cancelled,
           type: "POST",
           data: { 'class_booking_id':eventid, 'cancel_message':msg },
-          success: function() {
-            if(activeEvent.cancelled)
-              alert('Message sent, class reopened');
-            else
-              alert('Message sent, class cancelled');
+          success: function(result) {
+            alert(result);
 
             $('#calendar').fullCalendar( 'refetchEvents' );
             eventModal.modal('hide');
-          },
-          error: function(){
+        },
+        error: function(){
             alert("Error Occurred");
-          },
-        });
-      }
+        },
+    });
     }
+}
 
-  },
+},
 });
 });
 
@@ -132,6 +129,15 @@ $('#booking').on('click', '#event-cancel-class-btn, #event-uncancel-class-btn', 
 
   }
 
+  /**
+   * Render the room
+   */
+   function disable_buttons(past) {
+    eventModal.find('.btn.disable-past').each(function(){
+      $(this).prop('disabled', past);
+  });
+}
+
 /**
  * Disable/Enable the add member functionality
  */
@@ -186,12 +192,12 @@ $('#calendar').fullCalendar({
 
 	/* cal col headings */
 	columnFormat: {
-    month: 'dddd', 
-    week: 'ddd d', 
-    day: '' 
-  },
+        month: 'dddd', 
+        week: 'ddd d', 
+        day: '' 
+    },
 
-  titleFormat: {
+    titleFormat: {
     	month: 'MMMM yyyy',                             // September 2009
     	week: "MMM d[ yyyy]{ -[ MMM] d, yyyy}", // Sep 7 - 13 2009
     	day: 'dddd d MMMM yyyy'                  // Tuesday, Sep 8, 2009
@@ -209,34 +215,39 @@ $('#calendar').fullCalendar({
     	activeEvent = calEvent;
     	eventid = calEvent.class_id;
     	render_title(calEvent.title);
-    	render_cancelled_banner(calEvent.cancelled);
-    	render_cancel_button(calEvent.cancelled);
-    	disable_cancel_button(calEvent.past);
-    	render_date(calEvent.start, calEvent.end, calEvent.allDay);
-    	render_attendance_numbers(calEvent.attending, calEvent.max_attendance);
-    	render_color(calEvent.color);
-    	render_room(calEvent.room_id, calEvent.room);
-    	load_event_attendants(calEvent.past || calEvent.cancelled);
-    	disable_add_member(calEvent.past || calEvent.cancelled);
+    	if(calEvent.cancelled){
+            eventModal.addClass('cancelled');
+        }else{
+            eventModal.removeClass('cancelled');
+        }
+        render_cancel_button(calEvent.cancelled);
+        disable_cancel_button(calEvent.past);
+        disable_buttons(calEvent.past);
+        render_date(calEvent.start, calEvent.end, calEvent.allDay);
+        render_attendance_numbers(calEvent.attending, calEvent.max_attendance);
+        render_color(calEvent.color);
+        render_room(calEvent.room_id, calEvent.room);
+        load_event_attendants(calEvent.past || calEvent.cancelled);
+        disable_add_member(calEvent.past || calEvent.cancelled);
 
-    	/*setup form*/
-    	eventModal.modal('show');
+        /*setup form*/
+        eventModal.modal('show');
     },
 
     eventRender: function(event, element, view) {
 
-    	if(event.end <  new Date()){
-    		event.past = true;
-    		element.css('opacity', '0.35');
-    	}
-    	else{
-    		event.past = false;
-    	}
-    	event.cancelled = event.cancelled == true;
+     if(event.end <  new Date()){
+      event.past = true;
+      element.css('opacity', '0.35');
+  }
+  else{
+      event.past = false;
+  }
+  event.cancelled = event.cancelled == true;
 
-    	if(event.cancelled){
-    		element.addClass('cancelled');
-    	}
+  if(event.cancelled){
+      element.addClass('cancelled');
+  }
 
 		//fetch the currently selected category ids
 		var categories = [];
@@ -285,9 +296,9 @@ $('#calendar').fullCalendar({
 				}
 
 			},
-      windowResize: function(view) {
-        resizeCalendar();
-      }
+          windowResize: function(view) {
+            resizeCalendar();
+        }
 
     });
 
@@ -300,12 +311,14 @@ $('#calendar .fc-header .fc-header-center').before($('#rooms-dropdown').remove()
  * Render the room
  */
  function render_room(room_id, room) {
- 	if(exists(room_id)){
- 		eventLocation.html('<a href="room/' + room_id + '">' + room + '</a>');
- 	}else{
- 		eventLocation.text(calEvent.room);
- 	}
- }
+  if(exists(room_id)){
+    eventLocation.html('<a href="room/' + room_id + '">' + room + '</a>');
+}else{
+    eventLocation.text(calEvent.room);
+}
+}
+
+
 
 /**
  * Render the category color
@@ -356,18 +369,6 @@ $('#calendar .fc-header .fc-header-center').before($('#rooms-dropdown').remove()
  	eventTitle.text(title); 
  }
  
- /**
- * Add a cancelled banner
- */
- function render_cancelled_banner(render) {
- 	var banner = eventModal.find('#cancelled-banner');
- 	if(render){
- 		banner.removeClass('hidden');
- 	}else{
- 		banner.addClass('hidden');
-
- 	}
- }
  
  /**
  * Render the attendance numbers
@@ -397,12 +398,12 @@ $('#calendar .fc-header .fc-header-center').before($('#rooms-dropdown').remove()
 
       $(this).siblings('.active').each(function(key, val){
         $(val).removeClass('active');
-      });
+    });
 
       $(this).addClass('active');
       $('#calendar').fullCalendar( 'refetchEvents' );
 
-    });
+  });
 
 
   /**
@@ -428,7 +429,7 @@ $('#calendar .fc-header .fc-header-center').before($('#rooms-dropdown').remove()
    function teardown_add_guest_modal() {
     addGuestModal.find('#addGuestForm')[0].reset();
 
-  }
+}
 
 
 /* 
@@ -438,31 +439,40 @@ $('#calendar .fc-header .fc-header-center').before($('#rooms-dropdown').remove()
  	e.preventDefault();
  	var memberinputbox = $(this).find('input#search-users');
  	var mid = memberinputbox.attr('data-member-id');
-  if($('input[value='+ mid +']').exists()){
-    alert('Member already exists in class');
-    return;
-  }
-  if(mid != ''){
-   $.ajax({
-    url: "calendar/addMember",
-    type: "POST",
-    data: { 'member_id': mid, 'class_booking_id':eventid  },
-    success: function(res) {
-      alert(res);
-      memberinputbox.attr('data-member-id', '').val('');
-      load_event_attendants();
+    if(mid == ''){
+        return;
+    }
+    if($('input[value='+ mid +']').exists()){
+        alert('Member already exists in class');
+        return;
+    }
 
+    $.ajax({
+        url: "calendar/addMember",
+        type: "POST",
+        data: { 'member_id': mid, 'class_booking_id':eventid  },
+        success: function(res) {
+          alert(res);
+          memberinputbox.attr('data-member-id', '').val('');
+          load_event_attendants();
+
+      },
+      error: function(data){
+        if(data.status == 305){
+            bootbox.confirm("Class is full would you like to add user to waiting list?", function(result) {
+                if(result){
+                    $.post( siteUrl + 'waiting_list/addWaiting', {  member_id: mid, class_id:eventid })
+                    .done(function( result ) {
+                        alert(result);
+                    });
+                }
+            }); 
+        }
+        
+        memberinputbox.attr('data-member-id', '').val('');
     },
-    error: function(){
-     show_error('User already exists');
-     memberinputbox.attr('data-member-id', '').val('');
+});
 
-
-   },
- });
- }else{
-   show_error('No user selected');
- }
 
 });
 
@@ -509,13 +519,21 @@ $('#calendar .fc-header .fc-header-center').before($('#rooms-dropdown').remove()
  		}
  	},
 
- 	response: function(event, ui) {
- 		if (!ui.content.length) {
- 			var noResult = { value:"",label:noResultsLabel };
- 			ui.content.push(noResult);
- 		}
- 	}
- });
+  search: function( event, ui ) {
+    $('.tooltip').remove();//remove any stuck tooltips
+},
+
+close: function( event, ui ) {
+    $('.tooltip').remove();//remove any stuck tooltips
+},
+
+response: function(event, ui) {
+   if (!ui.content.length) {
+    var noResult = { value:"",label:noResultsLabel };
+    ui.content.push(noResult);
+}
+}
+});
 
  /*override the autocomp dropdown results display*/
  $.ui.autocomplete.prototype._renderMenu = function( ul, items ) {
@@ -550,7 +568,7 @@ $('#calendar .fc-header .fc-header-center').before($('#rooms-dropdown').remove()
   .tooltip({
     'placement': 'left',
     'container': eventModal
-  })
+})
 };
 
 
@@ -582,14 +600,14 @@ $('#btn-view-waiting-list').click(function(){
             label: "Close",
             className: "btn-default",
             callback: function() {  }
-          }
         }
-      });
-    },
-    error: function(){
+    }
+});
+  },
+  error: function(){
      alert('Error occurred');
-   },
- });
+ },
+});
 
 
 
@@ -602,15 +620,16 @@ $('form#addGuestForm').submit(function(e){
     url: "calendar/addGuestToClass/" + eventid,
     type: "POST",
     data:  postdata,
-    success: function() {
+    success: function(result) {
      load_event_attendants(false);
      addGuestModal.modal('hide');
      teardown_add_guest_modal();
-   },
-   error: function(){
+     alert(result);
+ },
+ error: function(){
      alert('Error occurred');
-   },
- });
+ },
+});
 
 
 });

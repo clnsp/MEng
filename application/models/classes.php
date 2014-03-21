@@ -13,7 +13,6 @@ class Classes extends CI_Model{
     private $class_tbl         = 'class_tbl';	
     private $class_type_tbl     = 'class_type_tbl';	
     private $class_info_view    = 'class_info_view';    
-    private $waiting_pool_tbl   = 'waiting_pool_tbl';	
 
     function __construct(){
         parent::__construct();
@@ -139,6 +138,7 @@ class Classes extends CI_Model{
     */
     function getClassTypeIDs(){
         $this->db->select('class_type_id');
+        $this->db->where('is_sport', 0);
         $this->db->from($this -> class_type_tbl);
 
         $query = $this -> db -> get()->result_array();
@@ -170,9 +170,6 @@ class Classes extends CI_Model{
     */
     function insertClass($data){
         $this->db->insert($this -> class_tbl, $data);
-        // echo($this->db->last_query());
-        // echo($this->db->_error_message());
-
         return $this->db->insert_id();
     }
 
@@ -184,7 +181,7 @@ class Classes extends CI_Model{
     */
     function getClassInformation($class_id){
 
-        $this -> db -> select('class_type, class_start_date, class_end_date, room');
+        $this -> db -> select('class_type, class_start_date, class_end_date, room, class_id, max_attendance');
         $this -> db -> from($this -> class_tbl);
         $this -> db -> where('class_id =' . $class_id);
         $this -> db -> join('class_type_tbl', 'class_type_tbl.class_type_id = class_tbl.class_type_id');
@@ -198,7 +195,6 @@ class Classes extends CI_Model{
     /**
     * Insert a new class type
     * @param array
-    * @param string
     */
     function addNewClassType($data){
         $this->db->insert($this -> class_type_tbl, $data);
@@ -260,24 +256,7 @@ class Classes extends CI_Model{
 
     }
 
-    /**
-    * Returns an array of those waiting for a position
-    * @param int
-    * @return array
-    */
-    function getWaiting($class_id){
-        $this -> db -> select('first_name, second_name');
 
-        $this->db->from($this -> waiting_pool_tbl);
-
-        $this->db->join('users', 'users.id = waiting_pool_tbl.member_id');
-        $this->db->where('class_id', $class_id);
-
-        $query = $this -> db -> get();
-        return $query->result_array();
-
-
-    }	
 
     /**
     * Returns an array of classes with type and between two different times
@@ -307,8 +286,8 @@ class Classes extends CI_Model{
 
         $query = $this -> db -> get();
 //		
-        echo($this->db->last_query());
-        echo($this->db->_error_message());
+        // echo($this->db->last_query());
+        // echo($this->db->_error_message());
 
         return $query->result_array();
 
@@ -321,20 +300,20 @@ class Classes extends CI_Model{
     */
     function getFutureClasses($class_type_id) {
 
-       $date = new DateTime();
+     $date = new DateTime();
 
-       $this -> db -> select('class_type, class_start_date, class_end_date, room, class_id');
-       $this -> db -> from($this -> class_tbl);
-       $this -> db -> where('class_type_tbl.class_type_id', $class_type_id);
-       $this -> db -> where('class_start_date >=', $date->format("Y-m-d H:i:s"));
-       $this -> db -> where('class_start_date <=', $date->modify('+1 week')->format("Y-m-d H:i:s"));
-       $this -> db -> join('class_type_tbl', 'class_type_tbl.class_type_id = class_tbl.class_type_id');
-       $this -> db -> join('room_tbl', 'room_tbl.room_id = class_tbl.room_id');
+     $this -> db -> select('class_type, class_start_date, class_end_date, room, class_id');
+     $this -> db -> from($this -> class_tbl);
+     $this -> db -> where('class_type_tbl.class_type_id', $class_type_id);
+     $this -> db -> where('class_start_date >=', $date->format("Y-m-d H:i:s"));
+     $this -> db -> where('class_start_date <=', $date->modify('+1 week')->format("Y-m-d H:i:s"));
+     $this -> db -> join('class_type_tbl', 'class_type_tbl.class_type_id = class_tbl.class_type_id');
+     $this -> db -> join('room_tbl', 'room_tbl.room_id = class_tbl.room_id');
 
-       $query = $this -> db -> get();
+     $query = $this -> db -> get();
 
-       return $query->result_array();
-   }
+     return $query->result_array();
+ }
 
 
 
@@ -469,11 +448,31 @@ class Classes extends CI_Model{
       JOIN class_type_tbl t2 ON t1.class_type_id = t2.class_type_id
       WHERE class_id = ? AND t2.is_sport = '1'";
 
-
       $this->db->query($sql, array($class_id));
   }
 
 
+
+     /**
+     * Fetch classes added by block booking after today
+     * @return array
+     */
+     function getBlockBookingDates($bid){
+        $now = new DateTime();
+        $now = $now->format('Y-m-d');
+
+        $this->db->select('Date(class_start_date) as class_start_date', false);
+        $this->db->where('block_booking_id', $bid);
+        $this->db->where("class_start_date > $now");
+
+        $this -> db -> from($this->class_tbl);
+        $query = $this -> db -> get();
+
+      //  echo $this->db->last_query();
+        echo $this->db->_error_message();
+
+        return $query->result_array();
+    }
 
 }
 

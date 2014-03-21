@@ -19,12 +19,20 @@ $( document ).ready(function() {
 
 	
 	$('#booking').on('submit', 'form.prevent.classes', function(e) {
-		var table = $('table.footable.table.classes tbody');
-		$('table.footable.table.classes').removeClass('hidden');
+		var table = $('table.footable.table.classes');
+		var tbody = table.find('tbody');
+		table.removeClass('hidden');
+		var footable = table.data('footable');
 
 		$.post(siteUrl + "/booking/search", $(this).serialize(), function( data ) {
-			table.html(data);
+			tbody.html(data);
 			table.trigger('footable_redraw');
+			table.trigger('footable_resize');
+			
+			table.footable().trigger('footable_redraw');
+			$('html, body').animate({
+				scrollTop: table.offset().top
+			}, 2000);
 		});
 
 	});

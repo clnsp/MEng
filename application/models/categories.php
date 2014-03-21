@@ -35,8 +35,7 @@ Class Categories extends CI_Model{
 	 * @param	string - hex value
 	 */
 	function setColor($category_id, $color){
-		echo ('updating ' + $category_id + ' ' + $color);
-		
+	
 		$this->db->where('category_id', $category_id);
 		$this->db->update($this -> category_tbl, array('color' => $color)); 
 

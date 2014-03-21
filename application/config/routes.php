@@ -45,6 +45,7 @@ $route['auth/(:any)'] = 'auth/$1';
 $route['login'] = 'auth/login';
 $route['logout'] = 'auth/logout';
 $route['register'] = 'auth/register';
+$route['ask_register'] = 'auth/ask_register';
 $route['404_override'] = 'pages/view/page-not-found';
 $route['users'] = 'pages/users';
 $route['rooms'] = 'pages/rooms';
@@ -54,6 +55,7 @@ $route['links'] = 'pages/links';
 //$route['pages/admin/'] = 'pages/users';
 
 $route['member'] = 'member';
+$route['registration'] = 'pages/registration';
 
 $route['updateClasses'] = 'pages/updateClasses';
 $route['users_fetch'] = 'users_fetch';
@@ -61,6 +63,7 @@ $route['booking/(:any)'] = 'booking/$1';
 $route['mybookings'] = 'pages/mybookings';
 $route['room/(:any)'] = 'pages/room/$1';
 $route['room/getRoomIDs'] = 'room/getRoomIDs';
+$route['cancelbooking'] = 'pages/cancelBooking';
 $route['manage'] = 'pages/manage';
 $route['manage-sports-hall'] = 'pages/view/manage-sports-hall';
 $route['admin-calendar'] = 'pages/admin_calendar';

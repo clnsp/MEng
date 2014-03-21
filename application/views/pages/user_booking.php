@@ -97,17 +97,17 @@ $js = 'class="form-control"';
 				</div>
 
 				<div class="form-group">
-					<label for="date">Date</label>
+					<label class="visible-xs" for="date">Date</label>
 					<?php echo form_input($date); ?>
 				</div>
 
 				<div class="form-group">
-					<label for="starttime">Start</label>
+					<label class="visible-xs" class="hidden-xs" for="starttime">Start</label>
 					<?php echo form_input($starttime); ?>
 				</div>
 
 				<div class="form-group">
-					<label for="endtime">Time</label>
+					<label class="visible-xs" for="endtime">Time</label>
 					<?php echo form_input($endtime); ?>
 				</div>
 
@@ -124,7 +124,7 @@ $js = 'class="form-control"';
 
 	<div class="col-sm-9">
 
-		<table class="footable table table table-striped table-hover table-bordered classes hidden">
+		<table class="footable table table-striped table-hover table-bordered classes hidden">
 			<thead>
 				<tr>
 					<th>Activity</th>
@@ -132,7 +132,7 @@ $js = 'class="form-control"';
 					<th data-hide="" data-type="time">Start</th>
 					<th data-hide="phone" data-type="time">End</th>
 					<th data-hide="phone">Room</th>
-					<th data-sort-ignore="true">Book</th>
+					<th data-hide="phone" data-sort-ignore="true">Book</th>
 				</tr>
 			</thead>
 

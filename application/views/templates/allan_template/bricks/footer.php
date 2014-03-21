@@ -24,7 +24,6 @@ if(!$this->tank_auth->is_admin()){ ?>
      <?php if($page_title=="home"){ ?>
      <script src="<?php echo base_url();?>assets/js/up-coming.js"></script>
      <?php }?>
-     <!-- COLIN TEST FIX-->
      <script src="<?php echo base_url();?>assets/js/jquery-ui.custom.min.js"></script>
 
      <script type="text/javascript" src="<?php echo base_url();?>assets/js/jquery.ui.core.js"></script>
@@ -36,6 +35,10 @@ if(!$this->tank_auth->is_admin()){ ?>
      <script src="<?php echo base_url();?>assets/datatab/js/DT_bootstrap.min.js"></script>
      <script src="<?php echo base_url();?>assets/datatab/js/user_custom.js"></script>
      <?php }?>
+
+<?php if($page_title=="DS Registeration"){?>
+  <script src="<?php echo base_url();?>assets/js/ds_registration.js"></script>
+<?php }?>
 
      <script src="<?php echo base_url();?>assets/js/jquery-ui-autocomplete.custom.min.js"></script>
      <script src="<?php echo base_url();?>assets/cal/fullcalendar.min.js"></script>

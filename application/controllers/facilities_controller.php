@@ -71,18 +71,18 @@ class facilities_controller extends CI_Controller {
 
     }
 
-/**
-* Creation or modification of a single court
-*/
-function _singleDivision(){
+    /**
+    * Creation or modification of a single court
+    */
+    function _singleDivision(){
 
-    if($this->rooms->isDivisible($_POST['room_id'])){
-        $this->rooms->removeDivisibleRoom($_POST['room_id']);
-        echo "Room restored to a <b>non divisible</b> room.";
-    }else{
-        echo "Cannot divide a room with one division";
+        if($this->rooms->isDivisible($_POST['room_id'])){
+            $this->rooms->removeDivisibleRoom($_POST['room_id']);
+            echo "Room restored to a <b>non divisible</b> room.";
+        }else{
+            echo "Cannot divide a room with one division";
+        }
     }
-}
 
 }  
 ?>
