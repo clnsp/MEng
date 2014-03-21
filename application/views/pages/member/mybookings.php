@@ -44,10 +44,10 @@
 									<td data-value="<?php echo $startDate->getTimestamp();?>"class="start_date"><?php echo $startDate->format('jS F Y') ?></td>
 									<td data-value="<?php echo $startDate->getTimestamp();?>" class="start_time"><?php echo $startDate->format('h.i A') ?></td>
 									<td data-value="<?php echo $endDate->getTimestamp();?>" class="end_time"><?php echo $endDate->format('h.i A') ?></td>
-									<td class="class_id">
+									<td class="cancel">
 
 										<?php 
-										echo form_open("/cancelbooking", $form, $hidden);
+										echo form_open(site_url(). "/booking/cancelBooking", $form, $hidden);
 										echo form_submit('cancelBooking', 'Cancel Booking', "class='cancelbooking btn btn-sm btn-default btn-danger'");	
 										echo form_close(); 
 										?>

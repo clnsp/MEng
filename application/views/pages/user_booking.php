@@ -136,14 +136,9 @@ $js = 'class="form-control"';
 				</tr>
 			</thead>
 
-			<tbody>
-<!-- 	<td>Start</td>
-		<td>end</td>
-		<td>room</td>
-		<td>book</td> -->
-	</tbody>
-</table>
+			<tbody></tbody>
+		</table>
 
-</div>
+	</div>
 
 </div>

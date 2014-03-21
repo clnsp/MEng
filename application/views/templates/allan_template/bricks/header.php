@@ -113,10 +113,6 @@
 
 
           <ul class="nav navbar-nav navbar-right">
-
-
-
-
           </div>
 
         </div><!--/.nav-collapse -->
