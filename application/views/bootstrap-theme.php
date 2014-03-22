@@ -1052,3 +1052,11 @@ html.mobile #booking.user_booking #search-panel select{
 #booking.users table#member tbody tr{
 	cursor: pointer;
 }
+
+#booking .btn-group.input-radio-group input[type=radio]{
+	display:none;
+}
+
+#booking .btn-group.input-radio-group.btn-group-vertical{
+	width:100%;
+}

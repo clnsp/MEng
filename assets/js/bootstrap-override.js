@@ -327,7 +327,7 @@
 
 
 
- var Rooms = function() {
+ var Rooms = new function() {
 
  	var urlBase, drop;
  	
@@ -375,11 +375,11 @@
  	init();
 
  };
- var rooms = new Rooms();
 
 
 
- var DivisibleRooms = function() {
+
+ var DivisibleRooms = new function() {
 
  	var drop, urlBase;
  	
@@ -425,7 +425,7 @@
  	
  };
 
- var divisiblerooms = new DivisibleRooms();
+
 
  /* responsive tables */
  
@@ -459,6 +459,19 @@
 
  	})
  }
+ 
 
+
+
+ var InputRadioGroup = new function(){
+ 	
+ 	$('html.mobile .btn-group.input-radio-group').addClass('btn-group-vertical');
+ 	 
+ 	$('#booking').on('click', '.btn-group.input-radio-group button', function() {
+ 		$(this).find('input[type=radio]').prop('checked', true);
+ 		$(this).siblings('.active').removeClass('active');
+ 		$(this).addClass('active');
+ 	});
+ }
 
 
