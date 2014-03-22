@@ -569,30 +569,6 @@ html.mobile #footer{
 	padding: 1px 10px;
 }
 
-/* @group Sub Modal */
-
-.modal.submodal{
-	width: 50%!important;
-	margin-left: auto;
-	margin-right: auto;
-	overflow: hidden;
-	outline-color: transparent!important;
-	outline:none;
-	z-index: 1051!important;
-}
-
-.modal.submodal .modal-dialog{
-	width: 95%;
-}
-
-.modal.submodal .modal-content{
-	border-top-left-radius: 0;
-	border-top-right-radius: 0;
-
-}
-
-/* @end */
-
 /* @group Attendance/Home*/
 #booking.home #category-dropdown{
 	display: inline-block;

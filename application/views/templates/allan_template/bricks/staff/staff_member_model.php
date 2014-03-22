@@ -13,7 +13,7 @@
 
                 <div class="panel panel-default col-lg-6" style="padding:0px;">
                     <div class="panel-heading">
-                        <h3 class="panel-title views">Account Details <i class="fa fa-pencil fa-fw pull-right"></i></h3>
+                        <h3 class="panel-title views">Account Details <i class="glyphicon glyphicon-pencil pull-right"></i></h3>
                     </div>
                     <div class="panel-body">
                         <!--LEFT-->
@@ -44,7 +44,7 @@
                 </div>
                 <div class="panel panel-default col-lg-6" style="padding:0px;">
                     <div class="panel-heading">
-                        <h3 class="panel-title views">Contact Details <i class="fa fa-pencil fa-fw pull-right"></i></h3>
+                        <h3 class="panel-title views">Contact Details <i class="glyphicon glyphicon-pencil pull-right"></i></h3>
                     </div>
                     <div class="panel-body">
                         <!--LEFT-->
@@ -80,23 +80,23 @@
                         <!-- LEFT-->
                         <!-- Single button -->
                         <button type="button" id="contact" class="btn btn-info btn-sm" href="#SubMemberDetails" data-target="#SubMemberDetails" data-toggle="modal">
-                            <i class="fa fa-user fa-fw"></i> Contact </span>
+                            <i class="glyphicon glyphicon-user"></i> Contact </span>
                         </button>
                         <!-- Single button -->
                         <button type="button" id="attendance"class="btn btn-warning btn-sm" href="#SubMemberDetails" data-target="#SubMemberDetails" data-toggle="modal">
-                            <i class="fa fa-search"></i> Attendance</span>
+                            <i class="glyphicon glyphicon-search"></i> Attendance</span>
                         </button>
                         <!-- Single button -->
                         <div class="btn-group">
                             <button type="button" class="btn btn-danger btn-sm dropdown-toggle" data-toggle="dropdown">
-                                <i class="fa fa-cogs"></i>  Options <span class="caret"></span>
+                                <i class="glyphicon glyphicon-cog"></i>  Options <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu" role="menu">
-                                <li class="membership"><a href="#SubMemberDetails" data-target="#SubMemberDetails" data-toggle="modal"><i class="fa fa-users"></i>  Update Membership</a></li>
+                                <li class="membership"><a href="#SubMemberDetails" data-target="#SubMemberDetails" data-toggle="modal"><i class="glyphicon glyphicon-bookmark"></i>  Update Membership</a></li>
                                 <li class="divider"></li>
-                                <li class="status"><a href="#SubMemberDetails" data-target="#SubMemberDetails" data-toggle="modal"><i class="fa fa-ban fa-fw"></i>  Change Status</a></li>
+                                <li class="status"><a href="#SubMemberDetails" data-target="#SubMemberDetails" data-toggle="modal"><i class="glyphicon glyphicon-ban-circle"></i>  Change Status</a></li>
                                 <li class="divider"></li>
-                                <li class="delete"><a href="#SubMemberDetails" data-target="#SubMemberDetails" data-toggle="modal"><i class="fa fa-trash-o fa-fw"></i>  Delete</a></li>
+                                <li class="delete"><a href="#SubMemberDetails" data-target="#SubMemberDetails" data-toggle="modal"><i class="glyphicon glyphicon-trash"></i>  Delete</a></li>
                             </ul>
                         </div>
                     </div>
