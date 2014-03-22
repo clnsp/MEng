@@ -91,7 +91,7 @@ class booking extends CI_Controller{
 	 * Book user into a sport
 	 */
 	function bookSport() {
-
+if(check_member()){
 		/*! need to check that you're allowed to make booking !*/
 		if(isset($_POST['class_type_id']) && isset($_POST['start']) && isset($_POST['end'])){
 
@@ -116,13 +116,16 @@ class booking extends CI_Controller{
 			}
 		}
 	}
+	}
 
 
 	/**
 	 * Index page for user booking
 	 **/
 	function index() {
-		parse_temp('user_booking', $this->load->view('pages/user_booking', setupClassSearchForm(), true));
+		if(check_member()){
+			parse_temp('user_booking', $this->load->view('pages/user_booking', setupClassSearchForm(), true));
+		}
 	}
 
 
@@ -199,6 +202,7 @@ class booking extends CI_Controller{
 	* Retrieves search results according to search parameters
 	*/
 	function search(){
+	if(check_member()){
 		$this->config->load('gym_settings');
 
 		$user_id = $this->tank_auth->get_user_id();
@@ -260,6 +264,7 @@ class booking extends CI_Controller{
 
 		echo ($this->load->view('pages/search_results', $data, true));
 
+	}
 	}
 
 	/**
