@@ -52,13 +52,13 @@ $captcha = array(
 					<?php echo form_error($login['name']); ?><?php echo isset($errors[$login['name']])?$errors[$login['name']]:''; ?>
 
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-envelope-o fa-fw"></i></span>
+						<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
 						<?php echo form_input($login); ?>
 					</div>
 
 
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>
+						<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
 						<?php echo form_password($password); ?>
 
 					</div>

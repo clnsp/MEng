@@ -11,7 +11,8 @@
 
   <link rel="shortcut icon" href="<?php echo base_url();?>assets/img/favicon">
   <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
-  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+<!--  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">-->
+
   <link rel="stylesheet" class="bootstraptheme" href="<?php echo base_url();?>index.php/bootstraptheme">
   <link rel="stylesheet" href="<?php echo base_url();?>assets/css/bootstrap.submodal.css">
   <link rel="stylesheet" href="<?php echo base_url();?>assets/css/jquery-ui-autocomplete.custom.min.css">
@@ -99,8 +100,12 @@
              <?php
              if($logged_in){ 
               if(isset($user)){
-                if($user){ $this->load->view('templates/allan_template/bricks/staff/staff_header_menu'); }
-                else if(!$user) { $this->load->view('templates/allan_template/bricks/student/student_header_menu'); }
+                if($user){ 
+                  $this->load->view('templates/allan_template/bricks/staff/staff_header_menu'); 
+                }
+                else if(!$user) { 
+                  $this->load->view('templates/allan_template/bricks/student/student_header_menu');
+                }
               }
             }
 
@@ -109,10 +114,6 @@
 
 
           <ul class="nav navbar-nav navbar-right">
-
-
-
-
           </div>
 
         </div><!--/.nav-collapse -->
@@ -125,14 +126,14 @@
             <li>
               <a href="#">
                 <div class="input-group margin-bottom-sm">
-                  <span class="input-group-addon"><i class="fa fa-envelope-o fa-fw"></i></span>
+                  <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
                   <input class="form-control" type="text" placeholder="Email address">
                 </div>
               </a>
             </li>
 
             <li><a href="#"><div class="input-group">
-              <span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>
+              <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
               <input class="form-control" type="password" placeholder="Password">
             </div></a></li>
             <li><a href="#">Login</a></li>

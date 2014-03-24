@@ -163,11 +163,20 @@ h2.gtime {
 
 }
 
+@media (max-width:768px) {
+
+#booking .navbar .navbar-form{
+  margin-top: 0px;
+}
+
+
+}
+
+
 #booking .navbar .navbar-form{
   border: 0px;
   box-shadow: none;
   -webkit-box-shadow:none;
-  margin-top:0px;
   margin-bottom:0px;
   margin-right:10px;
 }

@@ -525,6 +525,7 @@ html, body, #booking {
 	height: 100%;
 	/* Negative indent footer by it's height */
 	margin: 0 auto -155px;
+	overflow-y: auto;
 }
 
 html.desktop #booking.user #page-wrapper:after,
@@ -567,30 +568,6 @@ html.mobile #footer{
 #booking .navbar-brand{
 	padding: 1px 10px;
 }
-
-/* @group Sub Modal */
-
-.modal.submodal{
-	width: 50%!important;
-	margin-left: auto;
-	margin-right: auto;
-	overflow: hidden;
-	outline-color: transparent!important;
-	outline:none;
-	z-index: 1051!important;
-}
-
-.modal.submodal .modal-dialog{
-	width: 95%;
-}
-
-.modal.submodal .modal-content{
-	border-top-left-radius: 0;
-	border-top-right-radius: 0;
-
-}
-
-/* @end */
 
 /* @group Attendance/Home*/
 #booking.home #category-dropdown{
@@ -1050,4 +1027,12 @@ html.mobile #booking.user_booking #search-panel select{
 
 #booking.users table#member tbody tr{
 	cursor: pointer;
+}
+
+#booking .btn-group.input-radio-group input[type=radio]{
+	display:none;
+}
+
+#booking .btn-group.input-radio-group.btn-group-vertical{
+	width:100%;
 }

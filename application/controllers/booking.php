@@ -7,6 +7,7 @@ class booking extends CI_Controller{
 		parent::__construct();
 		
 		$this->load->Model('classes');
+		$this->load->Model('bookings');
 		$this->load->Helper('book');
 
 	}
@@ -19,7 +20,6 @@ class booking extends CI_Controller{
 		if(check_member()){
 
 			if(isset($_POST['classid'])){
-				$this->load->model('bookings');
 
 				$user_id = $this->tank_auth->get_user_id();
 				$classInfo = $this->classes->getClassInformation($_POST['classid']);
@@ -46,7 +46,6 @@ class booking extends CI_Controller{
 	* @param int
 	*/
 	function _addMember($classid, $user_id, $classInfo){
-		$this->load->model('bookings');
 
 		$m = $user_id;
 		$b = $classid;
@@ -92,8 +91,7 @@ class booking extends CI_Controller{
 	 * Book user into a sport
 	 */
 	function bookSport() {
-		$this->load->model('bookings');
-
+if(check_member()){
 		/*! need to check that you're allowed to make booking !*/
 		if(isset($_POST['class_type_id']) && isset($_POST['start']) && isset($_POST['end'])){
 
@@ -118,13 +116,16 @@ class booking extends CI_Controller{
 			}
 		}
 	}
+	}
 
 
 	/**
 	 * Index page for user booking
 	 **/
 	function index() {
-		parse_temp('user_booking', $this->load->view('pages/user_booking', setupClassSearchForm(), true));
+		if(check_member()){
+			parse_temp('user_booking', $this->load->view('pages/user_booking', setupClassSearchForm(), true));
+		}
 	}
 
 
@@ -159,7 +160,6 @@ class booking extends CI_Controller{
 	*/
 	function joinWaiting(){
 		if(check_member()){
-			$this->load->model('bookings');
 			$this->load->model('waiting');
 
 			/* class confirm */
@@ -202,6 +202,7 @@ class booking extends CI_Controller{
 	* Retrieves search results according to search parameters
 	*/
 	function search(){
+	if(check_member()){
 		$this->config->load('gym_settings');
 
 		$user_id = $this->tank_auth->get_user_id();
@@ -220,6 +221,13 @@ class booking extends CI_Controller{
 		}else{
 			$start_date = new DateTime($_POST['date']);
 			$end_date = new DateTime($_POST['date']);
+
+			$today = new DateTime();
+			if($start_date > $today->modify($this->config->item('class_booking_window'))){
+				echo "<td colspan='6'><b>Classes can only be booked a day in advance</b></td>";
+				return;
+			}
+			
 		}
 
 		$end_date = $end_date->format("Y-m-d");
@@ -256,6 +264,7 @@ class booking extends CI_Controller{
 
 		echo ($this->load->view('pages/search_results', $data, true));
 
+	}
 	}
 
 	/**
@@ -369,7 +378,79 @@ class booking extends CI_Controller{
 	}
 
 
+	/**
+	 * Cancel a booking
+	 */
+	function cancelBooking(){
+
+		if(check_member()){
 
 
+			if(isset($_POST['class_booking_id'])){
+
+				$class_booking_id = $_POST['class_booking_id'];
+				$member_id = $this->tank_auth->get_user_id();
+
+
+				$this->bookings->removeMember($class_booking_id, $member_id);
+				$this->classes->removeSportClass($class_booking_id); //if class is a sport need to remove the class as well
+
+			}
+			$this->mybookings();
+		}
+
+	}
+
+	/**
+	 * User Past Bookings List
+	 */
+	public function mybookings(){
+
+		if(check_member()){
+
+			$member_id = $this->tank_auth->get_user_id();
+
+			$this->load->Model($page = 'bookings');
+
+			$data['bookings'] = $this->bookings->getClassBookingByMember($member_id);
+			$data['bookingsPast'] = $this->bookings->getClassBookingByMember($member_id);
+			$data['bookingMember'] = $member_id;
+
+			$rowCount = 0;
+			$rowCounter = 0;
+
+			foreach ($data['bookings'] as $row){
+
+				$end = $row['end'];
+
+				if(time() > strtotime($end)){
+
+					unset($data['bookings'][$rowCount]);				
+
+				}
+
+				$rowCount++;			
+
+			}
+
+			foreach ($data['bookingsPast'] as $row){
+
+				$end = $row['end'];
+
+				if(time() < strtotime($end)){
+
+					unset($data['bookingsPast'][$rowCounter]);				
+
+				}
+
+				$rowCounter++;			
+
+			}
+
+			parse_temp($page, $this->load->view('pages/member/mybookings', $data, true));
+
+		}
+
+	}
 }
 ?>

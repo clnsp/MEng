@@ -142,15 +142,19 @@ $form = array(
 		
 		<div class="form-group">
 			<?php echo form_label('User *', $user_type['id'], $label); ?>
-			<div class="col-sm-10">
-				<?php echo form_radio($radio_affiliate) . " Affiliate   " ; echo  form_radio($radio_affiliate_spouse) . "Spouse / Partner of Affiliate   ";?>
+			<div class="col-sm-10 input-radio-group btn-group">
+				<button class="btn btn-default" type="button"><?php echo form_radio($radio_affiliate)  ;?>Affiliate</button>
+				<button class="btn btn-default" type="button"><?php echo  form_radio($radio_affiliate_spouse); ?>Spouse / Partner of Affiliate</button>
 			</div>
 		</div>
 		
 		<div class="form-group">
 			<?php echo form_label('Affiliate  Type *', $user_type['id'], $label); ?>
-			<div class="col-sm-10">
-				<?php echo form_radio($radio_associate) . " Associate   " ; echo  form_radio($radio_retired_staff) . " Retired Staff    "; echo form_radio($radio_external_student) . " External Student    " ; echo  form_radio($radio_graduate) . " Graduate   ";?>
+			<div class="col-sm-10 input-radio-group btn-group">
+				<button class="btn btn-default" type="button"><?php echo form_radio($radio_associate); ?>Associate</button>
+				<button class="btn btn-default" type="button"><?php echo form_radio($radio_retired_staff)  ;?>Retired Staff</button>
+				<button class="btn btn-default" type="button"><?php echo form_radio($radio_external_student);?>External Student</button>
+				<button class="btn btn-default" type="button"><?php echo form_radio($radio_graduate);?>Graduate</button>
 			</div>
 		</div>
 		

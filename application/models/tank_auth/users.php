@@ -158,10 +158,6 @@ class Users extends CI_Model
 	 */
 	function create_user($data, $activated = TRUE)
 	{
-<<<<<<< HEAD
-					echo($data);
-=======
->>>>>>> d5adf8b12887a3fdafa5170fac7aa4ab73542b3f
 		$data['created'] = date('Y-m-d H:i:s');
 		$data['activated'] = $activated ? 1 : 0;
 

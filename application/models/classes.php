@@ -441,7 +441,7 @@ class Classes extends CI_Model{
     
     /**
     * Remove a class if it is a sport
-    * @int 
+    * @param int 
     */
     function removeSportClass($class_id) {
       $sql = "DELETE t1 FROM class_tbl t1
