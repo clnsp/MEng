@@ -92,28 +92,28 @@ $radio_student = array(
     'name'        => 'member_type',
     'id'          => 'student-radio',
     'value'       => '1',
-    'checked'     => set_radio('member_type', '1'),
+    'checked'     => set_radio('member_type', 1),
 );
 
 $radio_staff = array(
     'name'        => 'member_type',
     'id'          => 'staff-radio',
     'value'       => '2',
-    'checked'     => set_radio('member_type', '2'),
+    'checked'     => set_radio('member_type', 2),
 );
 
 $radio_student_partner = array(
     'name'        => 'member_type',
-    'id'          => 'student-radio',
+    'id'          => 'student-partner-radio',
     'value'       => '3',
-    'checked'     => set_radio('member_type', '3'),
+    'checked'     => set_radio('member_type', 3),
 );
 
 $radio_staff_partner = array(
     'name'        => 'member_type',
-    'id'          => 'staff-radio',
+    'id'          => 'staff-partner-radio',
     'value'       => '4',
-    'checked'     => set_radio('member_type', '4'),
+    'checked'     => set_radio('member_type', 4),
 );
 
 	
