@@ -134,7 +134,7 @@ $form = array(
 	?>	
 
 	<h1>Registration</h1>
-	<p>Lorem ipsum dolor sit amet, feugiat apeirian contentiones ut ius, ius probatus rationibus repudiandae ad. Ad sed vero periculis. An posse delectus philosophia vel. Ne ius pertinax consectetuer, eam ex mundi aeterno dissentiunt. Saepe ancillae assueverit vis et, eam rebum delenit deterruisset cu.</p>
+	<p>Lets register you as a member. <br/> Fields marked with * are required.</p>
 	<div class="well well-lg  div-center">
 		<?php echo form_open($this->uri->uri_string(), $form); ?>
 		<div class="form-group">
