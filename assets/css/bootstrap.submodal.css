@@ -1,4 +1,4 @@
-.sub-modal{
+/*.sub-modal{
     position: absolute;
     top: 0;
     width: 97%;
@@ -27,25 +27,27 @@
 
 .sub-modal .modal-body{
 
-}
+}*/
 
 
-.sub-modal-backdrop{
+/*.sub-modal-backdrop{
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
 	z-index: 3;
-}
+}*/
+
+
 .modal-header{
     border-color: #ccc;
 }
-@media (max-width:767px){
+/*@media (max-width:767px){
     .sub-modal{
         left: 5%;    
     }
-}
+}*/
 
 .modal.submodal{
 	width: 50%!important;
