@@ -108,7 +108,18 @@ $js = 'class="form-control"';
 		<div class="form-group">
 		<?php echo form_label('Communication', $comms_preference['id'], $label); ?>
 			<div class="col-sm-10">
-				<?php echo form_dropdown('comms_preference', $prefs, $member -> comms_preference, $js); ?>
+				<?php
+					foreach ($comm_prefs as $p) {
+						$data = array(
+    						'name'        => 'new_preferences[]',
+    						'id'          => 'new_preferences[]',
+    						'value'       => $p->id,
+    						'checked'     => TRUE,
+    					);
+    					echo form_checkbox($data);
+    					echo form_label($p->comms_preference); ?> <br>
+    					<?php
+					} ?>
 			</div>
 		</div>
 
