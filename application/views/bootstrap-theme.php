@@ -602,6 +602,14 @@ html.mobile #footer{
 	cursor: pointer;
 }
 
+#booking.home .class-panel table tr.class-member input[type=checkbox] {
+	visibility: hidden;
+}
+
+#booking.home .class-panel table tr.class-member input[type=checkbox]:checked {
+	visibility: visible!important;
+}
+
 
 #booking.home .class-panel .panel-heading .duration{
 	font-weight: bold;
