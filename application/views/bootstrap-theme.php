@@ -593,6 +593,9 @@ html.mobile #footer{
 	text-align: right;
 }
 
+#booking.home .class-panel .panel-heading {
+	text-shadow: 1px 1px rgba(0, 0, 0, 0.5);
+}
 
 #booking.home .class-panel .panel-heading .duration{
 	font-weight: bold;
@@ -716,7 +719,7 @@ i.square{
 }
 
 #booking .navbar .dropdown-menu::after {
-<!-- 	position: absolute;
+	<!-- 	position: absolute;
 	top: -6px;
 	right: 20px;
 	display: inline-block;
@@ -840,7 +843,7 @@ border: 2px solid #000;
 }
 
 #booking .modal.cancelled .modal-content
- {
+{
 	background-color: #505050;
 
 }

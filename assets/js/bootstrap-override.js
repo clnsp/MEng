@@ -379,7 +379,7 @@
 
 
 
- var DivisibleRooms = new function() {
+ var divisiblerooms = new function() {
 
  	var drop, urlBase;
  	
