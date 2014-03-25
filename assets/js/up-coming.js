@@ -64,6 +64,7 @@ $.pageManager = (function () {
 		if($row.hasClass('success')){$attend=0;} else{$attend=1;}
 		$.post('index.php/member/updateAttendance', { pid:$row.attr('id'),cid: $row.closest("div.panel").attr('id'), at: $attend}, function (data) {
 			$row.toggleClass('success');
+			$row.find('input').prop('checked', $attend);
 		});	
 	},
 	

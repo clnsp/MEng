@@ -25,7 +25,8 @@
             <th>First</th>
             <th>Last</th>
             <th class="visible-print">Email</th>
-            <th class="visible-print">Attended?</th>
+            <th class="visible-print">Attended</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -36,6 +37,7 @@
             <td><?php echo ucfirst($attendee->second_name); ?></td>
             <td class="visible-print"><?php echo strtolower($attendee->email); ?></td>
             <td class="visible-print"></td>
+            <td class=""><input type="checkbox" name="" value=""<?php  if($attendee->attended == 1){echo ('checked');}?>/></td>
           </tr>
           <?php $i++; }?>
         </tbody>
