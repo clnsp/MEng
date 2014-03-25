@@ -48,7 +48,7 @@
 
 										<?php 
 										echo form_open(site_url(). "/booking/cancelBooking", $form, $hidden);
-										echo form_submit('cancelBooking', 'Cancel Booking', "class='cancelbooking btn btn-sm btn-default btn-danger'");	
+										echo form_submit('cancelBooking', 'Cancel Booking', "class='cancelbooking btn btn-sm btn-danger'");	
 										echo form_close(); 
 										?>
 
