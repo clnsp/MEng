@@ -107,6 +107,14 @@
 				parse_temp($page, $this->load->view($this->route.$page, $data, true));
 			}
 		}
+		
+		public function registration($page = 'registration'){
+			if(check_admin()){
+				$this->load->Model('members');
+				$data['users']= $this->members->getRegistrations();
+				parse_temp($page, $this->load->view($this->route.$page, $data, true));
+			}		
+		}
 
 
 		/**

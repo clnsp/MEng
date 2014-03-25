@@ -49,7 +49,7 @@ $config['sms_txtlocal_hash'] = '644803d2f1c4678d8dc453eb437ac7a95d4269dc';
 | These details are used allowing and sending Tweets
 |--------------------------------------------------------------------------
 */
-$config['twitter_allow'] = FALSE;
+$config['twitter_allow'] = TRUE;
 $config['twitter_username']	="mengers2013";
 $config['twitter_consumerKey']       = '9uo6ym4fGqUzJj1CJignUQ';
 $config['twitter_consumerSecret']    = 'qFuZChnvmJSwcZwynm5bQGeeY6awxLdBKkXovOLT0';

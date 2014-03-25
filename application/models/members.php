@@ -27,7 +27,8 @@ class Members extends CI_Model
     $this -> db -> from($this -> table_name);
     $this->db->join('member_type_tbl', $this->table_name.'.member_type_id = member_type_tbl.id');
     $this->db->join('membership_type_tbl', $this->table_name.'.membership_type_id = membership_type_tbl.id');
-    
+    $this->db->where('verified',1);
+	
     $query = $this->db->get();
     return $query -> result();
   }
@@ -99,6 +100,16 @@ class Members extends CI_Model
 
    return $this->db->get()->row()->email;
 
+ }
+ 
+ function getRegistrations(){
+	$this->db->select($this->table_name.'.id,username,first_name,second_name,email,activated,banned,type,created'); 
+	$this -> db -> from($this -> table_name);
+    $this->db->join('member_type_tbl', $this->table_name.'.member_type_id = member_type_tbl.id');
+    $this->db->join('membership_type_tbl', $this->table_name.'.membership_type_id = membership_type_tbl.id');
+	$this->db->where('verified',0);
+    $query = $this->db->get();
+    return $query -> result();
  }
 
 

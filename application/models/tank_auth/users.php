@@ -106,6 +106,10 @@ class Users extends CI_Model
 	 */
 	function is_username_available($username)
 	{
+		if($username=""){ // Users without DS Accounts
+			return true;
+		}
+		
 		$this->db->select('1', FALSE);
 		$this->db->where('LOWER(username)=', strtolower($username));
 
@@ -160,7 +164,7 @@ class Users extends CI_Model
 	{
 		$data['created'] = date('Y-m-d H:i:s');
 		$data['activated'] = $activated ? 1 : 0;
-
+		
 		if ($this->db->insert($this->table_name, $data)) {
 			$user_id = $this->db->insert_id();
 			if ($activated)	$this->create_profile($user_id);
