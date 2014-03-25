@@ -19,20 +19,20 @@ class Calendar extends CI_Controller{
         $this->load->model('members');
 
         if (isset($_GET['term'])){
-          $q = strtolower($_GET['term']);
-          $terms = explode(" ", $q);
-
-          $matched = array();
-          foreach($terms as $term){
-            if($term==''){
-              continue;
+          $matched = $this->members->getUserLike($_GET['term'])->result_array();
+          
+          function my_sort($a,$b){
+          		
+              $leva = levenshtein($_GET['term'], $a['name']);
+         	  $levb = levenshtein($_GET['term'], $b['name']);
+              
+          if ($leva==$levb) return 0;
+      
+          return ($leva<$levb)?-1:1;
           }
-          $query = $this->members->getUserLike($term)->result_array();
-          $matched = array_merge($matched, $query);
-      }
-
-      $matched = array_unique($matched, SORT_REGULAR);
-
+         
+          usort($matched,"my_sort");
+        
       foreach ($matched as $match){
         $new_row['label']=htmlentities(stripslashes($match['name']));
         $new_row['user_id']=htmlentities(stripslashes($match['id']));

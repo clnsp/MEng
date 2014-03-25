@@ -57,7 +57,8 @@ class Members extends CI_Model
    $this -> db -> select("id, email, CONCAT_WS(' ', first_name, second_name) AS name", FALSE);
 
    $term = strtolower($q);
-   $this->db->where("(LOWER(first_name) LIKE '%{$q}%' OR LOWER(second_name) LIKE '%{$q}%')");
+   
+   $this->db->where("LOWER(CONCAT_WS(' ', first_name, second_name)) LIKE '%{$q}%'");
    $query = $this -> db -> get($this -> table_name);
 
    return $query;
