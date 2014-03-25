@@ -10,7 +10,7 @@
 			<b><?php echo $d->format("jS F Y")?></b> in <b><?php echo $classinfo['room'];?></b> 
 		</small></h1>
 		<div class="button-group">
-			<a class="btn btn-primary" href="<?php echo site_url()?>/booking/">Make Another Booking</a>
+			<a class="btn btn-primary" href="<?php echo site_url()?>/booking">Make Another Booking</a>
 			<a class="btn btn-primary" href="<?php echo site_url()?>/booking/mybookings">View My Bookings</a>
 		</div>
 
