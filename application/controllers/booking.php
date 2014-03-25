@@ -213,7 +213,7 @@ if(check_member()){
 			return;
 		}
 
-		if($_POST['date'] == ''){
+		if(!isset($_POST['date']) || $_POST['date'] == ''){
 			$start_date = new DateTime();
 			$end_date = new DateTime();
 			$end_date->modify($this->config->item('class_booking_window'));

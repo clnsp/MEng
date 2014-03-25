@@ -20,6 +20,8 @@ $date = array(
 	'type'  => 'text',
 	'class' => 'form-control datepicker',
 	'placeholder' => 'mm/dd/yyyy',
+		'disabled' => 'disabled',
+	
 	
 	);
 
@@ -96,7 +98,7 @@ $js = 'class="form-control"';
 					<?php echo form_dropdown('class_type_id', $sportClassTypes, '' , 'class="form-control sports" disabled=disabled');	 ?>
 				</div>
 
-				<div class="form-group">
+				<div class="form-group toggleInput hidden">
 					<label class="visible-xs" for="date">Date</label>
 					<?php echo form_input($date); ?>
 				</div>
@@ -124,7 +126,7 @@ $js = 'class="form-control"';
 
 	<div class="col-sm-9">
 
-		<table class="footable table table-striped table-hover table-bordered classes hidden">
+		<table class="footable table table-striped table-hover table-bordered classes">
 			<thead>
 				<tr>
 					<th>Activity</th>
@@ -136,7 +138,9 @@ $js = 'class="form-control"';
 				</tr>
 			</thead>
 
-			<tbody></tbody>
+			<tbody>
+			
+			</tbody>
 		</table>
 
 	</div>
