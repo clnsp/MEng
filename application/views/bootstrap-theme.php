@@ -763,6 +763,10 @@ i.square{
 	content: " Cancelled";
 }
 
+#booking #calendar .fc-event .fc-event-inner *{
+	text-shadow: 1px 1px rgba(0, 0, 0, 0.5);
+}
+
 #booking #calendar .fc-day:hover,
 #booking #calendar .fc-agenda-slots tr:hover{
 	background-color: rgba(255, 255, 255, 0.49);
