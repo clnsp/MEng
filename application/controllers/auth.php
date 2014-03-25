@@ -419,25 +419,28 @@ class Auth extends CI_Controller
 	function load_details()
 	{
 	  if (!$this->tank_auth->is_logged_in()) {								// not logged in or not activated
-	  	redirect('/auth/login/');
+			redirect('/auth/login/');
 
-	  } else {
-	  	$this->form_validation->set_rules('first_name', 'First Name', 'trim|required|xss_clean');
-	  	$this->form_validation->set_rules('second_name', 'Surname', 'trim|required|xss_clean');
-	  	$this->form_validation->set_rules('home_number', 'Home Phone Number', 'trim|required|xss_clean');
-	  	$this->form_validation->set_rules('mobile_number', 'Mobile Phone Number', 'trim|required|xss_clean');
-	  	$this->form_validation->set_rules('comms_preference', 'Communications', 'trim|required|xss_clean');
-	  	
-	  	$data['errors'] = array();
+		} else {
+			$this->form_validation->set_rules('first_name', 'First Name', 'trim|required|xss_clean');
+			$this->form_validation->set_rules('second_name', 'Surname', 'trim|required|xss_clean');
+			$this->form_validation->set_rules('home_number', 'Home Phone Number', 'trim|required|xss_clean');
+			$this->form_validation->set_rules('mobile_number', 'Mobile Phone Number', 'trim|required|xss_clean');
+			$this->form_validation->set_rules('comms_preference', 'Communications', 'trim|required|xss_clean');
+			
+			$data['errors'] = array();
 
-	  	$this->load->Model('Members');
-	  	$this->load->Model('Comms_Preference');
-	  	
-	  	$members = $this->Members->getUserByID($this->tank_auth->get_user_id());
-	  	$data['member'] = $members['0']; 
-	  	
-	  	$prefs = $this->Comms_Preference->getPreferences();
-	  	$data['comm_prefs'] = $prefs;
+            $this->load->Model('Members');
+            $this->load->Model('Comms_Preference');
+            
+            $members = $this->Members->getUserByID($this->tank_auth->get_user_id());
+            $data['member'] = $members['0'];
+
+            //$member_prefs = $this->Members->getUserCommsPrefs($this->tank_auth->get_user_id());
+            //$data['member_prefs'] = $member_prefs;
+            
+            $prefs = $this->Comms_Preference->getPreferences();
+            $data['comm_prefs'] = $prefs;
 
 			if ($this->form_validation->run()) {								// validation ok
 				if ($this->tank_auth->change_password(
