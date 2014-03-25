@@ -41,8 +41,6 @@ class waiting_list extends CI_Controller
 		if($this->tank_auth->is_admin()){
 			if(isset($_POST['member_id']) && isset($_POST['class_id'])){
 
-				print_r($_POST);
-
 				$this->load->model('classes');
 				$this->load->helper('book');
 

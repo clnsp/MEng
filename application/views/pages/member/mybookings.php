@@ -19,7 +19,7 @@
 								<th>Class</th>
 								<th data-hide="phone">Room</th>
 								<th data-type="date">Date</th>
-								<th data-type="time">Start</th>
+								<th data-sort-initial="true" data-type="time">Start</th>
 								<th data-hide="phone" data-type="time">End</th>
 								<th data-sort-ignore="true" data-hide="phone">Cancel</th>		
 							</tr>
