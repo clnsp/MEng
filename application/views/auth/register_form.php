@@ -137,14 +137,23 @@ $form = array(
 	<p>Lets register you as a member. <br/> Fields marked with * are required.</p>
 	<div class="well well-lg  div-center">
 		<?php echo form_open($this->uri->uri_string(), $form); ?>
+		
+		
 		<div class="form-group">
-			<?php echo form_label('User Type *', $user_type['id'], $label); ?>
-			<div class="col-sm-10">
-				<?php echo form_radio($radio_student) . " Student   " ; echo  form_radio($radio_staff) . " Staff   "; echo form_radio($radio_student_partner) . " Student Partner/Spouse   " ; echo form_radio($radio_student_partner) . " Staff Partner/Spouse   " ;?>
+<?php echo form_label('User Type *', $user_type['id'], $label); ?>
+
+			<div class="col-sm-10 input-radio-group btn-group">
+				<button class="btn btn-default" type="button"><?php echo form_radio($radio_student)  ;?>Student</button>
+				<button class="btn btn-default" type="button"><?php echo  form_radio($radio_staff); ?>Staff</button>
+
+				<button class="btn btn-default" type="button"><?php echo  form_radio($radio_student_partner); ?>Student Partner/Spouse</button>
+				<button class="btn btn-default" type="button"><?php echo  form_radio($radio_staff_partner); ?>Staff Partner/Spouse</button>
+
 			</div>
 		</div>
-
-		<?php echo form_error($firstname['name']); ?>
+		
+		
+			<?php echo form_error($firstname['name']); ?>
 		<div class="form-group">
 			<?php echo form_label('First Name', $firstname['id'], $label); ?>
 			<div class="col-sm-10">
@@ -172,7 +181,7 @@ $form = array(
 			<?php echo form_label('Home Number', $home_number['id'], $label); ?>
 			<div class="col-sm-10">
 				<div class="input-group">
-				<span class="input-group-addon"><i class="fa fa-phone"></i></span>
+				<span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
 				<?php echo form_input($home_number); ?>
 				</div>
 			</div>
@@ -182,7 +191,7 @@ $form = array(
 			<?php echo form_label('Mobile Number', $mobile_number['id'], $label); ?>
 			<div class="col-sm-10">
 				<div class="input-group">
-				<span class="input-group-addon"><i class="fa fa-mobile"></i></span>
+				<span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
 				<?php echo form_input($mobile_number); ?>
 				</div>
 			</div>
@@ -192,7 +201,7 @@ $form = array(
 			<?php echo form_label('Twitter ID', $twitter['id'], $label); ?>
 			<div class="col-sm-10">
 				<div class="input-group">
-				<span class="input-group-addon"><i class="fa fa-twitter"></i></span>
+				<span class="input-group-addon"><i class="glyphicon glyphicon-link"></i></span>
 				<?php echo form_input($twitter); ?>
 				</div>
 			</div>
