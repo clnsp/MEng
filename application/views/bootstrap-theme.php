@@ -597,6 +597,12 @@ html.mobile #footer{
 	text-shadow: 1px 1px rgba(0, 0, 0, 0.5);
 }
 
+
+#booking.home .class-panel table tr.class-member {
+	cursor: pointer;
+}
+
+
 #booking.home .class-panel .panel-heading .duration{
 	font-weight: bold;
 }

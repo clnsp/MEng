@@ -81,7 +81,7 @@ $.pageManager = (function () {
 	
 	uiControls = function() {
 		$( window ).on("resize", function() {resize()});
-		$(".classes td").on("dblclick", function(){attendee($(this).parent("tr"));});
+		$(".classes td").on("click", function(){attendee($(this).parent("tr"));});
 		$(".list").on('selectstart', function (event) {event.preventDefault();});
 		$(".dropdown-menu li").on('click',  function() {
 			$('.'+$(this).attr('id')).toggleClass('hidden');
