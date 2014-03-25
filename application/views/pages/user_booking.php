@@ -32,7 +32,7 @@ $starttime = array(
 	'maxlength'	=> 20,
 	'size'	=> 20,
 	'type' 	=> 'text',
-	'class' => 'form-control timepicker',
+	'class' => 'form-control timepicker clearsearch',
 	'placeholder' => 'Between - Start Time',
 	);
 
@@ -43,7 +43,7 @@ $endtime = array(
 	'maxlength'	=> 20,
 	'size'	=> 20,
 	'type' 	=> 'text',
-	'class' => 'form-control timepicker',
+	'class' => 'form-control timepicker clearsearch',
 	'placeholder' => 'And - End Time',
 	);
 
@@ -100,17 +100,36 @@ $js = 'class="form-control"';
 
 				<div class="form-group toggleInput hidden">
 					<label class="visible-xs" for="date">Date</label>
+										<div class="input-group">
+					
 					<?php echo form_input($date); ?>
+					<span class="input-group-addon clearinput"><i class="glyphicon glyphicon-remove"></i></span>
+						
+					</div>		
 				</div>
+				
+		
 
-				<div class="form-group">
+				<div class="form-group ">
 					<label class="visible-xs" class="hidden-xs" for="starttime">Start</label>
+					
+					<div class="input-group">
+					
 					<?php echo form_input($starttime); ?>
+					<span class="input-group-addon clearinput"><i class="glyphicon glyphicon-remove"></i></span>
+						
+					</div>					
 				</div>
 
 				<div class="form-group">
-					<label class="visible-xs" for="endtime">Time</label>
-					<?php echo form_input($endtime); ?>
+				
+					<label class="visible-xs" for="endtime">End</label>
+					
+					<div class="input-group">
+						<?php echo form_input($endtime); ?>
+						<span class="input-group-addon clearinput"><i class="glyphicon glyphicon-remove"></i></span>
+						
+					</div>
 				</div>
 
 				<div class="form-group clearfix">
@@ -131,7 +150,7 @@ $js = 'class="form-control"';
 				<tr>
 					<th>Activity</th>
 					<th data-hide="" data-type="date">Date</th>
-					<th data-hide="" data-type="time">Start</th>
+					<th data-hide="" data-sort-initial="true" data-type="time">Start</th>
 					<th data-hide="phone" data-type="time">End</th>
 					<th data-hide="phone">Room</th>
 					<th data-hide="phone" data-sort-ignore="true">Book</th>

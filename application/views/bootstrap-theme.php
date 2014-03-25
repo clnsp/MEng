@@ -1071,3 +1071,8 @@ html.mobile #booking.user_booking #search-panel select{
 #booking .btn-group.input-radio-group.btn-group-vertical{
 	width:100%;
 }
+
+
+#booking .clearinput{
+	cursor: pointer;
+}

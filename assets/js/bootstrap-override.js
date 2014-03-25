@@ -461,8 +461,6 @@
  }
  
 
-
-
  var InputRadioGroup = new function(){
  	
  	$('html.mobile .btn-group.input-radio-group').addClass('btn-group-vertical');
@@ -473,5 +471,15 @@
  		$(this).addClass('active');
  	});
  }
+ 
+ var ClearSearch = new function() {
+ 	
+ 	$('.clearinput').click(function() {
+ 		$(this).prev('input').val('');
+ 	});
+ 	
+ }
+ 
+ 
 
 
