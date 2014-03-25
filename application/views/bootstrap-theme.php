@@ -490,9 +490,8 @@ table thead, table tfoot {
 **********************************************
 */
 
-#footer .row{
-	color: #fff;
-}
+
+
 
 body{
 	background-color: rgba(226, 226, 226, 0.65);
@@ -519,7 +518,7 @@ html, body, #booking {
 }
 
 /* Wrapper for page content to push down footer */
-#page-wrapper {
+#booking.user #page-wrapper {
 	min-height: 100%;
 	height: auto !important;
 	height: 100%;
@@ -556,6 +555,21 @@ html.tablet #booking.user #page-wrapper:after {
 
 html.mobile #footer{
 	display: none;
+}
+
+#footer a{
+	color: #fff;
+}
+
+#footer #footer-icons a{
+	font-size:30px;
+	color:#fff;
+	border:none;
+	text-decoration:none;
+}
+
+#footer #footer-icons a:hover{
+	opacity:0.5;
 }
 
 #booking #footer .row{
@@ -678,7 +692,7 @@ i.square{
 
 #footer, .footer{
 	margin-top: 2em;
-	padding: 1em 0 1em 0;
+	padding: 2em 0 1em 0;
 	background-color: <?php echo $brandPrimary;?>;
 }
 

@@ -327,7 +327,7 @@
 
 
 
- var Rooms = new function() {
+ var rooms = new function() {
 
  	var urlBase, drop;
  	

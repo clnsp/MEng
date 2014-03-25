@@ -31,9 +31,8 @@
 
 <div id='calendar' class="clearfix"></div>
 <!-- Pasted here for convenience needs tidying up -->
-<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
 <div id="loading-indicator" class="hidden">
-	Loading Events<i class="fa fa-spin fa-refresh"></i>
+	Loading Events<i class="glyphicon glyphicon-refresh"></i>
 </div>
 
 <!-- Modal -->
