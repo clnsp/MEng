@@ -88,6 +88,29 @@ class Waiting extends CI_Model
       	
       	return $this->db->count_all_results() > 0;  
       }
-      
 
+
+        /**
+   * Cancel a booking
+   */
+        function cancelWaitingg(){
+
+          if(check_member()){
+
+
+            if(isset($_POST['class_booking_id'])){
+
+              $class_booking_id = $_POST['class_booking_id'];
+              $member_id = $this->tank_auth->get_user_id();
+
+
+              $this->bookings->removeMember($class_booking_id, $member_id);
+
+      }
+      $this->mybookings();
     }
+
+  }
+
+
+}

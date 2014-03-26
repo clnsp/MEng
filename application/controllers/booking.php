@@ -418,6 +418,27 @@ class booking extends CI_Controller{
 	}
 
 	/**
+	 * Cancel a booking
+	 */
+	function cancelWaiting(){
+
+		if(check_member()){
+
+
+			if(isset($_POST['class_booking_id'])){
+
+				$class_booking_id = $_POST['class_booking_id'];
+				$member_id = $this->tank_auth->get_user_id();
+
+				$this->bookings->removeWaiting($class_booking_id, $member_id);
+
+			}
+			$this->mybookings();
+		}
+
+	}
+
+	/**
 	 * User Past Bookings List
 	 */
 	public function mybookings(){
@@ -430,6 +451,7 @@ class booking extends CI_Controller{
 
 			$data['bookings'] = $this->bookings->getClassBookingByMember($member_id);
 			$data['bookingsPast'] = $this->bookings->getClassBookingByMember($member_id);
+			$data['waiting'] = $this->bookings->getAllWaiting($member_id);
 			$data['bookingMember'] = $member_id;
 
 			$rowCount = 0;

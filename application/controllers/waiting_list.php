@@ -71,6 +71,8 @@ class waiting_list extends CI_Controller
 
 	}
 
+	
+
 }
 
 /* End of file welcome.php */
