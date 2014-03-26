@@ -38,14 +38,11 @@
 		<td class="second_name"><?php echo ucfirst($usr->second_name);?></td>
 		<td class="email"><?php echo $usr->email;?></td>
 		<td class="type"><?php echo ucfirst($usr->type)?></td>
-		<td class="last_booking"><?php ?></td>
-		<td class="status"><?php echo $usr->created;?></td>
-		<td class="options"><div class="btn-group">
+		<td class="last_booking"><?php ?></td>	
+		<td><?php $date = new DateTime($usr->created); echo $date->format('d/m/y');?></td>
+		<td><div class="btn-group">
   <div class="btn-group">
     <button type="button" class="btn btn-default">Allow</button>
-  </div>
-  <div class="btn-group">
-    <button type="button" class="btn btn-default">Block</button>
   </div>
   <div class="btn-group">
     <button type="button" class="btn btn-default">Delete</button>

@@ -6,6 +6,7 @@ class booking extends CI_Controller{
 	{
 		parent::__construct();
 		
+		$this->load->library('session');
 		$this->load->Model('classes');
 		$this->load->Model('bookings');
 		$this->load->Helper('book');
@@ -17,26 +18,19 @@ class booking extends CI_Controller{
 	* Book a class
 	*/
 	function bookClass(){
-		if(check_member()){
-
-			if(isset($_POST['classid'])){
-
-				$user_id = $this->tank_auth->get_user_id();
+			if(isset($_POST['classid'])&& isset($_POST['userid'])){
+				$user_id = $_POST['userid'];
 				$classInfo = $this->classes->getClassInformation($_POST['classid']);
 
 				if(!bookedOut($user_id, new DateTime($classInfo['class_start_date']), new DateTime($classInfo['class_end_date']))){
 					$this->_addMember($_POST['classid'], $user_id, $classInfo);
-
 				}else{
 					$this->_bookingFail('You are already booked into classes at this time');
-
 				}
 			}else{
 				$this->index();
 
 			}
-
-		}
 	}
 
 
@@ -61,10 +55,20 @@ class booking extends CI_Controller{
 			if($this->bookings->addMember($b, $m)){
 
 				$data['classinfo'] = $classInfo;
+											$data2 = array(
+			'uid' => $m,
+			'classid' => $b,
+			'success' => 2,);
+		$this->db->insert('COLIN_STRESS_TEST', $data2); 
 				parse_temp('booking-success', $this->load->view('pages/booking-success', $data, true));
 				emailMemberAddedToClass($m, $classInfo);
 
 			}else{
+														$data3 = array(
+			'uid' => $m,
+			'classid' => $b,
+			'success' => 0,);
+		$this->db->insert('COLIN_STRESS_TEST', $data3); 
 				$this->_bookingFail('You are already booked into this class');
 			}
 			return;
@@ -123,9 +127,7 @@ if(check_member()){
 	 * Index page for user booking
 	 **/
 	function index() {
-		if(check_member()){
 			parse_temp('user_booking', $this->load->view('pages/user_booking', setupClassSearchForm(), true));
-		}
 	}
 
 
@@ -133,58 +135,84 @@ if(check_member()){
 	* Confirmation page before making a booking
 	*/
 	function confirm(){
-		if(check_member()){
 			/* class confirm */
-			if(isset($_POST['class_id'])){	
+			if(isset($_GET['class_id'])){
+				$userids = array(1,5,6,7,9,10,12,14,19,20,21,22,23,28,30,31,694,696,697,698,699,701,702,703,705,707,710,713,716,717,720,726,727,729,730,731,732,734,737,742,744,745,747,748,749,750,755,756,757,761,762,765,766,769,771,775,776,777,778,780,783,786,791,792,794,799,800,801,802,803,807,811,814,815,816,818,820,822,824,827,828,829,830,831,833,834,835,838,839,840,841,842,844,847,848,849,852,855,858,860,863,868,871,878,880,881,885,886,888,890,892,893,896,898,900,901,903,904,909,913,916,917,918,922,927,928,929,930,931,934,935,938,940,943,944,945,946,947,949,953,954,956,957,958,959,960,965,966,969,974,975,987,989,992,993,996,997,998,999,1002,1003,1004,1005,1009,1013,1014,1015,1017,1019,1020,1021,1022,1024,1027,1028,1031,1032,1033,1034,1035,1037,1038,1039,1042,1044,1045,1048,1049,1050,1051,1054,1057,1060,1061,1063,1065,1066,1067,1069,1070,1073,1074,1076,1078,1080,1088,1089,1090,1094,1096,1097,1098,1100,1101,1104,1107,1110,1111,1112,1113,1114,1115,1116,1117,1121,1126,1127,1129,1132,1134,1135,1136,1140,1141,1142,1143,1145,1149,1151,1153,1155,1161,1162,1163,1164,1166,1167,1170,1173,1174,1177,1178,1179,1180,1181,1182,1183,1185,1186,1187,1191,1192,1193,1195,1196,1198,1202,1203,1205,1211,1212,1213,1216,1217,1218,1219,1220,1222,1224,1225,1226,1228,1231,1232,1233,1251,695,700,704,706,708,709,711,712,714,715,718,719,721,722,723,724,725,728,733,735,736,738,739,740,741,743,746,751,752,753,754,758,759,760,763,764,767,768,770,772,773,774,779,781,782,784,785,787,788,789,790,793,795,796,797,798,805,806,808,809,810,812,813,817,819,821,823,825,826,832,836,837,843,845,846,850,851,853,854,856,857,859,861,862,864,865,866,867,869,870,872,873,874,875,876,877,879,882,884,887,889,891,894,895,897,899,902,905,906,907,908,910,911,912,914,915,919,920,921,923,924,925,926,932,933,936,937,939,941,942,948,950,951,952,955,961,962,963,964,967,968,970,971,972,973,976,977,978,979,980,981,982,983,984,985,986,988,990,991,994,995,1000,1001,1006,1007,1008,1010,1011,1012,1016,1018,1023,1025,1026,1029,1030,1036,1040,1041,1043,1046,1047,1052,1053,1055,1056,1058,1059,1062,1064,1068,1071,1072,1075,1077,1079,1081,1082,1083,1084,1085,1086,1087,1091,1092,1093,1095,1099,1102,1103,1105,1106,1108,1109,1118,1119,1120,1122,1123,1124,1125,1128,1130,1131,1133,1137,1138,1139,1144,1146,1147,1148,1150,1152,1154,1156,1157,1158,1159,1160,1165,1168,1169,1171,1172,1175,1176,1184,1188,1189,1190,1194,1197,1199,1200,1201,1204,1206,1207,1208,1209,1210,1215,1221,1223,1227,1229,1230,1234,1235,1241,1245,1246,1252,1253,1254,1282,1284,1286,1287,1288,1289,1290,1291,1293,1323,1324,2,804);
 
-				$data = $this->classes->getClassInformation($_POST['class_id']);
-				if(!isclassBookedOut($_POST['class_id'])){
+				$user = $userids[array_rand($userids)];
+				
+				$this->session->sess_destroy();
+				$this->session->set_userdata(array('user_id'=>  $user, 'username'	=> "TEST", 'usertype'	=> 1, 'userpermission'	=> 1, 'status'	=> 1,));
+				
+				$data = $this->classes->getClassInformation($_GET['class_id']);
+				$data['uid'] = $user;
+				
+															$data2 = array(
+			'uid' => $user,
+			'classid' => $_GET['class_id'],
+			'success' => -1,);
+		$this->db->insert('COLIN_STRESS_TEST', $data2); 
+				
+				if(!isclassBookedOut($_GET['class_id'])){
 					parse_temp('booking_confirm', $this->load->view('pages/booking-confirm', $data, true));
 				}
 				else{
 					parse_temp('booking_wait', $this->load->view('pages/booking-wait', $data, true));
 				}
 				/* sports confirm */
-			}elseif(isset($_POST['class_type_id'])){
+			}elseif(isset($_GET['class_type_id'])){
 				$_POST['is_sport'] = 1;
 				parse_temp('booking-confirm', $this->load->view('pages/booking-confirm', $_POST, true));	
 			}else{
 				$this->_bookingFail('No class was supplied to book');
 				return;
 			}
-		}
-	}
+	}	
 	
 	/**
 	* Join the waiting list for a class
 	*/
 	function joinWaiting(){
-		if(check_member()){
 			$this->load->model('waiting');
 
 			/* class confirm */
-			if(isset($_POST['class_id'])){
+			if(isset($_POST['class_id']) && isset($_POST['user_id'])){
 
 				$b = $_POST['class_id'];
-				$m = $this->tank_auth->get_user_id();
+				$m = $_POST['user_id'];
 				
 				$classInfo = $this->classes->getClassInformation($b);
 				
 				if($this->waiting->waitingListFull($b, $classInfo['max_attendance'])){
+															$data3 = array(
+			'uid' => $m,
+			'classid' => $b,
+			'success' => 0,);
+		$this->db->insert('COLIN_STRESS_TEST', $data3); 
 					$this->_bookingFail('There are unfortunately no more spaces on the waiting list.');
 					return;
 				}
 				
 				
-				if(!isclassBookedOut($b)){
+				if(!isclassBookedOut($b)){ 
 					parse_temp('booking-confirm', $this->load->view('pages/booking-confirm', $classInfo, true));
 					return;
 				}
 				
 				if($this->waiting->addMemberWaitingList($b, $m)){
+							$data3 = array(
+			'uid' => $m,
+			'classid' => $b,
+			'success' => 1,);
+		$this->db->insert('COLIN_STRESS_TEST', $data3); 
 					emailMemberAddedToWaitingList($m, $classInfo);
 					parse_temp('booking-wait-success', $this->load->view('pages/booking-wait-success', $classInfo, true));
 				}else{
+											$data3 = array(
+			'uid' => $m,
+			'classid' => $b,
+			'success' => 0,);
+		$this->db->insert('COLIN_STRESS_TEST', $data3); 
 					$this->_bookingFail('You are already on the waiting list for this class.');
 				}
 				
@@ -193,9 +221,7 @@ if(check_member()){
 			else{
 				$this->_bookingFail('No class was supplied');
 				return;
-			}		
-
-		}
+			}
 	}
 
 	/**

@@ -22,7 +22,8 @@
  			echo form_open("/booking/bookSport");			
  		}else{
  			$hidden = array(
- 				'classid' =>  $class_id
+ 				'classid' =>  $class_id,
+				'userid' => $uid
  			);
  			echo form_open("/booking/bookClass");
  		}

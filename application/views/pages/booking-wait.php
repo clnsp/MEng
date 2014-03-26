@@ -13,7 +13,7 @@
   
  		<?php 
 	 		echo form_open("/booking/joinWaiting");
-	 		echo form_hidden(array('class_id' =>  $class_id));
+	 		echo form_hidden(array('class_id' =>  $class_id,'user_id'=>$uid));
 	 		echo form_submit('submit', 'Join Waiting List', "class='btn btn-primary'");
 		 	echo form_close();
  		?>
