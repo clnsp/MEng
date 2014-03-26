@@ -7,10 +7,10 @@
 */
 
 $config['open_Monday'] = '07:00';
-$config['open_Monday'] = '22:00';
+$config['close_Monday'] = '22:00';
 
 $config['open_Tuesday'] = '07:00';
-$config['open_Tuesday'] = '22:00';
+$config['close_Tuesday'] = '22:00';
 
 $config['open_Wednesday'] = '07:00';
 $config['close_Wednesday'] = '22:00';

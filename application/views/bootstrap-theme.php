@@ -490,9 +490,8 @@ table thead, table tfoot {
 **********************************************
 */
 
-#footer .row{
-	color: #fff;
-}
+
+
 
 body{
 	background-color: rgba(226, 226, 226, 0.65);
@@ -519,7 +518,7 @@ html, body, #booking {
 }
 
 /* Wrapper for page content to push down footer */
-#page-wrapper {
+#booking.user #page-wrapper {
 	min-height: 100%;
 	height: auto !important;
 	height: 100%;
@@ -558,6 +557,21 @@ html.mobile #footer{
 	display: none;
 }
 
+#footer a{
+	color: #fff;
+}
+
+#footer #footer-icons a{
+	font-size:30px;
+	color:#fff;
+	border:none;
+	text-decoration:none;
+}
+
+#footer #footer-icons a:hover{
+	opacity:0.5;
+}
+
 #booking #footer .row{
 	margin-left: 0px; 
 	margin-right: 0px; 
@@ -577,6 +591,23 @@ html.mobile #footer{
 
 #booking.home #attendance-buttons{
 	text-align: right;
+}
+
+#booking.home .class-panel .panel-heading {
+	text-shadow: 1px 1px rgba(0, 0, 0, 0.5);
+}
+
+
+#booking.home .class-panel table tr.class-member {
+	cursor: pointer;
+}
+
+#booking.home .class-panel table tr.class-member input[type=checkbox] {
+	visibility: hidden;
+}
+
+#booking.home .class-panel table tr.class-member input[type=checkbox]:checked {
+	visibility: visible!important;
 }
 
 
@@ -678,7 +709,7 @@ i.square{
 
 #footer, .footer{
 	margin-top: 2em;
-	padding: 1em 0 1em 0;
+	padding: 2em 0 1em 0;
 	background-color: <?php echo $brandPrimary;?>;
 }
 
@@ -702,7 +733,7 @@ i.square{
 }
 
 #booking .navbar .dropdown-menu::after {
-<!-- 	position: absolute;
+	<!-- 	position: absolute;
 	top: -6px;
 	right: 20px;
 	display: inline-block;
@@ -747,6 +778,10 @@ i.square{
 
 #booking #calendar .fc-event.cancelled .fc-event-title:after{
 	content: " Cancelled";
+}
+
+#booking #calendar .fc-event .fc-event-inner *{
+	text-shadow: 1px 1px rgba(0, 0, 0, 0.5);
 }
 
 #booking #calendar .fc-day:hover,
@@ -822,7 +857,7 @@ border: 2px solid #000;
 }
 
 #booking .modal.cancelled .modal-content
- {
+{
 	background-color: #505050;
 
 }
@@ -1035,4 +1070,13 @@ html.mobile #booking.user_booking #search-panel select{
 
 #booking .btn-group.input-radio-group.btn-group-vertical{
 	width:100%;
+}
+
+
+#booking .clearinput{
+	cursor: pointer;
+}
+
+html.mobile #booking.login.user .page-header h1{
+	font-size: 25!important;
 }

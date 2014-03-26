@@ -20,6 +20,8 @@ $date = array(
 	'type'  => 'text',
 	'class' => 'form-control datepicker',
 	'placeholder' => 'mm/dd/yyyy',
+		'disabled' => 'disabled',
+	
 	
 	);
 
@@ -30,7 +32,7 @@ $starttime = array(
 	'maxlength'	=> 20,
 	'size'	=> 20,
 	'type' 	=> 'text',
-	'class' => 'form-control timepicker',
+	'class' => 'form-control timepicker clearsearch',
 	'placeholder' => 'Between - Start Time',
 	);
 
@@ -41,7 +43,7 @@ $endtime = array(
 	'maxlength'	=> 20,
 	'size'	=> 20,
 	'type' 	=> 'text',
-	'class' => 'form-control timepicker',
+	'class' => 'form-control timepicker clearsearch',
 	'placeholder' => 'And - End Time',
 	);
 
@@ -96,19 +98,40 @@ $js = 'class="form-control"';
 					<?php echo form_dropdown('class_type_id', $sportClassTypes, '' , 'class="form-control sports" disabled=disabled');	 ?>
 				</div>
 
-				<div class="form-group">
+				<div class="form-group toggleInput hidden">
 					<label class="visible-xs" for="date">Date</label>
+					<div class="input-group toggleInput">
+					
 					<?php echo form_input($date); ?>
+					<span class="input-group-addon clearinput">
+						<i class="glyphicon glyphicon-remove"></i>
+					</span>
+						
+					</div>		
 				</div>
+				
+		
 
-				<div class="form-group">
+				<div class="form-group ">
 					<label class="visible-xs" class="hidden-xs" for="starttime">Start</label>
+					
+					<div class="input-group">
+					
 					<?php echo form_input($starttime); ?>
+					<span class="input-group-addon clearinput"><i class="glyphicon glyphicon-remove"></i></span>
+						
+					</div>					
 				</div>
 
 				<div class="form-group">
-					<label class="visible-xs" for="endtime">Time</label>
-					<?php echo form_input($endtime); ?>
+				
+					<label class="visible-xs" for="endtime">End</label>
+					
+					<div class="input-group">
+						<?php echo form_input($endtime); ?>
+						<span class="input-group-addon clearinput"><i class="glyphicon glyphicon-remove"></i></span>
+						
+					</div>
 				</div>
 
 				<div class="form-group clearfix">
@@ -124,19 +147,21 @@ $js = 'class="form-control"';
 
 	<div class="col-sm-9">
 
-		<table class="footable table table-striped table-hover table-bordered classes hidden">
+		<table class="footable table table-striped table-hover table-bordered classes">
 			<thead>
 				<tr>
 					<th>Activity</th>
 					<th data-hide="" data-type="date">Date</th>
-					<th data-hide="" data-type="time">Start</th>
+					<th data-hide="" data-sort-initial="true" data-type="time">Start</th>
 					<th data-hide="phone" data-type="time">End</th>
 					<th data-hide="phone">Room</th>
 					<th data-hide="phone" data-sort-ignore="true">Book</th>
 				</tr>
 			</thead>
 
-			<tbody></tbody>
+			<tbody>
+			
+			</tbody>
 		</table>
 
 	</div>

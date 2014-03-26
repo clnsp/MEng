@@ -2,7 +2,7 @@
 /*
  * Bootstrap Overrides
  */
- 
+ @media not print {
  img.displayed {
   display: block;
   margin-left: auto;
@@ -66,10 +66,6 @@ h2.gtime {
   margin-top: -10px;
   margin-bottom: 0px;
 }
-
-
-
-@media not print {
 
   div.list {
     overflow-x: auto;

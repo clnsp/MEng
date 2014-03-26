@@ -95,31 +95,31 @@ class booking extends CI_Controller{
 	 * Book user into a sport
 	 */
 	function bookSport() {
-if(check_member()){
-		/*! need to check that you're allowed to make booking !*/
-		if(isset($_POST['class_type_id']) && isset($_POST['start']) && isset($_POST['end'])){
+		if(check_member()){
+			/*! need to check that you're allowed to make booking !*/
+			if(isset($_POST['class_type_id']) && isset($_POST['start']) && isset($_POST['end'])){
 
 
-			$data = array(
-				'class_type_id'		=> $_POST['class_type_id'],
-				'class_start_date'	=> $_POST['start'],
-				'class_end_date'	=> $_POST['end'],
-				'room_id'			=> $_POST['room_id'],
-				'max_attendance'	=> 1,
-				);
+				$data = array(
+					'class_type_id'		=> $_POST['class_type_id'],
+					'class_start_date'	=> $_POST['start'],
+					'class_end_date'	=> $_POST['end'],
+					'room_id'			=> $_POST['room_id'],
+					'max_attendance'	=> 1,
+					);
 
 
-			$uid = $this->tank_auth->get_user_id();
-			if(!bookedOut($uid, new DateTime($_POST['start']), new DateTime($_POST['end']))){
-				$id = $this->classes->insertClass($data);
-				$data = $this->classes->getClassInformation($id);
-				$this->_addMember($id, $this->tank_auth->get_user_id(), $data);	
-			}else{
-				$this->_bookingFail('You are already booked into classes at this time');
+				$uid = $this->tank_auth->get_user_id();
+				if(!bookedOut($uid, new DateTime($_POST['start']), new DateTime($_POST['end']))){
+					$id = $this->classes->insertClass($data);
+					$data = $this->classes->getClassInformation($id);
+					$this->_addMember($id, $this->tank_auth->get_user_id(), $data);	
+				}else{
+					$this->_bookingFail('You are already booked into classes at this time');
 
+				}
 			}
 		}
-	}
 	}
 
 
@@ -184,11 +184,15 @@ if(check_member()){
 				$classInfo = $this->classes->getClassInformation($b);
 				
 				if($this->waiting->waitingListFull($b, $classInfo['max_attendance'])){
+<<<<<<< HEAD
 															$data3 = array(
 			'uid' => $m,
 			'classid' => $b,
 			'success' => 0,);
 		$this->db->insert('COLIN_STRESS_TEST', $data3); 
+=======
+
+>>>>>>> 182e0fd69d2e889b63a1aa54360cef685e439ee0
 					$this->_bookingFail('There are unfortunately no more spaces on the waiting list.');
 					return;
 				}
@@ -228,69 +232,82 @@ if(check_member()){
 	* Retrieves search results according to search parameters
 	*/
 	function search(){
-	if(check_member()){
-		$this->config->load('gym_settings');
+		if(check_member()){
+			$this->config->load('gym_settings');
 
-		$user_id = $this->tank_auth->get_user_id();
-		$start_date=''; $end_time='';
+			$user_id = $this->tank_auth->get_user_id();
+			$start_date=''; $end_time='';
 
-		if(!isset($_POST['class_type_id'])){
-			echo("Missing class to search for");
-			return;
-		}
-
-		if($_POST['date'] == ''){
-			$start_date = new DateTime();
-			$end_date = new DateTime();
-			$end_date->modify($this->config->item('class_booking_window'));
-
-		}else{
-			$start_date = new DateTime($_POST['date']);
-			$end_date = new DateTime($_POST['date']);
-
-			$today = new DateTime();
-			if($start_date > $today->modify($this->config->item('class_booking_window'))){
-				echo "<td colspan='6'><b>Classes can only be booked a day in advance</b></td>";
+			if(!isset($_POST['class_type_id'])){
+				echo("Missing class to search for");
 				return;
 			}
-			
-		}
 
-		$end_date = $end_date->format("Y-m-d");
-		$start_date = $start_date->format("Y-m-d");
+			if(!isset($_POST['date']) || $_POST['date'] == ''){
+				$start_date = new DateTime();
+				$end_date = new DateTime();
 
-		if($_POST['starttime']!=''){
-			$start_time = new DateTime($_POST['starttime']);
-			$start_time = $start_time->format('H:i:00');
-		}else{
-			$start_time = '00:00:00';
-		}
 
-		if($_POST['endtime']!=''){
-			$end_time = new DateTime($_POST['endtime']);
-			$end_time = $end_time->format('H:i:00');
-		}else{
-			$end_time = '23:59:59';
-		}
+				$end_date->modify($this->config->item('class_booking_window'));
+				
 
-		if(isset($_POST['is_sport'])){
-
-			$data['classes'] = $this->_fetchSportsClasses($_POST['class_type_id'], $start_date, $end_date, $start_time, $end_time);
-
-		}else{
-			if($_POST['class_type_id'] == '-1'){
-				$classtypes = $this->classes->getClassTypeIDs();
 			}else{
-				$classtypes = array('class_type_id' => $_POST['class_type_id']);
+				$start_date = new DateTime($_POST['date']);
+				$end_date = new DateTime($_POST['date']);
+
+				$today = new DateTime();
+				$todaySports = new DateTime();
+				if(!isset($_POST['is_sport']) && $start_date > $today->modify($this->config->item('class_booking_window'))){
+					echo "<td colspan='6'><b>Classes can only be booked a day in advance</b></td>";
+					return;
+				}
+				
+				else if(isset($_POST['is_sport']) && $start_date > $todaySports->modify($this->config->item('sports_booking_window'))){
+					echo "<td colspan='6'><b>Sports can only be booked a week in advance</b></td>";
+					return;
+				}
+
 			}
 
-			$data['classes'] = $this->classes->getClassesWithTypeAndStartTime($classtypes, $start_date, $end_date, $start_time, $end_time);
+			$end_date = $end_date->format("Y-m-d");
+			$start_date = $start_date->format("Y-m-d");
+
+
+			if($_POST['starttime']!=''){
+				$start_time = new DateTime($_POST['starttime']);
+				$start_time = $start_time->format('H:i:00');
+				
+			}else{
+				$start_time = '00:00:00';
+			}
+
+			if($_POST['endtime']!=''){
+				$end_time = new DateTime($_POST['endtime']);
+				$end_time = $end_time->format('H:i:00');
+			}else{
+				$end_time = '23:59:59';
+			}
+
+			if(isset($_POST['is_sport'])){
+
+				$data['classes'] = $this->_fetchSportsClasses($_POST['class_type_id'], $start_date, $end_date, $start_time, $end_time);
+
+			}else{
+				if($_POST['class_type_id'] == '-1'){
+					$classtypes = $this->classes->getClassTypeIDs();
+				}else{
+					$classtypes = array('class_type_id' => $_POST['class_type_id']);
+				}
+
+				$data['classes'] = $this->classes->getClassesWithTypeAndStartTime($classtypes, $start_date, $end_date, $start_time, $end_time);
+
+			}
+
+
+
+			echo ($this->load->view('pages/search_results', $data, true));
 
 		}
-
-		echo ($this->load->view('pages/search_results', $data, true));
-
-	}
 	}
 
 	/**
@@ -308,6 +325,8 @@ if(check_member()){
 		$this->load->model('rooms');
 		$this->load->model('classtype');
 		$this->load->model('restrictions');
+
+		echo "$start_date $end_date";
 
 		$info = $this->classtype->getClasstypeInfo($class_type_id);
 
@@ -428,6 +447,27 @@ if(check_member()){
 	}
 
 	/**
+	 * Cancel a booking
+	 */
+	function cancelWaiting(){
+
+		if(check_member()){
+
+
+			if(isset($_POST['class_booking_id'])){
+
+				$class_booking_id = $_POST['class_booking_id'];
+				$member_id = $this->tank_auth->get_user_id();
+
+				$this->bookings->removeWaiting($class_booking_id, $member_id);
+
+			}
+			$this->mybookings();
+		}
+
+	}
+
+	/**
 	 * User Past Bookings List
 	 */
 	public function mybookings(){
@@ -440,6 +480,7 @@ if(check_member()){
 
 			$data['bookings'] = $this->bookings->getClassBookingByMember($member_id);
 			$data['bookingsPast'] = $this->bookings->getClassBookingByMember($member_id);
+			$data['waiting'] = $this->bookings->getAllWaiting($member_id);
 			$data['bookingMember'] = $member_id;
 
 			$rowCount = 0;

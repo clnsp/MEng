@@ -18,24 +18,24 @@
     <div class="classes class-body">
       <?php if(count($class->attendees) > 0) {?>       
       <!-- Table -->
-      <table class="table" style="margin-bottom: 0px !important;">
+      <table class="table footable" style="margin-bottom: 0px !important;">
         <thead>
           <tr>
             <th>#</th>
-            <th>First Name</th>
-            <th>Last Name</th>
+            <th>First</th>
+            <th>Last</th>
             <th class="visible-print">Email</th>
-            <th class="visible-print">Attended?</th>
+            <th><span class="visible-print">Attended></span></th>
           </tr>
         </thead>
         <tbody>
           <?php $i=1; foreach($class->attendees as $attendee){ ?>
-          <tr id="<?php echo($attendee->member_id);?>" class="<?php if($attendee->attended == 1){echo ('success');}?>" data-toggle="tooltip" data-placement="top" title="<?php echo strtolower($attendee->email);?>"> 
+          <tr id="<?php echo($attendee->member_id);?>" class="class-member <?php if($attendee->attended == 1){echo ('success');}?>" data-toggle="tooltip" data-placement="top" title="<?php echo strtolower($attendee->email);?>"> 
             <td><?php echo($i); ?></td>
             <td><?php echo ucfirst($attendee->first_name); ?></td>
             <td><?php echo ucfirst($attendee->second_name); ?></td>
             <td class="visible-print"><?php echo strtolower($attendee->email); ?></td>
-            <td class="visible-print"></td>
+            <td class=""><input type="checkbox" name="" value=""<?php  if($attendee->attended == 1){echo ('checked');}?>/></td>
           </tr>
           <?php $i++; }?>
         </tbody>

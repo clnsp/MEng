@@ -64,6 +64,8 @@ $.pageManager = (function () {
 		if($row.hasClass('success')){$attend=0;} else{$attend=1;}
 		$.post('index.php/member/updateAttendance', { pid:$row.attr('id'),cid: $row.closest("div.panel").attr('id'), at: $attend}, function (data) {
 			$row.toggleClass('success');
+			$row.find('input').prop('checked', $attend).parents('td');
+
 		});	
 	},
 	
@@ -81,7 +83,7 @@ $.pageManager = (function () {
 	
 	uiControls = function() {
 		$( window ).on("resize", function() {resize()});
-		$(".classes td").on("dblclick", function(){attendee($(this).parent("tr"));});
+		$(".classes td").on("click", function(){attendee($(this).parent("tr"));});
 		$(".list").on('selectstart', function (event) {event.preventDefault();});
 		$(".dropdown-menu li").on('click',  function() {
 			$('.'+$(this).attr('id')).toggleClass('hidden');

@@ -327,7 +327,7 @@
 
 
 
- var Rooms = new function() {
+ var rooms = new function() {
 
  	var urlBase, drop;
  	
@@ -379,7 +379,7 @@
 
 
 
- var DivisibleRooms = new function() {
+ var divisiblerooms = new function() {
 
  	var drop, urlBase;
  	
@@ -429,7 +429,7 @@
 
  /* responsive tables */
  
-  
+
  $('.footable').footable();
 
  Modernizr.Detectizr.detect({
@@ -461,17 +461,27 @@
  }
  
 
-
-
  var InputRadioGroup = new function(){
  	
  	$('html.mobile .btn-group.input-radio-group').addClass('btn-group-vertical');
- 	 
+
  	$('#booking').on('click', '.btn-group.input-radio-group button', function() {
  		$(this).find('input[type=radio]').prop('checked', true);
  		$(this).siblings('.active').removeClass('active');
  		$(this).addClass('active');
  	});
  }
+ 
+ var ClearSearch = new function() {
+ 	
+ 	$('.clearinput').click(function() {
+ 		$(this).prev('input').val('');
+ 		$('.ui-datepicker-div').remove();
+ 		$('.bootstrap-timepicker-widget').remove();
+ 	});
+ 	
+ }
+ 
+ 
 
 
