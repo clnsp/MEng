@@ -10,6 +10,7 @@
 class Bookings extends CI_Model
 {
 	private $class_booking_tbl	= 'class_booking_tbl';			// user accounts
+	private $waiting_pool_tbl	= 'waiting_pool_tbl';			// user accounts
 
     function __construct()
     {
@@ -254,8 +255,30 @@ class Bookings extends CI_Model
  		return $query->result_array();
  	}
  	
+	function getAllWaiting($member_id){
 
+		$this -> db -> select('*');
 
+		$this -> db -> where('member_id', $member_id);
+
+		$this -> db -> from($this->waiting_pool_tbl);
+
+		$this -> db -> join('class_info_view', 'class_info_view.class_id = waiting_pool_tbl.class_id');
+
+		$query = $this -> db -> get();
+
+		return $query -> result_array();
+
+	}
+
+	function removeWaiting($class_booking_id, $member_id){
+
+		$data = array(
+			'member_id' => $member_id,
+			'class_id' => $class_booking_id,				   
+			);
+		$this->db->delete($this -> waiting_pool_tbl, $data);
+
+	}
       
-
   }

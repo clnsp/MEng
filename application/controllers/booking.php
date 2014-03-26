@@ -428,6 +428,7 @@ class booking extends CI_Controller{
 
 			$data['bookings'] = $this->bookings->getClassBookingByMember($member_id);
 			$data['bookingsPast'] = $this->bookings->getClassBookingByMember($member_id);
+			$data['waiting'] = $this->bookings->getAllWaiting($member_id);
 			$data['bookingMember'] = $member_id;
 
 			$rowCount = 0;
