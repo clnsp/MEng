@@ -64,8 +64,12 @@ class Waiting extends CI_Model
     	$query = $this -> db -> get();
     	
     	$max = round($max_attendance/100 * $this->config->item('max_waiting'), 0, PHP_ROUND_HALF_UP);
-    	
-    	return $this->db->count_all_results() >= $max;
+    	if($max < 3){
+        $max = 3;
+      }
+
+
+      return $this->db->count_all_results() >= $max;
 
     }
     
@@ -86,4 +90,4 @@ class Waiting extends CI_Model
       }
       
 
-  }
+    }

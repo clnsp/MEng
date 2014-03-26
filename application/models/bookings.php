@@ -11,14 +11,14 @@ class Bookings extends CI_Model
 {
 	private $class_booking_tbl	= 'class_booking_tbl';			// user accounts
 
-    function __construct()
-    {
-    	parent::__construct();
+	function __construct()
+	{
+		parent::__construct();
 
-    	$ci =& get_instance();
-    	$this->class_booking_tbl = $ci->config->item('db_table_prefix', 'tank_auth').$this->class_booking_tbl;
+		$ci =& get_instance();
+		$this->class_booking_tbl = $ci->config->item('db_table_prefix', 'tank_auth').$this->class_booking_tbl;
 
-    }
+	}
 
 	/**
 	 * Get booking by Id
@@ -256,6 +256,6 @@ class Bookings extends CI_Model
  	
 
 
-      
+ 	
 
-  }
+ }

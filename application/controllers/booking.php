@@ -171,6 +171,7 @@ class booking extends CI_Controller{
 				$classInfo = $this->classes->getClassInformation($b);
 				
 				if($this->waiting->waitingListFull($b, $classInfo['max_attendance'])){
+
 					$this->_bookingFail('There are unfortunately no more spaces on the waiting list.');
 					return;
 				}
@@ -246,6 +247,7 @@ class booking extends CI_Controller{
 			if($_POST['starttime']!=''){
 				$start_time = new DateTime($_POST['starttime']);
 				$start_time = $start_time->format('H:i:00');
+				
 			}else{
 				$start_time = '00:00:00';
 			}

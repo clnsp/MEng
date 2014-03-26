@@ -42,10 +42,10 @@ class Calendar extends CI_Controller{
                     $row_set[] = $new_row; //build an array
                   }
               //  echo json_encode($row_set); //format the array into json data
+                }
               }
-            }
 
-          }
+            }
 
 
 
