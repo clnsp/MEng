@@ -754,6 +754,12 @@ i.square{
 	}
 }
 
+@media (min-width: 768px){
+#booking.admin .container {
+width: 100%;
+}
+}
+
 /* @end */
 
 
