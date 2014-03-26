@@ -1076,3 +1076,7 @@ html.mobile #booking.user_booking #search-panel select{
 #booking .clearinput{
 	cursor: pointer;
 }
+
+html.mobile #booking.login.user .page-header h1{
+	font-size: 25!important;
+}
