@@ -37,7 +37,7 @@ $home_number = array(
 	'size'	=> 30,
 	'class' => 'form-control',
 	'placeholder' => 'Home Number (Excluding 0)',
-);
+	);
 $mobile_number = array(
 	'name'	=> 'mobile_number',
 	'id'	=> 'mobile_number',
@@ -46,7 +46,7 @@ $mobile_number = array(
 	'size'	=> 30,
 	'class' => 'form-control',
 	'placeholder' => 'Mobile Number (Excluding 0)',
-);
+	);
 $twitter = array(
 	'name'	=> 'twitter',
 	'id'	=> 'twitter',
@@ -55,7 +55,7 @@ $twitter = array(
 	'size'	=> 30,
 	'class' => 'form-control',
 	'placeholder' => 'Twitter ID',
-);
+	);
 $password = array(
 	'name'	=> 'password',
 	'id'	=> 'password',
@@ -89,34 +89,34 @@ $user_type = array(
 	);
 
 $radio_student = array(
-    'name'        => 'member_type',
-    'id'          => 'student-radio',
-    'value'       => '1',
-    'checked'     => set_radio('member_type', 1),
-);
+	'name'        => 'member_type',
+	'id'          => 'student-radio',
+	'value'       => '1',
+	'checked'     => set_radio('member_type', 1),
+	);
 
 $radio_staff = array(
-    'name'        => 'member_type',
-    'id'          => 'staff-radio',
-    'value'       => '2',
-    'checked'     => set_radio('member_type', 2),
-);
+	'name'        => 'member_type',
+	'id'          => 'staff-radio',
+	'value'       => '2',
+	'checked'     => set_radio('member_type', 2),
+	);
 
 $radio_student_partner = array(
-    'name'        => 'member_type',
-    'id'          => 'student-partner-radio',
-    'value'       => '3',
-    'checked'     => set_radio('member_type', 3),
-);
+	'name'        => 'member_type',
+	'id'          => 'student-partner-radio',
+	'value'       => '3',
+	'checked'     => set_radio('member_type', 3),
+	);
 
 $radio_staff_partner = array(
-    'name'        => 'member_type',
-    'id'          => 'staff-partner-radio',
-    'value'       => '4',
-    'checked'     => set_radio('member_type', 4),
-);
+	'name'        => 'member_type',
+	'id'          => 'staff-partner-radio',
+	'value'       => '4',
+	'checked'     => set_radio('member_type', 4),
+	);
 
-	
+
 $captcha = array(
 	'name'	=> 'captcha',
 	'id'	=> 'captcha',
@@ -141,7 +141,7 @@ $form = array(
 		
 		<div class="form-group">
 
-<?php echo form_label('User Type *', $user_type['id'], $label); ?>
+			<?php echo form_label('User Type *', $user_type['id'], $label); ?>
 
 			<div class="col-sm-10 input-radio-group btn-group">
 				<button class="btn btn-default" type="button"><?php echo form_radio($radio_student)  ;?>Student</button>
@@ -155,7 +155,7 @@ $form = array(
 		</div>
 		
 		
-			<?php echo form_error($firstname['name']); ?>
+		<?php echo form_error($firstname['name']); ?>
 		<div class="form-group">
 			<?php echo form_label('First Name', $firstname['id'], $label); ?>
 			<div class="col-sm-10">
@@ -183,8 +183,8 @@ $form = array(
 			<?php echo form_label('Home Number', $home_number['id'], $label); ?>
 			<div class="col-sm-10">
 				<div class="input-group">
-				<span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
-				<?php echo form_input($home_number); ?>
+					<span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+					<?php echo form_input($home_number); ?>
 				</div>
 			</div>
 		</div>
@@ -193,8 +193,8 @@ $form = array(
 			<?php echo form_label('Mobile Number', $mobile_number['id'], $label); ?>
 			<div class="col-sm-10">
 				<div class="input-group">
-				<span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
-				<?php echo form_input($mobile_number); ?>
+					<span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
+					<?php echo form_input($mobile_number); ?>
 				</div>
 			</div>
 		</div>
@@ -203,8 +203,8 @@ $form = array(
 			<?php echo form_label('Twitter ID', $twitter['id'], $label); ?>
 			<div class="col-sm-10">
 				<div class="input-group">
-				<span class="input-group-addon"><i class="glyphicon glyphicon-link"></i></span>
-				<?php echo form_input($twitter); ?>
+					<span class="input-group-addon"><i class="glyphicon glyphicon-link"></i></span>
+					<?php echo form_input($twitter); ?>
 				</div>
 			</div>
 		</div>
@@ -249,8 +249,8 @@ $form = array(
 
 		<tr>
 			<td>
-				<div class="recaptcha_only_if_image">Enter the words above</div>
-				<div class="recaptcha_only_if_audio">Enter the numbers you hear</div>
+				<div class="recaptcha_only_if_image">Type what you see</div>
+				<div class="recaptcha_only_if_audio">Type what you hear</div>
 			</td>
 			<td><input type="text" id="recaptcha_response_field" name="recaptcha_response_field" /></td>
 			<td style="color: red;"><?php echo form_error('recaptcha_response_field'); ?></td>
@@ -281,6 +281,6 @@ $form = array(
 	</div>
 
 	<?php echo form_close(); ?>
-	</div>
+</div>
 
 
