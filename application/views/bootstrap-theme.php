@@ -1086,3 +1086,15 @@ html.mobile #booking.user_booking #search-panel select{
 html.mobile #booking.login.user .page-header h1{
 	font-size: 25!important;
 }
+
+
+tr.scanned{
+    background-color:#0C9B00!important;
+}
+
+.bcfade{
+    opacity: 1;
+   transition: background-color 5s ease-out;
+   -moz-transition: background-color 5s ease-out;
+   -webkit-transition: background-color 5s ease-out;
+}

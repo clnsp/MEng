@@ -21,8 +21,15 @@ $.pageManager = (function () {
 		}
 	},
 	
-	retreive = function(){ $.get('index.php/updateClasses' , function(data){
-	 $(".row.list").html(data); $('tr').tooltip();});$(".classes td").on("dblclick", function(){attendee($(this).parent("tr"));});
+	retreive = function(){ 
+		$.get('index.php/updateClasses' , function(data){
+	 		$(".row.list").html(data);
+	 		$('tr').tooltip();
+	 	});
+	 	
+	 	$(".classes td").on("dblclick", function(){
+	 		attendee($(this).parent("tr"));
+	 		});
 	},
 	
 	nextHour = function(){
@@ -61,7 +68,11 @@ $.pageManager = (function () {
 	
 	attendee = function ($row) {
 
-		if($row.hasClass('success')){$attend=0;} else{$attend=1;}
+		if($row.hasClass('success')){
+			$attend=0;
+		}else{
+			$attend=1;
+		}
 		$.post('index.php/member/updateAttendance', { pid:$row.attr('id'),cid: $row.closest("div.panel").attr('id'), at: $attend}, function (data) {
 			$row.toggleClass('success');
 			$row.find('input').prop('checked', $attend).parents('td');
@@ -83,7 +94,10 @@ $.pageManager = (function () {
 	
 	uiControls = function() {
 		$( window ).on("resize", function() {resize()});
-		$(".classes td").on("click", function(){attendee($(this).parent("tr"));});
+		$(".classes td").on("click", function(){
+			attendee($(this).parent("tr").addClass('scanned'));
+			
+		});
 		$(".list").on('selectstart', function (event) {event.preventDefault();});
 		$(".dropdown-menu li").on('click',  function() {
 			$('.'+$(this).attr('id')).toggleClass('hidden');
