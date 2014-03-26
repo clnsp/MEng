@@ -100,10 +100,12 @@ $js = 'class="form-control"';
 
 				<div class="form-group toggleInput hidden">
 					<label class="visible-xs" for="date">Date</label>
-										<div class="input-group">
+					<div class="input-group toggleInput">
 					
 					<?php echo form_input($date); ?>
-					<span class="input-group-addon clearinput"><i class="glyphicon glyphicon-remove"></i></span>
+					<span class="input-group-addon clearinput">
+						<i class="glyphicon glyphicon-remove"></i>
+					</span>
 						
 					</div>		
 				</div>

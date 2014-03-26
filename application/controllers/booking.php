@@ -233,6 +233,7 @@ if(check_member()){
 		$end_date = $end_date->format("Y-m-d");
 		$start_date = $start_date->format("Y-m-d");
 
+
 		if($_POST['starttime']!=''){
 			$start_time = new DateTime($_POST['starttime']);
 			$start_time = $start_time->format('H:i:00');
@@ -261,6 +262,8 @@ if(check_member()){
 			$data['classes'] = $this->classes->getClassesWithTypeAndStartTime($classtypes, $start_date, $end_date, $start_time, $end_time);
 
 		}
+
+
 
 		echo ($this->load->view('pages/search_results', $data, true));
 

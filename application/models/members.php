@@ -59,6 +59,7 @@ class Members extends CI_Model
    $term = strtolower($q);
    
    $this->db->where("LOWER(CONCAT_WS(' ', first_name, second_name)) LIKE '%{$q}%'");
+	$this->db->order_by("first_name", "asc");
    $query = $this -> db -> get($this -> table_name);
 
    return $query;

@@ -279,7 +279,7 @@ class Classes extends CI_Model{
         $this -> db -> where("DATE(class_start_date) >= '$start_date'");
         $this -> db -> where("DATE(class_end_date) <= '$end_date'");
 
-        $this -> db -> where("DATE(class_start_date) > '$now'");
+        $this -> db -> where("class_start_date > CURDATE()");
 
         $this -> db -> join('class_type_tbl', 'class_type_tbl.class_type_id = class_tbl.class_type_id');
         $this -> db -> join('room_tbl', 'room_tbl.room_id = class_tbl.room_id');

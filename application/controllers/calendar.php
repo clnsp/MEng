@@ -22,7 +22,7 @@ class Calendar extends CI_Controller{
           $matched = $this->members->getUserLike($_GET['term'])->result_array();
           
           function my_sort($a,$b){
-          		
+          	
               $leva = levenshtein($_GET['term'], $a['name']);
          	  $levb = levenshtein($_GET['term'], $b['name']);
               
