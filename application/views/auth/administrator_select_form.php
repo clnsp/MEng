@@ -68,3 +68,48 @@ $js = 'class="form-control"';
 		<?php echo form_close(); ?>
 
 	</div>
+<div class="well well-lg  div-center">
+
+		<h2>Create Membership</h2>
+		<div class="row">
+		<!-- CURRENT MEMBERSHIPS -->
+		<div id="memberships" class="col-lg-4">
+			<table class="footable" data-filter="#filter">
+  <thead>
+    <tr>
+      <th data-sort-initial="descending" data-class="expand">
+        Name
+      </th>
+      <th data-sort-ignore="true">
+        Start Date
+      </th>
+      <th data-hide="phone">
+        End Date
+      </th>
+      <th data-hide="phone" data-type="numeric">
+        User Groups
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+  <tr>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>   
+  </tr>  
+  </tbody>
+  </table>
+			
+		
+		
+		
+		</div>
+		
+		<!-- CALANDERS -->
+		<div id="memberships" class="col-lg-6">
+		<div id="date-selector"></div>
+		
+	</div>		
+</div>
+	</div>

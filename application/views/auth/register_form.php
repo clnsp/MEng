@@ -133,22 +133,23 @@ $form = array(
 
 	?>	
 
-	<h1>Registration</h1>
+	<h2>Registration</h2>
 	<p>Lets register you as a member. <br/> Fields marked with * are required.</p>
 	<div class="well well-lg  div-center">
 		<?php echo form_open($this->uri->uri_string(), $form); ?>
-		
+		<?php if(array_key_exists('username',$errors))
+				{ echo('<p class="alert alert-danger text-center"><strong>'.$errors['username'] . '</strong></p><br/>');}?>
 		
 		<div class="form-group">
 
 			<?php echo form_label('User Type *', $user_type['id'], $label); ?>
 
 			<div class="col-sm-10 input-radio-group btn-group">
-				<button class="btn btn-default" type="button"><?php echo form_radio($radio_student)  ;?>Student</button>
-				<button class="btn btn-default" type="button"><?php echo  form_radio($radio_staff); ?>Staff</button>
+				<button class="btn btn-default <?php echo ($radio_student['checked'] ? 'active' : ''); ?>" type="button"><?php echo form_radio($radio_student)  ;?>Student</button>
+				<button class="btn btn-default <?php echo ($radio_staff['checked'] ? 'active' : ''); ?>" type="button"><?php echo  form_radio($radio_staff); ?>Staff</button>
 
-				<button class="btn btn-default" type="button"><?php echo  form_radio($radio_student_partner); ?>Student Partner/Spouse</button>
-				<button class="btn btn-default" type="button"><?php echo  form_radio($radio_staff_partner); ?>Staff Partner/Spouse</button>
+				<button class="btn btn-default" type="button <?php echo ($radio_student_partner['checked'] ? 'active' : ''); ?>"><?php echo  form_radio($radio_student_partner); ?>Student Partner/Spouse</button>
+				<button class="btn btn-default" type="button <?php echo ($radio_staff_partner['checked'] ? 'active' : ''); ?>"><?php echo  form_radio($radio_staff_partner); ?>Staff Partner/Spouse</button>
 
 
 			</div>

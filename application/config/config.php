@@ -17,7 +17,7 @@
 
 
 
-$config['base_url']	= 'https://devweb2013.cis.strath.ac.uk/~xvb09137/MEng';
+$config['base_url']	= 'https://devweb2013.cis.strath.ac.uk/~xvb09151/MEng';
 
 
 
