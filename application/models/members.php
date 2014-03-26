@@ -28,7 +28,7 @@ class Members extends CI_Model
     $this->db->join('member_type_tbl', $this->table_name.'.member_type_id = member_type_tbl.id');
     $this->db->join('membership_type_tbl', $this->table_name.'.membership_type_id = membership_type_tbl.id');
     $this->db->where('verified',1);
-	
+    
     $query = $this->db->get();
     return $query -> result();
   }
@@ -54,12 +54,12 @@ class Members extends CI_Model
   * @return  object
   */
   function getUserLike($q){
-   $this -> db -> select("id, email, CONCAT_WS(' ', first_name, second_name) AS name", FALSE);
+   $this -> db -> select("id, email, LOWER(CONCAT_WS(' ', first_name, second_name)) AS name", FALSE);
 
    $term = strtolower($q);
    
    $this->db->where("LOWER(CONCAT_WS(' ', first_name, second_name)) LIKE '%{$q}%'");
-	$this->db->order_by("first_name", "asc");
+   $this->db->order_by("first_name", "asc");
    $query = $this -> db -> get($this -> table_name);
 
    return $query;
@@ -105,13 +105,13 @@ class Members extends CI_Model
  }
  
  function getRegistrations(){
-	$this->db->select($this->table_name.'.id,username,first_name,second_name,email,activated,banned,type,created'); 
-	$this -> db -> from($this -> table_name);
-    $this->db->join('member_type_tbl', $this->table_name.'.member_type_id = member_type_tbl.id');
-    $this->db->join('membership_type_tbl', $this->table_name.'.membership_type_id = membership_type_tbl.id');
-	$this->db->where('verified',0);
-    $query = $this->db->get();
-    return $query -> result();
+   $this->db->select($this->table_name.'.id,username,first_name,second_name,email,activated,banned,type,created'); 
+   $this -> db -> from($this -> table_name);
+   $this->db->join('member_type_tbl', $this->table_name.'.member_type_id = member_type_tbl.id');
+   $this->db->join('membership_type_tbl', $this->table_name.'.membership_type_id = membership_type_tbl.id');
+   $this->db->where('verified',0);
+   $query = $this->db->get();
+   return $query -> result();
  }
 
 

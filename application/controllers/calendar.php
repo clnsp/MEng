@@ -9,7 +9,7 @@ class Calendar extends CI_Controller{
     $this->load->model('classes');
     $this->load->helper('book');
 
-}
+  }
 
     /**
      * Get users that match a partial term. Used for autocomplete
@@ -19,31 +19,33 @@ class Calendar extends CI_Controller{
         $this->load->model('members');
 
         if (isset($_GET['term'])){
-          $matched = $this->members->getUserLike($_GET['term'])->result_array();
-          
+
+          $term = strtolower($_GET['term']);
+          $matched = $this->members->getUserLike($term)->result_array();
+          print_r($matched);
           function my_sort($a,$b){
           	
-              $leva = levenshtein($_GET['term'], $a['name']);
-         	  $levb = levenshtein($_GET['term'], $b['name']);
-              
-          if ($leva==$levb) return 0;
-      
-          return ($leva<$levb)?-1:1;
-          }
-         
-          usort($matched,"my_sort");
-        
-      foreach ($matched as $match){
-        $new_row['label']=htmlentities(stripslashes($match['name']));
-        $new_row['user_id']=htmlentities(stripslashes($match['id']));
-        $new_row['email']=htmlentities(stripslashes($match['email']));
-                    $row_set[] = $new_row; //build an array
-                }
-                echo json_encode($row_set); //format the array into json data
-            }
-        }
+            $leva = levenshtein($term, $a['name']);
+            $levb = levenshtein($term, $b['name']);
 
-    }
+            if ($leva==$levb) return 0;
+
+            return ($leva<$levb)?-1:1;
+          }
+
+          usort($matched,"my_sort");
+
+          foreach ($matched as $match){
+            $new_row['label']=htmlentities(stripslashes($match['name']));
+            $new_row['user_id']=htmlentities(stripslashes($match['id']));
+            $new_row['email']=htmlentities(stripslashes($match['email']));
+                    $row_set[] = $new_row; //build an array
+                  }
+              //  echo json_encode($row_set); //format the array into json data
+              }
+            }
+
+          }
 
 
 
@@ -54,8 +56,8 @@ class Calendar extends CI_Controller{
       if (isset($_GET['class'])){
         $q = strtolower($_GET['class']);
         echo json_encode($this->bookings->getBookingAttendants($q));       
+      }
     }
-}
 
 
 
@@ -70,10 +72,10 @@ class Calendar extends CI_Controller{
           $b = strtolower($_POST['class_booking_id']);
 
           $this->_addMember($b, $m);
-      }    
-  }
+        }    
+      }
 
-}
+    }
 
     /**
     * Add a member to a class
@@ -84,29 +86,29 @@ class Calendar extends CI_Controller{
         echo "This class is booked out";
         header('HTTP/ 305 Class booked out');
         return;
-    }
+      }
 
-    if(isclassinPast($booking_id)){
+      if(isclassinPast($booking_id)){
         echo "This class is past";
         return;
-    }
-    $classDetails = $this->classes->getClassInformation($booking_id);
+      }
+      $classDetails = $this->classes->getClassInformation($booking_id);
 
-    if(bookedOut($member_id, new DateTime($classDetails['class_start_date']), new DateTime($classDetails['class_end_date']))){
+      if(bookedOut($member_id, new DateTime($classDetails['class_start_date']), new DateTime($classDetails['class_end_date']))){
         echo "This user is already booked into a class at this time";
         return;
-    }
+      }
 
 
 
-    if($this->bookings->addMember($booking_id, $member_id)){
+      if($this->bookings->addMember($booking_id, $member_id)){
         emailMemberAddedToClass($member_id, $classDetails);
         echo "Member added";
-    } else{
+      } else{
         echo "<br> Member not added to class.";
-    }
+      }
 
-}
+    }
 
 
     /**
@@ -124,10 +126,10 @@ class Calendar extends CI_Controller{
             $this->bookings->removeMember($b, $m);
             emailMemberRemovedClass($m, $b);
             
+          }
         }
+      }
     }
-}
-}
 
     /**
      * Cancel a class
@@ -146,27 +148,27 @@ class Calendar extends CI_Controller{
           if(isclassinPast($bid)){
             echo "Cannot change the status of a class in the past";
             return;  
-        }
-        if (isset($_POST['cancel_message'])){
+          }
+          if (isset($_POST['cancel_message'])){
             $msg = $_POST['cancel_message'];
-        }
+          }
 
-        $iscancelled = $this->classes->isClassCancelled($bid);          
+          $iscancelled = $this->classes->isClassCancelled($bid);          
 
-        if($cancelled == $iscancelled){
+          if($cancelled == $iscancelled){
             $this->changeClassStatus($bid, $msg, !$cancelled);
             if($cancelled){
               echo('Message sent, class reopened');
 
-          }
-          else{
+            }
+            else{
               echo 'Message sent, class cancelled';
+            }
           }
+        }
       }
-  }
-}
 
-}
+    }
 
 
     /**
@@ -184,14 +186,14 @@ class Calendar extends CI_Controller{
 
      if($cancel){
       "Your class has been cancelled. " + $msg;
-  }else{
+    }else{
       "Your class has been reopened. " + $msg;
-  }
+    }
 
-  foreach ($emails as $email){   
+    foreach ($emails as $email){   
       send_email($email['email'],'Update to your class',$msg );
+    }
   }
-}
 
 
     /**
@@ -211,19 +213,19 @@ class Calendar extends CI_Controller{
           $d = $this->classes->getClassesWithRoomBetween($s, $e, $params['room']);
           echo json_encode($d);
 
-      }else{
+        }else{
           echo json_encode(($this->Classes->getClassesBetween($s, $e)));
+
+        }
 
       }
 
-  }
+      else{
+        echo "not set";     
+        echo json_encode(($this->Calendar->fetchAllData()));
 
-  else{
-    echo "not set";     
-    echo json_encode(($this->Calendar->fetchAllData()));
-
-}
-}
+      }
+    }
 
     /**
      * Add guest to class
@@ -237,31 +239,31 @@ class Calendar extends CI_Controller{
 
         if (isset($_POST['guest_first_name'])){
           $first = strtolower($_POST['guest_first_name']);       
-      } else{
+        } else{
           return;
-      }
+        }
 
-      if (isset($_POST['guest_last_name'])){
+        if (isset($_POST['guest_last_name'])){
           $last = strtolower($_POST['guest_last_name']);       
-      } else{
+        } else{
           return;
-      }
+        }
 
-      if (isset($_POST['guest_email'])){
+        if (isset($_POST['guest_email'])){
           $email = strtolower($_POST['guest_email']);       
-      } 
-      else{
+        } 
+        else{
           return;
-      }
+        }
 
-      if (isset($_POST['guest_phone'])){
+        if (isset($_POST['guest_phone'])){
           $phone = strtolower($_POST['guest_phone']);       
-      } 
-      else{
+        } 
+        else{
           return;
-      }
+        }
 
-      $data = array(
+        $data = array(
           'membership_type_id' => 2,
           'first_name' => $first ,
           'second_name' => $last,
@@ -269,20 +271,20 @@ class Calendar extends CI_Controller{
           'home_number' =>$phone
           );
 
-      $newuserid = $this->users->create_user($data);
-      $newuserid = $newuserid['user_id'];
-      if(!is_null($newuserid)){
+        $newuserid = $this->users->create_user($data);
+        $newuserid = $newuserid['user_id'];
+        if(!is_null($newuserid)){
           $this->_addMember($class_id, $newuserid);
-      }else{
+        }else{
           echo "Error adding new user";
+        }
+
       }
 
+    }
+
+
   }
-
-}
-
-
-}
 
 /*
  * Get paramters from the url
