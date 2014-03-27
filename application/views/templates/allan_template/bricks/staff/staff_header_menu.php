@@ -7,7 +7,7 @@
 	<a class="ajax" href="<?php echo base_url()?>index.php/users">Users</a>
 </li>
 
-<li class="<?php if($page_title=='rooms')echo 'active';?> ajax">
+<li class="<?php if($page_title=='room')echo 'active';?> ajax">
 	<a  class="ajax" href="<?php echo base_url()?>index.php/rooms">Rooms</a>
 </li>
 
