@@ -127,6 +127,10 @@ class Auth extends CI_Controller
 	 */
 	function register()
 	{
+	  $this->load->Model('Comms_Preference');
+	  $prefs = $this->Comms_Preference->getPreferences();
+    $data['comm_prefs'] = $prefs;
+	  
 		if ($this->tank_auth->is_logged_in()) {									// logged in
 			redirect('');
 
@@ -229,7 +233,7 @@ class Auth extends CI_Controller
 				$data['fname'] = $ver['givenName'][0];
 				$data['sname'] = $ver['sn'][0];
 				$data['mail'] = $ver['mail'][0];
-				parse_temp('DS Registeration', $this->load->view('auth/register_form', $data, true));
+				parse_temp('DS Registration', $this->load->view('auth/register_form', $data, true));
 			}			
 		}
 	}
@@ -394,11 +398,15 @@ class Auth extends CI_Controller
 	  	$data['errors'] = array();
 
 	  	$this->load->Model('Members');
+
+	  	$member = $this->Members->getStaffUsers();
+	  	$data['member'] = $member;
+
 	  	$admin = $this->Members->getAdminUsers();
 	  	$data['admin'] = $admin;
 
 	  	$super = $this->Members->getSuperAdminUsers();
-	  	$data['super'] = $super;
+	  	$data['super'] = $super; 
 
 			if ($this->form_validation->run()) {								// validation ok
 				if ($this->tank_auth->change_password(

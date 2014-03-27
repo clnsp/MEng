@@ -47,6 +47,7 @@ if(!$this->tank_auth->is_admin()){ ?>
      <!-- Admin Manage Scripts -->
 
      <script type="text/javascript" src="<?php echo base_url();?>assets/js/jquery.minicolors.js"></script>
+     <script type="text/javascript" src="<?php echo base_url();?>assets/js/manage-permissions.js"></script>
 
      <!-- Patrick Test Scripts -->
      <script type="text/javascript" src="<?php echo base_url();?>assets/js/bootstrap-timepicker.js"></script>
@@ -76,7 +77,6 @@ if(!$this->tank_auth->is_admin()){ ?>
      <?php } ?>
      
      <script type="text/javascript" src="<?php echo base_url();?>assets/js/user-booking.js"></script>
-
      
 
      

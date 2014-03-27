@@ -52,11 +52,11 @@ class Member extends CI_Controller{
 		$new_details['first_name']       = $_POST['first_name'];
 		$new_details['second_name']      = $_POST['second_name'];
 		//$new_details['email']            = $_POST['email'];
-			if($_POST['comms_preference']==2){
+			if($_POST['comms_preference'] == 2){
 			//TWITTER VALIDATION
 			}
 
-			if($_POST['comms_preference']==1){
+			if($_POST['comms_preference'] == 1){
 			// SMS VALIDATION
 			}
 			$new_details['home_number']      = $_POST['home_number'];
@@ -99,7 +99,7 @@ class Member extends CI_Controller{
 				$_POST['changes'] = $new_details;
 				if(isset($_POST['changes'])){
 					foreach ($supers as $s) {
-		      //echo $this->members->updateUser($s, $new_details);
+		            	echo $this->members->updateUser($s, $new_details);
 					}
 				}
 			}

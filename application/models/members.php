@@ -151,8 +151,18 @@ class Members extends CI_Model
    $this->db->update('class_booking_tbl', $data); 
  }
 
- function getAdminUsers()
- {
+function getStaffUsers()
+{
+  $this -> db -> select($this -> table_name.'.id, first_name, second_name, email, home_number, mobile_number, twitter, comms_preference, activated, banned, ban_reason');
+  $this -> db -> from($this -> table_name);
+  $this -> db -> where($this -> table_name.'.member_type_id', '2');
+
+  $query = $this -> db -> get();
+  return $query->result();
+}
+
+function getAdminUsers()
+{
   $this -> db -> select($this -> table_name.'.id, first_name, second_name, email, home_number, mobile_number, twitter, comms_preference, activated, banned, ban_reason');
   $this -> db -> from($this -> table_name);
   $this -> db -> where($this -> table_name.'.member_type_id', '7');
