@@ -234,7 +234,8 @@ class Tank_auth
 			if (!is_null($res = $this->ci->users->create_user($data, !$email_activation))) {
 				$data['user_id'] = $res['user_id'];
 
-				$this->members->updateCommsPreference(strtolower($data['user_id']), $comms);
+				$this->ci->load->model('members');
+				$this->ci->members->updateCommsPreference(strtolower($res['user_id']), $comms);
 				$data['password'] = $password;
 				unset($data['last_ip']);
 				return $data;

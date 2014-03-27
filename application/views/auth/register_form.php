@@ -76,13 +76,15 @@ $confirm_password = array(
 	'placeholder' => 'Confirm Password',
 	);
 
-$comms_pref = array(
-	'name' => 'comms_preference',
-	'id' => 'comms_preference',
+$comms_preference = array(
+	'name'	=> 'comms_preference',
+	'id'	=> 'comms_preference',
+	'size' 	=> 30,
+	'class' => 'form-control',
 	);
 
 //$comm_prefs_options = array('1'  => 'Email only','2'  => ' Email and SMS','3'  => 'Email, SMS and Twitter',);
-foreach ($comm_prefs as $p)	$prefs[$p->id] = $p->comms_preference;
+foreach ($comm_prefs as $p)	$prefs[$p->id] = $p->id;
 
 $user_type = array(
 	'name' => 'member_type',
@@ -228,7 +230,7 @@ $form = array(
 		</div>
 		
 		<div class="form-group">
-		<?php echo form_label('Communication', $comms_pref['id'], $label); ?>
+		<?php echo form_label('Communication', $comms_preference['id'], $label); ?>
 			<div class="col-sm-10">
 				<?php
 					foreach ($comm_prefs as $p) {

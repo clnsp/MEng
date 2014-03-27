@@ -15,7 +15,7 @@
 |
 */
 
-$config['base_url']	= 'https://devweb2013.cis.strath.ac.uk/~gmb09157/MEng';
+$config['base_url']	= 'https://devweb2013.cis.strath.ac.uk/~mlb09152/MEng';
 
 /*
 |--------------------------------------------------------------------------
