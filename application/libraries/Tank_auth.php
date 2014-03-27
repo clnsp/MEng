@@ -192,7 +192,14 @@ class Tank_auth
 	function create_user($username, $first_name, $second_name, $home_number, $mobile_number, $email, $twitter, $password, $member_type, $membership_type, $comms_preferences, $email_activation, $verified)
 	{
 		if ((strlen($username) > 0) AND !$this->ci->users->is_username_available($username)) {
+		
+			if(strlen($username) ==8){
+			$this->error = array('username' => 'auth_dsusername_in_use');
+			} else if(strlen($username) ==10){
+			$this->error = array('username' => 'auth_spouse_dsusername_in_use');
+			}else{
 			$this->error = array('username' => 'auth_username_in_use');
+			}
 
 		} elseif (!$this->ci->users->is_email_available($email)) {
 			$this->error = array('email' => 'auth_email_in_use');
