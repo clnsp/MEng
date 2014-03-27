@@ -80,7 +80,7 @@ $captcha = array(
 							</div>
 							
 							<div class="form-group">
-								<div class="recaptcha_only_if_image">Type what you see/div>
+								<div class="recaptcha_only_if_image">Type what you see</div>
 								<div class="recaptcha_only_if_audio">Type what you hear</div>
 								<input type="text" class="form-control" id="recaptcha_response_field" name="recaptcha_response_field" />
 								<?php echo form_error('recaptcha_response_field'); ?>

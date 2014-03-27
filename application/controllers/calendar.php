@@ -1,6 +1,9 @@
 <?php
 class Calendar extends CI_Controller{
 
+	private $term = '';			// user accounts
+
+
   function __construct()  {
     parent::__construct();
     
@@ -9,7 +12,26 @@ class Calendar extends CI_Controller{
     $this->load->model('classes');
     $this->load->helper('book');
 
+
   }
+
+	
+	/**
+	* Compare function for levenshtein sort
+	* @param string
+	* @param string
+	* @return int
+	*/
+	function _my_sort($a,$b){      
+	    $leva = levenshtein($this-> term, $a['name']);
+	    $levb = levenshtein($this-> term, $b['name']);
+	
+	    if ($leva==$levb) return 0;
+	
+	    return ($leva<$levb)?-1:1;
+    }
+
+
 
     /**
      * Get users that match a partial term. Used for autocomplete
@@ -19,21 +41,12 @@ class Calendar extends CI_Controller{
         $this->load->model('members');
 
         if (isset($_GET['term'])){
+        
+          $this-> term = strtolower($_GET['term']);
 
-          $term = strtolower($_GET['term']);
-          $matched = $this->members->getUserLike($term)->result_array();
-          print_r($matched);
-          function my_sort($a,$b){
-          	
-            $leva = levenshtein($term, $a['name']);
-            $levb = levenshtein($term, $b['name']);
-
-            if ($leva==$levb) return 0;
-
-            return ($leva<$levb)?-1:1;
-          }
-
-          usort($matched,"my_sort");
+          $matched = $this->members->getUserLike($this-> term)->result_array();
+                    
+          usort($matched,array($this,"_my_sort")); 
 
           foreach ($matched as $match){
             $new_row['label']=htmlentities(stripslashes($match['name']));
@@ -41,7 +54,7 @@ class Calendar extends CI_Controller{
             $new_row['email']=htmlentities(stripslashes($match['email']));
                     $row_set[] = $new_row; //build an array
                   }
-              //  echo json_encode($row_set); //format the array into json data
+                echo json_encode($row_set); //format the array into json data
                 }
               }
 

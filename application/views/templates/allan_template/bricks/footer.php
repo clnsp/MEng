@@ -75,9 +75,10 @@ if(!$this->tank_auth->is_admin()){ ?>
      
      <?php } ?>
      
-     <script type="text/javascript" src="<?php echo base_url();?>assets/js/user-booking.js"></script>
-
+     <?php if($page_title=="user_booking" || $page_title=="bookings"){ ?>
+     	<script type="text/javascript" src="<?php echo base_url();?>assets/js/user-booking.js"></script>
      
+     <?php } ?>
 
      
      <?php if($page_title=="manage-sports-hall"){ ?>
