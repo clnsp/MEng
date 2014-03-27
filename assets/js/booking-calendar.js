@@ -168,6 +168,7 @@ var ModalHeader = new function(){
     render_color(event.color);
     render_room(event.room_id, event.room);
     render_attendance_numbers(event.attending, event.max_attendance);
+    editModalBtn.removeClass('active');
 
   }
 
@@ -197,12 +198,12 @@ var ModalHeader = new function(){
 
     /*all day no time*/
     if(exists(allDay) && allDay){
-      eventdate1.text(s_date);
+      eventdate1.append($('<span class="date">').text(s_date));
       eventdate2.text("All Day Event");
     }else{
       /* within one day */
       if(s_date == e_date){
-        eventdate1.text(s_date);
+        eventdate1.append($('<span class="date">').text(s_date));
         eventdate2.append(s_time).append(' to ').append(e_time);
       }
       /*split over multiple days*/
@@ -242,8 +243,17 @@ var ModalHeader = new function(){
   init();
 
   var sendForm = function(){
-    $.post( siteUrl + "calendar/", function( data ) {
-      $( ".result" ).html( data );
+    $.post( siteUrl + "calendar/editEvent", { 
+      class_id: eventid,
+      start: eventdate2.find('.start').val(),
+      end: eventdate2.find('.end').val(),
+      date: eventdate1.find('.date').html()
+    },
+    function(data) {
+      alert(data);
+      eventModal.modal('hide');
+      $('#calendar').fullCalendar('refetchEvents');
+
     });
   }
 
@@ -251,31 +261,51 @@ var ModalHeader = new function(){
     var contents = span.html();
     var classes = span.attr('class');
     var input = $('<input class="form-control input-sm editable" data-previous="' + contents +'" type="text" value=\"' + contents + '" />');
-
-    span.replaceWithAndReturnNew(input.clone().addClass(classes)).focus();
+    
     if(span.hasClass('time')){
       input.timepicker({
         minuteStep: 15,
         showSeconds: false,
         showMeridian: false,
       });
-
     }
+    span.replaceWithAndReturnNew(input.addClass(classes));
+    
+  }
+
+  var replaceInput = function(input){
+    var contents = input.val();
+    var classes = input.attr('class');
+    var span = $('<span>').html(contents);
+
+    input.replaceWithAndReturnNew(span.clone().addClass(classes).toggleClass('input-sm form-control'));
   }
 
   editModalBtn.click(function(){
 
     if($(this).hasClass('active')){
-      sendForm();
-      return;
-    }
-    eventdate2.find('span').each(function(){
+
+      bootbox.confirm("Would you like to save these changes?", function(result) {
+        if(result){
+          sendForm();
+
+        }else{
+          eventdate2.find('input').each(function(){
+            replaceInput($(this));
+          });
+        }
+      }); 
+
+    }else{
+     eventdate2.find('span').each(function(){
       replaceSpan($(this));
     });
+   }
+   
 
-    $(this).toggleClass('active');
+   $(this).toggleClass('active');
 
-  });
+ });
 
 }
 

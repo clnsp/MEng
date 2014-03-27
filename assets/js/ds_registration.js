@@ -18,7 +18,8 @@ register = (function(){
 		}
 	},
 	/* Event Listener */
-	$("input[name='member_type']").change(function(){
-		toggle($(this));
+
+	$('.input-radio-group  button').on('click', function(){
+		toggle($(this).children());
 	});
 })();

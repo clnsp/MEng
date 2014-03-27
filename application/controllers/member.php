@@ -52,11 +52,11 @@ class Member extends CI_Controller{
 		$new_details['first_name']       = $_POST['first_name'];
 		$new_details['second_name']      = $_POST['second_name'];
 		//$new_details['email']            = $_POST['email'];
-			if($_POST['comms_preference']==2){
+			if($_POST['comms_preference'] == 2){
 			//TWITTER VALIDATION
 			}
 
-			if($_POST['comms_preference']==1){
+			if($_POST['comms_preference'] == 1){
 			// SMS VALIDATION
 			}
 			$new_details['home_number']      = $_POST['home_number'];
@@ -98,7 +98,7 @@ class Member extends CI_Controller{
 				$_POST['changes'] = $new_details;
 				if(isset($_POST['changes'])){
 					foreach ($supers as $s) {
-		      //echo $this->members->updateUser($s, $new_details);
+		            	echo $this->members->updateUser($s, $new_details);
 					}
 				}
 			}
@@ -224,6 +224,21 @@ class Member extends CI_Controller{
 				$this->load->model('members');
 				$user = $this->members->getUserByID($_POST['id']);
 				$this->members->deleteUserAccount($_POST['id']);			
+			}
+		}
+	}
+	
+	function createMembership(){
+		if(check_admin()){
+			if(isset($_POST['membership'])){
+			$Membership = json_decode($_POST['membership']);
+			$this->load->model('members');
+$start = new DateTime($Membership->start);
+$end = new DateTime($Membership->end);
+			$ID = $this->members->createNewMembership($Membership->name, $start->format('Y-m-d'), $end->format('Y-m-d'));
+			for($i=0;$i<count($Membership->types);$i++){
+				echo($this->members->createMembertoMembershipLink($Membership->types[$i],$ID));
+			}
 			}
 		}
 	}

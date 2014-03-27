@@ -174,6 +174,12 @@ class booking extends CI_Controller{
 					$this->_bookingFail('There are unfortunately no more spaces on the waiting list.');
 					return;
 				}
+
+				if(isMemberBooked($m, $b)){
+
+					$this->_bookingFail('You have aleady booked this class.');
+					return;
+				}
 				
 				
 				if(!isclassBookedOut($b)){

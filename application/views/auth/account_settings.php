@@ -6,7 +6,7 @@
 $this->load->library('tank_auth');
 
 if ($this->tank_auth->is_super_admin()) {
-  echo('<li><a href="admin">Admin</a></li>');
+  echo('<li><a href="admin">Permissions</a></li>');
 }
 ?>
 	<li><a href="load_details">Information</a></li>

@@ -70,6 +70,19 @@ class Members extends CI_Model
    return $this->db->delete($this -> table_name, array('id' => $id)); 
  }
 
+
+function getAllMemberships(){
+ $this -> db -> select("id,membership_type, start_date, end_date");
+   $query = $this -> db -> get('membership_type_tbl');
+   return  $query->result();
+}
+
+function getAllMemberTypes(){
+ $this -> db -> select("id, type");
+   $query = $this -> db -> get('member_type_tbl');
+   return  $query->result();
+}
+
  /**
  * Get member type ids
  * @return array
@@ -90,6 +103,13 @@ class Members extends CI_Model
    $insert_id = $this->db->insert_id();
    return $insert_id;
  }
+
+function createMembertoMembershipLink($memberID, $shipID){
+ $data = array('member_type_id' => $memberID ,'membership_type_id' => $shipID);
+   $this->db->insert('member_membership_tbl', $data); 
+   $insert_id = $this->db->insert_id();
+   return $insert_id;
+}
 
  /**
  * Get member email
@@ -153,8 +173,18 @@ class Members extends CI_Model
    $this->db->update('class_booking_tbl', $data); 
  }
 
- function getAdminUsers()
- {
+function getStaffUsers()
+{
+  $this -> db -> select($this -> table_name.'.id, first_name, second_name, email, home_number, mobile_number, twitter, comms_preference, activated, banned, ban_reason');
+  $this -> db -> from($this -> table_name);
+  $this -> db -> where($this -> table_name.'.member_type_id', '2');
+
+  $query = $this -> db -> get();
+  return $query->result();
+}
+
+function getAdminUsers()
+{
   $this -> db -> select($this -> table_name.'.id, first_name, second_name, email, home_number, mobile_number, twitter, comms_preference, activated, banned, ban_reason');
   $this -> db -> from($this -> table_name);
   $this -> db -> where($this -> table_name.'.member_type_id', '7');

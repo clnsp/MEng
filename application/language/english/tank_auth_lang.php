@@ -6,6 +6,10 @@ $lang['auth_incorrect_login'] = 'Incorrect login';
 $lang['auth_incorrect_email_or_username'] = 'Login or email doesn\'t exist';
 $lang['auth_email_in_use'] = 'Email is already used by another user. Please choose another email.';
 $lang['auth_username_in_use'] = 'Username already exists. Please choose another username.';
+// OVERRIDE FOR DS
+$lang['auth_dsusername_in_use'] = 'You have already registered an account with us.';
+$lang['auth_spouse_dsusername_in_use'] = 'You have already registered an account with us. (One spouse per account)';
+
 $lang['auth_current_email'] = 'This is your current email';
 $lang['auth_incorrect_captcha'] = 'Your confirmation code does not match the one in the image.';
 $lang['auth_captcha_expired'] = 'Your confirmation code has expired. Please try again.';

@@ -1,16 +1,16 @@
 <?php
 class Calendar extends CI_Controller{
 
-	private $term = '';			// user accounts
+    private $term = '';			// user accounts
 
 
-  function __construct()  {
-    parent::__construct();    
-    $this->load->Model('classes');
-    $this->load->Model('bookings');
-    $this->load->model('classes');
-    $this->load->helper('book');
-  }
+    function __construct()  {
+        parent::__construct();    
+        $this->load->Model('classes');
+        $this->load->Model('bookings');
+        $this->load->model('classes');
+        $this->load->helper('book');
+    }
 
 
 	/**
@@ -20,13 +20,13 @@ class Calendar extends CI_Controller{
 	* @return int
 	*/
 	function _my_sort($a,$b){      
-   $leva = levenshtein($this-> term, $a['name']);
-   $levb = levenshtein($this-> term, $b['name']);
+        $leva = levenshtein($this-> term, $a['name']);
+        $levb = levenshtein($this-> term, $b['name']);
 
-   if ($leva==$levb) return 0;
+        if ($leva==$levb) return 0;
 
-   return ($leva<$levb)?-1:1;
- }
+        return ($leva<$levb)?-1:1;
+    }
 
 
 
@@ -50,12 +50,12 @@ function getUsers(){
         $new_row['user_id']=htmlentities(stripslashes($match['id']));
         $new_row['email']=htmlentities(stripslashes($match['email']));
                     $row_set[] = $new_row; //build an array
-                  }
+                }
                 echo json_encode($row_set); //format the array into json data
-              }
             }
+        }
 
-          }
+    }
 
 
 
@@ -66,8 +66,8 @@ function getUsers(){
     if (isset($_GET['class'])){
       $q = strtolower($_GET['class']);
       echo json_encode($this->bookings->getBookingAttendants($q));       
-    }
   }
+}
 
 
 
@@ -82,10 +82,10 @@ function getUsers(){
         $b = strtolower($_POST['class_booking_id']);
 
         $this->_addMember($b, $m);
-      }    
-    }
+    }    
+}
 
-  }
+}
 
   /**
   * Add a member to a class
@@ -96,29 +96,29 @@ function getUsers(){
       echo "This class is booked out";
       header('HTTP/ 305 Class booked out');
       return;
-    }
+  }
 
-    if(isclassinPast($booking_id)){
+  if(isclassinPast($booking_id)){
       echo "This class is past";
       return;
-    }
-    $classDetails = $this->classes->getClassInformation($booking_id);
+  }
+  $classDetails = $this->classes->getClassInformation($booking_id);
 
-    if(bookedOut($member_id, new DateTime($classDetails['class_start_date']), new DateTime($classDetails['class_end_date']))){
+  if(bookedOut($member_id, new DateTime($classDetails['class_start_date']), new DateTime($classDetails['class_end_date']))){
       echo "This user is already booked into a class at this time";
       return;
-    }
+  }
 
 
 
-    if($this->bookings->addMember($booking_id, $member_id)){
+  if($this->bookings->addMember($booking_id, $member_id)){
       emailMemberAddedToClass($member_id, $classDetails);
       echo "Member added";
-    } else{
+  } else{
       echo "<br> Member not added to class.";
-    }
-
   }
+
+}
 
 
   /**
@@ -136,10 +136,10 @@ function getUsers(){
           $this->bookings->removeMember($b, $m);
           emailMemberRemovedClass($m, $b);
           
-        }
       }
-    }
   }
+}
+}
 
   /**
    * Cancel a class
@@ -158,27 +158,27 @@ function getUsers(){
         if(isclassinPast($bid)){
           echo "Cannot change the status of a class in the past";
           return;  
-        }
-        if (isset($_POST['cancel_message'])){
+      }
+      if (isset($_POST['cancel_message'])){
           $msg = $_POST['cancel_message'];
-        }
+      }
 
-        $iscancelled = $this->classes->isClassCancelled($bid);          
+      $iscancelled = $this->classes->isClassCancelled($bid);          
 
-        if($cancelled == $iscancelled){
+      if($cancelled == $iscancelled){
           $this->changeClassStatus($bid, $msg, !$cancelled);
           if($cancelled){
             echo('Message sent, class reopened');
 
-          }
-          else{
-            echo 'Message sent, class cancelled';
-          }
         }
-      }
+        else{
+            echo 'Message sent, class cancelled';
+        }
     }
+}
+}
 
-  }
+}
 
 
   /**
@@ -188,21 +188,21 @@ function getUsers(){
    * @param bool
    */
   function changeClassStatus($bid, $msg, $cancel) {
-   $this->load->helper('email');
+     $this->load->helper('email');
 
-   $this->classes->cancelClass($bid, $cancel);
+     $this->classes->cancelClass($bid, $cancel);
 
-   $emails = $this->bookings->getBookingEmails($bid);
+     $emails = $this->bookings->getBookingEmails($bid);
 
-   if($cancel){
-    "Your class has been cancelled. " + $msg;
-  }else{
-    "Your class has been reopened. " + $msg;
-  }
+     if($cancel){
+        "Your class has been cancelled. " + $msg;
+    }else{
+        "Your class has been reopened. " + $msg;
+    }
 
-  foreach ($emails as $email){   
-    send_email($email['email'],'Update to your class',$msg );
-  }
+    foreach ($emails as $email){   
+        send_email($email['email'],'Update to your class',$msg );
+    }
 }
 
 
@@ -210,7 +210,7 @@ function getUsers(){
   * Generates json for the calendar
    * Expects two  parameters in the url start and end
    * Both of form unix timestamp
-   */
+       */
   function index(){
     $params = getQueryStringParams();
 
@@ -223,19 +223,19 @@ function getUsers(){
         $d = $this->classes->getClassesWithRoomBetween($s, $e, $params['room']);
         echo json_encode($d);
 
-      }else{
+    }else{
         echo json_encode(($this->Classes->getClassesBetween($s, $e)));
 
-      }
-
     }
 
-    else{
-      echo "not set";     
-      echo json_encode(($this->Calendar->fetchAllData()));
+}
 
-    }
-  }
+else{
+  echo "not set";     
+  echo json_encode(($this->Calendar->fetchAllData()));
+
+}
+}
 
   /**
    * Add guest to class
@@ -249,31 +249,31 @@ function getUsers(){
 
       if (isset($_POST['guest_first_name'])){
         $first = strtolower($_POST['guest_first_name']);       
-      } else{
+    } else{
         return;
-      }
+    }
 
-      if (isset($_POST['guest_last_name'])){
+    if (isset($_POST['guest_last_name'])){
         $last = strtolower($_POST['guest_last_name']);       
-      } else{
+    } else{
         return;
-      }
+    }
 
-      if (isset($_POST['guest_email'])){
+    if (isset($_POST['guest_email'])){
         $email = strtolower($_POST['guest_email']);       
-      } 
-      else{
+    } 
+    else{
         return;
-      }
+    }
 
-      if (isset($_POST['guest_phone'])){
+    if (isset($_POST['guest_phone'])){
         $phone = strtolower($_POST['guest_phone']);       
-      } 
-      else{
+    } 
+    else{
         return;
-      }
+    }
 
-      $data = array(
+    $data = array(
         'membership_type_id' => 2,
         'first_name' => $first ,
         'second_name' => $last,
@@ -281,25 +281,69 @@ function getUsers(){
         'home_number' =>$phone
         );
 
-      $newuserid = $this->users->create_user($data);
-      $newuserid = $newuserid['user_id'];
-      if(!is_null($newuserid)){
+    $newuserid = $this->users->create_user($data);
+    $newuserid = $newuserid['user_id'];
+    if(!is_null($newuserid)){
         $this->_addMember($class_id, $newuserid);
-      }else{
+    }else{
         echo "Error adding new user";
-      }
     }
-  }
+}
 }
 
-/**
-* Edit a class details
-*/
-function editEvent(){
-  if(isset($_POST['class_id']) && isset($_POST['class_date'] && isset($_POST['start']&& isset($_POST['end']))){
 
-  }
+    /**
+    * Edit a class details
+    */
+    function editEvent(){
+        if(isset($_POST['class_id']) && isset($_POST['date']) && isset($_POST['start']) && isset($_POST['end'])){
+
+            $this->load->Helper('comms');
+
+            $start_date = new DateTime($_POST['date']. " " . $_POST['start']);
+            $end_date = new DateTime($_POST['date']. " " . $_POST['end']);
+
+            if($start_date > $end_date){
+                echo "Start time cannot be grater than end time.";
+                return;
+            }
+
+            if($start_date < new DateTime){
+                echo "Start time cannot be in the past";
+                return;
+            }
+
+            $data = array(
+                'class_start_date' => $start_date->format("Y-m-d H:i:s"),
+                'class_end_date'    => $end_date->format("Y-m-d H:i:s")
+                );
+
+            $this->classes->updateClass($_POST['class_id'], $data);
+            if($this->db->_error_number()==0){
+                echo "Saved";
+
+                $users = $this->bookings->getBookingAttendantsIDs($_POST['class_id']);
+                $emails = array();
+                foreach ($users as $key => $user) {
+                    array_push($emails, $user['member_id']);
+                }
+
+                $classDetails = $this->classes->getClassInformation($_POST['class_id']);
+                $msg = 'The following class start time has changed: ' . $classDetails['class_type'] . ' on '. $start_date->format("jS F Y") . ' starting at '. $start_date->format("H:i") . ' in the following room: '. $classDetails['room'];
+
+                contact_user($emails, $msg);
+            }else{
+                echo "An error occurred";
+            }
+            return;
+        }
+        else{
+            echo "Missing parameters";
+        }
+    }
 }
+
+
 
 /*
  * Get paramters from the url

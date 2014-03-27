@@ -474,6 +474,17 @@ class Classes extends CI_Model{
         return $query->result_array();
     }
 
+    /**
+    * Update a class instance
+    * @param int
+    * @param array
+    */
+    function updateClass($class_id, $data){
+        $this->db->where('class_id', $class_id);
+        $this->db->update($this -> class_tbl, $data);
+
+    }   
+
 }
 
 
