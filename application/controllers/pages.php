@@ -235,7 +235,7 @@
 
 				$data['sport_types'] = $this->classtype->getSportstype();
 
-				parse_temp($page, $this->load->view('pages/'.$page, $data, true));	
+				parse_temp($page, $this->load->view('pages/member/'.$page, $data, true));	
 
 			}
 
