@@ -91,6 +91,20 @@
       return count($bookedOut) > 0;
     }
 
+    /**
+    * Check if member already booked classes
+    * @param int
+    * @param DateTime
+    * @param DateTime
+    * @return bool
+    */
+    function isMemberBooked($user_id, $class_id){
+      $ci = get_instance();
+      $booked = $ci->bookings
+      ->getClassForMember($user_id, $class_id);
+
+      return count($booked) > 0;
+    }
 
 
 

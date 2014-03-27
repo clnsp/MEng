@@ -44,7 +44,7 @@ class Waiting extends CI_Model
 	* @return bool
 	*/
 	function addMemberWaitingList($class_id, $member_id){ 
-
+		
 		$this->db->insert($this -> waiting_pool_tbl, array('member_id' => $member_id, 'class_id' => $class_id)); 	
 
 		return ($this->db->_error_number() == 0);
