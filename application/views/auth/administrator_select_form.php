@@ -68,12 +68,12 @@ $js = 'class="form-control"';
 		<?php echo form_close(); ?>
 
 	</div>
+<!-- CUSTOM MEMBERSHIP SECTION -->
 <div class="well well-lg  div-center">
-
 		<h2>Create Membership</h2>
 		<div class="row">
 		<!-- CURRENT MEMBERSHIPS -->
-		<div id="memberships" class="col-lg-4">
+		<div id="memberships" class="col-lg-6">
 			<table class="footable" data-filter="#filter">
   <thead>
     <tr>
@@ -83,10 +83,10 @@ $js = 'class="form-control"';
       <th data-sort-ignore="true">
         Start Date
       </th>
-      <th data-hide="phone">
+      <th >
         End Date
       </th>
-      <th data-hide="phone" data-type="numeric">
+      <th data-type="numeric">
         User Groups
       </th>
     </tr>
@@ -109,7 +109,24 @@ $js = 'class="form-control"';
 		<!-- CALANDERS -->
 		<div id="memberships" class="col-lg-6">
 		<div id="date-selector"></div>
-		
-	</div>		
+		  <div class="form-group">
+    <label for="MembershipName">Membership Name</label>
+    <input type="text" class="form-control" id="MembershipName" placeholder="Enter Membership Name">
+  </div>
+  <div class="form-group">
+    <label for="exampleInputEmail1">Member Account Types</label>
+<select multiple class="form-control">
+  <option>1</option>
+  <option>2</option>
+  <option>3</option>
+  <option>4</option>
+  <option>5</option>
+</select>
+<span class="help-block">Hold the control key to select multiple members.</span>
+  </div>	
+
+				<input type="button" name="change" value="Create Membership" class="btn btn-primary">				<input type="button" name="reset" value="Reset" class="btn btn-primary">
+			</div>
+</div>	
 </div>
 	</div>

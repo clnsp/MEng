@@ -148,8 +148,8 @@ $form = array(
 				<button class="btn btn-default <?php echo ($radio_student['checked'] ? 'active' : ''); ?>" type="button"><?php echo form_radio($radio_student)  ;?>Student</button>
 				<button class="btn btn-default <?php echo ($radio_staff['checked'] ? 'active' : ''); ?>" type="button"><?php echo  form_radio($radio_staff); ?>Staff</button>
 
-				<button class="btn btn-default" type="button <?php echo ($radio_student_partner['checked'] ? 'active' : ''); ?>"><?php echo  form_radio($radio_student_partner); ?>Student Partner/Spouse</button>
-				<button class="btn btn-default" type="button <?php echo ($radio_staff_partner['checked'] ? 'active' : ''); ?>"><?php echo  form_radio($radio_staff_partner); ?>Staff Partner/Spouse</button>
+				<button class="btn btn-default <?php echo ($radio_student_partner['checked'] ? 'active' : ''); ?>" type="button"><?php echo  form_radio($radio_student_partner); ?>Student Partner/Spouse</button>
+				<button class="btn btn-default <?php echo ($radio_staff_partner['checked'] ? 'active' : ''); ?>" type="button"><?php echo  form_radio($radio_staff_partner); ?>Staff Partner/Spouse</button>
 
 
 			</div>

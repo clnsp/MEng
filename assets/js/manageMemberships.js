@@ -69,6 +69,6 @@ datepicker = (function() {
 		getDates : getDates,
 		alternate: alternate,
 	};
-draw();
-})()
+})();
+datepicker.draw();
 })();
