@@ -94,9 +94,10 @@ if ( ! function_exists('parse_temp')){
 	function getNextClasses($st=1,$ft=1){
 		$ci = get_instance();
 		if(check_admin()){				
-			$h = gmdate('H');				
-			$s = gmdate('Y-m-d ').($h-$st). ':00:00'; // GET FOR CURRENT TIME  
-			$e = gmdate('Y-m-d ').($h+$ft). ':00:00'; 
+			$h = gmdate('H');
+
+			$s = gmdate("Y-m-d H:i:s", strtotime("-$st hours"));// GET FOR CURRENT TIME
+			$e = gmdate("Y-m-d H:i:s", strtotime("+$ft hours")); 
 			
 			$ci->load->Model('Rooms');
 			$ci->load->Model('Categories');
