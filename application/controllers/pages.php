@@ -196,7 +196,7 @@
 		 */
 		public function manage($page = 'manage'){
 
-			if(check_admin()){
+			if(isSuperAdmin()){
 				$this->load->Model('Categories');
 				$this->load->Model('classes');
 
