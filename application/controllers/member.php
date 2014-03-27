@@ -261,9 +261,11 @@ $end = new DateTime($Membership->end);
 		if(check_admin()){
 			if(isset($_POST['id']) && isset($_POST['message'])){
 				$this->load->helper('comms');
-				echo json_encode(contact_user(array($_POST['id']),$_POST['message']));
+				contact_user(array($_POST['id']),$_POST['message']);
+//echo json_encode( )
 			}
 		}
+echo("OUT");
 	}
 }
 

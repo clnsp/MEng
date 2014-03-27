@@ -149,6 +149,7 @@ function createMembertoMembershipLink($memberID, $shipID){
      $this->db->update('users', $changes); 
      return "4:Success";
    }
+
    function getCommsPref($id)
    {
      $this -> db ->select('comms_preference_id');
@@ -158,6 +159,16 @@ function createMembertoMembershipLink($memberID, $shipID){
      $query = $this->db->get();
      return $query->result();
    }
+
+function haveCommsPref($id,$com)
+{
+	$this->db->select('id');
+	$this->db->where('member_id', $id);
+	$this->db->where('comms_preference_id', $com);
+	$this -> db -> from('user_comms_preference_tbl');
+	$query = $this->db->get();
+	return $query->num_rows();
+}
    
   /**
   * Get Specfic Value 

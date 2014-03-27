@@ -36,7 +36,7 @@ if(!$this->tank_auth->is_admin()){ ?>
      <script src="<?php echo base_url();?>assets/datatab/js/user_custom.js"></script>
      <?php }?>
 
-     <?php if($page_title=="DS Registeration"){?>
+     <?php if($page_title=="DS Registration"){?>
      <script src="<?php echo base_url();?>assets/js/ds_registration.js"></script>
      <?php }?>
 

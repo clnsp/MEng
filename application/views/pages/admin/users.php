@@ -1,4 +1,5 @@
 <!--Basic Loading-->
+
 <div class="row" id="member-loading">
 	<div class="col-sm-1 col-md-offset-5" style="text-align: center;">
 		<i class="glyphicon glyphicon-refresh" style="display: inline-block; width: 100%;"></i><br/>
