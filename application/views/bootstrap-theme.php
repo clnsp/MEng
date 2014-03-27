@@ -755,9 +755,9 @@ i.square{
 }
 
 @media (min-width: 768px){
-#booking.admin .container {
-width: 100%;
-}
+	#booking.admin .container {
+		width: 100%;
+	}
 }
 
 /* @end */
@@ -1088,13 +1088,25 @@ html.mobile #booking.login.user .page-header h1{
 }
 
 
-tr.scanned{
-    background-color:#0C9B00!important;
+tr.success{
+	background-color:#DFF0D8;
 }
 
-.bcfade{
-    opacity: 1;
-   transition: background-color 5s ease-out;
-   -moz-transition: background-color 5s ease-out;
-   -webkit-transition: background-color 5s ease-out;
-}
+/*.table>tbody>tr.success>td{
+	background-color:#DFF0D8!important;
+	}*/
+
+	tr.scanned{
+		background-color:#0C9B00!important;
+	}
+
+	.bcfade{
+		opacity: 1;
+		transition: background-color 5s ease-out;
+		-moz-transition: background-color 5s ease-out;
+		-webkit-transition: background-color 5s ease-out;
+	}
+
+	.class-panel .table>tbody>tr.success>td{
+		background-color: inherit;
+	}

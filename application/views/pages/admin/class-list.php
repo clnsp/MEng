@@ -30,7 +30,7 @@
         </thead>
         <tbody>
           <?php $i=1; foreach($class->attendees as $attendee){ ?>
-          <tr id="<?php echo($attendee->member_id);?>" class="fadeBC class-member <?php if($attendee->attended == 1){echo ('success');}?>" data-toggle="tooltip" data-placement="top" title="<?php echo strtolower($attendee->email);?>"> 
+          <tr id="<?php echo($attendee->member_id);?>" class="class-member <?php if($attendee->attended == 1){echo ('success');}?>" data-toggle="tooltip" data-placement="top" title="<?php echo strtolower($attendee->email);?>"> 
             <td><?php echo($i); ?></td>
             <td><?php echo ucfirst($attendee->first_name); ?></td>
             <td><?php echo ucfirst($attendee->second_name); ?></td>
