@@ -750,7 +750,6 @@ $data['memberTypes'] = $this->Members->getAllMemberTypes();
 	 */
 	function _send_email($type, $email, &$data)
 	{
-		echo($email);
 		$this->load->library('email');
 		$fromEmail = "ouremail@sent.com";
 //		$this->email->from($this->config->item('webmaster_email', 'tank_auth'), $this->config->item('website_name', 'tank_auth'));
