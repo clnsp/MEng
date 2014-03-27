@@ -104,6 +104,13 @@ function getAllMemberTypes(){
    return $insert_id;
  }
 
+function createMembertoMembershipLink($memberID, $shipID){
+ $data = array('member_type_id' => $memberID ,'membership_type_id' => $shipID);
+   $this->db->insert('member_membership_tbl', $data); 
+   $insert_id = $this->db->insert_id();
+   return $insert_id;
+}
+
  /**
  * Get member email
  * @return string

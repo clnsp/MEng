@@ -3,14 +3,16 @@ manageMemberships = (function(){
 membership = (function() {
 	
 	onSubmit = function (){
-	//GET DATES
-	console.log(datepicker.getDates());
-// GET NAME
-	console.log($('#MembershipName').val());
-// GET OPTIONS
-	console.log($('#MemberTypes option:selected'));
-// SEND TO SERVER
-	
+	$memb = {};
+$memb.start = datepicker.getDates()[0];
+$memb.end = datepicker.getDates()[1];
+$memb.name = $('#MembershipName').val();
+$memb.types = $('#MemberTypes').val();
+console.log($memb);
+
+$.post( siteUrl+"member/createMembership",  { "membership": JSON.stringify($memb)}, function( data ) {
+  alert( "Data Loaded: " + data );
+});
 
 	},
 

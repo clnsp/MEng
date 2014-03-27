@@ -102,12 +102,7 @@ $js = 'class="form-control"';
 <?php } ?>
   </tbody>
   </table>
-			
-		
-		
-		
 		</div>
-		
 		<!-- CALANDERS -->
 		<div id="memberships" class="col-lg-6">
 		<div id="date-selector"></div>
@@ -117,7 +112,7 @@ $js = 'class="form-control"';
   </div>
   <div class="form-group">
     <label for="exampleInputEmail1">Member Account Types</label>
-<select multiple id="MemberTypes" class="form-control">
+<select id="MemberTypes" class="form-control" multiple="multiple">
 <?php foreach($memberTypes as $m) { ?>
   <option value="<?php echo($m->id);?>"><?php echo($m->type);?></option>
 <?php } ?>
