@@ -156,11 +156,29 @@ $('#booking').on('click', '#event-cancel-class-btn, #event-uncancel-class-btn', 
   	
   	getDropCategories();
   	
-  	$('html').on('click',  '#category-dropdown .dropdown-menu.multi-select li', function (e) {
-  		getDropCategories();
-  		e.stopPropagation();
-  	  $('#calendar').fullCalendar('rerenderEvents');
-  	});
+  	$('#body-wrapper').on('click',  '#category-dropdown .dropdown-menu.multi-select li', function (e) {
+  		if(!$(this).hasClass('toggle')){
+	  		e.preventDefault();
+	  		e.stopPropagation();
+	  		
+	  		$(this).toggleClass('selected');
+	  		
+	  		getDropCategories();
+  			$('#calendar').fullCalendar('rerenderEvents');
+  		
+  		}
+  	}).on('click', '.dropdown-menu.multi-select button.toggle.on', function(e) {
+  	 		$(this).toggleClass('on off');
+  	 		$(this).parents('ul.dropdown-menu.multi-select').find('li:not(.selected)').each(function(){
+  	 			$(this).click();
+  	 		})
+  	 	}).on('click', '.dropdown-menu.multi-select button.toggle.off', function(e) {
+  	 		$(this).toggleClass('on off');
+  	 		$(this).parents('ul.dropdown-menu.multi-select').find('li.selected').each(function(){
+  	 			$(this).click();
+  	 		})
+  	 	});
+  	 	
   
   }
   

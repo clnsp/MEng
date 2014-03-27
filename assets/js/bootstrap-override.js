@@ -14,7 +14,7 @@
  var MultiSelectDropdowns = new function() {
  	$('#page-body').on('click', '.dropdown-menu.multi-select li', function(e) {
  		e.preventDefault();
- 		//e.stopPropagation();
+ 		e.stopPropagation();
  		$(this).toggleClass('selected');
  	}).on('click', '.dropdown-menu.multi-select button.toggle.on', function(e) {
  		$(this).toggleClass('on off');
