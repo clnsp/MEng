@@ -112,7 +112,7 @@ $super_js = 'id="new_supers" class="form-control"';
 		<div class="row">
 		<!-- CURRENT MEMBERSHIPS -->
 		<div id="memberships" class="col-lg-6">
-			<table class="footable" data-filter="#filter">
+			<table class="footable table" data-filter="#filter">
   <thead>
     <tr>
       <th data-sort-initial="descending" data-class="expand">
