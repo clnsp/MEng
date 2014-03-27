@@ -127,9 +127,7 @@ class Auth extends CI_Controller
 	 */
 	function register()
 	{
-	  $this->load->Model('Comms_Preference');
-	  $prefs = $this->Comms_Preference->getPreferences();
-    $data['comm_prefs'] = $prefs;
+
 	  
 		if ($this->tank_auth->is_logged_in()) {									// logged in
 			redirect('');
@@ -190,8 +188,8 @@ class Auth extends CI_Controller
 					$this->form_validation->set_value('twitter'),
 					$this->form_validation->set_value('password'),
 					$this->form_validation->set_value('member_type'),
+					$this->form_validation->set_value('new_preferences'),
 					2,					// GUEST
-					$this->form_validation->set_value('comms_preference'),
 					$email_activation,
 					1))) {									// success
 					$data['site_name'] = $this->config->item('website_name', 'tank_auth');
@@ -229,6 +227,11 @@ class Auth extends CI_Controller
 			}
 			$data['captcha_registration'] = $captcha_registration;
 			$data['use_recaptcha'] = $use_recaptcha;
+
+			$this->load->Model('Comms_Preference');
+	  		$prefs = $this->Comms_Preference->getPreferences();
+      		$data['comm_prefs'] = $prefs;
+      		
 			if($ver)
 			{
 				$data['fname'] = $ver['givenName'][0];
@@ -445,8 +448,8 @@ class Auth extends CI_Controller
             $members = $this->Members->getUserByID($this->tank_auth->get_user_id());
             $data['member'] = $members['0'];
 
-            //$member_prefs = $this->Members->getUserCommsPrefs($this->tank_auth->get_user_id());
-            //$data['member_prefs'] = $member_prefs;
+            $member_prefs = $this->Members->getCommsPref($this->tank_auth->get_user_id());
+            $data['member_prefs'] = $member_prefs;
             
             $prefs = $this->Comms_Preference->getPreferences();
             $data['comm_prefs'] = $prefs;

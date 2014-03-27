@@ -3,6 +3,7 @@
 class Members extends CI_Model
 {
   private $table_name         = 'users';      // user accounts
+  private $prefs_table_name   = 'user_comms_preference_tbl';
   private $profile_table_name = 'user_profiles';  // user profiles
 
   function __construct()
@@ -12,6 +13,7 @@ class Members extends CI_Model
     $ci =& get_instance();
     $this -> table_name         = $ci -> config -> item('db_table_prefix', 'tank_auth').$this -> table_name;
     $this -> profile_table_name = $ci -> config -> item('db_table_prefix', 'tank_auth').$this -> profile_table_name;
+    $this -> prefs_table_name   = $ci -> config -> item('db_table_prefix', 'tank_auth').$this -> prefs_table_name;
   }
 
   /**
@@ -67,7 +69,7 @@ class Members extends CI_Model
  
  
  function deleteUserAccount($id){
-   return $this->db->delete($this -> table_name, array('id' => $id)); 
+   return $this->db->delete($this -> table_name, array('id' => $id));
  }
 
  /**
@@ -127,6 +129,15 @@ class Members extends CI_Model
      $this->db->update('users', $changes); 
      return "4:Success";
    }
+   function getCommsPref($id)
+   {
+     $this -> db ->select('comms_preference_id');
+     $this -> db -> where('member_id', $id);
+     $this -> db -> from('user_comms_preference_tbl');
+     
+     $query = $this->db->get();
+     return $query->result();
+   }
    
   /**
   * Get Specfic Value 
@@ -181,6 +192,16 @@ function getSuperAdminUsers()
 
   $query = $this -> db -> get();   
   return $query->result();
+}
+
+function updateCommsPreference($user_id, $new_comms_prefs)
+{
+  $this->db->delete($this -> prefs_table_name, array('member_id' => $user_id));
+
+  foreach ($new_comms_prefs as $p) {
+    $data = array('member_id' => $user_id, 'comms_preference_id' => $p);
+    $this->db->insert($this -> prefs_table_name, $data);
+  }
 }
 
 }

@@ -52,20 +52,22 @@ class Member extends CI_Controller{
 		$new_details['first_name']       = $_POST['first_name'];
 		$new_details['second_name']      = $_POST['second_name'];
 		//$new_details['email']            = $_POST['email'];
-			if($_POST['comms_preference'] == 2){
+			/*if($_POST['comms_preference'] == 2){
 			//TWITTER VALIDATION
 			}
 
 			if($_POST['comms_preference'] == 1){
 			// SMS VALIDATION
 			}
+			*/
 			$new_details['home_number']      = $_POST['home_number'];
 			$new_details['mobile_number']    = $_POST['mobile_number'];
 			$new_details['twitter']          = $_POST['twitter'];
-			$new_details['comms_preference'] = $_POST['comms_preference'];
+			//$new_details['comms_preference'] = $_POST['comms_preference'];
 
 			
 			$_POST['changes'] = $new_details;
+			$this->members->updateCommsPreference(strtolower($this->tank_auth->get_user_id()), $_POST['new_preferences']);
 			
 			if(isset($_POST['changes'])){
 				echo $this->members->updateUser(strtolower($this->tank_auth->get_user_id()), array_map('strtolower',$_POST['changes']));
