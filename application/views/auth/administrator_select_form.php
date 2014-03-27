@@ -92,12 +92,14 @@ $js = 'class="form-control"';
     </tr>
   </thead>
   <tbody>
-  <tr>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td></td>   
+<?php foreach ($memberships as $m){ ?>
+  <tr <?php echo('id="'.$m->id.'"'); ?>>
+  <td><?php echo($m->membership_type);?></td>
+  <td><?php echo($m->start_date); ?></td>
+  <td><?php echo($m->end_date); ?></td>
+  <td><?php ?></td>   
   </tr>  
+<?php } ?>
   </tbody>
   </table>
 			
@@ -115,17 +117,15 @@ $js = 'class="form-control"';
   </div>
   <div class="form-group">
     <label for="exampleInputEmail1">Member Account Types</label>
-<select multiple class="form-control">
-  <option>1</option>
-  <option>2</option>
-  <option>3</option>
-  <option>4</option>
-  <option>5</option>
+<select multiple id="MemberTypes" class="form-control">
+<?php foreach($memberTypes as $m) { ?>
+  <option value="<?php echo($m->id);?>"><?php echo($m->type);?></option>
+<?php } ?>
 </select>
 <span class="help-block">Hold the control key to select multiple members.</span>
   </div>	
 
-				<input type="button" name="change" value="Create Membership" class="btn btn-primary">				<input type="button" name="reset" value="Reset" class="btn btn-primary">
+				<input id="create" type="button" name="change" value="Create Membership" class="btn btn-primary">				<input type="button" name="reset" value="Reset" class="btn btn-primary">
 			</div>
 </div>	
 </div>

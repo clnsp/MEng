@@ -406,6 +406,10 @@ class Auth extends CI_Controller
 	  	$super = $this->Members->getSuperAdminUsers();
 	  	$data['super'] = $super;
 
+	// GET ALL POSSIBLE MEMBERSHIPS
+ 		$data['memberships'] = $this->Members->getAllMemberships();
+$data['memberTypes'] = $this->Members->getAllMemberTypes();
+
 			if ($this->form_validation->run()) {								// validation ok
 				if ($this->tank_auth->change_password(
 					$this->form_validation->set_value('old_password'),

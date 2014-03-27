@@ -1,5 +1,25 @@
 manageMemberships = (function(){
 
+membership = (function() {
+	
+	onSubmit = function (){
+	//GET DATES
+	console.log(datepicker.getDates());
+// GET NAME
+	console.log($('#MembershipName').val());
+// GET OPTIONS
+	console.log($('#MemberTypes option:selected'));
+// SEND TO SERVER
+	
+
+	},
+
+	$('#create').on('click', function(){onSubmit();});
+
+})();
+
+
+
 // CALANDER
 datepicker = (function() {
 
