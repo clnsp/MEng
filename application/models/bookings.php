@@ -80,6 +80,23 @@ class Bookings extends CI_Model
 	}
 
 	/**
+	 * Get specific class bookings by Member
+	 *
+	 * @return	object
+	 */
+	function getClassForMember($member_id, $class_id){
+
+		$this -> db -> select("*");
+		$this -> db -> from($this -> class_booking_tbl);
+		$this -> db -> where('member_id', $member_id);
+		$this -> db -> where('class_id', $class_id);
+		$query = $this -> db -> get();
+
+		return $query -> result_array();
+
+	}
+
+	/**
 	 * Get booking by Class Id
 	 *
 	 * @param	int

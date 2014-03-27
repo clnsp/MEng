@@ -138,7 +138,7 @@ $form = array(
 	<p>Lets register you as a member. <br/> Fields marked with * are required.</p>
 	<div class="well well-lg  div-center">
 		<?php echo form_open($this->uri->uri_string(), $form); ?>
-		<?php if(array_key_exists('username',$errors))
+		<?php if(isset($errors) && array_key_exists('username',$errors))
 				{ echo('<p class="alert alert-danger text-center"><strong>'.$errors['username'] . '</strong></p><br/>');}?>
 		
 		<div class="form-group">

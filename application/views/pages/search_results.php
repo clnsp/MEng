@@ -50,14 +50,23 @@ foreach($classes as $row): ?>
 				$hidden = array(
 					'class_id' =>  $row['class_id']
 				);
-			}
-				echo form_hidden($hidden);
-		
+
 			if(isClassBookedOut($row['class_id'])){
 			echo form_submit('submit', 'Book', "class='btn btn-warning'");
 			}else{
 			echo form_submit('submit', 'Book', "class='btn btn-primary'");
 			}
+
+			}
+
+			if(isset($row['is_sport'])){
+
+			echo form_submit('submit', 'Book', "class='btn btn-primary'");		
+				
+			}
+				echo form_hidden($hidden);
+		
+
 		?>
 	</td>
 	<?php echo form_close(); ?>
