@@ -1087,7 +1087,9 @@ html.mobile #booking.login.user .page-header h1{
 	font-size: 25!important;
 }
 
-
+.bootstrap-timepicker-widget{
+	z-index:10000004;
+}
 tr.success{
 	background-color:#DFF0D8;
 }

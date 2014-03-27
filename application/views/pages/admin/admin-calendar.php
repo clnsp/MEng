@@ -46,13 +46,12 @@
 						<h3 class="modal-title" id="event-title">Class Title</h3>
 					</div>
 					<div class="col-xs-4">
-
 						<i id="eventColor" class="pull-right glyphicon glyphicon-stop"></i>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-xs-8">
-						<h5 id="event-date-1" class="modal-title"></h5>
+						<h5 id="event-date-1" class="modal-title"></h5> 
 					</div>
 					<div class="col-xs-4">
 						<h5 class="clearfix pull-right modal-title">
@@ -61,7 +60,12 @@
 					</div>
 					<div class="row">
 						<div class="col-xs-8">
+							<?php if(isSuperAdmin()){?>
+							<i id="edit-modal" class="btn btn-sm pull-left btn-default glyphicon glyphicon-pencil pull-right"></i>
+							<?php }?>
 							<h5 id="event-date-2" class="modal-title"></h5>
+
+
 						</div>
 						<div id="event-location" class="col-xs-4 text-right">
 							<span id="" ></span>
