@@ -230,23 +230,26 @@ $form = array(
 
 
 			<div class="form-group">
-				<div id="recaptcha_image"></div>
-			</td>
-			<td>
-				<a href="javascript:Recaptcha.reload()">Get another CAPTCHA</a>
-				<div class="recaptcha_only_if_image"><a href="javascript:Recaptcha.switch_type('audio')">Get an audio CAPTCHA</a></div>
-				<div class="recaptcha_only_if_audio"><a href="javascript:Recaptcha.switch_type('image')">Get an image CAPTCHA</a></div>
-			</td>
+				<div  class="pull-left" id="recaptcha_image"></div>
+			
+			
+		<div class="btn-group-vertica pull-left">
+									<a class="btn btn-default" alt="Get another CAPTCHA" href="javascript:Recaptcha.reload()"><i class="glyphicon glyphicon-refresh"></i></a>
+									<div class="recaptcha_only_if_image"><a alt ="Get an audio CAPTCHA" class="btn btn-default" href="javascript:Recaptcha.switch_type('audio')"><i class="glyphicon glyphicon-volume-up"></i></a></div>
+									<div class="recaptcha_only_if_audio"><a alt="Get an image CAPTCHA" class="btn btn-default"href="javascript:Recaptcha.switch_type('image')"><i class="glyphicon glyphicon-picture"></i></a></div>
+								</div>
+			
 		</div>
 
 
 		<tr>
-			<td>
-				<div class="recaptcha_only_if_image">Enter the words above</div>
-				<div class="recaptcha_only_if_audio">Enter the numbers you hear</div>
-			</td>
-			<td><input type="text" id="recaptcha_response_field" name="recaptcha_response_field" /></td>
-			<td style="color: red;"><?php echo form_error('recaptcha_response_field'); ?></td>
+		<div class="form-group">
+								<div class="recaptcha_only_if_image">Type what you see</div>
+								<div class="recaptcha_only_if_audio">Type what you hear</div>
+								<input type="text" id="recaptcha_response_field" name="recaptcha_response_field" />
+								<td style="color: red;"><?php echo form_error('recaptcha_response_field'); ?></td>
+																<script>var RecaptchaOptions = {theme: 'custom', custom_theme_widget: 'recaptcha_widget'};</script>
+<script type="text/javascript" src="https://www.google.com/recaptcha/api/challenge?k=6LdW2uoSAAAAAPMDeZJTD7NIsJ6gdKRKKmcbQ_0Z"></script>
 			<?php echo $recaptcha_html; ?>
 		</tr>
 		<?php } else { ?>
