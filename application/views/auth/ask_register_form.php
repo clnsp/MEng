@@ -229,7 +229,11 @@ $form = array(
 			if ($use_recaptcha) { ?>
 
 
+		<div class = "row">
+		<div class="col-md-1"></div>
+		<div class="col-md-1"></div>
 			<div class="form-group">
+			<div class="col-sm-5">
 				<div  class="pull-left" id="recaptcha_image"></div>
 			
 			
@@ -240,18 +244,25 @@ $form = array(
 								</div>
 			
 		</div>
+		</div>
+	</div>
 
+<div class = "row">
+			<div class="col-md-1"></div>
+		<div class="col-md-1"></div>
 
-		<tr>
 		<div class="form-group">
-								<div class="recaptcha_only_if_image">Type what you see</div>
-								<div class="recaptcha_only_if_audio">Type what you hear</div>
-								<input type="text" id="recaptcha_response_field" name="recaptcha_response_field" />
+		<div class="col-sm-5">
+								<div class="recaptcha_only_if_image"><b>Type What You See *</b></div>
+								<div class="recaptcha_only_if_audio"><b>Type What You Hear *</b></div>
+								<input type="text" class="form-control" id="recaptcha_response_field" name="recaptcha_response_field" />
 								<td style="color: red;"><?php echo form_error('recaptcha_response_field'); ?></td>
-																<script>var RecaptchaOptions = {theme: 'custom', custom_theme_widget: 'recaptcha_widget'};</script>
+								</div>
+							</div>
+															<script>var RecaptchaOptions = {theme: 'custom', custom_theme_widget: 'recaptcha_widget'};</script>
 <script type="text/javascript" src="https://www.google.com/recaptcha/api/challenge?k=6LdW2uoSAAAAAPMDeZJTD7NIsJ6gdKRKKmcbQ_0Z"></script>
 			<?php echo $recaptcha_html; ?>
-		</tr>
+
 		<?php } else { ?>
 		<tr>
 			<td colspan="3">
