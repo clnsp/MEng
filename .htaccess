@@ -5,3 +5,13 @@ RewriteCond $1 !^(index\.php|(.*)\.swf|forums|images|css|downloads|jquery|js|rob
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ ./index.php?$1 [L,QSA]
+
+
+#DirectoryIndex index.php
+#RewriteEngine on
+
+#RewriteCond $1 !^(index\.php|(.*)\.swf|forums|images|css|downloads|jquery|js|robots\.txt|favicon\.ico)
+#RewriteCond %{REQUEST_FILENAME} !-f
+#RewriteCond %{REQUEST_FILENAME} !-d
+#RewriteRule ^(.*)$ /~xvb09137/MEng/index.php?$1 [L,QSA]
+

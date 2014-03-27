@@ -1,5 +1,3 @@
-
-
 <div class="container">
 
 	<?php 
@@ -29,4 +27,5 @@
 
 <?php endforeach; ?>
 
+</div>
 </div>

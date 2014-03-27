@@ -21,8 +21,15 @@ $.pageManager = (function () {
 		}
 	},
 	
-	retreive = function(){ $.get('index.php/updateClasses' , function(data){
-	 $(".row.list").html(data); $('tr').tooltip();});$(".classes td").on("dblclick", function(){attendee($(this).parent("tr"));});
+	retreive = function(){ 
+		$.get('index.php/updateClasses' , function(data){
+			$(".row.list").html(data);
+			$('tr').tooltip();
+		});
+
+		$(".classes td").on("dblclick", function(){
+			attendee($(this).parent("tr"));
+		});
 	},
 	
 	nextHour = function(){
@@ -58,15 +65,53 @@ $.pageManager = (function () {
 		if (j == 3 && i != 13) { return i + "rd"; }
 		return i + "th";
 	},
-	
-	attendee = function ($row) {
 
-		if($row.hasClass('success')){$attend=0;} else{$attend=1;}
-		$.post('index.php/member/updateAttendance', { pid:$row.attr('id'),cid: $row.closest("div.panel").attr('id'), at: $attend}, function (data) {
-			$row.toggleClass('success');
-		});	
+	timerDone = function(tr){
+		tr.addClass('bcfade').removeClass('scanned');
+		window.setTimeout(removeFade, 5000, tr);
+	},
+
+	removeFade = function(tr){
+		tr.removeClass('bcfade');
 	},
 	
+	attendee = function ($row, $scanned) {
+
+		if($row.hasClass('success')){
+			$attend=0;
+			if($scanned){
+				return;
+			}
+		}else{
+			$attend=1;
+			$row.addClass('attended');
+		}
+
+		if($scanned){
+			$row.addClass('scanned');
+		}
+
+
+		$.post('index.php/member/updateAttendance', { 
+			pid:$row.attr('id'),
+			cid: $row.closest("div.panel").attr('id'),
+			at: $attend
+		},
+		function (data) {
+			$row.toggleClass('success');
+			$row.find('input').prop('checked', $attend).parents('td');
+
+
+			if($scanned){
+				if($row.hasClass('attended')){
+					window.setTimeout(timerDone, 5000, $row);
+				}			
+			}
+
+
+		});	
+	},
+
 	setTimer = function(i){
 		//http://www.angelsystems.net/Beyond/Wizard/InfoTech/Quest.aspx?wizMode=View&FileID=27&FileTitle=Refresh+A+Page+Every+30+Minutes+On+Hour+Or+Half+An+Hour&FileCategory=JavaScript&HwizMode=SEARCH&wizCategoryID=204&wizKeywords=0&iCurrentListPage=1
 		var now = new Date();
@@ -74,55 +119,58 @@ $.pageManager = (function () {
 		var seconds = now.getSeconds();
 		if(i==0){
 		setTimeout('nextHour()',(((60 - (minutes % 60) - ((seconds>0)?1:0)) * 60) + (60 - seconds)) * 1000); // Every Hour
-		}else{
+	}else{
 		setTimeout('nextReg()',(((10 - (minutes % 10) - ((seconds>0)?1:0)) * 60) + (60 - seconds)) * 1000); // Every 10 Min
-		}var reading = !1, chars = [], timeout = 300;
-	},
-	
-	uiControls = function() {
-		$( window ).on("resize", function() {resize()});
-		$(".classes td").on("dblclick", function(){attendee($(this).parent("tr"));});
-		$(".list").on('selectstart', function (event) {event.preventDefault();});
-		$(".dropdown-menu li").on('click',  function() {
-			$('.'+$(this).attr('id')).toggleClass('hidden');
-			$('.'+$(this).attr('id')).children('.row').toggleClass('visible-print').toggleClass('hidden-print');
-			$('.'+$(this).attr('id')).children('.panel').toggleClass('hidden-print')
-		});
-		setTimer(0);
-		setTimer(2);
-		$('tr').tooltip();
-	},
+	}var reading = !1, chars = [], timeout = 300;
+},
 
-	eanCalcCsum = function(a) {
-	  var b = 0, c = 1;
-	  for (pos = a.length - 2;0 <= pos;pos--) {
-	    b += parseInt(a.charAt(pos)) * (1 + 2 * (c++ % 2));
-	  }
-	  return(10 - b % 10) % 10;
+uiControls = function() {
+	$( window ).on("resize", function() {resize()});
+	$(".classes td").on("click", function(){
+		attendee($(this).parent("tr"));
+
+	});
+	$(".list").on('selectstart', function (event) {event.preventDefault();});
+	$(".dropdown-menu li").on('click',  function() {
+		$('.'+$(this).attr('id')).toggleClass('hidden');
+		$('.'+$(this).attr('id')).children('.row').toggleClass('visible-print').toggleClass('hidden-print');
+		$('.'+$(this).attr('id')).children('.panel').toggleClass('hidden-print')
+	});
+	setTimer(0);
+	setTimer(2);
+	$('tr').tooltip();
+},
+
+eanCalcCsum = function(a) {
+	var b = 0, c = 1;
+	for (pos = a.length - 2;0 <= pos;pos--) {
+		b += parseInt(a.charAt(pos)) * (1 + 2 * (c++ % 2));
+	}
+	return(10 - b % 10) % 10;
 },
 
 eanValid = function(a) {
-  return eanCalcCsum(a) == parseInt(a.charAt(a.length - 1));
+	return eanCalcCsum(a) == parseInt(a.charAt(a.length - 1));
 },
 
 checkBC = function() {
-  var a = chars.join("");
-  eanValid(a) ? (console.log("EAN CSUM PASS: " + a), a = parseInt(a.substring(0, 7), 10), attendee($("#" + a).eq(0))) : console.log("EAN CSUM FAIL: " + a + ":" + eanCalcCsum(a));
+	var a = chars.join("");
+	eanValid(a) ? (console.log("EAN CSUM PASS: " + a), a = parseInt(a.substring(0, 7), 10), attendee($("#" + a).eq(0), true)) : console.log("EAN CSUM FAIL: " + a + ":" + eanCalcCsum(a));
 },
 
-	resize();
-	uiControls();
+resize();
+uiControls();
 
 
 document.onkeypress = function(a) {
-  a = a || window.event;
-  a = a.keyCode || a.which;
-  var b = String.fromCharCode(a);
-  48 <= a && 57 >= a && chars.push(b);
-  !0 == reading ? 8 == chars.length && (checkBC(), chars = [], reading = !1) : setTimeout(function() {
-    chars = [];
-    reading = !1;
-  }, timeout);
-  reading = !0;
+	a = a || window.event;
+	a = a.keyCode || a.which;
+	var b = String.fromCharCode(a);
+	48 <= a && 57 >= a && chars.push(b);
+	!0 == reading ? 8 == chars.length && (checkBC(), chars = [], reading = !1) : setTimeout(function() {
+		chars = [];
+		reading = !1;
+	}, timeout);
+	reading = !0;
 };
 })();

@@ -88,11 +88,11 @@ $( document ).ready(function() {
 		});
 
 
-		storeColor = function() {
+		 storeColor = function() {
 			currentColor = this.value;
 		}
 
-		saveColor = function() {
+		 saveColor = function() {
 			if(this.value != currentColor){
 				$.post( urlBase + 'setColor', { category_id: $(this).data('category_id'), color: this.value })
 				.done(function( result ) {
@@ -101,11 +101,11 @@ $( document ).ready(function() {
 			}
 		}
 
-		resetAddForm = function() {
+		var resetAddForm = function() {
 			addForm[0].reset();
 		}
 
-		addCategory = function() {
+		var addCategory = function() {
 			$.ajax({
 				url: urlBase + "addCategory/",
 				type: "POST",
@@ -122,7 +122,7 @@ $( document ).ready(function() {
 
 		}
 
-		removeCategory = function() {
+		var removeCategory = function() {
 			if(removeForm.serialize()==""){
 				alert("No categories selected");
 				return;
@@ -165,7 +165,7 @@ $( document ).ready(function() {
 
 		}
 
-		forceRemoveCategories = function(){
+		var forceRemoveCategories = function(){
 			$.post( urlBase + "forceRemoveCategories/", removeForm.serialize())
 			.done(function(result) {
 
@@ -180,7 +180,7 @@ $( document ).ready(function() {
 			});
 		}
 
-		storename = function(category_id, category){
+		var storename = function(category_id, category){
 			$.post( urlBase + 'setName', { category_id: category_id, category: category })
 			.done(function( result ) { alert(result); })
 			.fail(function( result ) { alert(result); });
@@ -197,7 +197,7 @@ $( document ).ready(function() {
 		});
 
 
-		sendForm = function() {
+		var sendForm = function() {
 
 			$.post(urlBase + 'addClassType/', form.serialize())
 			.done(function( result ) { 
@@ -209,7 +209,7 @@ $( document ).ready(function() {
 		}
 
 
-		resetAddForm = function () {
+		var resetAddForm = function () {
 			form[0].reset();
 		}
 	};
@@ -343,7 +343,7 @@ $( document ).ready(function() {
 			}
 		});
 
-		sendForm = function () {
+		var sendForm = function () {
 
 			var formSz = formCopy.serializeArray();
 			var dates = datepicker.getDates();

@@ -80,7 +80,6 @@ class Member extends CI_Controller{
 			$this->load->model('members');
 			$this->load->library('tank_auth');
 			
-			print_r($_POST);
 
 			if(isset($_POST['new_admins'])){
 				$admins = $_POST['new_admins'];
@@ -180,7 +179,7 @@ class Member extends CI_Controller{
 		if(check_admin()){
 			$this->load->model('members');
 			if(isset($_POST['id']) && isset($_POST['membership']) && isset($_POST['options'])){ // CUSTOM MEMBERSHIP
-				print_r($_POST);				
+
 				if($_POST['membership']==-1 && $this->_validDate($_POST['options']['start']) && $this->_validDate($_POST['options']['end']))
 				{
 					$start =  new DateTime($_POST['options']['start']);

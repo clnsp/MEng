@@ -17,7 +17,6 @@
 
 $config['base_url']	= 'https://devweb2013.cis.strath.ac.uk/~mlb09152/MEng';
 
-
 /*
 |--------------------------------------------------------------------------
 | Index File

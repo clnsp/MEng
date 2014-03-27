@@ -49,6 +49,7 @@ $route['ask_register'] = 'auth/ask_register';
 $route['404_override'] = 'pages/view/page-not-found';
 $route['users'] = 'pages/users';
 $route['rooms'] = 'pages/rooms';
+$route['sports'] = 'pages/sports';
 $route['links'] = 'pages/links';
 //$route['footer'] = 'pages/footer';
 

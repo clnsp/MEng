@@ -53,8 +53,11 @@ foreach($classes as $row): ?>
 			}
 				echo form_hidden($hidden);
 		
-			
+			if(isClassBookedOut($row['class_id'])){
+			echo form_submit('submit', 'Book', "class='btn btn-warning'");
+			}else{
 			echo form_submit('submit', 'Book', "class='btn btn-primary'");
+			}
 		?>
 	</td>
 	<?php echo form_close(); ?>

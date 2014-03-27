@@ -10,15 +10,16 @@
 class Bookings extends CI_Model
 {
 	private $class_booking_tbl	= 'class_booking_tbl';			// user accounts
+	private $waiting_pool_tbl	= 'waiting_pool_tbl';			// user accounts
 
-    function __construct()
-    {
-    	parent::__construct();
+	function __construct()
+	{
+		parent::__construct();
 
-    	$ci =& get_instance();
-    	$this->class_booking_tbl = $ci->config->item('db_table_prefix', 'tank_auth').$this->class_booking_tbl;
+		$ci =& get_instance();
+		$this->class_booking_tbl = $ci->config->item('db_table_prefix', 'tank_auth').$this->class_booking_tbl;
 
-    }
+	}
 
 	/**
 	 * Get booking by Id
@@ -254,8 +255,33 @@ class Bookings extends CI_Model
  		return $query->result_array();
  	}
  	
+	// May need check if member
+ 	function getAllWaiting($member_id){
+
+ 		$this -> db -> select('*');
 
 
-      
+ 		$this -> db -> where('member_id', $member_id);
 
-  }
+ 		$this -> db -> from($this->waiting_pool_tbl);
+
+ 		$this -> db -> join('class_info_view', 'class_info_view.class_id = waiting_pool_tbl.class_id');
+
+ 		$query = $this -> db -> get();
+
+ 		return $query -> result_array();
+
+ 	}
+
+	// May need check if member
+ 	function removeWaiting($class_booking_id, $member_id){
+
+ 		$data = array(
+ 			'member_id' => $member_id,
+ 			'class_id' => $class_booking_id,				   
+ 			);
+ 		$this->db->delete($this -> waiting_pool_tbl, $data);
+
+ 	}
+ 	
+ }

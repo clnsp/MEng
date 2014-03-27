@@ -23,7 +23,7 @@ class facilities_controller extends CI_Controller {
     * Retrieve information on whether a room is divisible
     */
     function getDivisibleRoom($room_id){
-        if(check_admin()){  
+        if(isSuperAdmin()){  
             echo json_encode($this->rooms->getDivisibleRoom($room_id));
         }
     }
@@ -33,7 +33,7 @@ class facilities_controller extends CI_Controller {
     * Retrieve all the divisible rooms
     */
     function getDivisibleRooms(){
-        if(check_admin()){  
+        if(isSuperAdmin()){  
             echo json_encode($this->rooms->getDivisibleRooms());
         }
     }
@@ -42,7 +42,7 @@ class facilities_controller extends CI_Controller {
     * Save a divisible room
     */
     function saveDivisibleRoom(){
-        if(check_admin()){
+        if(isSuperAdmin()){
 
             $this->load->model('courts'); 
 

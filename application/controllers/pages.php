@@ -196,7 +196,7 @@
 		 */
 		public function manage($page = 'manage'){
 
-			if(check_admin()){
+			if(isSuperAdmin()){
 				$this->load->Model('Categories');
 				$this->load->Model('classes');
 
@@ -220,6 +220,23 @@
 				$data = setupClassSearchForm();
 
 				parse_temp($page, $this->load->view('pages/'.$page, $data, true));
+			}
+
+		}
+
+		/**
+		 * Class List Page
+		 */
+		public function sports($page = 'sports'){
+
+			if(check_member()){
+
+				$this->load->Model('classtype');
+
+				$data['sport_types'] = $this->classtype->getSportstype();
+
+				parse_temp($page, $this->load->view('pages/member/'.$page, $data, true));	
+
 			}
 
 		}

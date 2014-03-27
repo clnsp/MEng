@@ -66,6 +66,12 @@ if ( ! function_exists('parse_temp')){
     	return $ci->tank_auth->is_admin();
     }
 
+    function isSuperAdmin(){
+    	$ci = get_instance();
+
+    	return $ci->tank_auth->is_super_admin();
+    }
+
     function check_member(){
     	$ci = get_instance();
 
