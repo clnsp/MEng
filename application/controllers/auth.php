@@ -758,8 +758,8 @@ $data['memberTypes'] = $this->Members->getAllMemberTypes();
 		$this->email->to($email);
 		$this->email->subject('Registration Confirmation');
 //		$this->email->subject(sprintf($this->lang->line('auth_subject_'.$type), $this->config->item('website_name', 'tank_auth')));
-		$this->email->message('This is to confirm that your account registraion has been successful congratulations ya rocket.'); 
-//		$this->email->message($this->load->view('email/'.$type.'-html', $data, TRUE));
+//		$this->email->message('This is to confirm that your account registraion has been successful congratulations ya rocket.'); 
+		$this->email->message($this->load->view('email/'.$type.'-html', $data, TRUE));
 //		$this->email->set_alt_message($this->load->view('email/'.$type.'-txt', $data, TRUE));
 		$this->email->send();
 
