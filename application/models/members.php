@@ -72,6 +72,19 @@ class Members extends CI_Model
    return $this->db->delete($this -> table_name, array('id' => $id));
  }
 
+
+function getAllMemberships(){
+ $this -> db -> select("id,membership_type, start_date, end_date");
+   $query = $this -> db -> get('membership_type_tbl');
+   return  $query->result();
+}
+
+function getAllMemberTypes(){
+ $this -> db -> select("id, type");
+   $query = $this -> db -> get('member_type_tbl');
+   return  $query->result();
+}
+
  /**
  * Get member type ids
  * @return array
@@ -92,6 +105,13 @@ class Members extends CI_Model
    $insert_id = $this->db->insert_id();
    return $insert_id;
  }
+
+function createMembertoMembershipLink($memberID, $shipID){
+ $data = array('member_type_id' => $memberID ,'membership_type_id' => $shipID);
+   $this->db->insert('member_membership_tbl', $data); 
+   $insert_id = $this->db->insert_id();
+   return $insert_id;
+}
 
  /**
  * Get member email

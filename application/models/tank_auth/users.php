@@ -106,7 +106,7 @@ class Users extends CI_Model
 	 */
 	function is_username_available($username)
 	{
-		if($username=""){ // Users without DS Accounts
+		if($username==""){ // Users without DS Accounts
 			return true;
 		}
 		

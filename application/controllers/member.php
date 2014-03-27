@@ -230,6 +230,21 @@ class Member extends CI_Controller{
 		}
 	}
 	
+	function createMembership(){
+		if(check_admin()){
+			if(isset($_POST['membership'])){
+			$Membership = json_decode($_POST['membership']);
+			$this->load->model('members');
+$start = new DateTime($Membership->start);
+$end = new DateTime($Membership->end);
+			$ID = $this->members->createNewMembership($Membership->name, $start->format('Y-m-d'), $end->format('Y-m-d'));
+			for($i=0;$i<count($Membership->types);$i++){
+				echo($this->members->createMembertoMembershipLink($Membership->types[$i],$ID));
+			}
+			}
+		}
+	}
+	
 	function serverTime()
 	{
 		$myTime = array('serverTime' =>  date("U"));	
