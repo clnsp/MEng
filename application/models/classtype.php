@@ -26,6 +26,20 @@ Class classtype extends CI_Model{
      * Fetch all sport class types
      * @return array
      */
+    function getSportstype(){
+        $this -> db -> select('*');
+        $this -> db -> where('is_sport','01');
+        $this -> db -> from('class_type_tbl');
+
+        $query = $this -> db -> get();
+
+        return $query->result_array();
+    }
+
+    /**
+     * Fetch all sport class types
+     * @return array
+     */
     function getActivitytype(){
         $query = $this -> db -> get($this -> class_type_sports_view);
 

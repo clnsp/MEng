@@ -1,5 +1,5 @@
-<?php 
-  foreach($class_types as $key => $type): ?>
+ <?php 
+  foreach($sport_types as $key => $type): ?>
 
   <?php if($key % 2 == 0) { ?>
   <div class="row">

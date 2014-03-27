@@ -274,8 +274,6 @@ class booking extends CI_Controller{
 
 			}
 
-
-
 			echo ($this->load->view('pages/search_results', $data, true));
 
 		}
@@ -456,10 +454,11 @@ class booking extends CI_Controller{
 
 			$rowCount = 0;
 			$rowCounter = 0;
+			$rowCounts = 0;
 
 			foreach ($data['bookings'] as $row){
 
-				$end = $row['end'];
+				$end = $row['end'];			
 
 				if(time() > strtotime($end)){
 
@@ -482,6 +481,20 @@ class booking extends CI_Controller{
 				}
 
 				$rowCounter++;			
+
+			}
+
+			foreach ($data['waiting'] as $row){
+
+				$end = $row['end'];
+
+				if(time() > strtotime($end)){
+
+					unset($data['waiting'][$rowCounts]);				
+
+				}
+
+				$rowCounts++;			
 
 			}
 

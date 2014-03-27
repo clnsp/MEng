@@ -19,6 +19,8 @@
 	<a  class="ajax" href="<?php echo base_url()?>index.php/registration">Registrations</a>
 </li> -->
 
+<?php if(isSuperAdmin()){ ?>
+
 <li class="<?php if($page_title=='manage')echo 'active';?> ajax dropdown">
 	<a href="" class="dropdown-toggle" data-toggle="dropdown">Manage <b class="caret"></b></a>
 	<ul class="dropdown-menu">
@@ -31,3 +33,5 @@
 
 	</ul>
 </li>
+
+<?php } ?>

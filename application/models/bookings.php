@@ -255,6 +255,7 @@ class Bookings extends CI_Model
  		return $query->result_array();
  	}
  	
+	// May need check if member
  	function getAllWaiting($member_id){
 
  		$this -> db -> select('*');
@@ -272,6 +273,7 @@ class Bookings extends CI_Model
 
  	}
 
+	// May need check if member
  	function removeWaiting($class_booking_id, $member_id){
 
  		$data = array(

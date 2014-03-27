@@ -76,12 +76,13 @@ $confirm_password = array(
 	'placeholder' => 'Confirm Password',
 	);
 
-$comm_prefs = array(
+$comms_preference = array(
 	'name' => 'comms_preference',
 	'id' => 'comms_preference',
 	);
 
 $comm_prefs_options = array('1'  => 'Email only','2'  => ' Email and SMS','3'  => 'Email, SMS and Twitter',);
+foreach ($comm_prefs as $p)	$prefs[$p->id] = $p->comms_preference;
 
 $user_type = array(
 	'name' => 'member_type',
@@ -227,9 +228,20 @@ $form = array(
 		</div>
 		
 		<div class="form-group">
-			<?php echo form_label('Communication Preferences *', $comm_prefs['id'], $label); ?>
+		<?php echo form_label('Communication', $comms_preference['id'], $label); ?>
 			<div class="col-sm-10">
-				<?php echo  form_dropdown($comm_prefs['name'], $comm_prefs_options, '1','class="form-control"'); ?>
+				<?php
+					foreach ($comm_prefs as $p) {
+						$data = array(
+    						'name'        => 'new_preferences[]',
+    						'id'          => 'new_preferences[]',
+    						'value'       => $p->id,
+    						'checked'     => TRUE,
+    					);
+    					echo form_checkbox($data);
+    					echo form_label($p->comms_preference); ?> <br>
+    					<?php
+					} ?>
 			</div>
 		</div>
 
