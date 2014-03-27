@@ -256,7 +256,6 @@ class Bookings extends CI_Model
 	}
 
 
-
  	/**
  	* Determine whether a user is already booked into a class or sport at particular time
  	* @param int

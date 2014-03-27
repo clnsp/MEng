@@ -11,6 +11,8 @@ if($('#booking').is('.admin-calendar')){
 var eventModal,  eventMembers, eventid, activeEvent, addGuestModal, eventSpacesTaken;
 
 
+
+
 $('#booking').on('click', '#event-cancel-class-btn, #event-uncancel-class-btn', function(){
 
  bootbox.dialog({
@@ -129,6 +131,39 @@ $('#booking').on('click', '#event-cancel-class-btn, #event-uncancel-class-btn', 
 
 
   $(document).ready(function() {
+  
+  var CategoryDrop = new function() {
+  	
+  	var selected = [];
+  	
+  	this.getSelected = function() {
+  		return selected;
+  	}
+  
+  	var getDropCategories = function() {
+  	
+  		selected = [];
+  		$('#category-dropdown li.selected a').each(function(){
+  			var $this = $(this);
+  			addCategory($this.data('category-id') + "");
+  		});
+  	
+  	}
+  	
+  	var addCategory = function(id){
+  		selected.push(id);
+  	}
+  	
+  	getDropCategories();
+  	
+  	$('html').on('click',  '#category-dropdown .dropdown-menu.multi-select li', function (e) {
+  		getDropCategories();
+  		e.stopPropagation();
+  	  $('#calendar').fullCalendar('rerenderEvents');
+  	});
+  
+  }
+  
 
   	/* Find Modal Editable Areas */
   	eventModal = $('#eventModal');
@@ -412,15 +447,9 @@ $('#calendar').fullCalendar({
     if(event.cancelled){
       element.addClass('cancelled');
     }
-
-		//fetch the currently selected category ids
-		var categories = [];
-		$('#category-dropdown li.selected a').each(function(){
-			var $this = $(this);
-			categories.push($this.data('category-id') + "");
-		});
+	
 		
-		if($.inArray(event.category_id, categories) == -1)
+		if($.inArray(event.category_id, CategoryDrop.getSelected()) == -1)
 			element.addClass('hidden');
 	},
 
@@ -658,13 +687,6 @@ eventModal.on("click", ".open-Model-button", function () {
   $("#cancelClassModal .modal-title").text(title);
 });
 
-
-
-
-/* Full Calendar refresh*/
-$('#category-dropdown .dropdown-menu.multi-select li').click(function () {
-  $('#calendar').fullCalendar('rerenderEvents');
-});
 
 $('#btn-view-waiting-list').click(function(){
 

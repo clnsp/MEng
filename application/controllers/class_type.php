@@ -180,6 +180,11 @@ class class_type extends CI_Controller
 					echo("Class start time must be before the end time");
 					return;
 				}
+				
+				if($start == $end){
+					echo("Start and end cannot be the same.");
+					return;
+				}
 
 				/* check the class type id exists */
 				if(!$this->classes->validClassType($_POST['class_type_id'])){
@@ -219,10 +224,10 @@ class class_type extends CI_Controller
 					$newClass['class_end_date'] = "$date $end_time";
 
 
-					$roomBooked = $this->classes
-					->isRoomBookedOut($_POST['room_id'], $date, $date, $start_time, $end_time);
+					$roomBooked = $this->classes->isRoomBookedOut($_POST['room_id'], $date, $date, $start_time, $end_time);
 
 					if($roomBooked){
+						echo("Room clash with class at $start_time to $end_time on $date<br>");
 						continue;
 					}
 
