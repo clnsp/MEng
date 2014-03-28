@@ -76,12 +76,15 @@ $confirm_password = array(
 	'placeholder' => 'Confirm Password',
 	);
 
-$comm_prefs = array(
-	'name' => 'comms_preference',
-	'id' => 'comms_preference',
+$comms_preference = array(
+	'name'	=> 'comms_preference',
+	'id'	=> 'comms_preference',
+	'size' 	=> 30,
+	'class' => 'form-control',
 	);
 
-$comm_prefs_options = array('1'  => 'Email only','2'  => ' Email and SMS','3'  => 'Email, SMS and Twitter',);
+//$comm_prefs_options = array('1'  => 'Email only','2'  => ' Email and SMS','3'  => 'Email, SMS and Twitter',);
+foreach ($comm_prefs as $p)	$prefs[$p->id] = $p->id;
 
 $user_type = array(
 	'name' => 'member_type',
@@ -133,22 +136,23 @@ $form = array(
 
 	?>	
 
-	<h1>Registration</h1>
+	<h2>Registration</h2>
 	<p>Lets register you as a member. <br/> Fields marked with * are required.</p>
 	<div class="well well-lg  div-center">
 		<?php echo form_open($this->uri->uri_string(), $form); ?>
-		
+		<?php if(isset($errors) && array_key_exists('username',$errors))
+				{ echo('<p class="alert alert-danger text-center"><strong>'.$errors['username'] . '</strong></p><br/>');}?>
 		
 		<div class="form-group">
 
 			<?php echo form_label('User Type *', $user_type['id'], $label); ?>
 
 			<div class="col-sm-10 input-radio-group btn-group">
-				<button class="btn btn-default" type="button"><?php echo form_radio($radio_student)  ;?>Student</button>
-				<button class="btn btn-default" type="button"><?php echo  form_radio($radio_staff); ?>Staff</button>
+				<button class="btn btn-default <?php echo ($radio_student['checked'] ? 'active' : ''); ?>" type="button"><?php echo form_radio($radio_student)  ;?>Student</button>
+				<button class="btn btn-default <?php echo ($radio_staff['checked'] ? 'active' : ''); ?>" type="button"><?php echo  form_radio($radio_staff); ?>Staff</button>
 
-				<button class="btn btn-default" type="button"><?php echo  form_radio($radio_student_partner); ?>Student Partner/Spouse</button>
-				<button class="btn btn-default" type="button"><?php echo  form_radio($radio_staff_partner); ?>Staff Partner/Spouse</button>
+				<button class="btn btn-default <?php echo ($radio_student_partner['checked'] ? 'active' : ''); ?>" type="button"><?php echo  form_radio($radio_student_partner); ?>Student Partner/Spouse</button>
+				<button class="btn btn-default <?php echo ($radio_staff_partner['checked'] ? 'active' : ''); ?>" type="button"><?php echo  form_radio($radio_staff_partner); ?>Staff Partner/Spouse</button>
 
 
 			</div>
@@ -226,9 +230,20 @@ $form = array(
 		</div>
 		
 		<div class="form-group">
-			<?php echo form_label('Communication Preferences *', $comm_prefs['id'], $label); ?>
+		<?php echo form_label('Communication', $comms_preference['id'], $label); ?>
 			<div class="col-sm-10">
-				<?php echo  form_dropdown($comm_prefs['name'], $comm_prefs_options, '1','class="form-control"'); ?>
+				<?php
+					foreach ($comm_prefs as $p) {
+						$data = array(
+    						'name'        => 'new_preferences[]',
+    						'id'          => 'new_preferences[]',
+    						'value'       => $p->id,
+    						'checked'     => FALSE,
+    					);
+    					echo form_checkbox($data);
+    					echo form_label($p->comms_preference); ?> <br>
+    					<?php
+					} ?>
 			</div>
 		</div>
 

@@ -10,12 +10,12 @@ var placedSports = function () {
 
     /* add a sport to the directory */
     this.addSport = function(class_type_id){
-    	directory[class_type_id] = new Array();
+        directory[class_type_id] = new Array();
     }
     
     /* is a sport in the directory */
     this.hasSport = function(class_type_id){
-    	return (directory[class_type_id]);
+        return (directory[class_type_id]);
     }
 
     /* remove divisions from sport */
@@ -47,19 +47,19 @@ var placedSports = function () {
     * Assign divisions to a sport takes string and array
     */
     this.assignDivisons = function(sport_id, divs){
-    	if(!sport_id){
-    		alert('Please select a sport to assign');
-    		return;
-    	}
+        if(!sport_id){
+            alert('Please select a sport to assign');
+            return;
+        }
 
-    	if(!this.hasSport(sport_id)){
-    		this.addSport(sport_id);
-    	}else{
-    		if(compareDivs(directory[sport_id], divs)){
-    			alert("Courts already added");
-    			return;
-    		}
-    	}
+        if(!this.hasSport(sport_id)){
+            this.addSport(sport_id);
+        }else{
+            if(compareDivs(directory[sport_id], divs)){
+                alert("Courts already added");
+                return;
+            }
+        }
 
         if(used_keys.length>0){
             directory[sport_id][used_keys.pop()] = divs;
@@ -77,49 +77,49 @@ var placedSports = function () {
     }
 
     compareDivs = function(directory, divs){
-    	var found = false;
-    	$.each(directory, function(index, value){
-    		if($(value).not(divs).length == 0 && $(divs).not(value).length == 0)
-    			found = true;
-    	});
-    	return found;
+        var found = false;
+        $.each(directory, function(index, value){
+            if($(value).not(divs).length == 0 && $(divs).not(value).length == 0)
+                found = true;
+        });
+        return found;
     }
 
 
     this.getDivisions = function(sport_id) {
 
-    	var cont = $('<ul>');
-    	if(directory[sport_id]){
+        var cont = $('<ul>');
+        if(directory[sport_id]){
 
 
-    		$.each(Object.keys(directory[sport_id]), function(index, value) {
+            $.each(Object.keys(directory[sport_id]), function(index, value) {
 
-    			var li = $('<li class="list-group-item"></li>').html("Court ");
-    			li.append($('<button class="remove-court-btn btn btn-xs pull-right btn-danger"><i class="glyphicon glyphicon-remove"></i></button>').attr('data-sport_id', value));
-    			$.each(directory[sport_id][value], function(j, v) {
-    				li.append(v + ", ");
-    			});    
-    			cont.append(li);  
-    		}); 
-    		return cont.html();
-    	}
-    	
-    	return "No assigned courts";
+                var li = $('<li class="list-group-item"></li>').html("Court ");
+                li.append($('<button class="remove-court-btn btn btn-xs pull-right btn-danger"><i class="glyphicon glyphicon-remove"></i></button>').attr('data-sport_id', value));
+                $.each(directory[sport_id][value], function(j, v) {
+                    li.append(v + ", ");
+                });    
+                cont.append(li);  
+            }); 
+            return cont.html();
+        }
+        
+        return "No assigned courts";
     }
     
     getDir = function(json) {
 
-    	directory = json;
-    	
-    	$.event.trigger({
-    		type: "courtDirectoryRefreshed",
-    		message: "Court directory refreshed",
-    		time: new Date()
-    	});
+        directory = json;
+        
+        $.event.trigger({
+            type: "courtDirectoryRefreshed",
+            message: "Court directory refreshed",
+            time: new Date()
+        });
     }
     
     this.refresh = function(room_id) {
-    	var $this = this;
+        var $this = this;
         used_keys = new Array();
         $.getJSON('court/getCourtDirectory/'+room_id, function(json){
             getDir(json);
@@ -150,32 +150,32 @@ roomDivider = function () {
         this.container = $(cont).addClass('box-divider');
 
         if(clickable){
-        	this.container.selectable({ 
-        		filter: ".box",
-        		stop: function( event, ui ) {
-        			var floater = $('<div class="floater" style="width:100%;height:100%; background-color:red; opacity:0.5">');
+            this.container.selectable({ 
+                filter: ".box",
+                stop: function( event, ui ) {
+                    var floater = $('<div class="floater" style="width:100%;height:100%; background-color:red; opacity:0.5">');
 
-        			var courts = new Array();
-        			$(event.target).find('.box.ui-selected').each(function(){
-        				courts.push(''+$(this).data('court_id'));
-        			});
+                    var courts = new Array();
+                    $(event.target).find('.box.ui-selected').each(function(){
+                        courts.push(''+$(this).data('court_id'));
+                    });
 
-        			ps.assignDivisons(assignDivPanel.getSelectedSport(), courts);
-        		}
-        	});
+                    ps.assignDivisons(assignDivPanel.getSelectedSport(), courts);
+                }
+            });
 
 
-        	this.container.on('click', '.box', function(e){
-        		if(e.shiftKey)
-        			$(this).toggleClass('multiselect').removeClass('selected');
-        		else{
+            this.container.on('click', '.box', function(e){
+                if(e.shiftKey)
+                    $(this).toggleClass('multiselect').removeClass('selected');
+                else{
 
-        			$(this).removeClass('multiselect').toggleClass('selected');
-        		}
+                    $(this).removeClass('multiselect').toggleClass('selected');
+                }
 
-        	});
+            });
         }else{
-        	this.container.addClass('no-click');
+            this.container.addClass('no-click');
         }
 
         this.create();
@@ -184,56 +184,56 @@ roomDivider = function () {
     }
 
     this.updateRows = function(num){
-    	var temp = this.rows;
-    	temp += num;
-    	if(temp >= min && temp <= max){
-    		this.rows =temp;
-    		this.regenerate();
-    	}
+        var temp = this.rows;
+        temp += num;
+        if(temp >= min && temp <= max){
+            this.rows =temp;
+            this.regenerate();
+        }
 
     }
 
     this.updateCols = function(num){
-    	var temp = this.cols;
-    	temp += num;
-    	if(temp >= min && temp <= max){
-    		this.cols = temp;
-    		this.regenerate();
-    	}
+        var temp = this.cols;
+        temp += num;
+        if(temp >= min && temp <= max){
+            this.cols = temp;
+            this.regenerate();
+        }
 
     }
 
     this.create = function(){
-    	var height = 100/this.rows;
-    	var width = 100/this.cols;
+        var height = 100/this.rows;
+        var width = 100/this.cols;
 
-		var box = $('<div class="box"></div>').height(height+'%').width(width+'%');//.width(width+'%');
+        var box = $('<div class="box"></div>').height(height+'%').width(width+'%');//.width(width+'%');
 
 
-		for (var r = 0; r < this.rows; r++) {
-			//var tr = $('<div class="tr">');//.height(height+'%');
+        for (var r = 0; r < this.rows; r++) {
+            //var tr = $('<div class="tr">');//.height(height+'%');
 
-			for (var c = 0; c < this.cols; c++) {
-				//tr.append(); 
-				var court_id = c+(r*this.cols)+1;
-				this.container.append(box.clone().addClass('r'+r+' c'+c).html(court_id).attr('data-court_id', court_id));
-			}
-		}
-	}
-	this.regenerate = function(){
-		this.container.empty();
-		this.create();
-	}
+            for (var c = 0; c < this.cols; c++) {
+                //tr.append(); 
+                var court_id = c+(r*this.cols)+1;
+                this.container.append(box.clone().addClass('r'+r+' c'+c).html(court_id).attr('data-court_id', court_id));
+            }
+        }
+    }
+    this.regenerate = function(){
+        this.container.empty();
+        this.create();
+    }
 };
 
 
 divisibleRoomPanel = (function() {
 
-	var rdrop = $('#manage-divisible-room select[name=room_id]');
-	var urlBase = 'facilities/';
-	var divisibleForm = $('#manage-divisible-room-form');
+    var rdrop = $('#manage-divisible-room select[name=room_id]');
+    var urlBase = 'facilities/';
+    var divisibleForm = $('#manage-divisible-room-form');
 
-	divisibleForm.submit(function(){
+    divisibleForm.submit(function(){
 
         bootbox.confirm("Are you sure you wish to save this setup? <p>If sports have been assigned to divisions that don't exist in the new setupm, they will be removed.</p>", function(result) {
             if(result){
@@ -252,45 +252,45 @@ divisibleRoomPanel = (function() {
         
     });
 
-	manage_rooms  = new roomDivider();
-	manage_rooms.init($('#divisible-room'), false);
+    manage_rooms  = new roomDivider();
+    manage_rooms.init($('#divisible-room'), false);
 
-	$('#add-row').click(function(){ manage_rooms.updateRows(1) });
-	$('#add-col').click(function(){ manage_rooms.updateCols(1) });
-	$('#del-row').click(function(){ manage_rooms.updateRows(-1) });
-	$('#del-col').click(function(){ manage_rooms.updateCols(-1) });
+    $('#add-row').click(function(){ manage_rooms.updateRows(1) });
+    $('#add-col').click(function(){ manage_rooms.updateCols(1) });
+    $('#del-row').click(function(){ manage_rooms.updateRows(-1) });
+    $('#del-col').click(function(){ manage_rooms.updateCols(-1) });
 
-	rdrop.change(function(){
+    rdrop.change(function(){
 
-		$.getJSON(urlBase + 'getDivisibleRoom/' + $(this).val(), function(data) {
-			if(data.length>0){
-				manage_rooms.cols = parseInt(data[0].cols);
-				manage_rooms.rows = parseInt(data[0].rows);
-			}else{
-				manage_rooms.cols = 1;
-				manage_rooms.rows = 1;
-			}
-			manage_rooms.regenerate();
-			divisiblerooms.refresh();
-		});
+        $.getJSON(urlBase + 'getDivisibleRoom/' + $(this).val(), function(data) {
+            if(data.length>0){
+                manage_rooms.cols = parseInt(data[0].cols);
+                manage_rooms.rows = parseInt(data[0].rows);
+            }else{
+                manage_rooms.cols = 1;
+                manage_rooms.rows = 1;
+            }
+            manage_rooms.regenerate();
+            divisiblerooms.refresh();
+        });
 
-		// ps.refresh($(this).val());
+        // ps.refresh($(this).val());
         console.log($(this).val());
     });
 
-	return { 
-		drop:rdrop
-	};
+    return { 
+        drop:rdrop
+    };
 
 })();
 
 
 assignDivPanel = (function() {
-	var container = $('#possible-sports');
-	var sportlist = $('#sports-list');
-	var divdrop = $('#select-divisible-room select[name=room_id]');
-	var urlBase = 'court/';
-	var divisions = $('#sports-divisions');
+    var container = $('#possible-sports');
+    var sportlist = $('#sports-list');
+    var divdrop = $('#select-divisible-room select[name=room_id]');
+    var urlBase = 'court/';
+    var divisions = $('#sports-divisions');
 
     manage_sports  = new roomDivider();
     manage_sports.init($('#add-sports-to-room'), true);
@@ -441,7 +441,7 @@ var Restrictions = function() {
 
 
 var manageRestrictionsPanel = (function() {
-	var container = $('#manage-restrictions');
+    var container = $('#manage-restrictions');
     var  limitForm = container.find('#form-limit-restriction');
     var  blockForm = container.find('#form-block-restriction');   
     var  drop = container.find('select[type=dropdown].divisiblerooms');
@@ -505,7 +505,7 @@ var manageRestrictionsPanel = (function() {
 })();
 
 var addSportPanel = (function() {
-	var urlBase = "class_type/";
+    var urlBase = "class_type/";
   var form = $('form#add-sport-type-form');
   var categoryDropdown = form.find('select[name=category_id]');
 
@@ -519,7 +519,7 @@ var addSportPanel = (function() {
         resetAddForm();
         classtypes.refresh();
     })
-     .fail(function( result ) { alert(result); });			
+     .fail(function( result ) { alert(result); });          
  }
 
 
@@ -542,9 +542,8 @@ $(function(){
       if(sport){
         assignDivPanel.divisions.html(ps.getDivisions(sport));
     }
-})
-
-    ;
+});
+    
 
     classtypes.refresh();
     rooms.refresh();
@@ -553,4 +552,3 @@ $(function(){
 
 
 });
-

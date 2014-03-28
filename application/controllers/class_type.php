@@ -17,11 +17,11 @@ class class_type extends CI_Controller
 	*/
 	function addClassType(){
 		if($this->tank_auth->is_admin()){
-			if (isset($_POST['class_type']) && isset($_POST['class_description']) && isset($_POST['category_id'])){
+			if ($this->input->post('class_type') && $this->input->post('class_description') && $this->input->post('category_id')){
 				$data = array(
-					'class_type'		=>	$_POST['class_type'],
-					'class_description'	=>	$_POST['class_description'],
-					'category_id'		=>	$_POST['category_id'],
+					'class_type'		=>	$this->input->post('class_type'),
+					'class_description'	=>	$this->input->post('class_description'),
+					'category_id'		=>	$this->input->post('category_id'),
 					'is_sport'			=>	false,
 					);
 
@@ -55,18 +55,18 @@ class class_type extends CI_Controller
 	 */
 	function updateClassType(){
 		if($this->tank_auth->is_admin()){
-			if (isset($_POST['class_type']) && isset($_POST['class_description']) && isset($_POST['class_type_id']) && isset($_POST['category_id'])){	
+			if ($this->input->post('class_type') && $this->input->post('class_description') && $this->input->post('class_type_id') && $this->input->post('category_id')){	
 				$data = array(
-					'class_type'	=>	$_POST['class_type'],
-					'class_description'	=>	$_POST['class_description'],
-					'category_id'	=>	$_POST['category_id']
+					'class_type'	=>	$this->input->post('class_type'),
+					'class_description'	=>	$this->input->post('class_description'),
+					'category_id'	=>	$this->input->post('category_id')
 					);
 
-				if(isset($_POST['duration'])){
-					$data['duration'] = $_POST['duration'];
+				if($this->input->post('duration')){
+					$data['duration'] = $this->input->post('duration');
 				}
 
-				$this->classes->updateClassType($_POST['class_type_id'], $data);
+				$this->classes->updateClassType($this->input->post('class_type_id'), $data);
 				echo "Class type updated";
 			}	
 		}
@@ -79,8 +79,8 @@ class class_type extends CI_Controller
 	 */
 	function removeClassType(){
 		if($this->tank_auth->is_admin()){
-			if (isset($_POST['class_type_id'])){			
-				$this->classes->removeClassType($_POST['class_type_id']);
+			if ($this->input->post('class_type_id')){			
+				$this->classes->removeClassType($this->input->post('class_type_id'));
 				echo "Class type removed";
 			}	
 		}
@@ -118,13 +118,13 @@ class class_type extends CI_Controller
 	*/
 	function addSportType(){
 		if($this->tank_auth->is_admin()){
-			if (isset($_POST['class_type']) && isset($_POST['class_description']) && isset($_POST['category_id']) && isset($_POST['duration'])){
+			if ($this->input->post('class_type') && $this->input->post('class_description') && $this->input->post('category_id') && $this->input->post('duration')){
 				$data = array(
-					'class_type'		=>	$_POST['class_type'],
-					'class_description'	=>	$_POST['class_description'],
-					'category_id'		=>	$_POST['category_id'],
-					'is_sport'			=>	true,
-					'duration'			=>	$_POST['duration']
+					'class_type'		=>	$this->input->post('class_type'),
+					'class_description'	=>	$this->input->post('class_description'),
+					'category_id'		=>	$this->input->post('category_id'),
+					'is_sport'		=>	true,
+					'duration'		=>	$this->input->post('duration')
 					);
 
 				$this->classes->addNewClassType($data);
@@ -173,12 +173,12 @@ class class_type extends CI_Controller
 	function addInstances(){
 		if($this->tank_auth->is_admin()){
 
-			if (isset($_POST['class_type_id']) && isset($_POST['max_attendance']) && isset($_POST['class_start_date']) && isset($_POST['class_end_date'])  && isset($_POST['room_id']) && isset($_POST['repeat_dates'])){
+			if ($this->input->post('class_type_id') && $this->input->post('max_attendance') && $this->input->post('class_start_date') && $this->input->post('class_end_date')  && $this->input->post('room_id') && $this->input->post('repeat_dates')){
 
 				/* validate the date formats*/
-				if($this->_validDate($_POST['class_start_date']) && $this->_validDate($_POST['class_end_date'])){
-					$start =  new DateTime($_POST['class_start_date']);
-					$end =  new DateTime($_POST['class_end_date']);
+				if($this->_validDate($this->input->post('class_start_date')) && $this->_validDate($this->input->post('class_end_date'))){
+					$start =  new DateTime($this->input->post('class_start_date'));
+					$end =  new DateTime($this->input->post('class_end_date'));
 				} else {
 					echo "Invalid date format";
 					return;
@@ -189,38 +189,43 @@ class class_type extends CI_Controller
 					echo("Class start time must be before the end time");
 					return;
 				}
+				
+				if($start == $end){
+					echo("Start and end cannot be the same.");
+					return;
+				}
 
 				/* check the class type id exists */
-				if(!$this->classes->validClassType($_POST['class_type_id'])){
+				if(!$this->classes->validClassType($this->input->post('class_type_id'))){
 					echo("Invalid class type");
 					return;
 				}
 
 				/* check the room capacity isn't exceeded */
 				$this->load->model('rooms');
-				if($this->rooms->exceedsClassTypeCapacity($_POST['room_id'], $_POST['max_attendance'])){
+				if($this->rooms->exceedsClassTypeCapacity($this->input->post('room_id'), $this->input->post('max_attendance'))){
 					echo("Exceeds class capacity");
 					return;
 				}
 
 
 				$newClass = array(
-					'class_type_id' => $_POST['class_type_id'],
-					'max_attendance' => $_POST['max_attendance'],
-					'room_id' => $_POST['room_id'],
+					'class_type_id' => $this->input->post('class_type_id'),
+					'max_attendance' => $this->input->post('max_attendance'),
+					'room_id' => $this->input->post('room_id'),
 					);
 
-				$start_time = new DateTime($_POST['class_start_date']);
+				$start_time = new DateTime($this->input->post('class_start_date'));
 				$start_time = $start_time->format('H:i:00');
 
-				$end_time = new DateTime($_POST['class_end_date']);
+				$end_time = new DateTime($this->input->post('class_end_date'));
 				$end_time = $end_time->format('H:i:00');
 
 				$bid = $this->classtype->addNewBlockBooking($newClass, $start_time, $end_time);
 
 				$newClass['block_booking_id'] = $bid;
 
-				foreach ($_POST['repeat_dates'] as $key => $date) {
+				foreach ($this->input->post('repeat_dates') as $key => $date) {
 					$date = new DateTime($date);
 					$date = $date->format('Y-m-d');
 
@@ -228,10 +233,10 @@ class class_type extends CI_Controller
 					$newClass['class_end_date'] = "$date $end_time";
 
 
-					$roomBooked = $this->classes
-					->isRoomBookedOut($_POST['room_id'], $date, $date, $start_time, $end_time);
+					$roomBooked = $this->classes->isRoomBookedOut($this->input->post('room_id'), $date, $date, $start_time, $end_time);
 
 					if($roomBooked){
+						echo("Room clash with class at $start_time to $end_time on $date<br>");
 						continue;
 					}
 
@@ -253,4 +258,10 @@ class class_type extends CI_Controller
 }
 
 
+
+
+
+/* End of file clas_type.php */
 /* Location: ./application/controllers/class_types.php */
+?>
+

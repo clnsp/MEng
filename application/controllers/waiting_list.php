@@ -33,7 +33,6 @@ class waiting_list extends CI_Controller
 				}
 			}
 		}
-
 	}
 
 	/**
@@ -42,14 +41,15 @@ class waiting_list extends CI_Controller
 	*/
 	public function addWaiting(){
 		if($this->tank_auth->is_admin()){
-			if(isset($_POST['member_id']) && isset($_POST['class_id'])){
+			if($this->input->post('member_id') && $this->input->post('class_id')){
 
 				$this->load->model('classes');
 				$this->load->helper('book');
 
-				$b = $_POST['class_id'];
-				$m = $this->tank_auth->get_user_id();
-
+				$b = $this->input->post('class_id');
+				//$m = $this->tank_auth->get_user_id();
+				$m = $this->input->post('member_id');
+			
 				$classInfo = $this->classes->getClassInformation($b);
 
 				if($this->waiting->waitingListFull($b, $classInfo['max_attendance'])){
@@ -73,10 +73,8 @@ class waiting_list extends CI_Controller
 		}
 
 	}
-
-	
-
 }
+
 
 /* End of file waiting_list.php */
 /* Location: ./application/controllers/waiting_list.php */

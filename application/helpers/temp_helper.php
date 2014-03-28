@@ -94,9 +94,10 @@ if ( ! function_exists('parse_temp')){
 	function getNextClasses($st=1,$ft=1){
 		$ci = get_instance();
 		if(check_admin()){				
-			$h = gmdate('H');				
-			$s = gmdate('Y-m-d ').($h-$st). ':00:00'; // GET FOR CURRENT TIME  
-			$e = gmdate('Y-m-d ').($h+$ft). ':00:00'; 
+			$h = gmdate('H');
+
+			$s = gmdate("Y-m-d H:i:s", strtotime("-$st hours"));// GET FOR CURRENT TIME
+			$e = gmdate("Y-m-d H:i:s", strtotime("+$ft hours")); 
 			
 			$ci->load->Model('Rooms');
 			$ci->load->Model('Categories');
@@ -105,7 +106,7 @@ if ( ! function_exists('parse_temp')){
 
 			$vals['rooms'] = $ci->Rooms->getRooms();
 			$vals['categories'] = $ci->Categories->getCategories();
-			$vals['classes'] = $ci->classes->getClassesWithRoomBetween($s, $e, 'allrooms');
+			$vals['classes'] = $ci->classes->getClassesWithRoomBetween($s, $e, 'allrooms',false);
 
 			foreach ($vals['classes'] as $class){
 				$class->attendees = $ci->Bookings->getBookingAttendantsNames($class->class_id);
@@ -113,6 +114,17 @@ if ( ! function_exists('parse_temp')){
 			return $vals;
 		}
 		return null;
+	}
+
+	function notifyWaiting($cid,$message){ // NOTIFY WAITING LIST
+		$ci = get_instance();
+		if($this->tank_auth->is_member()){
+			$ci->load->model('waiting');
+			$ci->load->helper('comms');
+			if(waitingListCount>0){
+				contact_user($this->waiting->getUsers($cid), $message);
+			}
+		}
 	}
 	
 	/* 

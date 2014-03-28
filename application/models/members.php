@@ -3,6 +3,7 @@
 class Members extends CI_Model
 {
   private $table_name         = 'users';      // user accounts
+  private $prefs_table_name   = 'user_comms_preference_tbl';
   private $profile_table_name = 'user_profiles';  // user profiles
 
   function __construct()
@@ -12,6 +13,7 @@ class Members extends CI_Model
     $ci =& get_instance();
     $this -> table_name         = $ci -> config -> item('db_table_prefix', 'tank_auth').$this -> table_name;
     $this -> profile_table_name = $ci -> config -> item('db_table_prefix', 'tank_auth').$this -> profile_table_name;
+    $this -> prefs_table_name   = $ci -> config -> item('db_table_prefix', 'tank_auth').$this -> prefs_table_name;
   }
 
   /*
@@ -71,8 +73,25 @@ class Members extends CI_Model
    * @return	void
    */
  function deleteUserAccount($id){
-   return $this->db->delete($this -> table_name, array('id' => $id)); 
+   return $this->db->delete($this -> table_name, array('id' => $id));
  }
+
+
+function getAllMemberships(){
+ $this -> db -> select("id,membership_type, start_date, end_date");
+   $query = $this -> db -> get('membership_type_tbl');
+   return  $query->result();
+}
+
+function deleteMembership($id){
+  $this->db->delete('membership_type_tbl', array('id' => $id));
+}
+
+function getAllMemberTypes(){
+ $this -> db -> select("id, type");
+   $query = $this -> db -> get('member_type_tbl');
+   return  $query->result();
+}
 
  /**
  * Get member type ids
@@ -99,6 +118,13 @@ class Members extends CI_Model
    $insert_id = $this->db->insert_id();
    return $insert_id;
  }
+
+function createMembertoMembershipLink($memberID, $shipID){
+ $data = array('member_type_id' => $memberID ,'membership_type_id' => $shipID);
+   $this->db->insert('member_membership_tbl', $data); 
+   $insert_id = $this->db->insert_id();
+   return $insert_id;
+}
 
  /**
  * Get member email
@@ -141,6 +167,26 @@ class Members extends CI_Model
      $this->db->update('users', $changes); 
      return "4:Success";
    }
+
+   function getCommsPref($id)
+   {
+     $this -> db ->select('comms_preference_id');
+     $this -> db -> where('member_id', $id);
+     $this -> db -> from('user_comms_preference_tbl');
+     
+     $query = $this->db->get();
+     return $query->result();
+   }
+
+function haveCommsPref($id,$com)
+{
+	$this->db->select('id');
+	$this->db->where('member_id', $id);
+	$this->db->where('comms_preference_id', $com);
+	$this -> db -> from('user_comms_preference_tbl');
+	$query = $this->db->get();
+	return $query->num_rows();
+}
    
   /**
   * Get user column
@@ -174,12 +220,28 @@ class Members extends CI_Model
    $this->db->update('class_booking_tbl', $data); 
  }
 
+
+ /*
+  * get the staff users
+  * @return object
+  */
+
+function getStaffUsers()
+{
+  $this -> db -> select($this -> table_name.'.id, first_name, second_name, email, home_number, mobile_number, twitter, comms_preference, activated, banned, ban_reason');
+  $this -> db -> from($this -> table_name);
+  $this -> db -> where($this -> table_name.'.member_type_id', '2');
+
+  $query = $this -> db -> get();
+  return $query->result();
+}
+
  /*
   * get the admin users
   * @return object
   */	
- function getAdminUsers()
- {
+function getAdminUsers()
+{
   $this -> db -> select($this -> table_name.'.id, first_name, second_name, email, home_number, mobile_number, twitter, comms_preference, activated, banned, ban_reason');
   $this -> db -> from($this -> table_name);
   $this -> db -> where($this -> table_name.'.member_type_id', '7');
@@ -201,6 +263,16 @@ function getSuperAdminUsers()
 
   $query = $this -> db -> get();   
   return $query->result();
+}
+
+function updateCommsPreference($user_id, $new_comms_prefs)
+{
+  $this->db->delete($this -> prefs_table_name, array('member_id' => $user_id));
+
+  foreach ($new_comms_prefs as $p) {
+    $data = array('member_id' => $user_id, 'comms_preference_id' => $p);
+    $this->db->insert($this -> prefs_table_name, $data);
+  }
 }
 
 }

@@ -50,24 +50,24 @@ class facilities_controller extends CI_Controller {
 
             $this->load->model('courts'); 
 
-            if(isset($_POST['room_id']) && isset($_POST['rows']) && isset($_POST['cols'])){
+            if($this->input->post('room_id') && $this->input->post('rows') && $this->input->post('cols')){
 
-                $number_courts =intval($_POST['rows']) * intval($_POST['cols']);
+                $number_courts =intval($this->input->post('rows')) * intval($this->input->post('cols'));
 
                 if($number_courts == 1){
                     $this->_singleDivision();
                     return;
                 } else{
-                    $this->rooms->insertDivisibleRoom($_POST['room_id'], $_POST['rows'], $_POST['cols']);
+                    $this->rooms->insertDivisibleRoom($this->input->post('room_id'), $this->input->post('rows'), $this->input->post('cols'));
                     echo "Divisible room saved";
 
 
                     for($i=1;  $i <= $number_courts; $i++){
-                        $this->courts->addDivision($_POST['room_id'], $i);
+                        $this->courts->addDivision($this->input->post('room_id'), $i);
                     }
 
                     //clear any divisions still hanging about
-                    $this->courts->clearExcessDivisions($_POST['room_id'], $number_courts);              
+                    $this->courts->clearExcessDivisions($this->input->post('room_id'), $number_courts);              
                 }
             }
 
@@ -81,8 +81,8 @@ class facilities_controller extends CI_Controller {
     */
     function _singleDivision(){
 
-        if($this->rooms->isDivisible($_POST['room_id'])){
-            $this->rooms->removeDivisibleRoom($_POST['room_id']);
+        if($this->rooms->isDivisible($this->input->post('room_id'))){
+            $this->rooms->removeDivisibleRoom($this->input->post('room_id'));
             echo "Room restored to a <b>non divisible</b> room.";
         }else{
             echo "Cannot divide a room with one division";

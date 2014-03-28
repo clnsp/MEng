@@ -25,6 +25,9 @@ $brandSecondary = $this->config->item('secondary_color');
 	-webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 1px rgba(0, 0, 0, 0.075);
 	box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 1px rgba(0, 0, 0, 0.075);
 }
+.timepicker-picker td{
+	text-align: center;
+}
 
 .btn-default:active,
 .btn-primary:active,
@@ -800,6 +803,10 @@ i.square{
 	font-size: 35px;
 }
 
+#booking #eventModal .modal-header input.form-control.editable{
+	width: 50px!important;
+}
+
 
 
 #booking #eventModal #cancelled-banner{
@@ -1087,7 +1094,9 @@ html.mobile #booking.login.user .page-header h1{
 	font-size: 25!important;
 }
 
-
+.bootstrap-datetimepicker-widget {
+	z-index:10000004;
+}
 tr.success{
 	background-color:#DFF0D8;
 }

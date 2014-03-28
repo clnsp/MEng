@@ -127,6 +127,8 @@ class Auth extends CI_Controller
 	 */
 	function register()
 	{
+
+	  
 		if ($this->tank_auth->is_logged_in()) {									// logged in
 			redirect('');
 
@@ -147,10 +149,11 @@ class Auth extends CI_Controller
 			$this->form_validation->set_rules('email', 'Email', 'trim|required|xss_clean|valid_email');
 			$this->form_validation->set_rules('home_number', 'Home Number', 'trim|xss_clean|alpha_dash');
 			$this->form_validation->set_rules('mobile_number', 'Mobile Number', 'trim|xss_clean|alpha_dash');
+			$this->form_validation->set_rules('twitter', 'Twitter Name', 'trim|xss_clean|alpha_dash');
 			$this->form_validation->set_rules('password', 'Password', 'trim|required|xss_clean|min_length['.$this->config->item('password_min_length', 'tank_auth').']|max_length['.$this->config->item('password_max_length', 'tank_auth').']|alpha_dash');
 			$this->form_validation->set_rules('confirm_password', 'Confirm Password', 'trim|required|xss_clean|matches[password]');
 			$this->form_validation->set_rules('member_type', 'Member Type', 'required|xss_clean');
-			$this->form_validation->set_rules('comms_preference', 'Communication Preferences', 'trim|xss_clean');
+			$this->form_validation->set_rules('new_preferences', 'Communication Preferences');
 
 			$captcha_registration	= $this->config->item('captcha_registration', 'tank_auth');
 			$use_recaptcha			= $this->config->item('use_recaptcha', 'tank_auth');
@@ -165,17 +168,19 @@ class Auth extends CI_Controller
 			
 			$email_activation = $this->config->item('email_activation', 'tank_auth');	
 			//$this->input->post('some_data');
-			if(intval($this->form_validation->set_value('member_type'))>2){ // SPOUSE OR PARTNER
-				$det['uid'] = $ver['uid'][0].'SP';
-				$det['fn'] = $this->form_validation->set_value('first_name');
-				$det['sn'] = $this->form_validation->set_value('second_name');
-			}else{ // STUDENT OR STAFF
-				$det['uid'] = $ver['uid'][0];
-				$det['fn'] = $ver['givenName'][0];
-				$det['sn'] = $ver['sn'][0];
-			}
 
-			if ($this->form_validation->run()) {								// validation ok
+
+			if ($this->form_validation->run()) {// validation ok
+					$det['uid'] = $ver['uid'][0];
+				if(intval($this->form_validation->set_value('member_type'))>2){ // SPOUSE OR PARTNER
+					$det['uid'] = $det['uid'].'SP';
+					$det['fn'] = $this->form_validation->set_value('first_name');
+					$det['sn'] = $this->form_validation->set_value('second_name');
+				}else{ // STUDENT OR STAFF
+					$det['fn'] = $ver['givenName'][0];
+					$det['sn'] = $ver['sn'][0];
+				}
+			
 				if (!is_null($data = $this->tank_auth->create_user(
 					$det['uid'],
 					$det['fn'],
@@ -186,8 +191,8 @@ class Auth extends CI_Controller
 					$this->form_validation->set_value('twitter'),
 					$this->form_validation->set_value('password'),
 					$this->form_validation->set_value('member_type'),
+					$_POST['new_preferences'],
 					2,					// GUEST
-					$this->form_validation->set_value('comms_preference'),
 					$email_activation,
 					1))) {									// success
 					$data['site_name'] = $this->config->item('website_name', 'tank_auth');
@@ -195,12 +200,11 @@ class Auth extends CI_Controller
 					if ($email_activation) {									// send "activate" email
 					$data['activation_period'] = $this->config->item('email_activation_expire', 'tank_auth') / 3600;
 
-					echo("hello".$data['email']);
 					$this->_send_email('activate', $data['email'], $data);
 
 						unset($data['password']); // Clear password (just for any case)
 
-						$this->_show_message($this->lang->line('auth_message_registration_completed_1'));
+						//$this->_show_message($this->lang->line('auth_message_registration_completed_1'));
 
 					} else {
 						if ($this->config->item('email_account_details', 'tank_auth')) {	// send "welcome" email
@@ -209,7 +213,7 @@ class Auth extends CI_Controller
 					}
 						unset($data['password']); // Clear password (just for any case)
 
-						$this->_show_message($this->lang->line('auth_message_registration_completed_2').' '.anchor('/auth/login/', 'Login'));
+						//$this->_show_message($this->lang->line('auth_message_registration_completed_2').' '.anchor('/auth/login/', 'Login'));
 					}
 				} else {
 					$errors = $this->tank_auth->get_error_message();
@@ -225,12 +229,17 @@ class Auth extends CI_Controller
 			}
 			$data['captcha_registration'] = $captcha_registration;
 			$data['use_recaptcha'] = $use_recaptcha;
+
+			$this->load->Model('Comms_Preference');
+	  		$prefs = $this->Comms_Preference->getPreferences();
+      		$data['comm_prefs'] = $prefs;
+      		
 			if($ver)
 			{
 				$data['fname'] = $ver['givenName'][0];
 				$data['sname'] = $ver['sn'][0];
 				$data['mail'] = $ver['mail'][0];
-				parse_temp('DS Registeration', $this->load->view('auth/register_form', $data, true));
+				parse_temp('DS Registration', $this->load->view('auth/register_form', $data, true));
 			}			
 		}
 	}
@@ -254,16 +263,17 @@ class Auth extends CI_Controller
 		} else {
 			$use_username = $this->config->item('use_username', 'tank_auth');
 			if ($use_username) {
-				$this->form_validation->set_rules('username', 'Username', 'trim|required|xss_clean|min_length['.$this->config->item('username_min_length', 'tank_auth').']|max_length['.$this->config->item('username_max_length', 'tank_auth').']|alpha_dash');
+				//$this->form_validation->set_rules('username', 'Username', 'trim|required|xss_clean|min_length['.$this->config->item('username_min_length', 'tank_auth').']|max_length['.$this->config->item('username_max_length', 'tank_auth').']|alpha_dash');
 			}
 			$this->form_validation->set_rules('first_name', 'First Name', 'trim|required|xss_clean|alpha_dash');
 			$this->form_validation->set_rules('second_name', 'Second Name', 'trim|required|xss_clean|alpha_dash');
 			$this->form_validation->set_rules('email', 'Email', 'trim|required|xss_clean|valid_email');
 			$this->form_validation->set_rules('home_number', 'Home Number', 'trim|xss_clean|alpha_dash');
 			$this->form_validation->set_rules('mobile_number', 'Mobile Number', 'trim|xss_clean|alpha_dash');
+			$this->form_validation->set_rules('twitter', 'Twitter Name', 'trim|xss_clean|alpha_dash');
 			$this->form_validation->set_rules('password', 'Password', 'trim|required|xss_clean|min_length['.$this->config->item('password_min_length', 'tank_auth').']|max_length['.$this->config->item('password_max_length', 'tank_auth').']|alpha_dash');
 			$this->form_validation->set_rules('confirm_password', 'Confirm Password', 'trim|required|xss_clean|matches[password]');
-			$this->form_validation->set_rules('member_type', 'Member Type', 'trim|xss_clean');
+			$this->form_validation->set_rules('member_type', 'Member Type', 'required|xss_clean');
 			$this->form_validation->set_rules('comms_preference', 'Communication Preferences', 'trim|xss_clean');
 
 			$captcha_registration	= $this->config->item('captcha_registration', 'tank_auth');
@@ -281,17 +291,19 @@ class Auth extends CI_Controller
 
 			if ($this->form_validation->run()) {								// validation ok
 				if (!is_null($data = $this->tank_auth->create_user(
+					"", // No Username
 					$this->form_validation->set_value('first_name'),
 					$this->form_validation->set_value('second_name'),
 					$this->form_validation->set_value('home_number'),
 					$this->form_validation->set_value('mobile_number'),
 					$this->form_validation->set_value('email'),
+					$this->form_validation->set_value('twitter'),
 					$this->form_validation->set_value('password'),
 					$this->form_validation->set_value('member_type'),
 					2,					// GUEST
 					$this->form_validation->set_value('comms_preference'),
 					$email_activation,
-					0))) {									// success
+					0))) {									// requires verification
 
 					$data['site_name'] = $this->config->item('website_name', 'tank_auth');
 
@@ -400,11 +412,19 @@ class Auth extends CI_Controller
 	  	$data['errors'] = array();
 
 	  	$this->load->Model('Members');
+
+	  	$member = $this->Members->getStaffUsers();
+	  	$data['member'] = $member;
+
 	  	$admin = $this->Members->getAdminUsers();
 	  	$data['admin'] = $admin;
 
 	  	$super = $this->Members->getSuperAdminUsers();
-	  	$data['super'] = $super;
+	  	$data['super'] = $super; 
+
+	// GET ALL POSSIBLE MEMBERSHIPS
+ 		$data['memberships'] = $this->Members->getAllMemberships();
+$data['memberTypes'] = $this->Members->getAllMemberTypes();
 
 			if ($this->form_validation->run()) {								// validation ok
 				if ($this->tank_auth->change_password(
@@ -447,8 +467,8 @@ class Auth extends CI_Controller
             $members = $this->Members->getUserByID($this->tank_auth->get_user_id());
             $data['member'] = $members['0'];
 
-            //$member_prefs = $this->Members->getUserCommsPrefs($this->tank_auth->get_user_id());
-            //$data['member_prefs'] = $member_prefs;
+            $member_prefs = $this->Members->getCommsPref($this->tank_auth->get_user_id());
+            $data['member_prefs'] = $member_prefs;
             
             $prefs = $this->Comms_Preference->getPreferences();
             $data['comm_prefs'] = $prefs;
@@ -768,16 +788,20 @@ class Auth extends CI_Controller
 	 */
 	function _send_email($type, $email, &$data)
 	{
-		echo("SEND1");
 		$this->load->library('email');
-		$this->email->from($this->config->item('webmaster_email', 'tank_auth'), $this->config->item('website_name', 'tank_auth'));
-		$this->email->reply_to($this->config->item('webmaster_email', 'tank_auth'), $this->config->item('website_name', 'tank_auth'));
+		$fromEmail = "ouremail@sent.com";
+//		$this->email->from($this->config->item('webmaster_email', 'tank_auth'), $this->config->item('website_name', 'tank_auth'));
+//		$this->email->reply_to($this->config->item('webmaster_email', 'tank_auth'), $this->config->item('website_name', 'tank_auth'));
+		$this->email->from($fromEmail, 'Email Test');
 		$this->email->to($email);
-		$this->email->subject(sprintf($this->lang->line('auth_subject_'.$type), $this->config->item('website_name', 'tank_auth')));
+		$this->email->subject('Registration Confirmation');
+//		$this->email->subject(sprintf($this->lang->line('auth_subject_'.$type), $this->config->item('website_name', 'tank_auth')));
+//		$this->email->message('This is to confirm that your account registraion has been successful congratulations ya rocket.'); 
 		$this->email->message($this->load->view('email/'.$type.'-html', $data, TRUE));
-		$this->email->set_alt_message($this->load->view('email/'.$type.'-txt', $data, TRUE));
+//		$this->email->set_alt_message($this->load->view('email/'.$type.'-txt', $data, TRUE));
 		$this->email->send();
-		echo("SEND2");
+
+//		echo $this->email->print_debugger(); // Useful email debugger
 	}
 
 	/**

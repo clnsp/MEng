@@ -1,4 +1,5 @@
- <?php 
+<div class="container"> 
+<?php 
   foreach($sport_types as $key => $type): ?>
 
   <?php if($key % 2 == 0) { ?>
@@ -21,7 +22,7 @@
   </div>
   <?php } ?>
 
-
-
 <?php endforeach; ?>
 
+</div>
+</div>

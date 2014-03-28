@@ -58,20 +58,22 @@ class Member extends CI_Controller{
 		$new_details['first_name']       = $_POST['first_name'];
 		$new_details['second_name']      = $_POST['second_name'];
 		//$new_details['email']            = $_POST['email'];
-			if($_POST['comms_preference']==2){
+			/*if($_POST['comms_preference'] == 2){
 			//TWITTER VALIDATION
 			}
 
-			if($_POST['comms_preference']==1){
+			if($_POST['comms_preference'] == 1){
 			// SMS VALIDATION
 			}
+			*/
 			$new_details['home_number']      = $_POST['home_number'];
 			$new_details['mobile_number']    = $_POST['mobile_number'];
 			$new_details['twitter']          = $_POST['twitter'];
-			$new_details['comms_preference'] = $_POST['comms_preference'];
+			//$new_details['comms_preference'] = $_POST['comms_preference'];
 
 			
 			$_POST['changes'] = $new_details;
+			$this->members->updateCommsPreference(strtolower($this->tank_auth->get_user_id()), $_POST['new_preferences']);
 			
 			if(isset($_POST['changes'])){
 				echo $this->members->updateUser(strtolower($this->tank_auth->get_user_id()), array_map('strtolower',$_POST['changes']));
@@ -108,7 +110,7 @@ class Member extends CI_Controller{
 				$_POST['changes'] = $new_details;
 				if(isset($_POST['changes'])){
 					foreach ($supers as $s) {
-		      //echo $this->members->updateUser($s, $new_details);
+		            	echo $this->members->updateUser($s, $new_details);
 					}
 				}
 			}
@@ -165,12 +167,12 @@ class Member extends CI_Controller{
 	
 	function getBookings($page = 'class_booking_view'){
 		if(check_admin()){
-			if(isset($_GET['id']))
+			if($this->input->get('id'))
 			{
 				$this->load->Model('Categories');
 				$this->load->Model('Bookings');
 				
-				$bookings = $this->Bookings->getBookingByMemberView($_GET['id']);
+				$bookings = $this->Bookings->getBookingByMemberView($this->input->get('id'));
 				$data['categories'] = $this->Categories->getCategories();
 				$data['bookings'] = array();
 				foreach ($bookings as $book){ 
@@ -193,25 +195,25 @@ class Member extends CI_Controller{
 	function updateUserMembership(){
 		if(check_admin()){
 			$this->load->model('members');
-			if(isset($_POST['id']) && isset($_POST['membership']) && isset($_POST['options'])){ // CUSTOM MEMBERSHIP
-
-				if($_POST['membership']==-1 && $this->_validDate($_POST['options']['start']) && $this->_validDate($_POST['options']['end']))
+			if($this->input->post('id') && $this->input->post('membership') && $this->input->post('options')){ // CUSTOM MEMBERSHIP
+$options = $this->input->post('options');
+				if($this->input->post('membership')==-1 && $this->_validDate($options['start']) && $this->_validDate($options['end']))
 				{
-					$start =  new DateTime($_POST['options']['start']);
-					$end =  new DateTime($_POST['options']['end']);
+					$start =  new DateTime($options['start']);
+					$end =  new DateTime($options['end']);
 					$mem = $this->members->createNewMembership('Custom',$start->format('Y-m-d'),$end->format('Y-m-d'));
-					echo $this->members->updateUser($_POST['id'],array('membership_type_id'=>$mem));
+					echo $this->members->updateUser($this->input->post('id'),array('membership_type_id'=>$mem));
 					return;
 				}else {
 					echo "Invalid date format";
 					return;
 				}
 			}
-			else if(isset($_POST['id']) && isset($_POST['membership'])){ // AVAILABLE MEMBERSHIPS
-				$avMeb = $this->members->getMembershipTypes($_POST['id']);
+			else if($this->input->post('id') && $this->input->post('membership')){ // AVAILABLE MEMBERSHIPS
+				$avMeb = $this->members->getMembershipTypes($this->input->post('id'));
 				foreach ($avMeb as $m){ 
-					if (isset($m->id) && $m->id == $_POST['membership']) 
-						echo $this->members->updateUser($_POST['id'],array('membership_type_id'=>$_POST['membership']));
+					if (isset($m->id) && $m->id == $this->input->post('membership')) 
+						echo $this->members->updateUser($this->input->post('id'),array('membership_type_id'=>$this->input->post('membership')));
 				}
 			}
 		}
@@ -235,10 +237,34 @@ class Member extends CI_Controller{
 	 */
 	function deleteUser(){
 		if(check_admin()){
-			if(isset($_POST['id']) && isset($_POST['reason'])){
+			if($this->input->post('id') && $this->input->post('reason')){
 				$this->load->model('members');
-				$user = $this->members->getUserByID($_POST['id']);
-				$this->members->deleteUserAccount($_POST['id']);			
+				$user = $this->members->getUserByID($this->input->post('id'));
+				$this->members->deleteUserAccount($this->input->post('id'));			
+			}
+		}
+	}
+	
+	function createMembership(){
+		if(check_admin()){
+			if($this->input->post('membership')){
+			$Membership = json_decode($this->input->post('membership'));
+			$this->load->model('members');
+$start = new DateTime($Membership->start);
+$end = new DateTime($Membership->end);
+			$ID = $this->members->createNewMembership($Membership->name, $start->format('Y-m-d'), $end->format('Y-m-d'));
+			for($i=0;$i<count($Membership->types);$i++){
+				echo($this->members->createMembertoMembershipLink($Membership->types[$i],$ID));
+			}
+			}
+		}
+	}
+	
+	function deleteMembership(){
+		if(check_admin()){
+			if($this->input->post('id')){
+				$this->load->model('members');
+				$this->members->deleteMembership($this->input->post('id'));
 			}
 		}
 	}
@@ -257,9 +283,10 @@ class Member extends CI_Controller{
 	 */
 	function contactUser() {
 		if(check_admin()){
-			if(isset($_POST['id']) && isset($_POST['message'])){
+			if($this->input->post('id') && $this->input->post('message')){
 				$this->load->helper('comms');
-				echo json_encode(contact_user(array($_POST['id']),$_POST['message']));
+				contact_user(array($this->input->post('id')), $this->input->post('message'));
+//echo json_encode( )
 			}
 		}
 	}

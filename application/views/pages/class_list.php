@@ -1,3 +1,4 @@
+<div class="container">
 <?php 
   foreach($class_types as $key => $type): ?>
 
@@ -21,7 +22,7 @@
   </div>
   <?php } ?>
 
-
-
 <?php endforeach; ?>
 
+</div>
+</div>

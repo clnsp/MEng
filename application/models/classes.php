@@ -29,9 +29,10 @@ class Classes extends CI_Model{
     * @param int -date
     * @return object
     */
-    function getClassessBetween($start, $end){ //getBookingsBetween used to be
+    function getClassessBetween($start, $end ,$inc=true){ //getBookingsBetween used to be
 
-        $this -> db -> where('start BETWEEN "' . $start . '" AND "' . $end . '"');
+        if($inc){ $this -> db -> where('start BETWEEN "' . $start . '" AND "' . $end . '"'); }
+	else { $this -> db -> where('start BETWEEN "' . $start . '" AND "' . $end . '" AND cancelled=0'); } // WONT SHOW CANCELLED CLASSES
         $this -> db -> order_by("start asc, title asc");
         $query = $this->db->get($this -> class_info_view);
 
@@ -47,21 +48,21 @@ class Classes extends CI_Model{
     * @param int
     * @return object
     */
-    function getClassesWithRoomBetween($start, $end, $room){
+    function getClassesWithRoomBetween($start, $end, $room,$inc=true){
 
         if($room != 'allrooms'){
-            $this -> db -> where('room_id',$room, ' start BETWEEN "' . $start . '" AND "' . $end . '"');
+	if($inc){ $this -> db -> where('room_id',$room, ' start BETWEEN "' . $start . '" AND "' . $end . '"'); }
+	else{ $this -> db -> where('room_id',$room, ' start BETWEEN "' . $start . '" AND "' . $end . '" AND cancelled=0'); } // WONT SHOW CANCELLED CLASSES
             $this -> db -> order_by("start asc, title asc");
             $query = $this->db->get($this -> class_info_view);
 
         }else{
-            return $this->getClassessBetween($start, $end);
+            return $this->getClassessBetween($start, $end,$inc);
         }
 
 
         return $query->result();
     }
-
 
     /**
     * Get the maximum attendance for a specific class
@@ -186,7 +187,7 @@ class Classes extends CI_Model{
     */
     function getClassInformation($class_id){
 
-        $this -> db -> select('class_type, class_start_date, class_end_date, room, class_id, max_attendance');
+        $this -> db -> select('class_type, class_start_date, class_end_date, room, room_tbl.room_id, class_id, max_attendance');
         $this -> db -> from($this -> class_tbl);
         $this -> db -> where('class_id =' . $class_id);
         $this -> db -> join('class_type_tbl', 'class_type_tbl.class_type_id = class_tbl.class_type_id');
@@ -295,8 +296,10 @@ class Classes extends CI_Model{
         $this -> db -> join('room_tbl', 'room_tbl.room_id = class_tbl.room_id');
 
         $query = $this -> db -> get();
+
 		
-        echo($this->db->last_query());
+ //       echo($this->db->last_query());
+        // echo($this->db->_error_message());
 
         return $query->result_array();
 
@@ -309,20 +312,20 @@ class Classes extends CI_Model{
     */
     function getFutureClasses($class_type_id) {
 
-       $date = new DateTime();
+     $date = new DateTime();
 
-       $this -> db -> select('class_type, class_start_date, class_end_date, room, class_id');
-       $this -> db -> from($this -> class_tbl);
-       $this -> db -> where('class_type_tbl.class_type_id', $class_type_id);
-       $this -> db -> where('class_start_date >=', $date->format("Y-m-d H:i:s"));
-       $this -> db -> where('class_start_date <=', $date->modify('+1 week')->format("Y-m-d H:i:s"));
-       $this -> db -> join('class_type_tbl', 'class_type_tbl.class_type_id = class_tbl.class_type_id');
-       $this -> db -> join('room_tbl', 'room_tbl.room_id = class_tbl.room_id');
+     $this -> db -> select('class_type, class_start_date, class_end_date, room, class_id');
+     $this -> db -> from($this -> class_tbl);
+     $this -> db -> where('class_type_tbl.class_type_id', $class_type_id);
+     $this -> db -> where('class_start_date >=', $date->format("Y-m-d H:i:s"));
+     $this -> db -> where('class_start_date <=', $date->modify('+1 week')->format("Y-m-d H:i:s"));
+     $this -> db -> join('class_type_tbl', 'class_type_tbl.class_type_id = class_tbl.class_type_id');
+     $this -> db -> join('room_tbl', 'room_tbl.room_id = class_tbl.room_id');
 
-       $query = $this -> db -> get();
+     $query = $this -> db -> get();
 
-       return $query->result_array();
-   }
+     return $query->result_array();
+ }
 
 
 
@@ -429,10 +432,13 @@ class Classes extends CI_Model{
     * @param int - date
     * @param int - time
     * @param int - time
+    * @param int - (optional)
     * @return bool
     */
-    function isRoomBookedOut($room_id, $start_date, $end_date, $start_time, $end_time) {
-
+    function isRoomBookedOut($room_id, $start_date, $end_date, $start_time, $end_time, $excludeClass_id='') {
+		if($excludeClass_id !=''){
+			$this -> db -> where("class_id != $excludeClass_id");
+		}
         $this -> db -> where("DATE(class_start_date) >= '$start_date'");
         $this -> db -> where("DATE(class_end_date) <= '$end_date'");
         $this->db->where("((TIME(class_start_date) <= '$start_time' AND TIME(class_end_date) > '$start_time') OR (TIME(class_end_date) < '$end_time' AND TIME(class_start_date) >= '$end_time'))");
@@ -440,7 +446,9 @@ class Classes extends CI_Model{
         $this->db->from($this->class_tbl);
 
         $query = $this -> db -> get();
-
+        
+//        echo$this->db->last_query();
+       
         return $query->num_rows() > 0;
     }
     
@@ -481,6 +489,19 @@ class Classes extends CI_Model{
 
         return $query->result_array();
     }
+
+    /**
+    * Update a class instance
+    * @param int
+    * @param array
+    */
+    function updateClass($class_id, $data){
+        $this->db->where('class_id', $class_id);
+        $this->db->update($this -> class_tbl, $data);
+
+    }   
+
+    
 
 }
 

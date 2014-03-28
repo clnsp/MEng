@@ -157,14 +157,14 @@
 		 * Rooms
 		 * @return	void
 		 */
-		public function rooms(){
+		public function rooms($page = 'rooms'){
 
 			if(check_member()){
 
-				$this->load->Model($page = 'rooms');
+				$this->load->Model('rooms');
 
 				$data['rooms'] = $this->rooms->getRooms();
-				parse_temp('room', $this->load->view('pages/member/rooms', $data, true));
+				parse_temp($page, $this->load->view('pages/member/'.$page, $data, true));
 
 			}
 
@@ -266,8 +266,6 @@
 
 				$this->load->Model('Categories');
 				$this->load->Model('classtype');
-
-
 
 				$data['categories'] = $this->Categories->getCategories();
 				$data['class_types'] = $this->classtype->getClasstype();

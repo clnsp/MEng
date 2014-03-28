@@ -1,7 +1,7 @@
 <?php
 class Calendar extends CI_Controller{
 
-	private $term = '';			// user accounts
+  private $term = '';     // user accounts
 
 
   function __construct()  {
@@ -15,21 +15,21 @@ class Calendar extends CI_Controller{
 
   }
 
-	
-	/**
-	* Compare function for levenshtein sort
-	* @param string
-	* @param string
-	* @return int
-	*/
-	function _my_sort($a,$b){      
-	    $leva = levenshtein($this-> term, $a['name']);
-	    $levb = levenshtein($this-> term, $b['name']);
-	
-	    if ($leva==$levb) return 0;
-	
-	    return ($leva<$levb)?-1:1;
-    }
+  
+  /**
+  * Compare function for levenshtein sort
+  * @param string
+  * @param string
+  * @return int
+  */
+  function _my_sort($a,$b){      
+    $leva = levenshtein($this-> term, $a['name']);
+    $levb = levenshtein($this-> term, $b['name']);
+    
+    if ($leva==$levb) return 0;
+    
+    return ($leva<$levb)?-1:1;
+  }
 
 
 
@@ -41,12 +41,12 @@ class Calendar extends CI_Controller{
       if(check_admin()){
         $this->load->model('members');
 
-        if (isset($_GET['term'])){
-        
-          $this-> term = strtolower($_GET['term']);
+        if ($this->input->get('term')){
+
+          $this-> term = strtolower($this->input->get('term'));
 
           $matched = $this->members->getUserLike($this-> term)->result_array();
-                    
+          
           usort($matched,array($this,"_my_sort")); 
 
           foreach ($matched as $match){
@@ -56,10 +56,10 @@ class Calendar extends CI_Controller{
                     $row_set[] = $new_row; //build an array
                   }
                 echo json_encode($row_set); //format the array into json data
-                }
               }
-
             }
+
+          }
 
 
 
@@ -68,8 +68,8 @@ class Calendar extends CI_Controller{
      * @return	void
      */
     function getClassAttendants(){
-      if (isset($_GET['class'])){
-        $q = strtolower($_GET['class']);
+      if ($this->input->get('class')){
+        $q = strtolower($this->input->get('class'));
         echo json_encode($this->bookings->getBookingAttendants($q));       
       }
     }
@@ -83,9 +83,9 @@ class Calendar extends CI_Controller{
     */
     function addMember(){
       if(check_admin()){
-        if (isset($_POST['member_id']) && isset($_POST['class_booking_id'])){
-          $m = strtolower($_POST['member_id']);
-          $b = strtolower($_POST['class_booking_id']);
+        if ($this->input->post('member_id') && $this->input->post('class_booking_id')){
+          $m = strtolower($this->input->post('member_id'));
+          $b = strtolower($this->input->post('class_booking_id'));
 
           $this->_addMember($b, $m);
         }    
@@ -136,11 +136,11 @@ class Calendar extends CI_Controller{
      */
     function removeMember(){
 
-      if (isset($_POST['member_id']) && isset($_POST['class_booking_id'])){
+      if ($this->input->post('member_id') && $this->input->post('class_booking_id')){
 
-        foreach($_POST['member_id'] as $mid){
+        foreach($this->input->post('member_id') as $mid){
           $m = strtolower($mid);
-          $b = strtolower($_POST['class_booking_id']);
+          $b = strtolower($this->input->post('class_booking_id'));
 
           if(!isclassinPast($b) && $this->bookings->countBookingAttendants($b) > 0 ){
             $this->bookings->removeMember($b, $m);
@@ -148,6 +148,8 @@ class Calendar extends CI_Controller{
             
           }
         }
+	$this->load->helper('temp');
+	notifyWaiting($class_booking_id, "TEST");
       }
     }
 
@@ -160,18 +162,18 @@ class Calendar extends CI_Controller{
       if(check_admin()){
         $cancelled = $cancelled == "true";
 
-        if (isset($_POST['class_booking_id'])){
+        if ($this->input->post('class_booking_id')){
           $this->load->model('classes');
 
-          $bid = $_POST['class_booking_id'];
+          $bid = $this->input->post('class_booking_id');
           $msg = '';
 
           if(isclassinPast($bid)){
             echo "Cannot change the status of a class in the past";
             return;  
           }
-          if (isset($_POST['cancel_message'])){
-            $msg = $_POST['cancel_message'];
+          if ($this->input->post('cancel_message')){
+            $msg = $this->input->post('cancel_message');
           }
 
           $iscancelled = $this->classes->isClassCancelled($bid);          
@@ -256,58 +258,143 @@ class Calendar extends CI_Controller{
      * @return	void
      */
     function addGuestToClass($class_id){
-      $this->load->model('tank_auth/users');
-      $this->load->model('members');
 
-      if(isset($class_id)){ 
+      if(check_admin()){
+        $this->load->model('tank_auth/users');
+        $this->load->model('members');
 
-        if (isset($_POST['guest_first_name'])){
-          $first = strtolower($_POST['guest_first_name']);       
-        } else{
-          return;
-        }
+        if(isset($class_id)){ 
 
-        if (isset($_POST['guest_last_name'])){
-          $last = strtolower($_POST['guest_last_name']);       
-        } else{
-          return;
-        }
+          if ($this->input->post('guest_first_name')){
+            $first = strtolower($this->input->post('guest_first_name'));       
+          } else{
+            echo "Please supply first name";
+            return;
+          }
 
-        if (isset($_POST['guest_email'])){
-          $email = strtolower($_POST['guest_email']);       
-        } 
-        else{
-          return;
-        }
+          if ($this->input->post('guest_last_name')){
+            $last = strtolower($this->input->post('guest_last_name'));       
+          } else{
+            echo "Please supply a name";
+            return;
+          }
 
-        if (isset($_POST['guest_phone'])){
-          $phone = strtolower($_POST['guest_phone']);       
-        } 
-        else{
-          return;
-        }
+          if ($this->input->post('guest_email')){
+            $email = strtolower($this->input->post('guest_email'));       
+          } 
+          else{
+            echo "Please supply an email address";
+            return;
+          }
 
-        $data = array(
-          'membership_type_id' => 2,
-          'first_name' => $first ,
-          'second_name' => $last,
-          'email'   => $email,
-          'home_number' =>$phone
-          );
+          if ($this->input->post('guest_phone')){
+            $phone = strtolower($this->input->post('guest_phone'));       
+          } 
+          else{
+            echo "Please supply contact";
+            return;
+          }
 
-        $newuserid = $this->users->create_user($data);
-        $newuserid = $newuserid['user_id'];
-        if(!is_null($newuserid)){
-          $this->_addMember($class_id, $newuserid);
-        }else{
-          echo "Error adding new user";
+          $data = array(
+            'membership_type_id' => 2,
+            'first_name' => $first ,
+            'second_name' => $last,
+            'email'   => $email,
+            'home_number' =>$phone
+            );
+
+          $newuserid = $this->users->create_user($data);
+          $newuserid = $newuserid['user_id'];
+          if(!is_null($newuserid)){
+            $this->_addMember($class_id, $newuserid);
+          }else{
+            echo "Error adding new user";
+          }
+
         }
 
       }
-
+      
     }
 
 
+    /**
+    * Edit a class details
+    */
+    function editEvent(){
+
+      if(isSuperAdmin()){
+
+        if(isset($_POST['class_id']) && isset($_POST['date']) && isset($_POST['start']) && isset($_POST['end'])){
+
+          $this->load->Helper('comms');
+
+          $start_date = new DateTime($_POST['date']. " " . $_POST['start']);
+          $end_date = new DateTime($_POST['date']. " " . $_POST['end']);
+
+
+          if($start_date > $end_date){
+            echo "Start time cannot be grater than end time.";
+            return;
+          }
+
+          if($start_date < new DateTime){
+            echo "Start time cannot be in the past";
+            return;
+          }
+
+          $classDetails = $this->classes->getClassInformation($_POST['class_id']);
+
+          $data = array(
+            'class_start_date' => $start_date->format("Y-m-d H:i:s"),
+            'class_end_date'    => $end_date->format("Y-m-d H:i:s")
+            );
+
+
+          if($this->classes->isRoomBookedOut($classDetails['room_id'], $start_date->format("Y-m-d"), $start_date->format("Y-m-d"), $start_date->format("H:i:s"), $end_date->format("H:i:s"), $_POST['class_id'])){
+            echo "There is a room overlap";
+            return;
+          }
+
+
+
+          $this->classes->updateClass($_POST['class_id'], $data);
+          if($this->db->_error_number()==0){
+            echo "Saved";
+
+            $users = $this->bookings->getBookingAttendantsIDs($_POST['class_id']);
+            $emails = array();
+            foreach ($users as $key => $user) {
+              array_push($emails, $user['member_id']);
+            }
+
+
+            $msg = 'The following class start time has changed: ' . $classDetails['class_type'] . ' on '. $start_date->format("jS F Y") . ' starting at '. $start_date->format("H:i") . ' in the following room: '. $classDetails['room'];
+
+            contact_user($emails, $msg);
+          }else{
+            echo "An error occurred";
+          }
+          return;
+        }
+        else{
+          echo "Missing parameters";
+        }
+      }
+    }
+
+      /**
+     * Module for managing the block classes
+     */
+      function manageBlockClasses(){
+
+       if (check_admin()) {
+        $this->load->view('pages/admin/manage-block-bookings');
+        return;
+      }
+
+
+    }
   }
 
 /*
@@ -322,5 +409,9 @@ function getQueryStringParams() {
 
 /* End of file calendar.php */
 /* Location: ./application/controllers/calendar.php */
+?>
+
+
+
 ?>
 

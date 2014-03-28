@@ -8,6 +8,8 @@
  	return replacer;
  };
 
+ $.ajaxSetup({ cache: false });
+
  var siteUrl = $('html').data('site-url');
 
 
@@ -198,13 +200,7 @@
  	
 
 
- 	var update = function () {
- 		$.event.trigger({
- 			type: "classtypesRefreshed",
- 			message: "Hello World!",
- 			time: new Date()
- 		});
- 		
+ 	var update = function () {		
  		$('[type=dropdown].sportsclasstype').html(sportsdrop.html());
  		$('[type=dropdown].classtype').html(drop.html());
  		$('table.classtype tbody').html(table.html()).trigger('footable_redraw');
@@ -455,14 +451,41 @@
  }else{
  	/* time pickers */
  	$('.timepicker').each(function(){
- 		$(this).timepicker('setTime', '');
 
- 	})
+ 	//	$(this).timepicker('setTime', '');
+ 	$(this).datetimepicker({
+ 		pickDate: false
+ 	});
+ })
+
  }
- 
+
+ if(!Modernizr.input.placeholder){
+ 	/*https://gist.github.com/hagenburger/379601*/
+ 	$('[placeholder]').focus(function() {
+ 		var input = $(this);
+ 		if (input.val() == input.attr('placeholder')) {
+ 			input.val('');
+ 			input.removeClass('placeholder');
+ 		}
+ 	}).blur(function() {
+ 		var input = $(this);
+ 		if (input.val() == '' || input.val() == input.attr('placeholder')) {
+ 			input.addClass('placeholder');
+ 			input.val(input.attr('placeholder'));
+ 		}
+ 	}).blur().parents('form').submit(function() {
+ 		$(this).find('[placeholder]').each(function() {
+ 			var input = $(this);
+ 			if (input.val() == input.attr('placeholder')) {
+ 				input.val('');
+ 			}
+ 		})
+ 	});
+ }
 
  var InputRadioGroup = new function(){
- 	
+
  	$('html.mobile .btn-group.input-radio-group').addClass('btn-group-vertical');
 
  	$('#booking').on('click', '.btn-group.input-radio-group button', function() {
@@ -471,17 +494,17 @@
  		$(this).addClass('active');
  	});
  }
- 
+
  var ClearSearch = new function() {
- 	
+
  	$('.clearinput').click(function() {
  		$(this).prev('input').val('');
  		$('.ui-datepicker-div').remove();
  		$('.bootstrap-timepicker-widget').remove();
  	});
- 	
+
  }
- 
- 
+
+
 
 
