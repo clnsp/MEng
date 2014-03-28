@@ -250,3 +250,4 @@ class class_type extends CI_Controller
 
 /* End of file welcome.php */
 /* Location: ./application/controllers/class_types.php */
+?>
