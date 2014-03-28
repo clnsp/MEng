@@ -458,8 +458,11 @@
  	/* time pickers */
  	$('.timepicker').each(function(){
 
- 		$(this).timepicker('setTime', '');
- 	})
+ 	//	$(this).timepicker('setTime', '');
+ 	$(this).datetimepicker({
+ 		pickDate: false
+ 	});
+ })
 
  }
 
