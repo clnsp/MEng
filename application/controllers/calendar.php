@@ -128,7 +128,6 @@ class Calendar extends CI_Controller{
      * Remove a member from a class
      */
     function removeMember(){
-
       if ($this->input->post('member_id') && $this->input->post('class_booking_id')){
 
         foreach($this->input->post('member_id') as $mid){
@@ -137,12 +136,12 @@ class Calendar extends CI_Controller{
 
           if(!isclassinPast($b) && $this->bookings->countBookingAttendants($b) > 0 ){
             $this->bookings->removeMember($b, $m);
-            emailMemberRemovedClass($m, $b);
+            //emailMemberRemovedClass($m, $b);
             
           }
         }
 	$this->load->helper('temp');
-	notifyWaiting($class_booking_id, "TEST");
+	notifyWaiting(strtolower($this->input->post('class_booking_id')));
       }
     }
 

@@ -51,6 +51,9 @@ $form = array(
 	'role' => 'form',
 	);
 
+$m_prefs = array();
+$prefs = array();
+
 foreach ($member_prefs as $p) $m_prefs[$p->comms_preference_id] = $p->comms_preference_id;
 foreach ($comm_prefs as $p)	$prefs[$p->id] = $p->comms_preference;
 

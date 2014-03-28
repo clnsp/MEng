@@ -184,10 +184,10 @@ function haveCommsPref($id,$com)
   function getUserColumn($id, $row) // $row = 'first_name'
   {
    $this->db->select($row);
-   $this->db->from($this->table_name);
    $this->db->where('id', $id);
+   $this->db->from($this->table_name);
 
-   $query = $this -> db -> get();   
+   $query = $this -> db -> get();
    return $query->result();
  }
 

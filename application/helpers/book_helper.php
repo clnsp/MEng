@@ -41,8 +41,8 @@
      $ci = get_instance();
      $ci->load->helper('comms');
 
-     $d = new DateTime($classDetails['class_start_date']);
-     $msg = 'You have removed from the following class: ' . $classDetails['class_type'] . ' on '. $d->format("jS F Y") . ' starting at '. $d->format("H:i") . ' in the following room: '. $classDetails['room'];
+     //$d = new DateTime($classDetails['class_start_date']);
+     $msg = 'You have removed from the following class: ' . $classDetails['class_type'] . ' on in the following room: '. $classDetails['room'];
      contact_user(array($member_id), $msg);
 
    }

@@ -452,7 +452,7 @@ class booking extends CI_Controller{
 				$this->bookings->removeMember($class_booking_id, $member_id);
 				$this->classes->removeSportClass($class_booking_id); //if class is a sport need to remove the class as well
 				$this->load->helper('temp');
-				notifyWaiting($class_booking_id, "TEST");
+				notifyWaiting($class_booking_id);
 			}
 			$this->mybookings();
 		}

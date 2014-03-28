@@ -12,8 +12,6 @@
 if (!function_exists('contact_user'))
 {
 	function contact_user($id,$message,$service=false){
-
-
 		if(!is_array($id)){$id = array($id);}
 		if(!is_array($message)){$message =  array('email'=>$message,'sms'=>$message,'twitter'=>$message);}
 		$ci =& get_instance();
