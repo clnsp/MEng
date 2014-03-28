@@ -39,11 +39,14 @@ if(!$this->tank_auth->is_admin()){ ?>
      <?php if($page_title=="DS Registeration"){?>
      <script src="<?php echo base_url();?>assets/js/ds_registration.js"></script>
      <?php }?>
+     
+           <?php if($page_title=="admin-calendar"){ ?>
+     
 
      <script src="<?php echo base_url();?>assets/js/jquery-ui-autocomplete.custom.min.js"></script>
      <script src="<?php echo base_url();?>assets/cal/fullcalendar.min.js"></script>
      <script type="text/javascript" src="<?php echo base_url();?>assets/js/booking-calendar.js"></script>
-
+     <?php }?>
      <!-- Admin Manage Scripts -->
 
      <script type="text/javascript" src="<?php echo base_url();?>assets/js/jquery.minicolors.js"></script>
@@ -78,6 +81,10 @@ if(!$this->tank_auth->is_admin()){ ?>
      
      <?php } ?>
      
+      <?php if(($page_title=="admin-calendar") && isSuperAdmin()){ ?>
+           <script type="text/javascript" src="<?php echo base_url();?>assets/js/manage.js"></script>
+          <?php } ?>
+          
      <?php if($page_title=="user_booking" || $page_title=="bookings"){ ?>
      	<script type="text/javascript" src="<?php echo base_url();?>assets/js/user-booking.js"></script>
      <?php } ?>

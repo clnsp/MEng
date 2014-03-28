@@ -800,6 +800,10 @@ i.square{
 	font-size: 35px;
 }
 
+#booking #eventModal .modal-header input.form-control.editable{
+	width: 50px!important;
+}
+
 
 
 #booking #eventModal #cancelled-banner{

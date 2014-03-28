@@ -181,7 +181,7 @@ class Classes extends CI_Model{
     */
     function getClassInformation($class_id){
 
-        $this -> db -> select('class_type, class_start_date, class_end_date, room, class_id, max_attendance');
+        $this -> db -> select('class_type, class_start_date, class_end_date, room, room_tbl.room_id, class_id, max_attendance');
         $this -> db -> from($this -> class_tbl);
         $this -> db -> where('class_id =' . $class_id);
         $this -> db -> join('class_type_tbl', 'class_type_tbl.class_type_id = class_tbl.class_type_id');
@@ -422,10 +422,13 @@ class Classes extends CI_Model{
     * @param int - date
     * @param int - time
     * @param int - time
+    * @param int - (optional)
     * @return bool
     */
-    function isRoomBookedOut($room_id, $start_date, $end_date, $start_time, $end_time) {
-
+    function isRoomBookedOut($room_id, $start_date, $end_date, $start_time, $end_time, $excludeClass_id='') {
+		if($excludeClass_id !=''){
+			$this -> db -> where("class_id != $excludeClass_id");
+		}
         $this -> db -> where("DATE(class_start_date) >= '$start_date'");
         $this -> db -> where("DATE(class_end_date) <= '$end_date'");
         $this->db->where("((TIME(class_start_date) <= '$start_time' AND TIME(class_end_date) > '$start_time') OR (TIME(class_end_date) < '$end_time' AND TIME(class_start_date) >= '$end_time'))");
@@ -434,6 +437,7 @@ class Classes extends CI_Model{
 
         $query = $this -> db -> get();
         
+//        echo$this->db->last_query();
        
         return $query->num_rows() > 0;
     }
