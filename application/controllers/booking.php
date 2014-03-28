@@ -249,22 +249,29 @@ class booking extends CI_Controller{
 			$end_date = $end_date->format("Y-m-d");
 			$start_date = $start_date->format("Y-m-d");
 
-			$istime = DateTime::createFromFormat('H:i:00', $this->input->post('starttime'));
+			//$istime = DateTime::createFromFormat('H:i:00', $this->input->post('starttime'));
 
-			if($this->input->post('starttime')!='' && $istime){
+			if($this->input->post('starttime')!=''){
 
-				$start_time = new DateTime($this->input->post('starttime'));
-				$start_time = $start_time->format('H:i:00');
-
+				try {
+					$start_time = new DateTime($this->input->post('starttime'));
+					$start_time = $start_time->format('H:i:00');
+				} catch (Exception $e) {
+					$start_time = '00:00:00';
+				}
 			}else{
 				$start_time = '00:00:00';
 			}
 
-			$istime2 = DateTime::createFromFormat('H:i:00', $this->input->post('endtime'));
+			//$istime2 = DateTime::createFromFormat('H:i:00', $this->input->post('endtime'));
 
-			if($this->input->post('endtime')!='' && $istime2){
-				$end_time = new DateTime($this->input->post('endtime'));
-				$end_time = $end_time->format('H:i:00');
+			if($this->input->post('endtime')!=''){
+				try {
+					$end_time = new DateTime($this->input->post('endtime'));
+					$end_time = $end_time->format('H:i:00');
+				} catch (Exception $e) {
+					$end_time = '23:59:59';
+				}
 			}else{
 				$end_time = '23:59:59';
 			}
