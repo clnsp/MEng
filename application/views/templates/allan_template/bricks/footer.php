@@ -39,15 +39,17 @@ if(!$this->tank_auth->is_admin()){ ?>
      <script src="<?php echo base_url();?>assets/js/ds_registration.js"></script>
      <?php }?>
 
+     <?php if($page_title=="admin-calendar"){?>
      <script src="<?php echo base_url();?>assets/js/jquery-ui-autocomplete.custom.min.js"></script>
      <script src="<?php echo base_url();?>assets/cal/fullcalendar.min.js"></script>
      <script type="text/javascript" src="<?php echo base_url();?>assets/js/booking-calendar.js"></script>
+     <script type="text/javascript" src="<?php echo base_url();?>assets/js/manage.js"></script>
 
+     <?php }?>
      <!-- Admin Manage Scripts -->
 
      <script type="text/javascript" src="<?php echo base_url();?>assets/js/jquery.minicolors.js"></script>
      <script type="text/javascript" src="<?php echo base_url();?>assets/js/manage-permissions.js"></script>
-
      <script type="text/javascript" src="<?php echo base_url();?>assets/js/manageMemberships.js"></script>
      
      <!-- Patrick Test Scripts -->
