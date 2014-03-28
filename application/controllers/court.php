@@ -89,7 +89,7 @@ class Court extends CI_Controller{
 	function removeSportInstance() {
 		if($this->tank_auth->is_admin()){
 			if($this->input->post('room_id') && $this->input->post('class_type_id') && $this->input->post('sport_number')){
-				$this->courts->removeSportInstance($this->input->post('room_id'), $this->input->post(['class_type_id'), $this->input->post('sport_number'));
+				$this->courts->removeSportInstance($this->input->post('room_id'), $this->input->post('class_type_id'), $this->input->post('sport_number'));
 				echo $this->db->_error_message();
 			}
 		}
@@ -105,7 +105,7 @@ class Court extends CI_Controller{
 
 			if($this->input->post('room_id') && $this->input->post('sport_to_block_id') && $this->input->post('occurring_sport_id')){
 				if($this->input->post('room_id') != '' && $this->input->post('sport_to_block_id')!='' && $this->input->post('occurring_sport_id')!='' ){
-					$this->restrictions->addBlockRestriction($this->input->post('room_id'), $this->input->post('sport_to_block_id'), $this->input->post('occurring_sport_id');
+					$this->restrictions->addBlockRestriction($this->input->post('room_id'), $this->input->post('sport_to_block_id'), $this->input->post('occurring_sport_id'));
 					echo "Saved";
 				}else{
 					echo "Not Saved";
@@ -128,7 +128,7 @@ class Court extends CI_Controller{
 					return;
 				}
 				if($_POST['sport_id'] != '' && $_POST['limit']!=''){
-					$this->restrictions->addLimitRestriction($this->input->post('room_id'), $this->input->post('sport_id'), $this->input->post('limit');
+					$this->restrictions->addLimitRestriction($this->input->post('room_id'), $this->input->post('sport_id'), $this->input->post('limit'));
 					echo "Saved";
 				}else{
 					echo "Missing sport or limit";
