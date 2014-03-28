@@ -244,6 +244,11 @@ class Auth extends CI_Controller
 		}
 	}
 
+	/**
+	 * ask register
+	 *
+	 * @return void
+	 */
 	function ask_register()
 	{
 		if ($this->tank_auth->is_logged_in()) {									// logged in
@@ -437,6 +442,11 @@ $data['memberTypes'] = $this->Members->getAllMemberTypes();
 		}
 	}
 	
+	 /**
+	 * Send activation email again, to the same or new email address
+	 *
+	 * @return void
+	 */
 	function load_details()
 	{
 	  if (!$this->tank_auth->is_logged_in()) {								// not logged in or not activated
@@ -631,7 +641,6 @@ $data['memberTypes'] = $this->Members->getAllMemberTypes();
 				foreach ($errors as $k => $v)	$data['errors'][$k] = $this->lang->line($v);
 			}
 		}
-		//$this->load->view('auth/change_email_form', $data);
 		parse_temp('Change Email', $this->load->view('auth/account_settings', '', true) . $this->load->view('auth/change_email_form', $data, true));
 	}
 }
@@ -660,8 +669,12 @@ $data['memberTypes'] = $this->Members->getAllMemberTypes();
 
 	
 	
-	// MOBILE NUMBER - SMS
 
+   /**
+	 * Replace user mobile number with a new one.
+	 *
+	 * @return void
+	 */
 	function change_mobile_number()
 	{
 		if (!$this->tank_auth->is_logged_in()) {				// not logged in or not activated
@@ -673,6 +686,11 @@ $data['memberTypes'] = $this->Members->getAllMemberTypes();
 		}
 	}
 
+	/**
+	 * Reset user mobile number.
+	 *
+	 * @return void
+	 */
 	function reset_mobile_number()
 	{
 		$user_id	= $this->uri->segment(3);
@@ -687,14 +705,23 @@ $data['memberTypes'] = $this->Members->getAllMemberTypes();
 		}
 	}
 
-	// TWITTER 
 
+	/**
+	 * Change user twitter account.
+	 *
+	 * @return void
+	 */
 	function change_twtter()
 	{
 
 
 	}
 
+	/**
+	 * Reset user twitter account.
+	 *
+	 * @return void
+	 */
 	function reset_twitter()
 	{
 		$user_id	= $this->uri->segment(3);
@@ -873,9 +900,8 @@ $data['memberTypes'] = $this->Members->getAllMemberTypes();
 	}
 
 	/**
-	 * User profile page
-	 *
-	 * 
+	 * User profile page get account settings
+	 * @return	void
 	 */
 	function account_settings(){
 

@@ -6,6 +6,7 @@ class Generate extends CI_Controller{
 	* @param int - number of classes to generate
 	* @param int - offset time in seconds from now to start generating
 	* @param int - number of weeks to generate classes for
+	* @return	void
 	* 
 	*/
 	function classes($numberClasses = 0, $offset = 0, $weeks = 1){
@@ -70,6 +71,7 @@ class Generate extends CI_Controller{
 	* Populate the database with realistic users pulled from a text file.
 	* They will have random membership types
 	* @param int - number of people to generate
+	* @return	void
 	* 
 	*/
 	function people($number = 0){
@@ -136,4 +138,7 @@ class Generate extends CI_Controller{
 	}
 
 
-}?>
+}/* End of file generate.php */
+/* Location: ./application/controllers/generate.php */
+?>
+

@@ -66,7 +66,7 @@
                   <a href="#" class="dropdown-toggle username" data-toggle="dropdown">{user_name} <span class="glyphicon glyphicon-user"><span class="caret"></span></a>            
 
                   <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownUser">
-                    <li><a href="<?php echo base_url()?>index.php/auth/account_settings"><i class="glyphicon glyphicon-cog"></i>  Account Settings</a></li>
+                    <li><a href="<?php echo base_url()?>index.php/auth/load_details"><i class="glyphicon glyphicon-cog"></i>  Account Settings</a></li>
                     <li class="divider"></li>
                     <li><a href="<?php echo base_url()?>index.php/logout"><i class="glyphicon glyphicon-log-out"></i> Logout</a></li>
 

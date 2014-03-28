@@ -7,9 +7,13 @@ Class Restrictions extends CI_Model{
 	private $block_tbl = 'sports_restriction_block';
 	private $block_view = 'sports_restriction_block_view';
 
-	/**
-	 * Adds a new limit restriction
-	 */
+	/*
+   * Add new limit restriction
+   * @param int
+   * @param int
+   * @param int
+   * @return	void
+   */
 	function addLimitRestriction($room_id, $sport_id, $limit){  
 		$data = array(
 			'sport_id'=>$sport_id,
@@ -20,9 +24,13 @@ Class Restrictions extends CI_Model{
 		$this->db->insert($this -> limit_tbl, $data);
 	} 
 
-	/**
-	 * Removes a limit restriction
-	 */
+
+	/*
+   * Remove limit restriction
+   * @param int
+   * @param int
+   * @return	void
+   */
 	function removeLimitRestriction($room_id, $sport_id){  
 		$data = array(
 			'sport_id'=>$sport_id,
@@ -34,9 +42,13 @@ Class Restrictions extends CI_Model{
 
 	} 
 
-	/**
-	 * Adds a new block restriction
-	 */
+
+   /* Add new block restriction
+   * @param int
+   * @param int
+   * @param int
+   * @return	void
+   */
 	function addBlockRestriction($room_id, $sport_to_block_id, $occurring_sport_id){  
 		$data = array(
 			'divisible_room_id'=>$room_id,
@@ -49,9 +61,13 @@ Class Restrictions extends CI_Model{
 		
 	} 
 
-	/**
-	 * Removes a block restriction
-	 */
+
+   /* Remove block restriction
+   * @param int
+   * @param int
+   * @param int
+   * @return	void
+   */
 	function removeBlockRestriction($room_id, $sport_to_block_id, $occurring_sport_id){  
 		$data = array(
 			'divisible_room_id'=>$room_id,
@@ -65,6 +81,7 @@ Class Restrictions extends CI_Model{
 
 	/**
 	 * Fetch the limit restrictions for particular room
+	 * @param int
 	 * @return array
 	 */
 	function getLimitRestrictions($room_id){  
@@ -78,7 +95,6 @@ Class Restrictions extends CI_Model{
 
 	/**
 	 * Fetch the block restrictions
-	 * @param int
 	 * @param int
 	 * @return array
 	 */
@@ -118,4 +134,8 @@ Class Restrictions extends CI_Model{
 	} 
 
 }
+/* End of file restrictions.php */  
+/* Location: ./application/models/restrictions.php */ 
 ?>
+
+

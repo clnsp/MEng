@@ -37,7 +37,7 @@
 </div>
 <div class="col-md-4" style="text-align:center">
     <?php foreach($contacts as $d): ?>
-    <a class="" href='mailto:<?php echo $d['email']?>'><span class="glyphicon glyphicon-mail"></span>Contact</a>
+    <a class="" href='mailto:<?php echo $d['email']?>'><span class="glyphicon glyphicon-mail"></span>Contact Us</a>
 <?php endforeach; ?>
 </div>
 <div class="col-md-4" style="text-align:center">

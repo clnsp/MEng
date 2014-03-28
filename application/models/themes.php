@@ -7,6 +7,7 @@ Class Themes extends CI_Model{
 
 	/**
 	 * Retrieves all theme properties stored
+	 * @return	void
 	 */
 	function getThemeProperties(){  
 
@@ -18,6 +19,7 @@ Class Themes extends CI_Model{
 	/**
 	 * Save theme proc_close(process)perties
 	 * @param array
+	 * @return	void
 	 */
 	function saveTheme($theme){  
 

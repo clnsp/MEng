@@ -12,6 +12,7 @@
 
 		/**
 		 * Generic view for all pages within the /pages folder
+		 * @return	void
 		 */
 		public function view($page = 'home'){
 
@@ -27,5 +28,8 @@
 		}
 
 	}
-
+/* End of file user_pages.php */
+/* Location: ./application/controllers/user_pages.php */
 	?>
+
+	

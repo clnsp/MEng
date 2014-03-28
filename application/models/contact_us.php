@@ -4,6 +4,10 @@
 
      private $table_name = 'contact_info';
 
+     /**
+     * Return all contact information
+     * @return array
+     */
 	    // Return all contact information
      function get_all(){  
 
@@ -12,6 +16,10 @@
       return $query->result_array();  
     }
     
+    /**
+     * Retrieve only emails of contacts
+     * @return array
+     */
 	    // Retrieve only email of contacts           
     function retrieve_email(){  
       $this->db->select('email'); 
@@ -24,7 +32,8 @@
 
   }  
 
-  /* End of file contact.php */  
-  /* Location: ./application/models/links.php */ 
-
+/* End of file contact_us.php */  
+/* Location: ./application/models/contact_us.php */ 
   ?>
+
+

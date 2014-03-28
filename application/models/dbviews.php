@@ -14,17 +14,22 @@ Class Dbviews extends CI_Model{
 		$this -> profile_table_name = $ci -> config -> item('db_table_prefix', 'tank_auth').$this -> profile_table_name;
 	}
 
-	/*
-	 * Function for fetching all rooms 
-	 * Returned as an array
-	 */
+   /*
+ 	* Function to fetch all rooms 
+ 	* @return array
+ 	*/
 	function getRooms()
 	{
 		$query = $this -> db -> get('room_tbl');
 		return $query -> result();
 	}
 	
-	function getUserByID($id) //was fetchUser($id)
+	/*
+	* Function to get users by an id
+	* @param int
+ 	* @return array
+ 	*/
+	function getUserByID($id) 
 	{
 		$this -> db -> select('first_name, second_name, email, home_number, mobile_number, twitter');
 		$this -> db -> from($this -> table_name);
@@ -34,7 +39,12 @@ Class Dbviews extends CI_Model{
 		return $query->result();
 	}
 	
-  function getBookingByID($booking_id) // was get_booking_by_id
+	/*
+	* Function to get booking by an id
+	* @param int
+ 	* @return array
+ 	*/
+  function getBookingByID($booking_id) 
   {
   	$this->db->where('class_booking_id', $booking_id);
 
@@ -42,6 +52,11 @@ Class Dbviews extends CI_Model{
   	return $query -> result();  
   }
   
+  /**
+	* Get the arrendance of a class
+	* @param int
+ 	* @return array
+ 	*/
   function getClassAttendance($class_id)
   {
   	$this -> db -> where('class_id', $class_id);
@@ -49,6 +64,12 @@ Class Dbviews extends CI_Model{
   	
   	return $query -> result();
   }
+  
+  /**
+	* Get the attendance of a user
+	* @param int
+ 	* @return array
+ 	*/
   function getUserAttendance($member_id)
   {
   	$this -> db -> where('member_id', $member_id);
@@ -56,6 +77,12 @@ Class Dbviews extends CI_Model{
   	
   	return $query -> result();
   }
+  
+  /**
+	* Get last attendance of a user
+	* @param int
+ 	* @return array
+ 	*/
   function getUserLastAttendance($member_id)
   {
   	$this->db->select('attended_view.*');
@@ -66,6 +93,11 @@ Class Dbviews extends CI_Model{
   	return $query -> result();
   }
   
+  /**
+	* get the class non attendance
+	* @param int
+ 	* @return array
+ 	*/
   function getClassNonAttendance($class_id)
   {
   	$this -> db -> where('class_id', $class_id);
@@ -73,6 +105,13 @@ Class Dbviews extends CI_Model{
   	
   	return $query -> result();
   }
+  
+  
+  /**
+	* Get the user non attendance
+	* @param int
+ 	* @return array
+ 	*/
   function getUserNonAttendance($member_id)
   {
   	$this -> db -> where('member_id', $member_id);
@@ -80,7 +119,9 @@ Class Dbviews extends CI_Model{
   	
   	return $query -> result();
   }
-}
+  
+}/* End of file dbviews.php */  
+/* Location: ./application/models/dbviews.php */ 
 ?>
 
 

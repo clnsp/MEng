@@ -33,6 +33,7 @@ Class Categories extends CI_Model{
 	 * Set the color of a category
 	 * @param	int
 	 * @param	string - hex value
+	 * @return	void
 	 */
 	function setColor($category_id, $color){
 	
@@ -45,9 +46,9 @@ Class Categories extends CI_Model{
 	 * Add new category
 	 * @param	string - title
 	 * @param	string - hex value
+	 * @return	void
 	 */
 	function addCategory($category, $color){
-	//	echo ('inserting ' + $category + ' ' + $color);
 		
 		$data = array(
 		   'category' => $category ,
@@ -80,6 +81,7 @@ Class Categories extends CI_Model{
 	 * Set the name of a category
 	 * @param	int
 	 * @param	string
+	 * @return	void
 	 */
 	function setName($category_id, $category){		
 		$this->db->where('category_id', $category_id);
@@ -88,6 +90,8 @@ Class Categories extends CI_Model{
 	}	
 
 	
-}
+}/* End of file categories.php */  
+/* Location: ./application/models/categories.php */ 
 ?>
+
 

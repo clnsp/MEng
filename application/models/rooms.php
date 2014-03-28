@@ -5,7 +5,10 @@ Class Rooms extends CI_Model{
 	private $table_name = 'room_tbl';
 	private $divisible_rooms_tbl = 'divisible_rooms_tbl';
 
-
+	/**
+	 * Function for fetching all descriptions
+	 * @return array
+	 */
 	function retrieve_descriptions(){  
 		$this->db->select('description'); 
 		$this -> db -> from($this -> table_name); 
@@ -14,7 +17,10 @@ Class Rooms extends CI_Model{
 		return $query->result_array();  
 	}             
 	
-
+	/**
+	 * Function for fetching all titles
+	 * @return array
+	 */
 	function retrieve_titles(){  
 		$this->db->select('room'); 
 		$this -> db -> from($this -> table_name); 
@@ -23,7 +29,10 @@ Class Rooms extends CI_Model{
 		return $query->result_array();  
 	} 
 
-
+	/**
+	 * Function for fetching all ids
+	 * @return array
+	 */
 	function retrieve_ids(){  
 		$this->db->select('room_id'); 
 		$this -> db -> from($this -> table_name); 
@@ -97,6 +106,7 @@ Class Rooms extends CI_Model{
 
 	/**
 	* Retrieve the divisible room information
+	* @param int
 	* @return array
 	*/
 	function getDivisibleRoom($room_id){
@@ -108,6 +118,7 @@ Class Rooms extends CI_Model{
 	
 	/**
 	* Determines whether a room is already divisible
+	* @param int
 	* @return bool
 	*/
 	function isDivisible($room_id){
@@ -120,6 +131,8 @@ Class Rooms extends CI_Model{
 
 	/**
 	* Updates a divisible room properties
+	* @param int
+	* @return	void
 	*/
 	function removeDivisibleRoom($room_id){
 		$this->db->delete($this -> divisible_rooms_tbl, array('room_id' => $room_id)); 
@@ -127,6 +140,10 @@ Class Rooms extends CI_Model{
 
 	/**
 	* Insert or update divisible room
+	* @param int
+	* @param int
+	* @param int
+	* @return	void
 	*/
 	function insertDivisibleRoom($room_id, $rows, $cols){
 		$data = array(
@@ -144,7 +161,7 @@ Class Rooms extends CI_Model{
 	/**
 	 * Fetch the size of a divisivle room
 	 * @param int
-	 * @param int
+	 * @return	void
 	 */
 	function getRoomSize($room_id){
 
@@ -156,4 +173,8 @@ Class Rooms extends CI_Model{
 	}
 	
 }
+/* End of file rooms.php */  
+/* Location: ./application/models/rooms.php */
 ?>
+
+ 
