@@ -77,12 +77,14 @@ $confirm_password = array(
 	);
 
 $comms_preference = array(
-	'name' => 'comms_preference',
-	'id' => 'comms_preference',
+	'name'	=> 'comms_preference',
+	'id'	=> 'comms_preference',
+	'size' 	=> 30,
+	'class' => 'form-control',
 	);
 
-$comm_prefs_options = array('1'  => 'Email only','2'  => ' Email and SMS','3'  => 'Email, SMS and Twitter',);
-foreach ($comm_prefs as $p)	$prefs[$p->id] = $p->comms_preference;
+//$comm_prefs_options = array('1'  => 'Email only','2'  => ' Email and SMS','3'  => 'Email, SMS and Twitter',);
+foreach ($comm_prefs as $p)	$prefs[$p->id] = $p->id;
 
 $user_type = array(
 	'name' => 'member_type',
@@ -236,7 +238,7 @@ $form = array(
     						'name'        => 'new_preferences[]',
     						'id'          => 'new_preferences[]',
     						'value'       => $p->id,
-    						'checked'     => TRUE,
+    						'checked'     => FALSE,
     					);
     					echo form_checkbox($data);
     					echo form_label($p->comms_preference); ?> <br>

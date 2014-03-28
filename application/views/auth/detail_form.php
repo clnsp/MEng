@@ -51,7 +51,7 @@ $form = array(
 	'role' => 'form',
 	);
 
-//print_r($comm_prefs);
+foreach ($member_prefs as $p) $m_prefs[$p->comms_preference_id] = $p->comms_preference_id;
 foreach ($comm_prefs as $p)	$prefs[$p->id] = $p->comms_preference;
 
 $js = 'class="form-control"';
@@ -114,8 +114,11 @@ $js = 'class="form-control"';
     						'name'        => 'new_preferences[]',
     						'id'          => 'new_preferences[]',
     						'value'       => $p->id,
-    						'checked'     => TRUE,
+    						//'checked'     => TRUE,
     					);
+    					if (in_array($p->id, $m_prefs, TRUE)) {
+    						$data['checked'] = TRUE;
+    					}
     					echo form_checkbox($data);
     					echo form_label($p->comms_preference); ?> <br>
     					<?php

@@ -23,17 +23,19 @@ if (!function_exists('contact_user'))
 			$list = array('email'=>array(),'sms'=>array(),'twitter'=>array());
 			foreach($id as $i)
 			{
-				$prefD = $ci->members->getUserColumn($i, array('comms_preference','email','twitter','valid_twitter','mobile_number','valid_mobile_number'));
+				$prefD = $ci->members->getUserColumn($i, array('email','twitter','valid_twitter','mobile_number','valid_mobile_number'));
 				$prefD = $prefD[0];
 
-				if($prefD->comms_preference> 2 && $prefD->valid_twitter){
+				if($ci->members->haveCommsPref($i,3)>0 && $prefD->valid_twitter){
 					$list['twitter'][] = $prefD->twitter; 
 				}
 				
-				if($prefD->comms_preference> 1 && $prefD->valid_mobile_number){
+				if($ci->members->haveCommsPref($i,2)>0 && $prefD->valid_mobile_number){
 					$list['sms'][] = $prefD->mobile_number; 
 				}
+				if($ci->members->haveCommsPref($i,1)>0){
 				$list['email'][] = $prefD->email; 
+				}
 			}			
 			$status=array();
 			if(!$service){ // ADMIN -- EMAIL ONLY

@@ -16,7 +16,9 @@ if ($this->tank_auth->is_super_admin()) {
 
 </ul>
 
-<?php /*
+
+<?php 
+/*
 <h2>Information</h2>
 
 <div class="col-md-6">

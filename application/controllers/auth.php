@@ -127,9 +127,7 @@ class Auth extends CI_Controller
 	 */
 	function register()
 	{
-	  $this->load->Model('Comms_Preference');
-	  $prefs = $this->Comms_Preference->getPreferences();
-    $data['comm_prefs'] = $prefs;
+
 	  
 		if ($this->tank_auth->is_logged_in()) {									// logged in
 			redirect('');
@@ -155,7 +153,7 @@ class Auth extends CI_Controller
 			$this->form_validation->set_rules('password', 'Password', 'trim|required|xss_clean|min_length['.$this->config->item('password_min_length', 'tank_auth').']|max_length['.$this->config->item('password_max_length', 'tank_auth').']|alpha_dash');
 			$this->form_validation->set_rules('confirm_password', 'Confirm Password', 'trim|required|xss_clean|matches[password]');
 			$this->form_validation->set_rules('member_type', 'Member Type', 'required|xss_clean');
-			$this->form_validation->set_rules('comms_preference', 'Communication Preferences', 'trim|xss_clean');
+			$this->form_validation->set_rules('new_preferences', 'Communication Preferences');
 
 			$captcha_registration	= $this->config->item('captcha_registration', 'tank_auth');
 			$use_recaptcha			= $this->config->item('use_recaptcha', 'tank_auth');
@@ -193,8 +191,8 @@ class Auth extends CI_Controller
 					$this->form_validation->set_value('twitter'),
 					$this->form_validation->set_value('password'),
 					$this->form_validation->set_value('member_type'),
+					$_POST['new_preferences'],
 					2,					// GUEST
-					$this->form_validation->set_value('comms_preference'),
 					$email_activation,
 					1))) {									// success
 					$data['site_name'] = $this->config->item('website_name', 'tank_auth');
@@ -231,6 +229,11 @@ class Auth extends CI_Controller
 			}
 			$data['captcha_registration'] = $captcha_registration;
 			$data['use_recaptcha'] = $use_recaptcha;
+
+			$this->load->Model('Comms_Preference');
+	  		$prefs = $this->Comms_Preference->getPreferences();
+      		$data['comm_prefs'] = $prefs;
+      		
 			if($ver)
 			{
 				$data['fname'] = $ver['givenName'][0];
@@ -454,8 +457,8 @@ $data['memberTypes'] = $this->Members->getAllMemberTypes();
             $members = $this->Members->getUserByID($this->tank_auth->get_user_id());
             $data['member'] = $members['0'];
 
-            //$member_prefs = $this->Members->getUserCommsPrefs($this->tank_auth->get_user_id());
-            //$data['member_prefs'] = $member_prefs;
+            $member_prefs = $this->Members->getCommsPref($this->tank_auth->get_user_id());
+            $data['member_prefs'] = $member_prefs;
             
             $prefs = $this->Comms_Preference->getPreferences();
             $data['comm_prefs'] = $prefs;
