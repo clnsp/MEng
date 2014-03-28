@@ -158,7 +158,7 @@ class Member extends CI_Controller{
 				$this->load->Model('Categories');
 				$this->load->Model('Bookings');
 				
-				$bookings = $this->Bookings->getBookingByMemberView($this->input->get('id');
+				$bookings = $this->Bookings->getBookingByMemberView($this->input->get('id'));
 				$data['categories'] = $this->Categories->getCategories();
 				$data['bookings'] = array();
 				foreach ($bookings as $book){ 
@@ -181,11 +181,11 @@ class Member extends CI_Controller{
 		if(check_admin()){
 			$this->load->model('members');
 			if($this->input->post('id') && $this->input->post('membership') && $this->input->post('options')){ // CUSTOM MEMBERSHIP
-
-				if($this->input->post('membership')==-1 && $this->_validDate($this->input->post('options')['start']) && $this->_validDate($this->input->post('options')['end']))
+$options = $this->input->post('options');
+				if($this->input->post('membership')==-1 && $this->_validDate($options['start']) && $this->_validDate($options['end']))
 				{
-					$start =  new DateTime($this->input->post('options')['start']);
-					$end =  new DateTime($this->input->post('options')['end']);
+					$start =  new DateTime($options['start']);
+					$end =  new DateTime($options['end']);
 					$mem = $this->members->createNewMembership('Custom',$start->format('Y-m-d'),$end->format('Y-m-d'));
 					echo $this->members->updateUser($this->input->post('id'),array('membership_type_id'=>$mem));
 					return;
@@ -198,7 +198,7 @@ class Member extends CI_Controller{
 				$avMeb = $this->members->getMembershipTypes($this->input->post('id'));
 				foreach ($avMeb as $m){ 
 					if (isset($m->id) && $m->id == $this->input->post('membership')) 
-						echo $this->members->updateUser($this->input->post('id'),array('membership_type_id'=>$_POST['membership']));
+						echo $this->members->updateUser($this->input->post('id'),array('membership_type_id'=>$this->input->post('membership')));
 				}
 			}
 		}
@@ -270,7 +270,7 @@ $end = new DateTime($Membership->end);
 		if(check_admin()){
 			if($this->input->post('id') && $this->input->post('message')){
 				$this->load->helper('comms');
-				contact_user(array($this->input->post('id'),$this->input->post('message'));
+				contact_user(array($this->input->post('id')), $this->input->post('message'));
 //echo json_encode( )
 			}
 		}
