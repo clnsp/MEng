@@ -438,7 +438,6 @@ class Classes extends CI_Model{
 
         $query = $this -> db -> get();
         
-        echo$this->db->last_query();
        
         return $query->num_rows() > 0;
     }
