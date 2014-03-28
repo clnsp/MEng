@@ -115,6 +115,22 @@ if ( ! function_exists('parse_temp')){
 		}
 		return null;
 	}
+
+	function notifyWaiting($cid){ // NOTIFY WAITING LIST
+		$ci = get_instance();
+		if($ci->tank_auth->is_member() || $ci->tank_auth->is_admin()){
+			$ci->load->model('waiting');
+			$ci->load->helper('comms');
+			if($ci->waiting->waitingListCount($cid)>0){
+				$ids = array();
+				foreach($ci->waiting->getUsers($cid) as $mem){
+					$ids[] = $mem['member_id'];
+				}
+				$message = "A place has become available for a class on your waiting list.";
+				contact_user($ids, $message);
+			}
+		}
+	}
 	
 	/* 
 	 *

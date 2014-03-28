@@ -33,9 +33,9 @@ class Waiting extends CI_Model
 
      	$query = $this -> db -> get();
      	return $query->result_array();
-
-
      }
+
+   
 
 	/**
 	* Add a member to the waiting list
@@ -51,7 +51,8 @@ class Waiting extends CI_Model
 	}	
 
     /**
-    * Remove a class if it is a sport
+    * check if waiting list is full
+    * @param int
     * @param int
     * @return bool 
     */
@@ -76,6 +77,7 @@ class Waiting extends CI_Model
       /**
       * Is a user already in a waiting list
       * @param int
+      * @param int
       * @return bool 
       */
       function onWaitingList($member_id, $class_id) {
@@ -90,9 +92,18 @@ class Waiting extends CI_Model
       }
 
 
-        /**
-   * Cancel a booking
-   */
+      function waitingListCount($class_id) {
+	$this->db->select('id');      	
+      	$this->db->where('class_id', $class_id);
+      	$this->db->from($this -> waiting_pool_tbl);
+ $this -> db -> get();
+      	return $this->db->count_all_results();
+ 
+      }
+/*
+  			 * Cancel a booking
+  			 * @return	void
+  			 */
         function cancelWaitingg(){
 
           if(check_member()){
@@ -109,8 +120,18 @@ class Waiting extends CI_Model
       }
       $this->mybookings();
     }
-
   }
 
-
+function getUsers($class_id){ // GET USER IDS
+	 if(check_member()){
+		$this->db->select('member_id');
+	     	$this->db->where('class_id', $class_id);
+      		$this->db->from($this -> waiting_pool_tbl);
+      		$query = $this -> db -> get();
+     		return $query->result_array();
+	}
 }
+}
+
+/* End of file waiting.php */  
+/* Location: ./application/models/waiting.php */ 

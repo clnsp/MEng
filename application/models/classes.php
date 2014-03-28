@@ -25,8 +25,8 @@ class Classes extends CI_Model{
     /**
     * Get bookings between two dates
     *
-    * @param date
-    * @param date
+    * @param int -date
+    * @param int -date
     * @return object
     */
     function getClassessBetween($start, $end ,$inc=true){ //getBookingsBetween used to be
@@ -41,8 +41,12 @@ class Classes extends CI_Model{
     }
 
 
-    /*
-    * Fetch a rooms specific classes
+    /**
+    * Fetch a rooms specific classes between two set dates
+    * @param int -date
+    * @param int -date
+    * @param int
+    * @return object
     */
     function getClassesWithRoomBetween($start, $end, $room,$inc=true){
 
@@ -100,6 +104,7 @@ class Classes extends CI_Model{
     *
     * @param int
     * @param int
+    * @return	void	
     */
     function cancelClass($class_id, $cancel){
 
@@ -205,6 +210,7 @@ class Classes extends CI_Model{
     * Update a class type
     * @param int
     * @param array
+    * @return	void
     */
     function updateClassType($class_type_id, $data){
 
@@ -216,6 +222,7 @@ class Classes extends CI_Model{
     /**
     * Change all class types with categories to uncategorised.
     * @param array
+    * @return	void
     */
     function uncategoriseClassTypes($categories){
         foreach ($categories as $cat) {
@@ -228,6 +235,7 @@ class Classes extends CI_Model{
     /**
     * Remove a class type
     * @param int
+    * @return bool
     */
     function removeClassType($class_type_id){
         $this->db->where_in('class_type_id', $class_type_id);
@@ -261,9 +269,11 @@ class Classes extends CI_Model{
 
     /**
     * Returns an array of classes with type and between two different times
-    * @param array
     * @param int
-    * @param int
+    * @param int -date
+    * @param int -date
+    * @param int -time
+    * @param int -time
     * @return array
     */
     function getClassesWithTypeAndStartTime($class_type_id, $start_date, $end_date, $start_time, $end_time) {	
@@ -286,7 +296,8 @@ class Classes extends CI_Model{
         $this -> db -> join('room_tbl', 'room_tbl.room_id = class_tbl.room_id');
 
         $query = $this -> db -> get();
-//		
+
+		
  //       echo($this->db->last_query());
         // echo($this->db->_error_message());
 
@@ -322,7 +333,7 @@ class Classes extends CI_Model{
    /**
     * Returns an array of classes which occur that day
     * @param string
-	* @param int
+    * @param int -date
     * @return array
     */
     function getClassesWithTypeAndDate($class_type, $date) {
@@ -346,7 +357,7 @@ class Classes extends CI_Model{
      * Returns an array of classes which have a specified class type
      *
      * @param   String
-     * @return  object
+     * @return  array
      */
     function getClassesWithType($class_type){
         $this -> db -> select('class_type, class_start_date, class_end_date, room, class_id');
@@ -362,11 +373,11 @@ class Classes extends CI_Model{
 
     }
 
-    /**
+    	/**
 	 * Get classes by Class Type id
 	 * Returns an array of classes which have a specified class type id
 	 *
-	 * @param	String
+	 * @param	int
 	 * @return	array
 	 */
     function getClassesWithTypeID($class_type_id){
@@ -384,8 +395,11 @@ class Classes extends CI_Model{
 	/**
 	* Get all sports booked into the room at particular time
 	* @param int
-	* @param int
-	* @return int
+	* @param int -date
+	* @param int -date
+	* @param int -time
+	* @param int -time
+	* @return array
 	*/
 	function getSportsBookedOverTime($room_id, $start_date, $end_date, $start_time, $end_time){
         $this -> db -> select('class_tbl.class_type_id');
@@ -398,19 +412,14 @@ class Classes extends CI_Model{
         $this->db->where("((TIME(class_start_date) <= '$start_time' AND TIME(class_end_date) > '$start_time') OR (TIME(class_end_date) < '$end_time' AND TIME(class_start_date) >= '$end_time'))");
 
         
-        // $this->db->where("TIME(class_start_date) <= '$start_time'");
-        // $this->db->where("TIME(class_end_date) > '$start_time'");
-        
-        // $this->db->or_where("TIME(class_end_date) < '$end_time'");
-        // $this->db->where("TIME(class_start_date) >= '$end_time'");
+
 
         $this->db->where('room_id', $room_id);
         $this->db->from($this->class_tbl);
         $this -> db -> join('class_type_tbl', 'class_type_tbl.class_type_id = class_tbl.class_type_id');
 
         $query = $this -> db -> get();
-		//		echo($this->db->last_query());
-			//	echo($this->db->_error_message());
+
         return $query->result_array();
     }
 
@@ -432,13 +441,12 @@ class Classes extends CI_Model{
 		}
         $this -> db -> where("DATE(class_start_date) >= '$start_date'");
         $this -> db -> where("DATE(class_end_date) <= '$end_date'");
-        $this->db->where("((TIME(class_start_date) <= '$start_time' AND TIME(class_end_date) > '$start_time') OR (TIME(class_end_date) < '$end_time' AND TIME(class_start_date) >= '$end_time'))");
+        $this->db->where("((TIME(class_start_date) <= '$start_time' AND TIME(class_end_date) > '$start_time') OR (TIME(class_end_date) < '$end_time' AND TIME(class_start_date) >= '$end_time') OR (TIME(class_end_date) < '$end_time' AND TIME(class_start_date) >= '$start_time'))");
         $this->db->where('room_id', $room_id);
         $this->db->from($this->class_tbl);
 
         $query = $this -> db -> get();
         
-//        echo$this->db->last_query();
        
         return $query->num_rows() > 0;
     }
@@ -448,6 +456,7 @@ class Classes extends CI_Model{
     /**
     * Remove a class if it is a sport
     * @param int 
+    * @return	void
     */
     function removeSportClass($class_id) {
       $sql = "DELETE t1 FROM class_tbl t1
@@ -461,6 +470,7 @@ class Classes extends CI_Model{
 
      /**
      * Fetch classes added by block booking after today
+     * @param int
      * @return array
      */
      function getBlockBookingDates($bid){
@@ -474,7 +484,6 @@ class Classes extends CI_Model{
         $this -> db -> from($this->class_tbl);
         $query = $this -> db -> get();
 
-      //  echo $this->db->last_query();
         echo $this->db->_error_message();
 
         return $query->result_array();
@@ -495,5 +504,6 @@ class Classes extends CI_Model{
 
 }
 
-
+/* End of file classes.php */  
+/* Location: ./application/models/classes.php */ 
 

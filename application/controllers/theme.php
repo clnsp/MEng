@@ -11,6 +11,7 @@ class theme extends CI_Controller
 
 	/**
 	* Theme Creator page
+	* @return	void
 	*/
 	public function index(){
 		if(check_admin()){	
@@ -36,6 +37,7 @@ class theme extends CI_Controller
 
 	/**
 	* Bootstrap theme CSS File
+	* @return	void
 	*/
 	public function css(){
 
@@ -43,15 +45,16 @@ class theme extends CI_Controller
 		
 	}
 
+	/**
+	* Save the selected theme
+	* @return	void
+	*/
 	public function saveTheme(){
 		if($this->tank_auth->is_admin()){
 
 			$this->themes->saveTheme($_POST);
 
 
-			// echo "About to set " . $key . " as " . $value;
-			// $this->config->set_item($key, $value);
-			// echo "<br> New value: " . $this->config->item($key, 'theme');;
 
 		};
 
@@ -63,5 +66,5 @@ class theme extends CI_Controller
 
 
 
-/* End of file welcome.php */
+/* End of file theme.php */
 /* Location: ./application/controllers/theme.php */

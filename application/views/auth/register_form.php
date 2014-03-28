@@ -84,6 +84,8 @@ $comms_preference = array(
 	);
 
 //$comm_prefs_options = array('1'  => 'Email only','2'  => ' Email and SMS','3'  => 'Email, SMS and Twitter',);
+$prefs = array();
+
 foreach ($comm_prefs as $p)	$prefs[$p->id] = $p->id;
 
 $user_type = array(

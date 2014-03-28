@@ -7,6 +7,10 @@ class edit_bookings extends CI_Controller{
     parent::__construct();
   }
 
+	/**
+	* Cancel a Booking
+	* @return	void
+	*/
 	function cancelBooking(){
 
 	if(check_member()){
@@ -17,10 +21,10 @@ class edit_bookings extends CI_Controller{
 		$class_booking_id = $this->input->post('class_booking_id');
 		$member_id = $this->input->post('member_id');
 		$this->bookings->removeMember($class_booking_id, $member_id);
-		$this->classes->removeSportClass($class_booking_id); //if class is asport need to remove the class as well
+		$this->classes->removeSportClass($class_booking_id);
 		
 		
-//		echo "member id: ".$member_id." class id: ".$class_booking_id;
+
 
 			$data['bookings'] = $this->bookings->getClassBookingByMember($member_id);
 			$data['bookingsPast'] = $this->bookings->getClassBookingByMember($member_id);
@@ -62,7 +66,11 @@ class edit_bookings extends CI_Controller{
 	}
 
 	}
-
+	
+	/**
+	* Cancel a waiting pool 
+	* @return	void
+	*/
 	function cancelWaiting(){
 
 	if(check_member()){
@@ -74,7 +82,6 @@ class edit_bookings extends CI_Controller{
 		$member_id = $this->input->post('member_id');
 		$this->bookings->removeWaiting($class_booking_id, $member_id);
 		
-//		echo "member id: ".$member_id." class id: ".$class_booking_id;
 
 			$data['bookings'] = $this->bookings->getClassBookingByMember($member_id);
 			$data['bookingsPast'] = $this->bookings->getClassBookingByMember($member_id);
@@ -119,5 +126,7 @@ class edit_bookings extends CI_Controller{
 	}
 
 }
-
+/* End of file edit_bookings.php */
+/* Location: ./application/controllers/edit_bookings.php */
 ?>
+

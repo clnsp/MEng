@@ -13,6 +13,7 @@ class class_type extends CI_Controller
 	
 	/**
 	* Add new class type
+	* @return	void
 	*/
 	function addClassType(){
 		if($this->tank_auth->is_admin()){
@@ -35,6 +36,7 @@ class class_type extends CI_Controller
 	
 	/**
 	 * Get all the class types as json
+	 * @return	void
 	 */
 	function getClassTypes(){
 		if($this->tank_auth->is_admin()){
@@ -49,6 +51,7 @@ class class_type extends CI_Controller
 	
 	/**
 	 * Modify class type
+	 * @return	void
 	 */
 	function updateClassType(){
 		if($this->tank_auth->is_admin()){
@@ -72,6 +75,7 @@ class class_type extends CI_Controller
 
 	/**
 	 * Remove class type
+	 * @return	void
 	 */
 	function removeClassType(){
 		if($this->tank_auth->is_admin()){
@@ -99,6 +103,7 @@ class class_type extends CI_Controller
 
 	/**
 	 * Get all the sports class types as json
+	 * @return	void
 	 */
 	function getSportsClassTypes(){
 		
@@ -109,6 +114,7 @@ class class_type extends CI_Controller
 	
 	/**
 	* Add new sport type
+	* @return	void
 	*/
 	function addSportType(){
 		if($this->tank_auth->is_admin()){
@@ -132,6 +138,7 @@ class class_type extends CI_Controller
 	
 	/**
 	* Get all block booking details
+	* @return	void
 	*/
 	function getBlockBookingInformation(){
 		if($this->tank_auth->is_admin()){
@@ -141,6 +148,7 @@ class class_type extends CI_Controller
 	
 	/**
 	* Get all block booking dates
+	* @return	void
 	*/
 	function getBlockBookingDates($bid){
 		if($this->tank_auth->is_admin()){
@@ -160,6 +168,7 @@ class class_type extends CI_Controller
 	 * 3 Weekly
 	 * 4 Monthly
 	 * 5 Yearly
+	 * @return	void
 	 */
 	function addInstances(){
 		if($this->tank_auth->is_admin()){
@@ -248,6 +257,11 @@ class class_type extends CI_Controller
 
 }
 
-/* End of file welcome.php */
+
+
+
+
+/* End of file clas_type.php */
 /* Location: ./application/controllers/class_types.php */
 ?>
+

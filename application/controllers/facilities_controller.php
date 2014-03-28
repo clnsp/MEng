@@ -11,6 +11,7 @@ class facilities_controller extends CI_Controller {
     * Retrieve an array with all descriptions
     * Select our view file that will display our products 
     * Display the page with the above defined content 
+	 * @return	void
     */
     function index(){  
         $data['description'] = $this->rooms->retrieve_descriptions(); 
@@ -21,6 +22,7 @@ class facilities_controller extends CI_Controller {
 
     /**
     * Retrieve information on whether a room is divisible
+    * @return	void
     */
     function getDivisibleRoom($room_id){
         if(isSuperAdmin()){  
@@ -31,6 +33,7 @@ class facilities_controller extends CI_Controller {
 
     /**
     * Retrieve all the divisible rooms
+    * @return	void
     */
     function getDivisibleRooms(){
         if(isSuperAdmin()){  
@@ -40,6 +43,7 @@ class facilities_controller extends CI_Controller {
 
     /**
     * Save a divisible room
+    * @return	void
     */
     function saveDivisibleRoom(){
         if(isSuperAdmin()){
@@ -73,6 +77,7 @@ class facilities_controller extends CI_Controller {
 
     /**
     * Creation or modification of a single court
+    * @return	void
     */
     function _singleDivision(){
 

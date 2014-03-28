@@ -12,6 +12,8 @@ class waiting_list extends CI_Controller
 
 	/**
 	* Fetch those waiting list for a particular class
+	* @param int
+	* @return	void
 	*/
 	public function getWaiting($class_id){
 		if($this->tank_auth->is_admin()){
@@ -31,11 +33,11 @@ class waiting_list extends CI_Controller
 				}
 			}
 		}
-
 	}
 
 	/**
 	* Add a member to the waiting list
+	* @return	void
 	*/
 	public function addWaiting(){
 		if($this->tank_auth->is_admin()){
@@ -71,10 +73,8 @@ class waiting_list extends CI_Controller
 		}
 
 	}
-
-	
-
 }
 
-/* End of file welcome.php */
+
+/* End of file waiting_list.php */
 /* Location: ./application/controllers/waiting_list.php */
