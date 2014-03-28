@@ -23,9 +23,9 @@ class Category extends CI_Controller
 	function setColor(){
 		
 		if($this->tank_auth->is_admin()){
-			if (isset($_POST['category_id']) && isset($_POST['color'])){
-				if($_POST['category_id'] != 1){
-					$this->categories->setColor($_POST['category_id'], $_POST['color']);
+			if ($this->input->post('category_id') && $this->input->post('color')){
+				if($this->input->post('category_id') != 1){
+					$this->categories->setColor($this->input->post('category_id'),$this->input->post('color'));
 					echo 'Color changed';
 				}else{
 					echo 'Cannot alter "Uncategorised" category';
@@ -45,8 +45,8 @@ class Category extends CI_Controller
 	*/
 	function addCategory(){
 		if($this->tank_auth->is_admin()){
-			if (isset($_POST['category']) && isset($_POST['color'])){
-				$this->categories->addCategory($_POST['category'], $_POST['color']);
+			if ($this->input->post('category') && $this->input->post('color')){
+				$this->categories->addCategory($this->input->post('category'), $this->input->post('color'));
 				echo "Category Added";
 			}else{
 				echo "No values supplied";
@@ -75,9 +75,9 @@ class Category extends CI_Controller
 	function removeCategories(){
 		if($this->tank_auth->is_admin()){
 
-			if (isset($_POST['category_id'])){
+			if ($this->input->post('category_id')){
 
-				$_POST['category_id'] = $this->_cleanseUncategorised($_POST['category_id']);
+				$_POST['category_id'] = $this->_cleanseUncategorised($this->input->post('category_id'));
 				
 				if(sizeof($_POST['category_id']) > 0){					
 					if($this->categories->removeCategories($_POST['category_id']))
@@ -101,10 +101,10 @@ class Category extends CI_Controller
 	function forceRemoveCategories(){
 		if($this->tank_auth->is_admin()){
 
-			if (isset($_POST['category_id'])){
+			if ($this->input->post('category_id')){
 				$this->load->model('classes');
 
-				$_POST['category_id'] = $this->_cleanseUncategorised($_POST['category_id']);
+				$_POST['category_id'] = $this->_cleanseUncategorised($this->input->post('category_id'));
 				
 				if(sizeof($_POST['category_id']) > 0){
 
@@ -129,9 +129,9 @@ class Category extends CI_Controller
 	*/
 	function setName(){
 		if($this->tank_auth->is_admin()){
-			if (isset($_POST['category_id']) && isset($_POST['category'])){
-				if($_POST['category_id'] != 1){
-					$this->categories->setName($_POST['category_id'], $_POST['category']);
+			if ($this->input->post('category_id') && $this->input->post('category')){
+				if($this->input->post('category_id') != 1){
+					$this->categories->setName($this->input->post('category_id'), $this->input->post('category'));
 					echo "Category name changed";
 				}else{
 					echo "Cannot change name of uncategorized category";
