@@ -93,7 +93,7 @@ if(!$this->tank_auth->is_admin()){ ?>
       $( document ).ready(function () {
 
         $("#page-body").html(data.content).addClass(data.title);
-      }
+      });
 
 
 
