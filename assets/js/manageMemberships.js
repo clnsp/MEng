@@ -3,23 +3,31 @@ manageMemberships = (function(){
 membership = (function() {
 	
 	onSubmit = function (){
-	$memb = {};
-$memb.start = datepicker.getDates()[0];
-$memb.end = datepicker.getDates()[1];
-$memb.name = $('#MembershipName').val();
-$memb.types = $('#MemberTypes').val();
-console.log($memb);
+		$memb = {};
+		$memb.start = datepicker.getDates()[0];
+		$memb.end = datepicker.getDates()[1];
+		$memb.name = $('#MembershipName').val();
+		$memb.types = $('#MemberTypes').val();
+		console.log($memb);
 
-$.post( siteUrl+"member/createMembership",  { "membership": JSON.stringify($memb)}, function( data ) {
-  alert( "Data Loaded: " + data );
-});
-
+		$.post( siteUrl+"member/createMembership",  { "membership": JSON.stringify($memb)}, function( data ) {
+		  alert("Successful Created");
+		});
+	},
+	
+	onDelete = function ($id){
+		bootbox.confirm("Are you sure?", function(result) {
+			if(result){
+				$.post( siteUrl+"member/deleteMembership",  { "id": $id}, function( data ) {
+					alert("Successful Deleted");
+				});
+			}
+		}); 
 	},
 
 	$('#create').on('click', function(){onSubmit();});
-
+	$('#memberships tbody tr').on('click', function(){onDelete($(this).attr('id'));});
 })();
-
 
 
 // CALANDER

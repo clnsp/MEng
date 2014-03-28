@@ -79,6 +79,10 @@ function getAllMemberships(){
    return  $query->result();
 }
 
+function deleteMembership($id){
+  $this->db->delete('membership_type_tbl', array('id' => $id));
+}
+
 function getAllMemberTypes(){
  $this -> db -> select("id, type");
    $query = $this -> db -> get('member_type_tbl');
