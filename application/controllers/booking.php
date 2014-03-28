@@ -154,6 +154,35 @@ class booking extends CI_Controller{
 			}
 		}
 	}
+
+	/**
+	* Confirmation page before making a booking from waiting list
+	*/
+	function bookFromWaitingList(){
+		if(check_member()){
+			/* class confirm */
+			if($this->input->post('class_id')){	
+
+				$data = $this->classes->getClassInformation($this->input->post('class_id'));
+				if(!isclassBookedOut($this->input->post('class_id'))){
+					$class_booking_id = $this->input->post('class_booking_id');
+					parse_temp('booking_confirm', $this->load->view('pages/booking-confirm', $data, true));
+					$this->cancelWaitingFromList($class_booking_id);
+				}
+				else{
+					parse_temp('booking_wait', $this->load->view('pages/booking-wait', $data, true));
+				}
+				/* sports confirm */
+			}elseif($this->input->post('class_type_id')){
+				$p = $this->input->post(NULL);
+				$p['is_sport'] = 1;
+				parse_temp('booking-confirm', $this->load->view('pages/booking-confirm', $p, true));	
+			}else{
+				$this->_bookingFail('No class was supplied to book');
+				return;
+			}
+		}
+	}
 	
 	/**
 	* Join the waiting list for a class
@@ -431,7 +460,7 @@ class booking extends CI_Controller{
 	}
 
 	/**
-	 * Cancel a booking
+	 * Cancel a waiting list booking
 	 */
 	function cancelWaiting(){
 		if(check_member()){
@@ -443,6 +472,22 @@ class booking extends CI_Controller{
 				$this->bookings->removeWaiting($class_booking_id, $member_id);
 
 			}
+			$this->mybookings();
+		}
+
+	}
+
+	/**
+	 * Cancel a waiting list booking
+	 */
+	function cancelWaitingFromList($class_booking_id){
+		if(check_member()){
+
+			$member_id = $this->tank_auth->get_user_id();
+
+			$this->bookings->removeWaiting($class_booking_id, $member_id);
+
+
 			$this->mybookings();
 		}
 

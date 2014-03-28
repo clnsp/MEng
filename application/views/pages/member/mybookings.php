@@ -89,7 +89,7 @@
 								<th data-type="date">Date</th>
 								<th data-sort-initial="true" data-type="time">Start</th>
 								<th data-hide="phone" data-type="time">End</th>
-								<th data-sort-ignore="true" data-hide="phone">Cancel</th>		
+								<th data-sort-ignore="true" data-hide="phone">Edit</th>		
 							</tr>
 						</thead>
 
@@ -100,7 +100,8 @@
 							$endDate = new DateTime($d['end']);
 
 							$hidden = array(
-								'class_booking_id' =>$d['class_id'] ,
+								'class_booking_id' =>$d['class_id'],
+								'class_id' =>$d['class_id'],
 								'member_id' => $d['member_id']
 								); ?>
 
@@ -113,12 +114,19 @@
 									<td data-value="<?php echo $startDate->getTimestamp();?>" class="start_time"><?php echo $startDate->format('h.i A') ?></td>
 									<td data-value="<?php echo $endDate->getTimestamp();?>" class="end_time"><?php echo $endDate->format('h.i A') ?></td>
 									<td class="cancel">
-
+										<?php if(isClassBookedOut($d['class_id'])){ ?>
 										<?php 
 										echo form_open(site_url(). "/booking/cancelWaiting", $form, $hidden);
 										echo form_submit('cancelWaiting', 'Cancel Waiting', "class='cancelwaiting btn btn-sm btn-danger'");	
 										echo form_close(); 
 										?>
+										<?php }else{
+										echo form_open(site_url(). "/booking/bookFromWaitingList", $form, $hidden);
+										echo form_submit('submit', 'Book', "class='btn btn-primary'");		
+										echo form_hidden($hidden);
+										echo form_close();
+										} 
+										 ?>
 
 									</td>
 								</tr>
