@@ -11,7 +11,6 @@ class booking extends CI_Controller{
 		$this->load->Helper('book');
 
 	}
-	
 
 	/**
 	* Book a class

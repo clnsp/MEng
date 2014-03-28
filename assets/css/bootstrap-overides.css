@@ -2,6 +2,12 @@
 /*
  * Bootstrap Overrides
  */
+ 
+ .form-control.editable{
+   width: auto !important;
+   display:inline-block !important;
+ 
+ }
  @media not print {
  img.displayed {
   display: block;
@@ -9,11 +15,7 @@
   margin-right: auto 
 }
 
-.form-control.editable{
-  width: auto !important;
-  display:inline-block !important;
 
-}
 
 label.editable{
   padding-top: 7px;

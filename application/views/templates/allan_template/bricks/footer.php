@@ -10,7 +10,7 @@ if(!$this->tank_auth->is_admin()){ ?>
 </div><!--end footer-->
 <?php }; ?>
 
-     <!-- Bootstrap core JavaScript
+      <!-- Bootstrap core JavaScript
      ================================================== -->
      <!-- Placed at the end of the document so the pages load faster 
      <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>-->
@@ -49,8 +49,8 @@ if(!$this->tank_auth->is_admin()){ ?>
      <script type="text/javascript" src="<?php echo base_url();?>assets/js/jquery.minicolors.js"></script>
      <script type="text/javascript" src="<?php echo base_url();?>assets/js/manage-permissions.js"></script>
 
-	<script type="text/javascript" src="<?php echo base_url();?>assets/js/manageMemberships.js"></script>
-	 
+  <script type="text/javascript" src="<?php echo base_url();?>assets/js/manageMemberships.js"></script>
+   
      <!-- Patrick Test Scripts -->
      <script type="text/javascript" src="<?php echo base_url();?>assets/js/bootstrap-timepicker.js"></script>
      <script src="<?php echo base_url();?>assets/datatab/js/jquery.dataTables.min.js"></script>
@@ -79,7 +79,7 @@ if(!$this->tank_auth->is_admin()){ ?>
      <?php } ?>
      
      <?php if($page_title=="user_booking" || $page_title=="bookings"){ ?>
-     	<script type="text/javascript" src="<?php echo base_url();?>assets/js/user-booking.js"></script>
+      <script type="text/javascript" src="<?php echo base_url();?>assets/js/user-booking.js"></script>
      <?php } ?>
 
      
@@ -92,65 +92,12 @@ if(!$this->tank_auth->is_admin()){ ?>
       // using JQUERY's ready method to know when all dom elements are rendered
       $( document ).ready(function () {
 
-
-        // set an on click on the button
-        $("a.ajax").click(function (e) {/*
-         //prevent default
-         e.preventDefault();
-
-         var pagebody = $("#page-body");
-         var title = $(this).attr("href");
-         var href = "<?php echo site_url(); ?>/" + title;
-
-
-          // get the time if clicked via an ajax get queury
-          // see the code in the controller time.php
-          pagebody.load(href + " #body-wrapper", function(){
-            window.history.pushState({title: title, content: pagebody.html()}, title, "<?php echo site_url(); ?>/" + title);
-          });
-        */
-      });
-
-    /*  // Revert to a previously saved state
-      window.addEventListener('popstate', function(event) {
-        console.log('popstate fired!' + event.state);
-
-        updateContent(event.state);
-      });
-
-      */
-
-    });
-
-  // Store the initial content so we can revisit it later
-  history.replaceState({
-   content: $("#page-body").html(),
-   title: document.title
- }, document.title, document.location.href);
-
-  
-  /*$('.navbar li').click(function(e) {
-    var $this = $(this);
-    $this.parent().find('li.active').removeClass("active");
-
-    
-    if (!$this.hasClass('active')) {
-      $this.addClass('active');
-    }
-
-
-  });*/
-
-function updateContent(data) {
- if(!data){
-  return;
-}
-$("#page-body").html(data.content).addClass(data.title);
-}
+        $("#page-body").html(data.content).addClass(data.title);
+      }
 
 
 
 
-</script>
+      </script>
 
-</body></html>
+    </body></html>

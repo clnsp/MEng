@@ -1,150 +1,147 @@
 
-
-<!-- 	<div class="row">
-		<h1>Manage Hall</h1>
-	</div>
--->
-<div class="row">
+<div class="container">
+	<div class="row">
 		<div class="col-md-6">
-				<div id="manage-add-sports" class="">
-					<div class="panel panel-default">
-						<div class="panel-heading">
-							<h3 class="panel-title">Add New Sport</h3>
-							
-						</div>
-						<div class="panel-body">
+			<div id="manage-add-sports" class="">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">Add New Sport</h3>
+
+					</div>
+					<div class="panel-body">
 						<p>Sports can be assigned to divisible rooms only</p>
-							
-							<form id="add-sport-type-form" class="prevent" role="form">
-								<div class="form-group">
-									<label for="class_type">Title</label>
-									<input name="class_type" type="text" class="form-control" placeholder="Sport Title">
-								</div>
-	
-								<div class="form-group">
-									<label for="class_category">Category</label>
-									<select name="category_id" type="dropdown" class="categories form-control"></select>
-								</div>
-								
-								<div class="form-group">
-									<label for="duration">Duration (mins)</label>
-									<input name="duration" min="15" step="15" type="number" class="form-control"/>
-								</div>
-	
-								<div class="form-group">
-									<label for="class_description">Description</label>
-									<textarea name="class_description" class="form-control" rows="3"></textarea>
-								</div>
-	
-								<div class="form-group">
-									<button type="submit" class="btn btn-primary">Add Sport</button>
-								</div>
-							</form>
-	
-	
-						</div>
+
+						<form id="add-sport-type-form" class="prevent" role="form">
+							<div class="form-group">
+								<label for="class_type">Title</label>
+								<input name="class_type" type="text" class="form-control" placeholder="Sport Title">
+							</div>
+
+							<div class="form-group">
+								<label for="class_category">Category</label>
+								<select name="category_id" type="dropdown" class="categories form-control"></select>
+							</div>
+
+							<div class="form-group">
+								<label for="duration">Duration (mins)</label>
+								<input name="duration" min="15" step="15" type="number" class="form-control"/>
+							</div>
+
+							<div class="form-group">
+								<label for="class_description">Description</label>
+								<textarea name="class_description" class="form-control" rows="3"></textarea>
+							</div>
+
+							<div class="form-group">
+								<button type="submit" class="btn btn-primary">Add Sport</button>
+							</div>
+						</form>
+
+
 					</div>
-	
 				</div>
-	
+
 			</div>
-			<div class="col-md-6">
+
+		</div>
+		<div class="col-md-6">
 			<div id="manage-classes" class="">
-						<div class="panel panel-default">
-							<div class="panel-heading">
-								<h3 class="panel-title">Manage Sports</h3>
-							</div>
-							<div class="panel-body ">						
-			
-								<table id='class-types-table' class="sportsclasstype footable table table-bordered table-striped table-hover scroll">
-									<thead>
-										<tr>
-											<th >Title</th>
-											<th data-hide="phone, tablet">Description</th>
-											<th>Category</th>
-											<th data-hide="phone, tablet">Duration</th>
-										</tr>
-									</thead>
-			
-									<tbody class="manage-panel"></tbody>
-			
-								</table>
-							</div>
-			
-						</div>
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">Manage Sports</h3>
 					</div>
-			
-				</div>
+					<div class="panel-body ">						
+
+						<table id='class-types-table' class="sportsclasstype footable table table-bordered table-striped table-hover scroll">
+							<thead>
+								<tr>
+									<th >Title</th>
+									<th data-hide="phone, tablet">Description</th>
+									<th>Category</th>
+									<th data-hide="phone, tablet">Duration</th>
+								</tr>
+							</thead>
+
+							<tbody class="manage-panel"></tbody>
+
+						</table>
 					</div>
-			
-</div>
-
-
-
-<div class="row">
-
-	<div id="manage-divisible-room" class="panel panel-default ">
-		<div class="panel-heading"><h3 class="panel-title">Manage Rooms</h3></div>
-		<div class="panel-body">
-
-			<div>
-
-				<div class="form-group">
-					<form id="manage-divisible-room-form" class="form-horizontal prevent" role="form">
-
-
-						<div class="col-xs-10">
-							<select name="room_id" type="dropdown" class="rooms form-control"></select>
-
-						</div>
-						<div class="col-xs-2 no-pad-right no-pad-left">
-							<button type="submit" class="btn btn-primary">Save Setup</button>
-						</div>
-
-					</form>
 
 				</div>
+			</div>
 
-				
-				<div class="">
-					<div id="divisible-room"></div>
-
-					<button id="add-col" type="button" class="btn btn-default pull-left">
-						<span class="glyphicon glyphicon-plus"></span>
-						<span class="glyphicon glyphicon-resize-horizontal"></span>
-					</button>
-
-					<button id="del-col" type="button" class="btn btn-default pull-left">
-						<span class="glyphicon glyphicon-minus"></span>
-						<span class="glyphicon glyphicon-resize-horizontal"></span>
-					</button>
-
-					<button id="del-row" type="button" class="btn btn-default pull-right">
-						<span class="glyphicon glyphicon-minus"></span>
-						<span class="glyphicon glyphicon-resize-vertical"></span>
-					</button>
-					<button id="add-row" type="button" class="btn btn-default pull-right">
-						<span class="glyphicon glyphicon-plus"></span>
-						<span class="glyphicon glyphicon-resize-vertical"></span>
-					</button>
+		</div>
+	</div>
 
 
 
 
 
-				</div>
+	<div class="row">
+
+		<div id="manage-divisible-room" class="panel panel-default ">
+			<div class="panel-heading"><h3 class="panel-title">Manage Rooms</h3></div>
+			<div class="panel-body">
+
+				<div>
+
+					<div class="form-group">
+						<form id="manage-divisible-room-form" class="form-horizontal prevent" role="form">
 
 
-			</form>
+							<div class="col-xs-10">
+								<select name="room_id" type="dropdown" class="rooms form-control"></select>
+
+							</div>
+							<div class="col-xs-2 no-pad-right no-pad-left">
+								<button type="submit" class="btn btn-primary">Save Setup</button>
+							</div>
+
+						</form>
+
+					</div>
+
+					
+					<div class="">
+						<div id="divisible-room"></div>
+
+						<button id="add-col" type="button" class="btn btn-default pull-left">
+							<span class="glyphicon glyphicon-plus"></span>
+							<span class="glyphicon glyphicon-resize-horizontal"></span>
+						</button>
+
+						<button id="del-col" type="button" class="btn btn-default pull-left">
+							<span class="glyphicon glyphicon-minus"></span>
+							<span class="glyphicon glyphicon-resize-horizontal"></span>
+						</button>
+
+						<button id="del-row" type="button" class="btn btn-default pull-right">
+							<span class="glyphicon glyphicon-minus"></span>
+							<span class="glyphicon glyphicon-resize-vertical"></span>
+						</button>
+						<button id="add-row" type="button" class="btn btn-default pull-right">
+							<span class="glyphicon glyphicon-plus"></span>
+							<span class="glyphicon glyphicon-resize-vertical"></span>
+						</button>
 
 
 
+
+
+					</div>
+
+
+				</form>
+
+
+
+			</div>
 		</div>
 
 	</div>
 
 </div>
-</div>
+
 
 <div class="row">
 	<div id="possible-sports" class="panel panel-default ">
@@ -260,6 +257,7 @@
 
 		</div>
 	</div>
+</div>
 </div>
 
 

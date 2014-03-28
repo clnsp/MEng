@@ -800,6 +800,10 @@ i.square{
 	font-size: 35px;
 }
 
+#booking #eventModal .modal-header input.form-control.editable{
+	width: 50px!important;
+}
+
 
 
 #booking #eventModal #cancelled-banner{
@@ -1087,7 +1091,9 @@ html.mobile #booking.login.user .page-header h1{
 	font-size: 25!important;
 }
 
-
+.bootstrap-timepicker-widget{
+	z-index:10000004;
+}
 tr.success{
 	background-color:#DFF0D8;
 }

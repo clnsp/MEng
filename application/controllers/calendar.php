@@ -1,7 +1,7 @@
 <?php
 class Calendar extends CI_Controller{
 
-	private $term = '';			// user accounts
+  private $term = '';     // user accounts
 
 
   function __construct()  {
@@ -15,20 +15,20 @@ class Calendar extends CI_Controller{
 
   }
 
-	
-	/**
-	* Compare function for levenshtein sort
-	* @param string
-	* @param string
-	* @return int
-	*/
-	function _my_sort($a,$b){      
-	    $leva = levenshtein($this-> term, $a['name']);
-	    $levb = levenshtein($this-> term, $b['name']);
-	
-	    if ($leva==$levb) return 0;
-	
-	    return ($leva<$levb)?-1:1;
+  
+  /**
+  * Compare function for levenshtein sort
+  * @param string
+  * @param string
+  * @return int
+  */
+  function _my_sort($a,$b){      
+      $leva = levenshtein($this-> term, $a['name']);
+      $levb = levenshtein($this-> term, $b['name']);
+  
+      if ($leva==$levb) return 0;
+  
+      return ($leva<$levb)?-1:1;
     }
 
 

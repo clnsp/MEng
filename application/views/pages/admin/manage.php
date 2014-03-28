@@ -49,7 +49,7 @@
 							<button type="submit" class="btn btn-sm btn-danger pull-right">Remove</button>
 						</form>
 					</div>
-						
+
 				</div>
 			</div>
 		</div>
@@ -124,7 +124,6 @@
 		</div>
 
 	</div>
-
 	<div class="row">		
 
 		<div id="add-block-classes" class="col-md-12">
@@ -138,6 +137,7 @@
 
 				<div class="panel-body" >						
 					<div class="col-md-6">
+
 
 						<form id="add-block-classes-form" class="form-horizontal prevent" role="form">
 
@@ -226,7 +226,6 @@
 
 							<div class="form-group">
 								<div class="col-sm-offset-3 col-sm-9">
-									<button id="import-block-button" class="prevent btn btn-default">Configure Previous Blocks</button>
 									<button id="add-block-button" type="submit" class="btn btn-primary">Save Block</button>
 								</div>
 							</div>
@@ -245,6 +244,7 @@
 		</div>
 
 	</div>
+
 
 </div>
 
@@ -291,38 +291,7 @@
 </div><!-- /.modal -->
 
 
-<div id="modal-manage-blocks" class="modal fade">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title">Configure Block Bookings</h4>
-			</div>
-			<div class="modal-body">
-				<p>Select a previous block booking from the table below to configure</p>
 
-				<table class='table footable footable-sortable'>
-					<thead>
-						<tr>
-							<th>Room</th>
-							<th>Class Type</th>
-							<th>Start</th>
-							<th>End</th>
-							<th>Select</th>
-						</tr>
-					</thead>
-					<tbody>
-					</tbody>
-				</table>
-
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-			</div>
-		</form>
-	</div><!-- /.modal-content -->
-</div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
 
 </div><!--/container-->
 
