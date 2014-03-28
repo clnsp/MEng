@@ -312,8 +312,6 @@ class booking extends CI_Controller{
 		$this->load->model('classtype');
 		$this->load->model('restrictions');
 
-		echo "$start_date $end_date";
-
 		$info = $this->classtype->getClasstypeInfo($class_type_id);
 
 		$duration = $info['duration']; 
@@ -329,6 +327,8 @@ class booking extends CI_Controller{
 
 		$results =  array();
 
+		$savedStart = clone $start_object;
+
 		foreach ($rooms as $key => $room) {
 			$room_id = $room['room_id'];
 			$sportInstances = $this->courts->countSportInstances($room_id, $class_type_id);
@@ -337,10 +337,14 @@ class booking extends CI_Controller{
 			$blockedSportIds = $this->restrictions->getSportsThatBlock($room_id, $class_type_id);
 
 
+			$start_object = clone $savedStart;
+
 			while($start_object <= $end_object){
 
 				$start_dup = clone $start_object;
 				$start_dup->modify("+$duration minutes");
+
+
 
 				if($start_object < $opening || $start_dup > $closing || $start_object < $now){
 					$start_object->modify("+$duration minutes");
@@ -351,6 +355,8 @@ class booking extends CI_Controller{
 				$roomSizeForTime = $roomSize;
 
 				$alreadyBooked = $this->classes->getSportsBookedOverTime($room_id, $start_date, $end_date, $start_object->format('H:i:s'), $start_dup->format('H:i:s'));		
+
+
 
 				foreach ($alreadyBooked as $key => $booked) {
 
@@ -366,6 +372,8 @@ class booking extends CI_Controller{
 						$roomSizeForTime = $roomSizeForTime  - $this->_fetchTokenSize($room_id, $booked['class_type_id']);
 					}
 				}
+
+
 
 				if($sportInstancesForTime > 0 && $roomSizeForTime >= $targetSportTokenSize){
 					$result['class_start_date'] = $start_object->format('Y-m-d H:i:s');
@@ -384,7 +392,11 @@ class booking extends CI_Controller{
 				}
 
 			}
+
+
+			
 		}
+
 
 		return $results;
 
