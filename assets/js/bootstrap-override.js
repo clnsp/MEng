@@ -8,6 +8,8 @@
  	return replacer;
  };
 
+ $.ajaxSetup({ cache: false });
+
  var siteUrl = $('html').data('site-url');
 
 
@@ -465,30 +467,30 @@
  		// 	showMeridian: false,
  		// 	setTime: ''
  		// });
- }
- 
+}
 
- var InputRadioGroup = new function(){
- 	
- 	$('html.mobile .btn-group.input-radio-group').addClass('btn-group-vertical');
 
- 	$('#booking').on('click', '.btn-group.input-radio-group button', function() {
- 		$(this).find('input[type=radio]').prop('checked', true);
- 		$(this).siblings('.active').removeClass('active');
- 		$(this).addClass('active');
- 	});
- }
- 
- var ClearSearch = new function() {
- 	
- 	$('.clearinput').click(function() {
- 		$(this).prev('input').val('');
- 		$('.ui-datepicker-div').remove();
- 		$('.bootstrap-timepicker-widget').remove();
- 	});
- 	
- }
- 
- 
+var InputRadioGroup = new function(){
+	
+	$('html.mobile .btn-group.input-radio-group').addClass('btn-group-vertical');
+
+	$('#booking').on('click', '.btn-group.input-radio-group button', function() {
+		$(this).find('input[type=radio]').prop('checked', true);
+		$(this).siblings('.active').removeClass('active');
+		$(this).addClass('active');
+	});
+}
+
+var ClearSearch = new function() {
+	
+	$('.clearinput').click(function() {
+		$(this).prev('input').val('');
+		$('.ui-datepicker-div').remove();
+		$('.bootstrap-timepicker-widget').remove();
+	});
+	
+}
+
+
 
 
