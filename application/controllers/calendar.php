@@ -296,6 +296,72 @@ class Calendar extends CI_Controller{
 
     }
 
+   
+    /**
+    * Edit a class details
+    */
+    function editEvent(){
+    
+      if(isSuperAdmin()){
+      
+        if(isset($_POST['class_id']) && isset($_POST['date']) && isset($_POST['start']) && isset($_POST['end'])){
+
+            $this->load->Helper('comms');
+
+            $start_date = new DateTime($_POST['date']. " " . $_POST['start']);
+            $end_date = new DateTime($_POST['date']. " " . $_POST['end']);
+            
+
+            if($start_date > $end_date){
+                echo "Start time cannot be grater than end time.";
+                return;
+            }
+
+            if($start_date < new DateTime){
+                echo "Start time cannot be in the past";
+                return;
+            }
+            
+            $classDetails = $this->classes->getClassInformation($_POST['class_id']);
+
+            $data = array(
+                'class_start_date' => $start_date->format("Y-m-d H:i:s"),
+                'class_end_date'    => $end_date->format("Y-m-d H:i:s")
+                );
+                
+                
+            if($this->classes->isRoomBookedOut($classDetails['room_id'], $start_date->format("Y-m-d"), $start_date->format("Y-m-d"), $start_date->format("H:i:s"), $end_date->format("H:i:s"), $_POST['class_id'])){
+                echo "There is a room overlap";
+                return;
+            }
+
+            
+
+            $this->classes->updateClass($_POST['class_id'], $data);
+            if($this->db->_error_number()==0){
+                echo "Saved";
+
+                $users = $this->bookings->getBookingAttendantsIDs($_POST['class_id']);
+                $emails = array();
+                foreach ($users as $key => $user) {
+                    array_push($emails, $user['member_id']);
+                }
+
+                
+                $msg = 'The following class start time has changed: ' . $classDetails['class_type'] . ' on '. $start_date->format("jS F Y") . ' starting at '. $start_date->format("H:i") . ' in the following room: '. $classDetails['room'];
+
+                contact_user($emails, $msg);
+            }else{
+                echo "An error occurred";
+            }
+            return;
+        }
+        else{
+            echo "Missing parameters";
+        }
+       }
+    }
+
       /**
      * Module for managing the block classes
      */
