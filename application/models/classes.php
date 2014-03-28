@@ -287,7 +287,7 @@ class Classes extends CI_Model{
 
         $query = $this -> db -> get();
 //		
-        echo($this->db->last_query());
+ //       echo($this->db->last_query());
         // echo($this->db->_error_message());
 
         return $query->result_array();

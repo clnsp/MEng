@@ -280,7 +280,7 @@ class booking extends CI_Controller{
 
 			}
 
-			$this->load->view('pages/search_results', $data, true);
+			echo ($this->load->view('pages/search_results', $data, true));
 
 		}
 	}
