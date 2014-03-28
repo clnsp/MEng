@@ -245,6 +245,15 @@ $end = new DateTime($Membership->end);
 		}
 	}
 	
+	function deleteMembership(){
+		if(check_admin()){
+			if(isset($_POST['id'])){
+				$this->load->model('members');
+				$this->members->deleteMembership($_POST['id']);
+			}
+		}
+	}
+	
 	function serverTime()
 	{
 		$myTime = array('serverTime' =>  date("U"));	

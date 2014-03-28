@@ -142,7 +142,7 @@ $super_js = 'id="new_supers" class="form-control"';
   </table>
 		</div>
 		<!-- CALANDERS -->
-		<div id="memberships" class="col-lg-6">
+		<div class="col-lg-6">
 		<div id="date-selector"></div>
 		  <div class="form-group">
     <label for="MembershipName">Membership Name</label>
