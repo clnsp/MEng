@@ -461,35 +461,52 @@
  		$(this).timepicker('setTime', '');
  	})
 
- // $(this).timepicker({
- 		// 	minuteStep: 15,
- 		// 	showSeconds: false,
- 		// 	showMeridian: false,
- 		// 	setTime: ''
- 		// });
-}
+ }
 
+ if(Modernizr.input.placeholder){
+ 	/*https://gist.github.com/hagenburger/379601*/
+ 	$('[placeholder]').focus(function() {
+ 		var input = $(this);
+ 		if (input.val() == input.attr('placeholder')) {
+ 			input.val('');
+ 			input.removeClass('placeholder');
+ 		}
+ 	}).blur(function() {
+ 		var input = $(this);
+ 		if (input.val() == '' || input.val() == input.attr('placeholder')) {
+ 			input.addClass('placeholder');
+ 			input.val(input.attr('placeholder'));
+ 		}
+ 	}).blur().parents('form').submit(function() {
+ 		$(this).find('[placeholder]').each(function() {
+ 			var input = $(this);
+ 			if (input.val() == input.attr('placeholder')) {
+ 				input.val('');
+ 			}
+ 		})
+ 	});
+ }
 
-var InputRadioGroup = new function(){
-	
-	$('html.mobile .btn-group.input-radio-group').addClass('btn-group-vertical');
+ var InputRadioGroup = new function(){
 
-	$('#booking').on('click', '.btn-group.input-radio-group button', function() {
-		$(this).find('input[type=radio]').prop('checked', true);
-		$(this).siblings('.active').removeClass('active');
-		$(this).addClass('active');
-	});
-}
+ 	$('html.mobile .btn-group.input-radio-group').addClass('btn-group-vertical');
 
-var ClearSearch = new function() {
-	
-	$('.clearinput').click(function() {
-		$(this).prev('input').val('');
-		$('.ui-datepicker-div').remove();
-		$('.bootstrap-timepicker-widget').remove();
-	});
-	
-}
+ 	$('#booking').on('click', '.btn-group.input-radio-group button', function() {
+ 		$(this).find('input[type=radio]').prop('checked', true);
+ 		$(this).siblings('.active').removeClass('active');
+ 		$(this).addClass('active');
+ 	});
+ }
+
+ var ClearSearch = new function() {
+
+ 	$('.clearinput').click(function() {
+ 		$(this).prev('input').val('');
+ 		$('.ui-datepicker-div').remove();
+ 		$('.bootstrap-timepicker-widget').remove();
+ 	});
+
+ }
 
 
 
