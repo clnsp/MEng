@@ -8,8 +8,9 @@ if($('#booking').is('.admin-calendar')){
 return true;
 }
 
-var eventModal, eventTitle, eventdate1, eventdate2, eventSpacesMax, eventSpacesTaken, eventColor, eventLocation, eventMembers, eventid;
-var activeEvent, addGuestModal;
+var eventModal,  eventMembers, eventid, activeEvent, addGuestModal, eventSpacesTaken;
+
+
 
 
 $('#booking').on('click', '#event-cancel-class-btn, #event-uncancel-class-btn', function(){
@@ -55,32 +56,7 @@ $('#booking').on('click', '#event-cancel-class-btn, #event-uncancel-class-btn', 
 });
 
 
-/*
- * Load the attendants of this event
- * @param bool
- */
- function load_event_attendants(disabled) {
 
- 	$.getJSON('calendar/getClassAttendants/?class=' + eventid, function(data) {
- 		eventMembers.empty();
- 		eventSpacesTaken.text(data.length);
-
- 		if(data.length>0){
- 			$.each( data, function( key, mem ) {
- 				disable_remove_button(false);
- 				add_member_to_member_list(mem['member_id'], mem['username'], !disabled);
- 				if(disabled){
- 					disable_remove_button(true);
-
- 				}
- 			});
- 		}else{
- 			eventMembers.append('<li class="list-group-item"> No attendants</li>');
- 			disable_remove_button(true);
- 		}
-
- 	});
- }
 
 /**
  * Add member to the member list
@@ -156,20 +132,321 @@ $('#booking').on('click', '#event-cancel-class-btn, #event-uncancel-class-btn', 
 
   $(document).ready(function() {
 
-  	/* Find Modal Editable Areas */
-  	eventModal = $('#eventModal');
-  	eventTitle = eventModal.find('#event-title');
-  	eventdate1 = eventModal.find('#event-date-1');
-  	eventdate2 = eventModal.find('#event-date-2');
-  	eventSpacesMax = eventModal.find('#event-spaces-max');
-  	eventSpacesTaken = eventModal.find('#event-spaces-taken');
-  	eventColor = eventModal.find('#eventColor');
-  	eventLocation = eventModal.find('#event-location');
-  	eventMembers = eventModal.find('#event-member-list .list-group');
-  	eventError = eventModal.find('#event-warning');
-    addGuestModal = $('#addGuestModal');
+
+    var EditBlockClasses = new function() {
+
+        var btn = $('#edit-block-classes');
+
+        btn.click(function() {
+
+          var ret = $.post( siteUrl + "calendar/manageBlockClasses", function( data ) {
+            bootbox.dialog({
+                message:  '<div class="col-sm-12"><div id="date-selector"></div></div>'+ data,
+                title: "Edit Block Bookings",
+                buttons: {
+                    success: {
+                        label: "Success!",
+                        className: "btn-success",
+                        callback: function() {
+                            Example.show("great success");
+                        }
+                    },
+                    danger: {
+                        label: "Danger!",
+                        className: "btn-danger",
+                        callback: function() {
+                            Example.show("uh oh, look out!");
+                        }
+                    },
+                    main: {
+                        label: "Click ME!",
+                        className: "btn-primary",
+                        callback: function() {
+                            Example.show("Primary button");
+                        }
+                    }
+                }
+
+            });
+
+var to = siteUrl.lastIndexOf('/') -9;
+x =  siteUrl.substring(0,to);
+
+$.getScript(x+"/assets/js/manage.js", function( data, textStatus, jqxhr ) {
+        console.log( data ); // Data returned
+        console.log( textStatus ); // Success
+        console.log( jqxhr.status ); // 200
+        console.log( "Load was performed." );
+    });
+
+});
+
+
+
+
+
+});
+
+
+
+}
+
+var CategoryDrop = new function() {
+
+ var selected = [];
+
+ this.getSelected = function() {
+  return selected;
+}
+
+var getDropCategories = function() {
+
+  selected = [];
+  $('#category-dropdown li.selected a').each(function(){
+   var $this = $(this);
+   addCategory($this.data('category-id') + "");
+});
+
+}
+
+var addCategory = function(id){
+  selected.push(id);
+}
+
+getDropCategories();
+
+$('#body-wrapper').on('click',  '#category-dropdown .dropdown-menu.multi-select li', function (e) {
+  if(!$(this).hasClass('toggle')){
+   e.preventDefault();
+   e.stopPropagation();
+
+   $(this).toggleClass('selected');
+
+   getDropCategories();
+   $('#calendar').fullCalendar('rerenderEvents');
+
+}
+}).on('click', '.dropdown-menu.multi-select button.toggle.on', function(e) {
+  $(this).toggleClass('on off');
+  $(this).parents('ul.dropdown-menu.multi-select').find('li:not(.selected)').each(function(){
+   $(this).click();
+})
+}).on('click', '.dropdown-menu.multi-select button.toggle.off', function(e) {
+  $(this).toggleClass('on off');
+  $(this).parents('ul.dropdown-menu.multi-select').find('li.selected').each(function(){
+   $(this).click();
+})
+});
+
+
+}
+
+
+/* Find Modal Editable Areas */
+eventModal = $('#eventModal');
+  	// eventTitle = eventModal.find('#event-title');
+  	//eventdate1 = eventModal.find('#event-date-1');
+  //	eventdate2 = eventModal.find('#event-date-2');
+ // eventSpacesMax = eventModal.find('#event-spaces-max');
+ // eventSpacesTaken = eventModal.find('#event-spaces-taken');
+//  eventColor = eventModal.find('#eventColor');
+//  eventLocation = eventModal.find('#event-location');
+eventMembers = eventModal.find('#event-member-list .list-group');
+eventError = eventModal.find('#event-warning');
+addGuestModal = $('#addGuestModal');
 //	var eventDescription =eventModal.find('#event-description');
 
+
+var ModalHeader = new function(){
+  var eventTitle, eventdate1, eventdate2, eventSpacesMax,
+  eventColor, eventLocation, editModalBtn, header;
+
+
+  var init = function(){
+    editModalBtn = $('#edit-modal');
+    eventTitle = eventModal.find('#event-title');
+    eventdate1 = eventModal.find('#event-date-1');
+    eventdate2 = eventModal.find('#event-date-2');
+    eventSpacesMax = eventModal.find('#event-spaces-max');
+    eventSpacesTaken = eventModal.find('#event-spaces-taken');
+    eventColor = eventModal.find('#eventColor');
+    eventLocation = eventModal.find('#event-location');
+    header = eventModal.find('.modal-header');
+}
+
+this.render = function(event){
+    eventTitle.text(event.title);
+    render_date(event.start, event.end, event.allDay);
+    render_color(event.color);
+    render_room(event.room_id, event.room);
+    render_attendance_numbers(event.attending, event.max_attendance);
+    editModalBtn.removeClass('active');
+
+}
+
+var render_attendance_numbers = function(attending, max_attendance) {
+    if(exists(max_attendance)){
+      eventSpacesMax.text(max_attendance);
+  }
+
+  if(exists(attending)){
+      eventSpacesTaken.text(attending);
+  }
+
+}
+
+var render_date = function(start, end, allDay) {
+    var s_date, e_date, s_time, e_time;
+
+    if(exists(start)){
+      s_date = $.fullCalendar.formatDate(start, "dddd d MMMM yyyy");
+      s_time = $('<span class="editable time start">').text($.fullCalendar.formatDate(start, "HH:mm"));
+  }
+
+  if(exists(end)){
+      e_date = $.fullCalendar.formatDate(end, "dddd d MMMM yyyy");
+      e_time = $('<span class="editable time end">').text($.fullCalendar.formatDate(end, "HH:mm"));
+  }
+
+  /*all day no time*/
+  if(exists(allDay) && allDay){
+      eventdate1.append($('<span class="date">').text(s_date));
+      eventdate2.text("All Day Event");
+  }else{
+      /* within one day */
+      if(s_date == e_date){
+        eventdate1.append($('<span class="date">').text(s_date));
+        eventdate2.append(s_time).append(' to ').append(e_time);
+    }
+    /*split over multiple days*/
+    else{
+        eventdate1.append(s_time).append(' ').append(e_time).append(' to');
+        eventdate2.append(e_time).append(' ').append(e_date);
+    }
+}
+}
+
+
+var render_room = function (room_id, room) {
+    if(exists(room_id)){
+      eventLocation.html('<a href="room/' + room_id + '">' + room + '</a>');
+  }else{
+      eventLocation.text(calEvent.room);
+  }
+}
+
+
+var render_color = function(color) {
+    eventColor.css( "color", color );
+}
+
+
+this.teardown = function(){
+    eventTitle.text('');
+    eventdate1.text(''); 
+    eventdate2.text('');
+    eventSpacesMax.text('[0]'); 
+    eventSpacesTaken.text('[0]'); 
+    eventColor.css('color', '#000'); 
+    eventLocation.text(''); 
+}
+
+
+init();
+
+var sendForm = function(){
+    $.post( siteUrl + "calendar/editEvent", { 
+      class_id: eventid,
+      start: eventdate2.find('.start').val(),
+      end: eventdate2.find('.end').val(),
+      date: eventdate1.find('.date').html()
+  },
+  function(data) {
+      alert(data);
+      eventModal.modal('hide');
+      $('#calendar').fullCalendar('refetchEvents');
+
+  });
+}
+
+var replaceSpan = function(span){
+    var contents = span.html();
+    var classes = span.attr('class');
+    var input = $('<input class="form-control input-sm editable" data-previous="' + contents +'" type="text" value=\"' + contents + '" />');
+    
+    if(span.hasClass('time')){
+      input.timepicker({
+        minuteStep: 15,
+        showSeconds: false,
+        showMeridian: false,
+    });
+  }
+  span.replaceWithAndReturnNew(input.addClass(classes));
+
+}
+
+var replaceInput = function(input){
+    var contents = input.val();
+    var classes = input.attr('class');
+    var span = $('<span>').html(contents);
+
+    input.replaceWithAndReturnNew(span.clone().addClass(classes).toggleClass('input-sm form-control'));
+}
+
+editModalBtn.click(function(){
+
+    if($(this).hasClass('active')){
+
+      bootbox.confirm("Would you like to save these changes?", function(result) {
+        if(result){
+          sendForm();
+
+      }else{
+          header.find('input').each(function(){
+            replaceInput($(this));
+        });
+      }
+  }); 
+
+  }else{
+     header.find('span.editable').each(function(){
+      replaceSpan($(this));
+  });
+ }
+
+
+ $(this).toggleClass('active');
+
+});
+
+}
+
+/*
+ * Load the attendants of this event
+ * @param bool
+ */
+ function load_event_attendants(disabled) {
+
+  $.getJSON('calendar/getClassAttendants/?class=' + eventid, function(data) {
+    eventMembers.empty();
+    eventSpacesTaken.text(data.length);
+
+    if(data.length>0){
+      $.each( data, function( key, mem ) {
+        disable_remove_button(false);
+        add_member_to_member_list(mem['member_id'], mem['username'], !disabled);
+        if(disabled){
+          disable_remove_button(true);
+
+      }
+  });
+  }else{
+      eventMembers.append('<li class="list-group-item"> No attendants</li>');
+      disable_remove_button(true);
+  }
+
+});
+}
 
 /* Handler for the event button */
 eventError.find('button.close').click(function(e){
@@ -214,57 +491,50 @@ $('#calendar').fullCalendar({
     eventClick: function(calEvent, jsEvent, view) {
     	activeEvent = calEvent;
     	eventid = calEvent.class_id;
-    	render_title(calEvent.title);
-    	if(calEvent.cancelled){
-            eventModal.addClass('cancelled');
-        }else{
-            eventModal.removeClass('cancelled');
-        }
-        render_cancel_button(calEvent.cancelled);
-        disable_cancel_button(calEvent.past);
-        disable_buttons(calEvent.past);
-        render_date(calEvent.start, calEvent.end, calEvent.allDay);
-        render_attendance_numbers(calEvent.attending, calEvent.max_attendance);
-        render_color(calEvent.color);
-        render_room(calEvent.room_id, calEvent.room);
-        load_event_attendants(calEvent.past || calEvent.cancelled);
-        disable_add_member(calEvent.past || calEvent.cancelled);
+    	// render_title(calEvent.title);
+      ModalHeader.render(calEvent);
 
-        /*setup form*/
-        eventModal.modal('show');
-    },
+      if(calEvent.cancelled){
+        eventModal.addClass('cancelled');
+    }else{
+        eventModal.removeClass('cancelled');
+    }
+    render_cancel_button(calEvent.cancelled);
+    disable_cancel_button(calEvent.past);
+    disable_buttons(calEvent.past);
 
-    eventRender: function(event, element, view) {
+    load_event_attendants(calEvent.past || calEvent.cancelled);
+    disable_add_member(calEvent.past || calEvent.cancelled);
 
-     if(event.end <  new Date()){
-      event.past = true;
-      element.css('opacity', '0.35');
-  }
-  else{
-      event.past = false;
-  }
-  event.cancelled = event.cancelled == true;
+    /*setup form*/
+    eventModal.modal('show');
+},
 
-  if(event.cancelled){
-      element.addClass('cancelled');
-  }
+eventRender: function(event, element, view) {
 
-		//fetch the currently selected category ids
-		var categories = [];
-		$('#category-dropdown li.selected a').each(function(){
-			var $this = $(this);
-			categories.push($this.data('category-id') + "");
-		});
-		
-		if($.inArray(event.category_id, categories) == -1)
-			element.addClass('hidden');
-	},
+ if(event.end <  new Date()){
+  event.past = true;
+  element.css('opacity', '0.35');
+}
+else{
+  event.past = false;
+}
+event.cancelled = event.cancelled == true;
 
-	eventSources: [
-	{
-		url: 'calendar',
-		startParam: 'start',
-		endParam: 'end',
+if(event.cancelled){
+  element.addClass('cancelled');
+}
+
+
+if($.inArray(event.category_id, CategoryDrop.getSelected()) == -1)
+ element.addClass('hidden');
+},
+
+eventSources: [
+{
+  url: 'calendar',
+  startParam: 'start',
+  endParam: 'end',
 			//fetch room
 			data: function() { // a function that returns an object
 				return {
@@ -307,83 +577,7 @@ $('#calendar').fullCalendar({
 $('#calendar .fc-header .fc-header-center').after($('#category-dropdown').remove());
 $('#calendar .fc-header .fc-header-center').before($('#rooms-dropdown').remove());
 
-/**
- * Render the room
- */
- function render_room(room_id, room) {
-  if(exists(room_id)){
-    eventLocation.html('<a href="room/' + room_id + '">' + room + '</a>');
-}else{
-    eventLocation.text(calEvent.room);
-}
-}
 
-
-
-/**
- * Render the category color
- */
- function render_color(color) {
- 	eventColor.css( "color", color );
- }
- 
-/**
- * Render the date of the event
- */
- function render_date(start, end, allDay) {
- 	var s_date, e_date, s_time, e_time;
-
- 	if(exists(start)){
- 		s_date = $.fullCalendar.formatDate(start, "dddd d MMMM yyyy");
- 		s_time = $.fullCalendar.formatDate(start, "HH:mm");
- 	}
-
- 	if(exists(end)){
- 		e_date = $.fullCalendar.formatDate(end, "dddd d MMMM yyyy");
- 		e_time = $.fullCalendar.formatDate(end, "HH:mm");
- 	}
-
- 	/*all day no time*/
- 	if(exists(allDay) && allDay){
- 		eventdate1.text(s_date);
- 		eventdate2.text("All Day Event");
- 	}else{
- 		/* within one day */
- 		if(s_date == e_date){
- 			eventdate1.text(s_date);
- 			eventdate2.text(s_time + ' to ' + e_time);
- 		}
- 		/*split over multiple days*/
- 		else{
- 			eventdate1.text(s_time + ' ' + s_date + ' to');
- 			eventdate2.text(e_time + ' ' + e_date);
- 		}
- 	}
- }
-
-
- /**
- * Render the title
- */
- function render_title(title) {
- 	eventTitle.text(title); 
- }
- 
- 
- /**
- * Render the attendance numbers
- */
- function render_attendance_numbers(attending, max_attendance) {
- 	if(exists(max_attendance)){
- 		eventSpacesMax.text(max_attendance);
- 	}
-
- 	if(exists(attending)){
- 		eventSpacesTaken.text(attending);
- 	}
-
- }
- 
  /*
   * Tear down the modal properties
   */
@@ -410,18 +604,11 @@ $('#calendar .fc-header .fc-header-center').before($('#rooms-dropdown').remove()
    * Cleanup the modal attributes
    */
    function teardown_modal() {
-   	eventTitle.text('[Title]');
-   	eventdate1.text('[Date]'); 
-   	eventdate2.text('[Date]'); 
-   	eventSpacesMax.text('[0]'); 
-   	eventSpacesTaken.text('[0]'); 
-   	eventColor.css('color', '#000'); 
-   	eventLocation.text('[RoomName]'); 
+   	ModalHeader.teardown();
    	eventid = "";
-  	//	eventDescription.text('[Descripttion]');
-  	eventMembers.html('');
-  	activeEvent = null;
-  }
+     eventMembers.html('');
+     activeEvent = null;
+ }
 
     /**
    * Cleanup the modal attributes
@@ -439,38 +626,38 @@ $('#calendar .fc-header .fc-header-center').before($('#rooms-dropdown').remove()
  	e.preventDefault();
  	var memberinputbox = $(this).find('input#search-users');
  	var mid = memberinputbox.attr('data-member-id');
-    if(mid == ''){
-        return;
-    }
-    if($('input[value='+ mid +']').exists()){
-        alert('Member already exists in class');
-        return;
-    }
+  if(mid == ''){
+    return;
+}
+if($('input[value='+ mid +']').exists()){
+    alert('Member already exists in class');
+    return;
+}
 
-    $.ajax({
-        url: "calendar/addMember",
-        type: "POST",
-        data: { 'member_id': mid, 'class_booking_id':eventid  },
-        success: function(res) {
-          alert(res);
-          memberinputbox.attr('data-member-id', '').val('');
-          load_event_attendants();
+$.ajax({
+    url: "calendar/addMember",
+    type: "POST",
+    data: { 'member_id': mid, 'class_booking_id':eventid  },
+    success: function(res) {
+      alert(res);
+      memberinputbox.attr('data-member-id', '').val('');
+      load_event_attendants();
 
-      },
-      error: function(data){
-        if(data.status == 305){
-            bootbox.confirm("Class is full would you like to add user to waiting list?", function(result) {
-                if(result){
-                    $.post( siteUrl + 'waiting_list/addWaiting', {  member_id: mid, class_id:eventid })
-                    .done(function( result ) {
-                        alert(result);
-                    });
-                }
-            }); 
+  },
+  error: function(data){
+      if(data.status == 305){
+        bootbox.confirm("Class is full would you like to add user to waiting list?", function(result) {
+          if(result){
+            $.post( siteUrl + 'waiting_list/addWaiting', {  member_id: mid, class_id:eventid })
+            .done(function( result ) {
+              alert(result);
+          });
         }
-        
-        memberinputbox.attr('data-member-id', '').val('');
-    },
+    }); 
+    }
+
+    memberinputbox.attr('data-member-id', '').val('');
+},
 });
 
 
@@ -577,13 +764,6 @@ eventModal.on("click", ".open-Model-button", function () {
   $("#cancelClassModal .modal-title").text(title);
 });
 
-
-
-
-/* Full Calendar refresh*/
-$('#category-dropdown .dropdown-menu.multi-select li').click(function () {
-  $('#calendar').fullCalendar('rerenderEvents');
-});
 
 $('#btn-view-waiting-list').click(function(){
 

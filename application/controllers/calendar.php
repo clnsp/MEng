@@ -1,7 +1,7 @@
 <?php
 class Calendar extends CI_Controller{
 
-	private $term = '';			// user accounts
+  private $term = '';     // user accounts
 
 
   function __construct()  {
@@ -15,20 +15,20 @@ class Calendar extends CI_Controller{
 
   }
 
-	
-	/**
-	* Compare function for levenshtein sort
-	* @param string
-	* @param string
-	* @return int
-	*/
-	function _my_sort($a,$b){      
-	    $leva = levenshtein($this-> term, $a['name']);
-	    $levb = levenshtein($this-> term, $b['name']);
-	
-	    if ($leva==$levb) return 0;
-	
-	    return ($leva<$levb)?-1:1;
+  
+  /**
+  * Compare function for levenshtein sort
+  * @param string
+  * @param string
+  * @return int
+  */
+  function _my_sort($a,$b){      
+      $leva = levenshtein($this-> term, $a['name']);
+      $levb = levenshtein($this-> term, $b['name']);
+  
+      if ($leva==$levb) return 0;
+  
+      return ($leva<$levb)?-1:1;
     }
 
 
@@ -40,9 +40,9 @@ class Calendar extends CI_Controller{
       if(check_admin()){
         $this->load->model('members');
 
-        if (isset($_GET['term'])){
+        if ($this->input->get('term')){
         
-          $this-> term = strtolower($_GET['term']);
+          $this-> term = strtolower($this->input->get('term'));
 
           $matched = $this->members->getUserLike($this-> term)->result_array();
                     
@@ -66,8 +66,8 @@ class Calendar extends CI_Controller{
      * Get users from associated with a class booking
      */
     function getClassAttendants(){
-      if (isset($_GET['class'])){
-        $q = strtolower($_GET['class']);
+      if ($this->input->get('class')){
+        $q = strtolower($this->input->get('class'));
         echo json_encode($this->bookings->getBookingAttendants($q));       
       }
     }
@@ -80,9 +80,9 @@ class Calendar extends CI_Controller{
     */
     function addMember(){
       if(check_admin()){
-        if (isset($_POST['member_id']) && isset($_POST['class_booking_id'])){
-          $m = strtolower($_POST['member_id']);
-          $b = strtolower($_POST['class_booking_id']);
+        if ($this->input->post('member_id') && $this->input->post('class_booking_id')){
+          $m = strtolower($this->input->post('member_id'));
+          $b = strtolower($this->input->post('class_booking_id'));
 
           $this->_addMember($b, $m);
         }    
@@ -129,11 +129,11 @@ class Calendar extends CI_Controller{
      */
     function removeMember(){
 
-      if (isset($_POST['member_id']) && isset($_POST['class_booking_id'])){
+      if ($this->input->post('member_id') && $this->input->post('class_booking_id')){
 
-        foreach($_POST['member_id'] as $mid){
+        foreach($this->input->post('member_id') as $mid){
           $m = strtolower($mid);
-          $b = strtolower($_POST['class_booking_id']);
+          $b = strtolower($this->input->post('class_booking_id'));
 
           if(!isclassinPast($b) && $this->bookings->countBookingAttendants($b) > 0 ){
             $this->bookings->removeMember($b, $m);
@@ -152,18 +152,18 @@ class Calendar extends CI_Controller{
       if(check_admin()){
         $cancelled = $cancelled == "true";
 
-        if (isset($_POST['class_booking_id'])){
+        if ($this->input->post('class_booking_id')){
           $this->load->model('classes');
 
-          $bid = $_POST['class_booking_id'];
+          $bid = $this->input->post('class_booking_id');
           $msg = '';
 
           if(isclassinPast($bid)){
             echo "Cannot change the status of a class in the past";
             return;  
           }
-          if (isset($_POST['cancel_message'])){
-            $msg = $_POST['cancel_message'];
+          if ($this->input->post('cancel_message')){
+            $msg = $this->input->post('cancel_message');
           }
 
           $iscancelled = $this->classes->isClassCancelled($bid);          
@@ -250,27 +250,27 @@ class Calendar extends CI_Controller{
 
       if(isset($class_id)){ 
 
-        if (isset($_POST['guest_first_name'])){
-          $first = strtolower($_POST['guest_first_name']);       
+        if ($this->input->post('guest_first_name')){
+          $first = strtolower($this->input->post('guest_first_name'));       
         } else{
           return;
         }
 
-        if (isset($_POST['guest_last_name'])){
-          $last = strtolower($_POST['guest_last_name']);       
+        if ($this->input->post('guest_last_name')){
+          $last = strtolower($this->input->post('guest_last_name'));       
         } else{
           return;
         }
 
-        if (isset($_POST['guest_email'])){
-          $email = strtolower($_POST['guest_email']);       
+        if ($this->input->post('guest_email')){
+          $email = strtolower($this->input->post('guest_email'));       
         } 
         else{
           return;
         }
 
-        if (isset($_POST['guest_phone'])){
-          $phone = strtolower($_POST['guest_phone']);       
+        if ($this->input->post('guest_phone')){
+          $phone = strtolower($this->input->post('guest_phone'));       
         } 
         else{
           return;

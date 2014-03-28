@@ -455,9 +455,16 @@
  }else{
  	/* time pickers */
  	$('.timepicker').each(function(){
- 		$(this).timepicker('setTime', '');
 
+ 		$(this).timepicker('setTime', '');
  	})
+
+ // $(this).timepicker({
+ 		// 	minuteStep: 15,
+ 		// 	showSeconds: false,
+ 		// 	showMeridian: false,
+ 		// 	setTime: ''
+ 		// });
  }
  
 

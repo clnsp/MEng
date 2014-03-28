@@ -15,12 +15,7 @@
 |
 */
 
-
-
-
-$config['base_url']	= 'https://devweb2013.cis.strath.ac.uk/~gmb09157/MEng';
-
-
+$config['base_url']	= 'https://devweb2013.cis.strath.ac.uk/~xvb09137/MEng';
 
 
 /*
@@ -287,7 +282,7 @@ $config['cookie_secure']	= FALSE;
 | COOKIE data is encountered
 |
 */
-$config['global_xss_filtering'] = FALSE;
+$config['global_xss_filtering'] = TRUE;
 
 /*
 |--------------------------------------------------------------------------

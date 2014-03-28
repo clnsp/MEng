@@ -52,20 +52,22 @@ class Member extends CI_Controller{
 		$new_details['first_name']       = $_POST['first_name'];
 		$new_details['second_name']      = $_POST['second_name'];
 		//$new_details['email']            = $_POST['email'];
-			if($_POST['comms_preference']==2){
+			/*if($_POST['comms_preference'] == 2){
 			//TWITTER VALIDATION
 			}
 
-			if($_POST['comms_preference']==1){
+			if($_POST['comms_preference'] == 1){
 			// SMS VALIDATION
 			}
+			*/
 			$new_details['home_number']      = $_POST['home_number'];
 			$new_details['mobile_number']    = $_POST['mobile_number'];
 			$new_details['twitter']          = $_POST['twitter'];
-			$new_details['comms_preference'] = $_POST['comms_preference'];
+			//$new_details['comms_preference'] = $_POST['comms_preference'];
 
 			
 			$_POST['changes'] = $new_details;
+			$this->members->updateCommsPreference(strtolower($this->tank_auth->get_user_id()), $_POST['new_preferences']);
 			
 			if(isset($_POST['changes'])){
 				echo $this->members->updateUser(strtolower($this->tank_auth->get_user_id()), array_map('strtolower',$_POST['changes']));
@@ -98,7 +100,7 @@ class Member extends CI_Controller{
 				$_POST['changes'] = $new_details;
 				if(isset($_POST['changes'])){
 					foreach ($supers as $s) {
-		      //echo $this->members->updateUser($s, $new_details);
+		            	echo $this->members->updateUser($s, $new_details);
 					}
 				}
 			}
@@ -228,6 +230,30 @@ class Member extends CI_Controller{
 		}
 	}
 	
+	function createMembership(){
+		if(check_admin()){
+			if(isset($_POST['membership'])){
+			$Membership = json_decode($_POST['membership']);
+			$this->load->model('members');
+$start = new DateTime($Membership->start);
+$end = new DateTime($Membership->end);
+			$ID = $this->members->createNewMembership($Membership->name, $start->format('Y-m-d'), $end->format('Y-m-d'));
+			for($i=0;$i<count($Membership->types);$i++){
+				echo($this->members->createMembertoMembershipLink($Membership->types[$i],$ID));
+			}
+			}
+		}
+	}
+	
+	function deleteMembership(){
+		if(check_admin()){
+			if(isset($_POST['id'])){
+				$this->load->model('members');
+				$this->members->deleteMembership($_POST['id']);
+			}
+		}
+	}
+	
 	function serverTime()
 	{
 		$myTime = array('serverTime' =>  date("U"));	
@@ -244,9 +270,11 @@ class Member extends CI_Controller{
 		if(check_admin()){
 			if(isset($_POST['id']) && isset($_POST['message'])){
 				$this->load->helper('comms');
-				echo json_encode(contact_user(array($_POST['id']),$_POST['message']));
+				contact_user(array($_POST['id']),$_POST['message']);
+//echo json_encode( )
 			}
 		}
+echo("OUT");
 	}
 }
 

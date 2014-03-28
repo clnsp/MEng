@@ -46,13 +46,12 @@
 						<h3 class="modal-title" id="event-title">Class Title</h3>
 					</div>
 					<div class="col-xs-4">
-
 						<i id="eventColor" class="pull-right glyphicon glyphicon-stop"></i>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-xs-8">
-						<h5 id="event-date-1" class="modal-title"></h5>
+						<h5 id="event-date-1" class="modal-title"></h5> 
 					</div>
 					<div class="col-xs-4">
 						<h5 class="clearfix pull-right modal-title">
@@ -62,10 +61,29 @@
 					<div class="row">
 						<div class="col-xs-8">
 							<h5 id="event-date-2" class="modal-title"></h5>
+
 						</div>
 						<div id="event-location" class="col-xs-4 text-right">
 							<span id="" ></span>
 						</div>
+					</div>
+					
+					
+					<?php if(isSuperAdmin()){?>
+					
+					<div class="row">
+						<div class="col-xs-8">
+							<i id="edit-modal" class="btn btn-sm pull-left btn-warning glyphicon glyphicon-pencil pull-right"></i>
+							
+						</div>
+						
+						<div class="col-xs-4">
+							
+							<button type="button" id="edit-block-classes" class="btn btn-warning pull-right btn-sm ">Edit class blocks</button>
+						</div>
+						<?php }?>
+						
+						
 					</div>
 				</div>
 				<div class="modal-body">
@@ -78,7 +96,7 @@
 						</form>
 					-->					
 
-					<div id="event-member-list">
+					<div id="event-member-list" class="no-margin-btm">
 						<form class="prevent" id="event-remove-member-form" method="post" action="">
 							<ul class="list-group checkbox-group"></ul>
 						</div>

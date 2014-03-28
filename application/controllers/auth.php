@@ -127,6 +127,8 @@ class Auth extends CI_Controller
 	 */
 	function register()
 	{
+
+	  
 		if ($this->tank_auth->is_logged_in()) {									// logged in
 			redirect('');
 
@@ -151,7 +153,7 @@ class Auth extends CI_Controller
 			$this->form_validation->set_rules('password', 'Password', 'trim|required|xss_clean|min_length['.$this->config->item('password_min_length', 'tank_auth').']|max_length['.$this->config->item('password_max_length', 'tank_auth').']|alpha_dash');
 			$this->form_validation->set_rules('confirm_password', 'Confirm Password', 'trim|required|xss_clean|matches[password]');
 			$this->form_validation->set_rules('member_type', 'Member Type', 'required|xss_clean');
-			$this->form_validation->set_rules('comms_preference', 'Communication Preferences', 'trim|xss_clean');
+			$this->form_validation->set_rules('new_preferences', 'Communication Preferences');
 
 			$captcha_registration	= $this->config->item('captcha_registration', 'tank_auth');
 			$use_recaptcha			= $this->config->item('use_recaptcha', 'tank_auth');
@@ -189,8 +191,8 @@ class Auth extends CI_Controller
 					$this->form_validation->set_value('twitter'),
 					$this->form_validation->set_value('password'),
 					$this->form_validation->set_value('member_type'),
+					$_POST['new_preferences'],
 					2,					// GUEST
-					$this->form_validation->set_value('comms_preference'),
 					$email_activation,
 					1))) {									// success
 					$data['site_name'] = $this->config->item('website_name', 'tank_auth');
@@ -227,12 +229,17 @@ class Auth extends CI_Controller
 			}
 			$data['captcha_registration'] = $captcha_registration;
 			$data['use_recaptcha'] = $use_recaptcha;
+
+			$this->load->Model('Comms_Preference');
+	  		$prefs = $this->Comms_Preference->getPreferences();
+      		$data['comm_prefs'] = $prefs;
+      		
 			if($ver)
 			{
 				$data['fname'] = $ver['givenName'][0];
 				$data['sname'] = $ver['sn'][0];
 				$data['mail'] = $ver['mail'][0];
-				parse_temp('DS Registeration', $this->load->view('auth/register_form', $data, true));
+				parse_temp('DS Registration', $this->load->view('auth/register_form', $data, true));
 			}			
 		}
 	}
@@ -400,11 +407,15 @@ class Auth extends CI_Controller
 	  	$data['errors'] = array();
 
 	  	$this->load->Model('Members');
+
+	  	$member = $this->Members->getStaffUsers();
+	  	$data['member'] = $member;
+
 	  	$admin = $this->Members->getAdminUsers();
 	  	$data['admin'] = $admin;
 
 	  	$super = $this->Members->getSuperAdminUsers();
-	  	$data['super'] = $super;
+	  	$data['super'] = $super; 
 
 	// GET ALL POSSIBLE MEMBERSHIPS
  		$data['memberships'] = $this->Members->getAllMemberships();
@@ -446,8 +457,8 @@ $data['memberTypes'] = $this->Members->getAllMemberTypes();
             $members = $this->Members->getUserByID($this->tank_auth->get_user_id());
             $data['member'] = $members['0'];
 
-            //$member_prefs = $this->Members->getUserCommsPrefs($this->tank_auth->get_user_id());
-            //$data['member_prefs'] = $member_prefs;
+            $member_prefs = $this->Members->getCommsPref($this->tank_auth->get_user_id());
+            $data['member_prefs'] = $member_prefs;
             
             $prefs = $this->Comms_Preference->getPreferences();
             $data['comm_prefs'] = $prefs;

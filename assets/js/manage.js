@@ -213,82 +213,8 @@ $( document ).ready(function() {
 			form[0].reset();
 		}
 	};
-
-	var importDialog = new function(){
-		var modal = $('#modal-manage-blocks');	
-		var urlBase = siteUrl + ('class_type/');
-
-		var table = modal.find('tbody');
-		var tableBuffer = $('<tbody>');
-		var button = $('<button>').html('Select').addClass("configure-block-btn btn btn-primary");
-		var $this = $this;
-
-		modal.on('click', '.configure-block-btn', function(){
-			$row = $(this).parents('tr');
-			$row.find()
-			addBlockClassesPanel.classTypeDrop.val($row.find('[data-class_type_id]').data('class_type_id'));
-			addBlockClassesPanel.roomDrop.val($row.find('[data-room_id]').data('room_id'));
-			addBlockClassesPanel.form.find('input[name=class_start_time]').val($row.find('[data-class_start_time]').data('class_start_time'));
-			addBlockClassesPanel.form.find('input[name=class_start_time]').val($row.find('[data-class_end_time]').data('class_end_time'));
-			addBlockClassesPanel.form.find('[type=submit]').attr('class', 'btn btn-warning').html('Save Changes');
-			fetchBlockDates($(this).data('block_booking_id'));
-
-			modal.modal('hide');
-		});
-
-		var fetchBlockDates = function(bid){
-			$.getJSON(urlBase + 'getBlockBookingDates/' + bid , function(data) {
-				datepicker.clear();
-				console.log(data);
-				var arr = new Array();
-				
-				for (var key in data) {
-					arr.push(new Date(data[key]['class_start_date']));
-				}
-
-				datepicker.addDates(arr);
-			});
-
-			return 
-		}
-
-		var createRow = function (block) {
-			var tr = $('<tr>');
-			tr.append($('<td>').attr('data-room_id', block['room_id']).append(block['room']));
-			tr.append($('<td>').attr('data-class_type_id', block['class_type_id']).append(block['class_type']));
-			tr.append($('<td>').attr('data-class_start_time', block['class_start_time']).append(block['class_start_time']));
-			tr.append($('<td>').attr('data-class_end_time', block['class_end_time']).append(block['class_end_time']));
-			tr.append($('<td>').append(button.clone().attr('data-block_booking_id', block['block_booking_id'])));
-			return tr;
-		}
-
-		this.show = function (show) {
-			modal.modal('show');
-
-			$.getJSON(urlBase + 'getBlockBookingInformation', function(data) {
-
-				clear();
-				if(data.length>0){
-					$.each( data, function(key, block) {
-						tableBuffer.append(createRow(block));
-					});
-
-				}
-				update();
-
-			});
-		}
-
-
-		var update = function(){
-			table.html(tableBuffer.html());
-		}
-
-		var clear = function(){
-			tableBuffer.html('');
-		}
-	};
-
+	
+	
 	var addBlockClassesPanel = new function() {
 		var container = $('#add-block-classes');
 		var urlBase = siteUrl + "class_type/";
