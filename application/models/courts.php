@@ -21,6 +21,7 @@ Class Courts extends CI_Model{
 	/**
 	* Clear divisions associated with a room
 	* @param int
+	* @return void
 	*/
 	function clearDivisions($room_id){
 		$this->db->where('room_id', $room_id);
@@ -53,7 +54,8 @@ Class Courts extends CI_Model{
 	
 	/**
 	* Get all the sport instances mapped to divisions
-	* @param array
+	* @param int
+	* @return array
 	*/
 	function getSportsToDivisions($room_id) {
 
@@ -64,7 +66,8 @@ Class Courts extends CI_Model{
 	}	
 	/**
 	* Get all divisions for a room
-	* @param array
+	* @param int
+	* @return array
 	*/
 	function getDivisions($room_id) {
 
@@ -103,6 +106,7 @@ Class Courts extends CI_Model{
  	* eg. max_court 4 would remove exisiting courts 5, 6
  	* @param int
  	* @param int
+	* @return	void
  	*/
  	function clearExcessDivisions($room_id, $max_court){
  		$this->db->where('room_id', $room_id);
@@ -115,7 +119,7 @@ Class Courts extends CI_Model{
  	 * Find all potential sports
  	 * @param int
  	 * @param int
- 	 * @return int
+ 	 * @return array
  	 */
  	function countSportInstances($room_id, $class_type_id){
 
@@ -163,4 +167,8 @@ Class Courts extends CI_Model{
 
 
  }
+/* End of file courts.php */  
+/* Location: ./application/models/courts.php */ 
  ?>
+
+

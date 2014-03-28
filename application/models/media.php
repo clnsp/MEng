@@ -12,7 +12,11 @@
           return $query->result_array();  
       }
       
-	    // Retrieve only google information            
+	         
+		/*
+		* Retrieve only google information 
+ 		* @return array
+ 		*/          
       function retrieve_gid(){  
         $this->db->select('googleplus_id'); 
         $this -> db -> from($this -> table_name); 
@@ -22,8 +26,12 @@
         return $query->result_array();  
     }             
 
-	    // Retrieve only twitter information
-    function retrieve_tid(){  
+	   
+	   /*
+		* Retrieve only twitter information
+ 		* @return array
+ 		*/    
+    	function retrieve_tid(){  
         $this->db->select('twitter_id'); 
         $this -> db -> from($this -> table_name); 
 
@@ -32,8 +40,12 @@
         return $query->result_array();  
     }
 
-	    // Retrieve only facebook information
-    function retrieve_fid(){  
+	   
+	   /*
+		* Retrieve only facebook information
+ 		* @return array
+ 		*/    
+    	function retrieve_fid(){  
         $this->db->select('facebook_id'); 
         $this -> db -> from($this -> table_name); 
 

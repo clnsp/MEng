@@ -35,6 +35,7 @@ class Calendar extends CI_Controller{
 
     /**
      * Get users that match a partial term. Used for autocomplete
+     * @return	void
      */
     function getUsers(){
       if(check_admin()){
@@ -64,6 +65,7 @@ class Calendar extends CI_Controller{
 
     /**
      * Get users from associated with a class booking
+     * @return	void
      */
     function getClassAttendants(){
       if (isset($_GET['class'])){
@@ -77,6 +79,7 @@ class Calendar extends CI_Controller{
 
     /**
     * Add a member to a class
+    * @return	void
     */
     function addMember(){
       if(check_admin()){
@@ -92,6 +95,9 @@ class Calendar extends CI_Controller{
 
     /**
     * Add a member to a class
+    * @param int
+	 * @param int
+	 * @return	void
     */
     function _addMember($booking_id, $member_id){
 
@@ -126,6 +132,7 @@ class Calendar extends CI_Controller{
 
     /**
      * Remove a member from a class
+     * @return	void
      */
     function removeMember(){
 
@@ -147,6 +154,7 @@ class Calendar extends CI_Controller{
     /**
      * Cancel a class
      * @param bool
+     * @return	void
      */
     function cancelClass($cancelled){
       if(check_admin()){
@@ -189,6 +197,7 @@ class Calendar extends CI_Controller{
      * @param int
      * @param string
      * @param bool
+     * @return	void
      */
     function changeClassStatus($bid, $msg, $cancel) {
      $this->load->helper('email');
@@ -213,6 +222,7 @@ class Calendar extends CI_Controller{
     * Generates json for the calendar
      * Expects two  parameters in the url start and end
      * Both of form unix timestamp
+     * @return	void
      */
     function index(){
       $params = getQueryStringParams();
@@ -243,6 +253,7 @@ class Calendar extends CI_Controller{
     /**
      * Add guest to class
      * @param int - class_id to add guest to
+     * @return	void
      */
     function addGuestToClass($class_id){
       $this->load->model('tank_auth/users');
@@ -302,11 +313,14 @@ class Calendar extends CI_Controller{
 /*
  * Get paramters from the url
  * http://stackoverflow.com/questions/2894250/how-to-make-codeigniter-accept-query-string-urls
+ * @return	string
  */
 function getQueryStringParams() {
   parse_str($_SERVER['QUERY_STRING'], $params);
   return $params;
 }
 
-
+/* End of file calendar.php */
+/* Location: ./application/controllers/calendar.php */
 ?>
+

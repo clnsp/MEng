@@ -15,6 +15,7 @@ class booking extends CI_Controller{
 
 	/**
 	* Book a class
+	* @return	void
 	*/
 	function bookClass(){
 		if(check_member()){
@@ -44,6 +45,7 @@ class booking extends CI_Controller{
 	* Add member to a class
 	* @param int
 	* @param int
+   * @return	void
 	*/
 	function _addMember($classid, $user_id, $classInfo){
 
@@ -80,6 +82,8 @@ class booking extends CI_Controller{
 
 	/**
 	* Handle booking failuires
+	* @param int string
+   * @return	void	
 	*/
 	function _bookingFail($message){
 		$data['message'] = $message;
@@ -89,6 +93,7 @@ class booking extends CI_Controller{
 
 	/**
 	 * Book user into a sport
+    * @return	void
 	 */
 	function bookSport() {
 		if(check_member()){
@@ -121,6 +126,7 @@ class booking extends CI_Controller{
 
 	/**
 	 * Index page for user booking
+    * @return	void
 	 **/
 	function index() {
 		if(check_member()){
@@ -131,6 +137,7 @@ class booking extends CI_Controller{
 
 	/**
 	* Confirmation page before making a booking
+   * @return	void
 	*/
 	function confirm(){
 		if(check_member()){
@@ -157,6 +164,7 @@ class booking extends CI_Controller{
 	
 	/**
 	* Join the waiting list for a class
+   * @return	void
 	*/
 	function joinWaiting(){
 		if(check_member()){
@@ -201,6 +209,7 @@ class booking extends CI_Controller{
 
 	/**
 	* Retrieves search results according to search parameters
+   * @return	void
 	*/
 	function search(){
 		if(check_member()){
@@ -394,6 +403,7 @@ class booking extends CI_Controller{
 
 	/**
 	 * Cancel a booking
+    * @return	void
 	 */
 	function cancelBooking(){
 
@@ -417,6 +427,7 @@ class booking extends CI_Controller{
 
 	/**
 	 * Cancel a booking
+    * @return	void
 	 */
 	function cancelWaiting(){
 
@@ -438,6 +449,7 @@ class booking extends CI_Controller{
 
 	/**
 	 * User Past Bookings List
+    * @return	void
 	 */
 	public function mybookings(){
 
@@ -503,5 +515,8 @@ class booking extends CI_Controller{
 		}
 
 	}
-}
+}/* End of file booking.php */
+/* Location: ./application/controllers/booking.php */
 ?>
+
+

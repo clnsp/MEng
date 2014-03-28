@@ -105,12 +105,14 @@ Class classtype extends CI_Model{
         $data['class_end_time'] = $end_time;
 
         $this -> db -> insert($this->block_booking_tbl, $data);
-    //    echo $this->db->last_query();
-     //   echo $this->db->_error_message();
 
         return $this->db->insert_id();
     }
 
 
  }
+/* End of file classtype.php */  
+/* Location: ./application/models/classtype.php */ 
  ?>
+
+

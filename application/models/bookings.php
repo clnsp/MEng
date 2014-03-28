@@ -25,7 +25,6 @@ class Bookings extends CI_Model
 	 * Get booking by Id
 	 *
 	 * @param	int
-	 * @param	bool
 	 * @return	object
 	 */
 	function getBookingByID($booking_id){// was get_booking_by_id
@@ -41,7 +40,6 @@ class Bookings extends CI_Model
 	 * Get booking by Member
 	 *
 	 * @param	int
-	 * @param	bool
 	 * @return	object
 	 */
 	function getBookingByMember($member_id){ // was get_booking_by_member
@@ -53,6 +51,12 @@ class Bookings extends CI_Model
 		}
 	}
 	
+	/**
+	 * Get booking by MemberView
+	 *
+	 * @param	int
+	 * @return	object
+	 */
 	function getBookingByMemberView($member_id){
 		if(check_admin()){
 			$this -> db -> where('member_id', $member_id);
@@ -65,7 +69,8 @@ class Bookings extends CI_Model
 	/**
 	 * Get class bookings by Member
 	 *
-	 * @return	object
+	 * @param	int
+	 * @return	array
 	 */
 	function getClassBookingByMember($member_id){
 
@@ -83,7 +88,6 @@ class Bookings extends CI_Model
 	 * Get booking by Class Id
 	 *
 	 * @param	int
-	 * @param	bool
 	 * @return	object
 	 */
 	function getBookingByClassID($class_id){
@@ -98,7 +102,7 @@ class Bookings extends CI_Model
 	 * Add a user to a class
 	 * @param int
 	 * @param int 
-	 * @param bool
+	 * @return bool
 	 */
 	function addMember($class_booking_id, $member_id){ // was add_member
 
@@ -119,6 +123,7 @@ class Bookings extends CI_Model
 	 * Remove a user from a class booking
 	 * @param int
 	 * @param int
+	 * @return	void
 	 */
 	function removeMember($class_booking_id, $member_id){ // was remove_member
 
@@ -138,14 +143,12 @@ class Bookings extends CI_Model
 	 */
 	function countBookingAttendants($class_id){ 
 
-	//Removed check admin so i can reuse it for searching for classes
-	//if(check_admin()){
 		$this -> db -> select("member_id");
 		$this -> db -> from($this -> class_booking_tbl);
 		$this -> db -> where('class_id', $class_id);
 
 		return $this->db->count_all_results();
-	//	}
+
 	}
 	
 	/**
@@ -230,7 +233,7 @@ class Bookings extends CI_Model
  	* @param string - date
  	* @param string - time
  	* @param string - time
- 	* @return bool
+ 	* @return array
  	*/
  	function isMemberBookedOut($member_id, $date, $start_time, $end_time){
  		$this -> db -> select('*');
@@ -255,7 +258,13 @@ class Bookings extends CI_Model
  		return $query->result_array();
  	}
  	
-	// May need check if member
+
+	/**
+	 * Get all users in waiting pool
+	 *
+	 * @param	int
+	 * @return	array
+	 */
  	function getAllWaiting($member_id){
 
  		$this -> db -> select('*');
@@ -273,7 +282,13 @@ class Bookings extends CI_Model
 
  	}
 
-	// May need check if member
+
+	/**
+	 * Remove user from waiting pool
+	 *
+	 * @param	int
+	 * @return	array
+	 */
  	function removeWaiting($class_booking_id, $member_id){
 
  		$data = array(
@@ -285,3 +300,5 @@ class Bookings extends CI_Model
  	}
  	
  }
+/* End of file bookings.php */  
+/* Location: ./application/models/bookings.php */ 

@@ -4,15 +4,23 @@
 
        private $table_name = 'link_tbl';
 
-	    // Return all links
-       function get_all(){  
+	  
+	/*
+	* Function to get all links
+ 	* @return array
+ 	*/       
+	function get_all(){  
 
           $query = $this -> db ->get('link_tbl');
 
           return $query->result_array();  
       }
+  
 
-	    // Retrieve only descriptions of links            
+	/*
+	* Retrieve only descriptions of links   
+ 	* @return array
+ 	*/  		         
       function retrieve_descriptions(){  
         $this->db->select('description'); 
         $this -> db -> from($this -> table_name); 
@@ -22,7 +30,11 @@
         return $query->result_array();  
     }             
 
-	    // Retrieve only links
+	    
+	/*
+	* Retrieve only links
+ 	* @return array
+ 	*/  
     function retrieve_links(){  
         $this->db->select('link'); 
         $this -> db -> from($this -> table_name); 

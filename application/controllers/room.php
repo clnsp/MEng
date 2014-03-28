@@ -9,6 +9,7 @@ class Room extends CI_Controller{
 
 	/**
 	 * Get room names and ids
+	 * @return	void
 	 */
 	function getRoomIDs(){ 
 		

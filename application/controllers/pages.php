@@ -10,6 +10,7 @@
 
 		/**
 		 * Generic view for all pages within the /pages folder
+		 * @return	void
 		 */
 		public function view($page = 'home'){
 
@@ -34,6 +35,7 @@
 
 		/**
 		 * Get new updated body for up and coming classes
+		 * @return	void
 		 */
 		public function updateClasses($page = 'class-list')
 		{
@@ -48,6 +50,7 @@
 
 		/**
 		 * Login to system
+		 * @return	void
 		 */
 		public function login($page = 'login'){
 
@@ -61,6 +64,7 @@
 
 		 /**
 		 * Admin User Mangement
+		 * @return	void
 		 */
 		 public function users($page = 'users'){
 
@@ -93,6 +97,7 @@
 
 		/**
 		 * Admin calendar booking page
+		 * @return	void
 		 */
 		public function admin_calendar($page = 'admin-calendar'){
 
@@ -119,6 +124,7 @@
 
 		/**
 		 * Logout of system
+		 * @return	void
 		 */
 		public function logout(){
 			$this->session->unset_userdata('logged_in');
@@ -128,6 +134,7 @@
 
 		/**
 		 * 404 Error
+		 * @return	void
 		 */
 		public function error(){
 			$this->session->unset_userdata('logged_in');
@@ -137,6 +144,7 @@
 
 		/**
 		 * Room
+		 * @return	void
 		 */
 		public function room($id=1){
 			$data['room_id'] = $id;
@@ -147,6 +155,7 @@
 
 		/**
 		 * Rooms
+		 * @return	void
 		 */
 		public function rooms(){
 
@@ -164,6 +173,7 @@
 
 		/**
 		 * Links
+		 * @return	void
 		 */
 		public function links(){
 
@@ -178,6 +188,7 @@
 
 		/**
 		 * Footer
+		 * @return	void
 		 */
 		public function footer(){
 
@@ -193,6 +204,7 @@
 		
 		/**
 		 * Admin calendar booking page
+		 * @return	void
 		 */
 		public function manage($page = 'manage'){
 
@@ -212,6 +224,7 @@
 		
 		/*
 		* User booking page
+		* @return	void
         */
 		public function user_booking($page = 'user_booking'){
 
@@ -226,6 +239,7 @@
 
 		/**
 		 * Class List Page
+		 * @return	void
 		 */
 		public function sports($page = 'sports'){
 
@@ -243,6 +257,7 @@
 
 		/**
 		 * Class List Page
+		 * @return	void
 		 */
 		public function class_list($page = 'class_list'){
 
@@ -266,5 +281,7 @@
 
 	}
 
-
+/* End of file pages.php */
+/* Location: ./application/controllers/pages.php */
 	?>
+

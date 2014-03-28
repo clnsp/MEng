@@ -51,7 +51,8 @@ class Waiting extends CI_Model
 	}	
 
     /**
-    * Remove a class if it is a sport
+    * check if waiting list is full
+    * @param int
     * @param int
     * @return bool 
     */
@@ -76,6 +77,7 @@ class Waiting extends CI_Model
       /**
       * Is a user already in a waiting list
       * @param int
+      * @param int
       * @return bool 
       */
       function onWaitingList($member_id, $class_id) {
@@ -91,8 +93,9 @@ class Waiting extends CI_Model
 
 
         /**
-   * Cancel a booking
-   */
+  			 * Cancel a booking
+  			 * @return	void
+  			 */
         function cancelWaitingg(){
 
           if(check_member()){
@@ -114,3 +117,6 @@ class Waiting extends CI_Model
 
 
 }
+
+/* End of file waiting.php */  
+/* Location: ./application/models/waiting.php */ 

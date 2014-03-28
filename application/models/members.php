@@ -14,14 +14,12 @@ class Members extends CI_Model
     $this -> profile_table_name = $ci -> config -> item('db_table_prefix', 'tank_auth').$this -> profile_table_name;
   }
 
-  /**
+  /*
    * Get list of members
    *
-   * @param int
-   * @param bool
    * @return  object
    */
-  function getAllUsers() //was get_all_user()
+  function getAllUsers() 
   {
     $this->db->select($this->table_name.'.id,first_name,second_name,email,activated,banned,type,membership_type');  // CHANGE
     $this -> db -> from($this -> table_name);
@@ -33,10 +31,13 @@ class Members extends CI_Model
     return $query -> result();
   }
   
-  /*
-   * Fetch users details
+   /*
+   * Fetch User details
+   *
+   * @param int
+   * @return  object
    */
-  function getUserByID($id) //was fetchUser($id)
+  function getUserByID($id) 
   {
   	$this -> db -> select($this -> table_name.'.id, first_name, second_name, email, home_number, mobile_number, twitter, comms_preference, activated, banned, ban_reason, membership_type, start_date, end_date , type');
   	$this -> db -> from($this -> table_name);
@@ -65,14 +66,18 @@ class Members extends CI_Model
    return $query;
  }
  
- 
+   /*
+   * Delete a users account
+   * @return	void
+   */
  function deleteUserAccount($id){
    return $this->db->delete($this -> table_name, array('id' => $id)); 
  }
 
  /**
  * Get member type ids
- * @return array
+ * @param int
+ * @return object
  */
  function getMembershipTypes($id) {
    $sql = "SELECT  membership_type_tbl.id as id, membership_type, start_date, end_date FROM users, member_membership_tbl, membership_type_tbl WHERE users.id = ? AND member_membership_tbl.member_type_id = users.member_type_id AND membership_type_tbl.id = member_membership_tbl.membership_type_id  AND membership_type_tbl.id != users.membership_type_id AND end_date > CURDATE( )";
@@ -80,9 +85,13 @@ class Members extends CI_Model
    return $query->result();  
  }
  
- /**
+
+  /**
   * Create a new membership
-  * @return the new row's id
+  * @param string
+  * @param int - date
+  * @param int - date
+  * @return  int
   */
  function createNewMembership($name,$startDate,$endDate){
    $data = array('membership_type' => $name ,'start_date' => $startDate , 'end_date' => $endDate );
@@ -93,6 +102,7 @@ class Members extends CI_Model
 
  /**
  * Get member email
+ * @param int
  * @return string
  */
  function getMemberEmail($member_id) {
@@ -104,6 +114,10 @@ class Members extends CI_Model
 
  }
  
+  /**
+ * Get registrations
+ * @return object
+ */
  function getRegistrations(){
    $this->db->select($this->table_name.'.id,username,first_name,second_name,email,activated,banned,type,created'); 
    $this -> db -> from($this -> table_name);
@@ -117,9 +131,9 @@ class Members extends CI_Model
 
    /**
    * Update User Details
-   * @param number
+   * @param int
    * @param Array
-   * @param string
+   * @return string
    */
    function updateUser($id, $changes)
    {
@@ -129,9 +143,9 @@ class Members extends CI_Model
    }
    
   /**
-  * Get Specfic Value 
-  * @param number 
-  * @param row for value
+  * Get user column
+  * @param int
+  * @param int
   * @return object
   */
 
@@ -145,6 +159,13 @@ class Members extends CI_Model
    return $query->result();
  }
 
+  /*
+  * update attendance
+  * @param int
+  * @param int
+  * @param int
+  * @return	void
+  */
  function attendance($pid, $cid, $at)
  {
    $data= array('attended' => $at);
@@ -153,6 +174,10 @@ class Members extends CI_Model
    $this->db->update('class_booking_tbl', $data); 
  }
 
+ /*
+  * get the admin users
+  * @return object
+  */	
  function getAdminUsers()
  {
   $this -> db -> select($this -> table_name.'.id, first_name, second_name, email, home_number, mobile_number, twitter, comms_preference, activated, banned, ban_reason');
@@ -163,6 +188,11 @@ class Members extends CI_Model
   return $query->result();
 }
 
+ /**
+  * get the super admin users
+  * @param object
+  * @return	void
+  */
 function getSuperAdminUsers()
 {
   $this -> db -> select($this -> table_name.'.id, first_name, second_name, email, home_number, mobile_number, twitter, comms_preference, activated, banned, ban_reason');
@@ -174,3 +204,5 @@ function getSuperAdminUsers()
 }
 
 }
+/* End of file members.php */  
+/* Location: ./application/models/members.php */ 

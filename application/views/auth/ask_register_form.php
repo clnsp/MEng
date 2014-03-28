@@ -285,8 +285,8 @@ $form = array(
 
 		<div class="form-group">
 		<div class="col-sm-5">
-
-			<?php echo form_submit('register', 'Register', 'class="btn btn-primary"'); ?>
+		
+	<?php echo ("&nbsp");?>		<?php echo form_submit('register', 'Register', 'class="btn btn-primary"'); ?>
 
 		</div>
 	</div>
@@ -294,4 +294,5 @@ $form = array(
 
 	<?php echo form_close(); ?>
 	</div>
+</div>
 </div>

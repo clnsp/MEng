@@ -3,6 +3,7 @@ class Member extends CI_Controller{
 
 	/*
 	 * Get user details for editing
+	 * @return	void
 	 */
 	function getUserDetails(){
 		if(check_admin()){
@@ -17,6 +18,7 @@ class Member extends CI_Controller{
 	
 	/*
 	 * Update User details
+	 * @return	void
 	 */
 	function updateUserDetails(){
 		if(check_admin()){
@@ -44,6 +46,10 @@ class Member extends CI_Controller{
 		}
 	}
 
+	/*
+	 * Create user settings
+	 * @return	void
+	 */
 	function createUserChanges(){ // ISSET CHECKS 
 	if(check_member()){
 		$this->load->model('members');
@@ -74,6 +80,10 @@ class Member extends CI_Controller{
 		}
 	}
 	
+	/*
+	 * Create permission changes
+	 * @return	void
+	 */
 	function createPermissionChanges()
 	{
 		if(check_admin()){
@@ -109,6 +119,7 @@ class Member extends CI_Controller{
 	
 	/*
 	 * Get Memberships for User
+	 * @return	void
 	 */
 	function getMembershipOptions(){
 		if(check_admin()){
@@ -121,6 +132,7 @@ class Member extends CI_Controller{
 
 	/*
 	 * User Attend Class
+	 * @return	void
 	 */
 	function updateAttendance(){
 		if(check_admin()){
@@ -132,6 +144,7 @@ class Member extends CI_Controller{
 	}
 	/*
 	 * Get User Attendance Record
+	 * @return	void
 	 */
 	function getAttendance(){
 		if(check_admin()){
@@ -147,6 +160,7 @@ class Member extends CI_Controller{
 	
 	/*
 	 * Get User Bookings
+	 * @return	void
 	 */
 	
 	function getBookings($page = 'class_booking_view'){
@@ -174,6 +188,7 @@ class Member extends CI_Controller{
 			
 	/*
 	 * Update User Membership
+	 * @return	void
 	 */
 	function updateUserMembership(){
 		if(check_admin()){
@@ -237,7 +252,7 @@ class Member extends CI_Controller{
 	/*
 	 * Contact User
 	 * @param ids: Pass a single id or array of id for the message to be sent to
-	 * @parm messages: Pass a single message or array of messages 'email','sms','twitter' to send differnt messages using the different options
+	 * @param messages: Pass a single message or array of messages 'email','sms','twitter' to send differnt messages using the different options
 	 * $ids,$messages
 	 */
 	function contactUser() {
@@ -249,5 +264,7 @@ class Member extends CI_Controller{
 		}
 	}
 }
-
+/* End of file member.php */
+/* Location: ./application/controllers/member.php */
 ?>
+
