@@ -41,7 +41,7 @@ class Calendar extends CI_Controller{
         $this->load->model('members');
 
         if ($this->input->get('term')){
-          
+
           $this-> term = strtolower($this->input->get('term'));
 
           $matched = $this->members->getUserLike($this-> term)->result_array();
@@ -296,7 +296,18 @@ class Calendar extends CI_Controller{
 
     }
 
+      /**
+     * Module for managing the block classes
+     */
+      function manageBlockClasses(){
 
+       if (check_admin()) {
+        $this->load->view('pages/admin/manage-block-bookings');
+        return;
+      }
+
+
+    }
   }
 
 /*

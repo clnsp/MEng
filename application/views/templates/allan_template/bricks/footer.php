@@ -39,19 +39,23 @@ if(!$this->tank_auth->is_admin()){ ?>
      <script src="<?php echo base_url();?>assets/js/ds_registration.js"></script>
      <?php }?>
 
+     <?php if($page_title=="admin-calendar"){?>
      <script src="<?php echo base_url();?>assets/js/jquery-ui-autocomplete.custom.min.js"></script>
      <script src="<?php echo base_url();?>assets/cal/fullcalendar.min.js"></script>
      <script type="text/javascript" src="<?php echo base_url();?>assets/js/booking-calendar.js"></script>
+     <script type="text/javascript" src="<?php echo base_url();?>assets/js/manage.js"></script>
 
+     <?php }?>
      <!-- Admin Manage Scripts -->
 
      <script type="text/javascript" src="<?php echo base_url();?>assets/js/jquery.minicolors.js"></script>
      <script type="text/javascript" src="<?php echo base_url();?>assets/js/manage-permissions.js"></script>
-
      <script type="text/javascript" src="<?php echo base_url();?>assets/js/manageMemberships.js"></script>
      
-     <!-- Patrick Test Scripts -->
+     <!-- Patrick Test Scripts 
      <script type="text/javascript" src="<?php echo base_url();?>assets/js/bootstrap-timepicker.js"></script>
+     -->
+     <script src="<?php echo base_url();?>assets/datatab/js/jquery.dataTables.min.js"></script>
      <script src="<?php echo base_url();?>assets/datatab/js/jquery.dataTables.min.js"></script>
      <script src="<?php echo base_url();?>assets/datatab/js/DT_bootstrap.min.js"></script>
 
@@ -66,7 +70,9 @@ if(!$this->tank_auth->is_admin()){ ?>
      <script type="text/javascript" src="<?php echo base_url();?>assets/js/modernizr-custom.js"></script>
      <script type="text/javascript" src="<?php echo base_url();?>assets/js/detectizr.js"></script>
      
-     <script type="text/javascript" src="<?php echo base_url();?>assets/js/moment.js"></script>  <!-- Time/DatePicker -->
+     <script type="text/javascript" src="<?php echo base_url();?>assets/js/moment.js"></script>
+     <script src="<?php echo base_url();?>assets/js/datetimepicker.js"></script>
+
      <script type="text/javascript" src="<?php echo base_url();?>assets/js/bootstrap-override.js"></script>
      <script type="text/javascript" src="<?php echo base_url();?>assets/js/theme.js"></script>
      
