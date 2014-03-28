@@ -249,121 +249,129 @@ class Calendar extends CI_Controller{
      * @param int - class_id to add guest to
      */
     function addGuestToClass($class_id){
-      $this->load->model('tank_auth/users');
-      $this->load->model('members');
 
-      if(isset($class_id)){ 
+      if(check_admin()){
+        $this->load->model('tank_auth/users');
+        $this->load->model('members');
 
-        if ($this->input->post('guest_first_name')){
-          $first = strtolower($this->input->post('guest_first_name'));       
-        } else{
-          return;
-        }
+        if(isset($class_id)){ 
 
-        if ($this->input->post('guest_last_name')){
-          $last = strtolower($this->input->post('guest_last_name'));       
-        } else{
-          return;
-        }
+          if ($this->input->post('guest_first_name')){
+            $first = strtolower($this->input->post('guest_first_name'));       
+          } else{
+            echo "Please supply first name";
+            return;
+          }
 
-        if ($this->input->post('guest_email')){
-          $email = strtolower($this->input->post('guest_email'));       
-        } 
-        else{
-          return;
-        }
+          if ($this->input->post('guest_last_name')){
+            $last = strtolower($this->input->post('guest_last_name'));       
+          } else{
+            echo "Please supply a name";
+            return;
+          }
 
-        if ($this->input->post('guest_phone')){
-          $phone = strtolower($this->input->post('guest_phone'));       
-        } 
-        else{
-          return;
-        }
+          if ($this->input->post('guest_email')){
+            $email = strtolower($this->input->post('guest_email'));       
+          } 
+          else{
+            echo "Please supply an email address";
+            return;
+          }
 
-        $data = array(
-          'membership_type_id' => 2,
-          'first_name' => $first ,
-          'second_name' => $last,
-          'email'   => $email,
-          'home_number' =>$phone
-          );
+          if ($this->input->post('guest_phone')){
+            $phone = strtolower($this->input->post('guest_phone'));       
+          } 
+          else{
+            echo "Please supply contact";
+            return;
+          }
 
-        $newuserid = $this->users->create_user($data);
-        $newuserid = $newuserid['user_id'];
-        if(!is_null($newuserid)){
-          $this->_addMember($class_id, $newuserid);
-        }else{
-          echo "Error adding new user";
+          $data = array(
+            'membership_type_id' => 2,
+            'first_name' => $first ,
+            'second_name' => $last,
+            'email'   => $email,
+            'home_number' =>$phone
+            );
+
+          $newuserid = $this->users->create_user($data);
+          $newuserid = $newuserid['user_id'];
+          if(!is_null($newuserid)){
+            $this->_addMember($class_id, $newuserid);
+          }else{
+            echo "Error adding new user";
+          }
+
         }
 
       }
-
+      
     }
 
-   
+
     /**
     * Edit a class details
     */
     function editEvent(){
-    
+
       if(isSuperAdmin()){
-      
+
         if(isset($_POST['class_id']) && isset($_POST['date']) && isset($_POST['start']) && isset($_POST['end'])){
 
-            $this->load->Helper('comms');
+          $this->load->Helper('comms');
 
-            $start_date = new DateTime($_POST['date']. " " . $_POST['start']);
-            $end_date = new DateTime($_POST['date']. " " . $_POST['end']);
-            
+          $start_date = new DateTime($_POST['date']. " " . $_POST['start']);
+          $end_date = new DateTime($_POST['date']. " " . $_POST['end']);
 
-            if($start_date > $end_date){
-                echo "Start time cannot be grater than end time.";
-                return;
-            }
 
-            if($start_date < new DateTime){
-                echo "Start time cannot be in the past";
-                return;
-            }
-            
-            $classDetails = $this->classes->getClassInformation($_POST['class_id']);
-
-            $data = array(
-                'class_start_date' => $start_date->format("Y-m-d H:i:s"),
-                'class_end_date'    => $end_date->format("Y-m-d H:i:s")
-                );
-                
-                
-            if($this->classes->isRoomBookedOut($classDetails['room_id'], $start_date->format("Y-m-d"), $start_date->format("Y-m-d"), $start_date->format("H:i:s"), $end_date->format("H:i:s"), $_POST['class_id'])){
-                echo "There is a room overlap";
-                return;
-            }
-
-            
-
-            $this->classes->updateClass($_POST['class_id'], $data);
-            if($this->db->_error_number()==0){
-                echo "Saved";
-
-                $users = $this->bookings->getBookingAttendantsIDs($_POST['class_id']);
-                $emails = array();
-                foreach ($users as $key => $user) {
-                    array_push($emails, $user['member_id']);
-                }
-
-                
-                $msg = 'The following class start time has changed: ' . $classDetails['class_type'] . ' on '. $start_date->format("jS F Y") . ' starting at '. $start_date->format("H:i") . ' in the following room: '. $classDetails['room'];
-
-                contact_user($emails, $msg);
-            }else{
-                echo "An error occurred";
-            }
+          if($start_date > $end_date){
+            echo "Start time cannot be grater than end time.";
             return;
+          }
+
+          if($start_date < new DateTime){
+            echo "Start time cannot be in the past";
+            return;
+          }
+
+          $classDetails = $this->classes->getClassInformation($_POST['class_id']);
+
+          $data = array(
+            'class_start_date' => $start_date->format("Y-m-d H:i:s"),
+            'class_end_date'    => $end_date->format("Y-m-d H:i:s")
+            );
+
+
+          if($this->classes->isRoomBookedOut($classDetails['room_id'], $start_date->format("Y-m-d"), $start_date->format("Y-m-d"), $start_date->format("H:i:s"), $end_date->format("H:i:s"), $_POST['class_id'])){
+            echo "There is a room overlap";
+            return;
+          }
+
+
+
+          $this->classes->updateClass($_POST['class_id'], $data);
+          if($this->db->_error_number()==0){
+            echo "Saved";
+
+            $users = $this->bookings->getBookingAttendantsIDs($_POST['class_id']);
+            $emails = array();
+            foreach ($users as $key => $user) {
+              array_push($emails, $user['member_id']);
+            }
+
+
+            $msg = 'The following class start time has changed: ' . $classDetails['class_type'] . ' on '. $start_date->format("jS F Y") . ' starting at '. $start_date->format("H:i") . ' in the following room: '. $classDetails['room'];
+
+            contact_user($emails, $msg);
+          }else{
+            echo "An error occurred";
+          }
+          return;
         }
         else{
-            echo "Missing parameters";
+          echo "Missing parameters";
         }
-       }
+      }
     }
 
       /**

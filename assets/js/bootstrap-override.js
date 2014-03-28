@@ -200,13 +200,7 @@
  	
 
 
- 	var update = function () {
- 		$.event.trigger({
- 			type: "classtypesRefreshed",
- 			message: "Hello World!",
- 			time: new Date()
- 		});
- 		
+ 	var update = function () {		
  		$('[type=dropdown].sportsclasstype').html(sportsdrop.html());
  		$('[type=dropdown].classtype').html(drop.html());
  		$('table.classtype tbody').html(table.html()).trigger('footable_redraw');

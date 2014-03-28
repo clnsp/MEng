@@ -167,7 +167,7 @@ class class_type extends CI_Controller
 			if ($this->input->post('class_type_id') && $this->input->post('max_attendance') && $this->input->post('class_start_date') && $this->input->post('class_end_date')  && $this->input->post('room_id') && $this->input->post('repeat_dates')){
 
 				/* validate the date formats*/
-				if($this->_validDate($this->input->post('class_start_date') && $this->_validDate($this->input->post('class_end_date')){
+				if($this->_validDate($this->input->post('class_start_date')) && $this->_validDate($this->input->post('class_end_date'))){
 					$start =  new DateTime($this->input->post('class_start_date'));
 					$end =  new DateTime($this->input->post('class_end_date'));
 				} else {
@@ -187,14 +187,14 @@ class class_type extends CI_Controller
 				}
 
 				/* check the class type id exists */
-				if(!$this->classes->validClassType($this->input->post('class_type_id')){
+				if(!$this->classes->validClassType($this->input->post('class_type_id'))){
 					echo("Invalid class type");
 					return;
 				}
 
 				/* check the room capacity isn't exceeded */
 				$this->load->model('rooms');
-				if($this->rooms->exceedsClassTypeCapacity($this->input->post('room_id'), $this->input->post('max_attendance')){
+				if($this->rooms->exceedsClassTypeCapacity($this->input->post('room_id'), $this->input->post('max_attendance'))){
 					echo("Exceeds class capacity");
 					return;
 				}

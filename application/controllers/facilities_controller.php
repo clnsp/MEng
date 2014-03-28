@@ -76,7 +76,7 @@ class facilities_controller extends CI_Controller {
     */
     function _singleDivision(){
 
-        if($this->rooms->isDivisible($this->input->post('room_id')){
+        if($this->rooms->isDivisible($this->input->post('room_id'))){
             $this->rooms->removeDivisibleRoom($this->input->post('room_id'));
             echo "Room restored to a <b>non divisible</b> room.";
         }else{
