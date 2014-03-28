@@ -432,13 +432,13 @@ class Classes extends CI_Model{
 		}
         $this -> db -> where("DATE(class_start_date) >= '$start_date'");
         $this -> db -> where("DATE(class_end_date) <= '$end_date'");
-        $this->db->where("((TIME(class_start_date) <= '$start_time' AND TIME(class_end_date) > '$start_time') OR (TIME(class_end_date) < '$end_time' AND TIME(class_start_date) >= '$end_time'))");
+        $this->db->where("((TIME(class_start_date) <= '$start_time' AND TIME(class_end_date) > '$start_time') OR (TIME(class_end_date) < '$end_time' AND TIME(class_start_date) >= '$end_time') OR (TIME(class_end_date) < '$end_time' AND TIME(class_start_date) >= '$start_time'))");
         $this->db->where('room_id', $room_id);
         $this->db->from($this->class_tbl);
 
         $query = $this -> db -> get();
         
-//        echo$this->db->last_query();
+        echo$this->db->last_query();
        
         return $query->num_rows() > 0;
     }
