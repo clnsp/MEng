@@ -115,6 +115,17 @@ if ( ! function_exists('parse_temp')){
 		}
 		return null;
 	}
+
+	function notifyWaiting($cid,$message){ // NOTIFY WAITING LIST
+		$ci = get_instance();
+		if($this->tank_auth->is_member()){
+			$ci->load->model('waiting');
+			$ci->load->helper('comms');
+			if(waitingListCount>0){
+				contact_user($this->waiting->getUsers($cid), $message);
+			}
+		}
+	}
 	
 	/* 
 	 *

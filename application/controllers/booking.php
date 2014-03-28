@@ -413,10 +413,7 @@ class booking extends CI_Controller{
 	 * Cancel a booking
 	 */
 	function cancelBooking(){
-
 		if(check_member()){
-
-
 			if($this->input->post('class_booking_id')){
 
 				$class_booking_id = $this->input->post('class_booking_id');
@@ -425,7 +422,8 @@ class booking extends CI_Controller{
 
 				$this->bookings->removeMember($class_booking_id, $member_id);
 				$this->classes->removeSportClass($class_booking_id); //if class is a sport need to remove the class as well
-
+				$this->load->helper('temp');
+				notifyWaiting($class_booking_id, "TEST");
 			}
 			$this->mybookings();
 		}

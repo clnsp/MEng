@@ -153,7 +153,7 @@
 		},
 		// SEND MESSAGE
 		sendMessage = function () {  
-			$.post($baseUrl.member+$functionUrl.contactUser, { id: $member.id, message: $message.val() }, function (data) {        });
+			$.post($baseUrl.member+$functionUrl.contactUser, { id: $member.id, message: $message.val() }, function (data) {  $('#SubMemberDetails').modal('hide');  alert("Message Sent!!");   });
 		},
 		// Start Point
 		$selector.on("click", function () { generateUI(); });

@@ -33,9 +33,9 @@ class Waiting extends CI_Model
 
      	$query = $this -> db -> get();
      	return $query->result_array();
-
-
      }
+
+   
 
 	/**
 	* Add a member to the waiting list
@@ -90,6 +90,17 @@ class Waiting extends CI_Model
       }
 
 
+      function waitingListCount( $class_id) {
+	$this->db->select('id');      	
+      	$this->db->where('class_id', $class_id);
+      	$this->db->from($this -> waiting_pool_tbl);
+      	$query = $this -> db -> get();
+      	
+      	return $this->db->count_all_results();  
+      }
+
+
+
         /**
    * Cancel a booking
    */
@@ -109,8 +120,14 @@ class Waiting extends CI_Model
       }
       $this->mybookings();
     }
-
   }
 
-
+function getUsers($class_id){
+	 if(check_member()){
+	     	$this->db->where('class_id', $class_id);
+      		$this->db->from($this -> waiting_pool_tbl);
+      		$query = $this -> db -> get();
+     		return $query->result_array();
+	}
+}
 }

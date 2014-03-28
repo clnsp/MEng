@@ -141,6 +141,8 @@ class Calendar extends CI_Controller{
             
           }
         }
+	$this->load->helper('temp');
+	notifyWaiting($class_booking_id, "TEST");
       }
     }
 
@@ -218,7 +220,9 @@ class Calendar extends CI_Controller{
       $params = getQueryStringParams();
 
       if((isset($params['start']) && isset($params['end']))){
-
+	$this->classes->removeSportClass($class_booking_id); //if class is a sport need to remove the class as well
+				$this->load->helper('temp');
+				notifyWaiting($class_booking_id, "T
         $s = gmdate("Y-m-d H:i:s", $params['start']);
         $e = gmdate("Y-m-d H:i:s", $params['end']);
 
