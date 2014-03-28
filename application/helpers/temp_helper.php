@@ -106,7 +106,7 @@ if ( ! function_exists('parse_temp')){
 
 			$vals['rooms'] = $ci->Rooms->getRooms();
 			$vals['categories'] = $ci->Categories->getCategories();
-			$vals['classes'] = $ci->classes->getClassesWithRoomBetween($s, $e, 'allrooms');
+			$vals['classes'] = $ci->classes->getClassesWithRoomBetween($s, $e, 'allrooms',false);
 
 			foreach ($vals['classes'] as $class){
 				$class->attendees = $ci->Bookings->getBookingAttendantsNames($class->class_id);

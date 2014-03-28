@@ -11,7 +11,7 @@ if(!$this->tank_auth->is_admin()){ ?>
 <?php }; ?>
 
       <!-- Bootstrap core JavaScript
-     ================================================== -->
+      ================================================== -->
      <!-- Placed at the end of the document so the pages load faster 
      <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>-->
      <!--     <script src="<?php echo base_url();?>assets/js/jquery-1.7.2.js"></script-->
@@ -19,7 +19,6 @@ if(!$this->tank_auth->is_admin()){ ?>
 
      <!-- Latest compiled and minified JavaScript -->
      <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
-     <script src="<?php echo base_url();?>assets/js/bootstrap.submodal.js"></script>
 
      <?php if($page_title=="home"){ ?>
      <script src="<?php echo base_url();?>assets/js/up-coming.js"></script>
@@ -49,8 +48,8 @@ if(!$this->tank_auth->is_admin()){ ?>
      <script type="text/javascript" src="<?php echo base_url();?>assets/js/jquery.minicolors.js"></script>
      <script type="text/javascript" src="<?php echo base_url();?>assets/js/manage-permissions.js"></script>
 
-  <script type="text/javascript" src="<?php echo base_url();?>assets/js/manageMemberships.js"></script>
-   
+     <script type="text/javascript" src="<?php echo base_url();?>assets/js/manageMemberships.js"></script>
+     
      <!-- Patrick Test Scripts -->
      <script type="text/javascript" src="<?php echo base_url();?>assets/js/bootstrap-timepicker.js"></script>
      <script src="<?php echo base_url();?>assets/datatab/js/jquery.dataTables.min.js"></script>
@@ -79,7 +78,7 @@ if(!$this->tank_auth->is_admin()){ ?>
      <?php } ?>
      
      <?php if($page_title=="user_booking" || $page_title=="bookings"){ ?>
-      <script type="text/javascript" src="<?php echo base_url();?>assets/js/user-booking.js"></script>
+     <script type="text/javascript" src="<?php echo base_url();?>assets/js/user-booking.js"></script>
      <?php } ?>
 
      
@@ -88,16 +87,4 @@ if(!$this->tank_auth->is_admin()){ ?>
      <script type="text/javascript" src="<?php echo base_url();?>assets/js/manage-sports-hall.js"></script>
      <?php } ?>
 
-     <script> 
-      // using JQUERY's ready method to know when all dom elements are rendered
-      $( document ).ready(function () {
-
-        $("#page-body").html(data.content).addClass(data.title);
-      }
-
-
-
-
-      </script>
-
-    </body></html>
+ </body></html>

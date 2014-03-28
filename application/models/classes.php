@@ -29,9 +29,10 @@ class Classes extends CI_Model{
     * @param date
     * @return object
     */
-    function getClassessBetween($start, $end){ //getBookingsBetween used to be
+    function getClassessBetween($start, $end ,$inc=true){ //getBookingsBetween used to be
 
-        $this -> db -> where('start BETWEEN "' . $start . '" AND "' . $end . '"');
+        if($inc){ $this -> db -> where('start BETWEEN "' . $start . '" AND "' . $end . '"'); }
+	else { $this -> db -> where('start BETWEEN "' . $start . '" AND "' . $end . '" AND cancelled=0'); } // WONT SHOW CANCELLED CLASSES
         $this -> db -> order_by("start asc, title asc");
         $query = $this->db->get($this -> class_info_view);
 
@@ -43,21 +44,21 @@ class Classes extends CI_Model{
     /*
     * Fetch a rooms specific classes
     */
-    function getClassesWithRoomBetween($start, $end, $room){
+    function getClassesWithRoomBetween($start, $end, $room,$inc=true){
 
         if($room != 'allrooms'){
-            $this -> db -> where('room_id',$room, ' start BETWEEN "' . $start . '" AND "' . $end . '"');
+	if($inc){ $this -> db -> where('room_id',$room, ' start BETWEEN "' . $start . '" AND "' . $end . '"'); }
+	else{ $this -> db -> where('room_id',$room, ' start BETWEEN "' . $start . '" AND "' . $end . '" AND cancelled=0'); } // WONT SHOW CANCELLED CLASSES
             $this -> db -> order_by("start asc, title asc");
             $query = $this->db->get($this -> class_info_view);
 
         }else{
-            return $this->getClassessBetween($start, $end);
+            return $this->getClassessBetween($start, $end,$inc);
         }
 
 
         return $query->result();
     }
-
 
     /**
     * Get the maximum attendance for a specific class
