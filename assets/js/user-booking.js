@@ -9,7 +9,7 @@ $( document ).ready(function() {
 		var table, tbody, $this, form;
 		
 		$('#booking').on('submit', form, function(e) {
-			performSearch(true);
+			performSearch($('html').hasClass('mobile'));
 		});
 		
 		$('#tabs li').click(function(){
@@ -48,14 +48,15 @@ $( document ).ready(function() {
 		
 		performSearch = function(scrollto) {
 		
-			var footable = table.data('footable');
+			//var footable = table.data('footable');
 	
 			$.post(siteUrl + "/booking/search", form.serialize(), function( data ) {
 				tbody.html(data);
-				table.trigger('footable_redraw');
-				table.trigger('footable_resize');
+			//	table.trigger('footable_redraw');
 				
-				table.footable().trigger('footable_redraw');
+				table.trigger('footable_redraw');
+								table.trigger('footable_resize');
+
 				if(scrollto){
 					$('html, body').animate({
 						scrollTop: table.offset().top
