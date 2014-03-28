@@ -542,9 +542,8 @@ $(function(){
       if(sport){
         assignDivPanel.divisions.html(ps.getDivisions(sport));
     }
-})
-
-    ;
+});
+    
 
     classtypes.refresh();
     rooms.refresh();
