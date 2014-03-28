@@ -52,7 +52,7 @@ Class Dbviews extends CI_Model{
   	return $query -> result();  
   }
   
-  /*
+  /**
 	* Get the arrendance of a class
 	* @param int
  	* @return array
@@ -65,7 +65,7 @@ Class Dbviews extends CI_Model{
   	return $query -> result();
   }
   
-  /*
+  /**
 	* Get the attendance of a user
 	* @param int
  	* @return array
@@ -78,7 +78,7 @@ Class Dbviews extends CI_Model{
   	return $query -> result();
   }
   
-  /*
+  /**
 	* Get last attendance of a user
 	* @param int
  	* @return array
@@ -93,7 +93,7 @@ Class Dbviews extends CI_Model{
   	return $query -> result();
   }
   
-  /*
+  /**
 	* get the class non attendance
 	* @param int
  	* @return array
@@ -107,7 +107,7 @@ Class Dbviews extends CI_Model{
   }
   
   
-  /*
+  /**
 	* Get the user non attendance
 	* @param int
  	* @return array

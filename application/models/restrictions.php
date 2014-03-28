@@ -43,7 +43,7 @@ Class Restrictions extends CI_Model{
 	} 
 
 
-   * Add new block restriction
+   /* Add new block restriction
    * @param int
    * @param int
    * @param int
@@ -62,7 +62,7 @@ Class Restrictions extends CI_Model{
 	} 
 
 
-   * Remove block restriction
+   /* Remove block restriction
    * @param int
    * @param int
    * @param int

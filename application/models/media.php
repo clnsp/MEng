@@ -4,7 +4,11 @@
 
        private $table_name = 'social_media';
 
-	    // Return all social media information
+	     
+	        /*
+		* Return all social media information
+ 		* @return array
+ 		*/  
        function get_all(){  
 
           $query = $this -> db ->get('social_media');

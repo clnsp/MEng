@@ -4,7 +4,7 @@
 
      private $table_name = 'contact_info';
 
- 		/**
+     /**
      * Return all contact information
      * @return array
      */

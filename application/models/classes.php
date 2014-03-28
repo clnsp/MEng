@@ -41,7 +41,7 @@ class Classes extends CI_Model{
     }
 
 
-    /*
+    /**
     * Fetch a rooms specific classes between two set dates
     * @param int -date
     * @param int -date
