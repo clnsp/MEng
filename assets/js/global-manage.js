@@ -81,7 +81,7 @@ var editClassTypeModal = (function(){
 			.done(function( data ) {
 				alert(data);
 				modal.modal('hide');
-				refresh();
+				classtypes.refresh();
 			});
 
 		}
