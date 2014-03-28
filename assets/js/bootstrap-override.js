@@ -466,7 +466,7 @@
 
  }
 
- if(Modernizr.input.placeholder){
+ if(!Modernizr.input.placeholder){
  	/*https://gist.github.com/hagenburger/379601*/
  	$('[placeholder]').focus(function() {
  		var input = $(this);
