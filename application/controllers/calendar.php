@@ -23,13 +23,13 @@ class Calendar extends CI_Controller{
   * @return int
   */
   function _my_sort($a,$b){      
-      $leva = levenshtein($this-> term, $a['name']);
-      $levb = levenshtein($this-> term, $b['name']);
-  
-      if ($leva==$levb) return 0;
-  
-      return ($leva<$levb)?-1:1;
-    }
+    $leva = levenshtein($this-> term, $a['name']);
+    $levb = levenshtein($this-> term, $b['name']);
+    
+    if ($leva==$levb) return 0;
+    
+    return ($leva<$levb)?-1:1;
+  }
 
 
 
@@ -41,11 +41,11 @@ class Calendar extends CI_Controller{
         $this->load->model('members');
 
         if ($this->input->get('term')){
-        
+          
           $this-> term = strtolower($this->input->get('term'));
 
           $matched = $this->members->getUserLike($this-> term)->result_array();
-                    
+          
           usort($matched,array($this,"_my_sort")); 
 
           foreach ($matched as $match){
@@ -55,10 +55,10 @@ class Calendar extends CI_Controller{
                     $row_set[] = $new_row; //build an array
                   }
                 echo json_encode($row_set); //format the array into json data
-                }
               }
-
             }
+
+          }
 
 
 
