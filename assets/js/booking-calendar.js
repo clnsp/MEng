@@ -4,8 +4,8 @@ if($('#booking').is('.admin-calendar')){
   function exists(variable){
    if(typeof variable == 'undefined' || variable == null){
     return false;
-}
-return true;
+  }
+  return true;
 }
 
 var eventModal,  eventMembers, eventid, activeEvent, addGuestModal, eventSpacesTaken;
@@ -26,9 +26,9 @@ $('#booking').on('click', '#event-cancel-class-btn, #event-uncancel-class-btn', 
       callback: function() {
 
       }
-  },
+    },
 
-  success: {
+    success: {
       label: "Confirm",
       className: "btn-danger",
       callback: function() {
@@ -43,15 +43,15 @@ $('#booking').on('click', '#event-cancel-class-btn, #event-uncancel-class-btn', 
 
             $('#calendar').fullCalendar( 'refetchEvents' );
             eventModal.modal('hide');
-        },
-        error: function(){
+          },
+          error: function(){
             alert("Error Occurred");
-        },
-    });
+          },
+        });
+      }
     }
-}
 
-},
+  },
 });
 });
 
@@ -111,8 +111,8 @@ $('#booking').on('click', '#event-cancel-class-btn, #event-uncancel-class-btn', 
    function disable_buttons(past) {
     eventModal.find('.btn.disable-past').each(function(){
       $(this).prop('disabled', past);
-  });
-}
+    });
+  }
 
 /**
  * Disable/Enable the add member functionality
@@ -135,56 +135,46 @@ $('#booking').on('click', '#event-cancel-class-btn, #event-uncancel-class-btn', 
 
     var EditBlockClasses = new function() {
 
-        var btn = $('#edit-block-classes');
+      var btn = $('#edit-block-classes');
 
-        btn.click(function() {
+      btn.click(function() {
 
-          var ret = $.post( siteUrl + "calendar/manageBlockClasses", function( data ) {
-            bootbox.dialog({
-                message:  '<div class="col-sm-12"><div id="date-selector"></div></div>'+ data,
-                title: "Edit Block Bookings",
-                buttons: {
-                    success: {
-                        label: "Success!",
-                        className: "btn-success",
-                        callback: function() {
-                            Example.show("great success");
-                        }
-                    },
-                    danger: {
-                        label: "Danger!",
-                        className: "btn-danger",
-                        callback: function() {
-                            Example.show("uh oh, look out!");
-                        }
-                    },
-                    main: {
-                        label: "Click ME!",
-                        className: "btn-primary",
-                        callback: function() {
-                            Example.show("Primary button");
-                        }
-                    }
+        var ret = $.post( siteUrl + "calendar/manageBlockClasses", function( data ) {
+          bootbox.dialog({
+            message:  '<div class="col-sm-12"><div id="date-selector"></div></div>'+ data,
+            title: "Edit Block Bookings",
+            buttons: {
+              success: {
+                label: "Success!",
+                className: "btn-success",
+                callback: function() {
+                  Example.show("great success");
                 }
+              },
+              danger: {
+                label: "Danger!",
+                className: "btn-danger",
+                callback: function() {
+                  Example.show("uh oh, look out!");
+                }
+              },
+              main: {
+                label: "Click ME!",
+                className: "btn-primary",
+                callback: function() {
+                  Example.show("Primary button");
+                }
+              }
+            }
 
-            });
+          });
 
-var to = siteUrl.lastIndexOf('/') -9;
-x =  siteUrl.substring(0,to);
+          var to = siteUrl.lastIndexOf('/') -9;
+          x =  siteUrl.substring(0,to);
 
-$.getScript(x+"/assets/js/manage.js", function( data, textStatus, jqxhr ) {
-        console.log( data ); // Data returned
-        console.log( textStatus ); // Success
-        console.log( jqxhr.status ); // 200
-        console.log( "Load was performed." );
-    });
+          $.getScript(x+"/assets/js/manage.js", function( data, textStatus, jqxhr ) { });
 
-});
-
-
-
-
-
+        });
 });
 
 
@@ -205,7 +195,7 @@ var getDropCategories = function() {
   $('#category-dropdown li.selected a').each(function(){
    var $this = $(this);
    addCategory($this.data('category-id') + "");
-});
+ });
 
 }
 
@@ -225,17 +215,17 @@ $('#body-wrapper').on('click',  '#category-dropdown .dropdown-menu.multi-select 
    getDropCategories();
    $('#calendar').fullCalendar('rerenderEvents');
 
-}
+ }
 }).on('click', '.dropdown-menu.multi-select button.toggle.on', function(e) {
   $(this).toggleClass('on off');
   $(this).parents('ul.dropdown-menu.multi-select').find('li:not(.selected)').each(function(){
    $(this).click();
-})
+ })
 }).on('click', '.dropdown-menu.multi-select button.toggle.off', function(e) {
   $(this).toggleClass('on off');
   $(this).parents('ul.dropdown-menu.multi-select').find('li.selected').each(function(){
    $(this).click();
-})
+ })
 });
 
 
@@ -272,9 +262,9 @@ var ModalHeader = new function(){
     eventColor = eventModal.find('#eventColor');
     eventLocation = eventModal.find('#event-location');
     header = eventModal.find('.modal-header');
-}
+  }
 
-this.render = function(event){
+  this.render = function(event){
     eventTitle.text(event.title);
     render_date(event.start, event.end, event.allDay);
     render_color(event.color);
@@ -282,66 +272,66 @@ this.render = function(event){
     render_attendance_numbers(event.attending, event.max_attendance);
     editModalBtn.removeClass('active');
 
-}
+  }
 
-var render_attendance_numbers = function(attending, max_attendance) {
+  var render_attendance_numbers = function(attending, max_attendance) {
     if(exists(max_attendance)){
       eventSpacesMax.text(max_attendance);
-  }
+    }
 
-  if(exists(attending)){
+    if(exists(attending)){
       eventSpacesTaken.text(attending);
+    }
+
   }
 
-}
-
-var render_date = function(start, end, allDay) {
+  var render_date = function(start, end, allDay) {
     var s_date, e_date, s_time, e_time;
 
     if(exists(start)){
       s_date = $.fullCalendar.formatDate(start, "dddd d MMMM yyyy");
       s_time = $('<span class="editable time start">').text($.fullCalendar.formatDate(start, "HH:mm"));
-  }
+    }
 
-  if(exists(end)){
+    if(exists(end)){
       e_date = $.fullCalendar.formatDate(end, "dddd d MMMM yyyy");
       e_time = $('<span class="editable time end">').text($.fullCalendar.formatDate(end, "HH:mm"));
-  }
+    }
 
-  /*all day no time*/
-  if(exists(allDay) && allDay){
+    /*all day no time*/
+    if(exists(allDay) && allDay){
       eventdate1.append($('<span class="date">').text(s_date));
       eventdate2.text("All Day Event");
-  }else{
+    }else{
       /* within one day */
       if(s_date == e_date){
         eventdate1.append($('<span class="date">').text(s_date));
         eventdate2.append(s_time).append(' to ').append(e_time);
-    }
-    /*split over multiple days*/
-    else{
+      }
+      /*split over multiple days*/
+      else{
         eventdate1.append(s_time).append(' ').append(e_time).append(' to');
         eventdate2.append(e_time).append(' ').append(e_date);
+      }
     }
-}
-}
+  }
 
 
-var render_room = function (room_id, room) {
+  var render_room = function (room_id, room) {
     if(exists(room_id)){
       eventLocation.html('<a href="room/' + room_id + '">' + room + '</a>');
-  }else{
+    }else{
       eventLocation.text(calEvent.room);
+    }
   }
-}
 
 
-var render_color = function(color) {
+  var render_color = function(color) {
     eventColor.css( "color", color );
-}
+  }
 
 
-this.teardown = function(){
+  this.teardown = function(){
     eventTitle.text('');
     eventdate1.text(''); 
     eventdate2.text('');
@@ -349,68 +339,75 @@ this.teardown = function(){
     eventSpacesTaken.text('[0]'); 
     eventColor.css('color', '#000'); 
     eventLocation.text(''); 
-}
+  }
 
 
-init();
+  init();
 
-var sendForm = function(){
+  var sendForm = function(){
     $.post( siteUrl + "calendar/editEvent", { 
       class_id: eventid,
       start: eventdate2.find('.start').val(),
       end: eventdate2.find('.end').val(),
       date: eventdate1.find('.date').html()
-  },
-  function(data) {
+    },
+    function(data) {
       alert(data);
       eventModal.modal('hide');
       $('#calendar').fullCalendar('refetchEvents');
 
-  });
-}
+    });
+  }
 
-var replaceSpan = function(span){
+  var replaceSpan = function(span){
     var contents = span.html();
     var classes = span.attr('class');
     var input = $('<input class="form-control input-sm editable" data-previous="' + contents +'" type="text" value=\"' + contents + '" />');
     
     if(span.hasClass('time')){
-      input.timepicker({
-        minuteStep: 15,
-        showSeconds: false,
-        showMeridian: false,
-    });
-  }
-  span.replaceWithAndReturnNew(input.addClass(classes));
+      input.datetimepicker({
+        pickDate: false
+      });
+      // input.timepicker({
+      //   minuteStep: 15,
+      //   showSeconds: false,
+      //   showMeridian: false,
+      // });
+
+i
+
+
+}
+span.replaceWithAndReturnNew(input.addClass(classes));
 
 }
 
 var replaceInput = function(input){
-    var contents = input.val();
-    var classes = input.attr('class');
-    var span = $('<span>').html(contents);
+  var contents = input.val();
+  var classes = input.attr('class');
+  var span = $('<span>').html(contents);
 
-    input.replaceWithAndReturnNew(span.clone().addClass(classes).toggleClass('input-sm form-control'));
+  input.replaceWithAndReturnNew(span.clone().addClass(classes).toggleClass('input-sm form-control'));
 }
 
 editModalBtn.click(function(){
 
-    if($(this).hasClass('active')){
+  if($(this).hasClass('active')){
 
-      bootbox.confirm("Would you like to save these changes?", function(result) {
-        if(result){
-          sendForm();
+    bootbox.confirm("Would you like to save these changes?", function(result) {
+      if(result){
+        sendForm();
 
       }else{
-          header.find('input').each(function(){
-            replaceInput($(this));
+        header.find('input').each(function(){
+          replaceInput($(this));
         });
       }
-  }); 
+    }); 
 
   }else{
-     header.find('span.editable').each(function(){
-      replaceSpan($(this));
+   header.find('span.editable').each(function(){
+    replaceSpan($(this));
   });
  }
 
@@ -438,14 +435,14 @@ editModalBtn.click(function(){
         if(disabled){
           disable_remove_button(true);
 
-      }
-  });
-  }else{
+        }
+      });
+    }else{
       eventMembers.append('<li class="list-group-item"> No attendants</li>');
       disable_remove_button(true);
-  }
+    }
 
-});
+  });
 }
 
 /* Handler for the event button */
@@ -469,12 +466,12 @@ $('#calendar').fullCalendar({
 
 	/* cal col headings */
 	columnFormat: {
-        month: 'dddd', 
-        week: 'ddd d', 
-        day: '' 
-    },
+    month: 'dddd', 
+    week: 'ddd d', 
+    day: '' 
+  },
 
-    titleFormat: {
+  titleFormat: {
     	month: 'MMMM yyyy',                             // September 2009
     	week: "MMM d[ yyyy]{ -[ MMM] d, yyyy}", // Sep 7 - 13 2009
     	day: 'dddd d MMMM yyyy'                  // Tuesday, Sep 8, 2009
@@ -496,42 +493,42 @@ $('#calendar').fullCalendar({
 
       if(calEvent.cancelled){
         eventModal.addClass('cancelled');
-    }else{
+      }else{
         eventModal.removeClass('cancelled');
+      }
+      render_cancel_button(calEvent.cancelled);
+      disable_cancel_button(calEvent.past);
+      disable_buttons(calEvent.past);
+
+      load_event_attendants(calEvent.past || calEvent.cancelled);
+      disable_add_member(calEvent.past || calEvent.cancelled);
+
+      /*setup form*/
+      eventModal.modal('show');
+    },
+
+    eventRender: function(event, element, view) {
+
+     if(event.end <  new Date()){
+      event.past = true;
+      element.css('opacity', '0.35');
     }
-    render_cancel_button(calEvent.cancelled);
-    disable_cancel_button(calEvent.past);
-    disable_buttons(calEvent.past);
+    else{
+      event.past = false;
+    }
+    event.cancelled = event.cancelled == true;
 
-    load_event_attendants(calEvent.past || calEvent.cancelled);
-    disable_add_member(calEvent.past || calEvent.cancelled);
-
-    /*setup form*/
-    eventModal.modal('show');
-},
-
-eventRender: function(event, element, view) {
-
- if(event.end <  new Date()){
-  event.past = true;
-  element.css('opacity', '0.35');
-}
-else{
-  event.past = false;
-}
-event.cancelled = event.cancelled == true;
-
-if(event.cancelled){
-  element.addClass('cancelled');
-}
+    if(event.cancelled){
+      element.addClass('cancelled');
+    }
 
 
-if($.inArray(event.category_id, CategoryDrop.getSelected()) == -1)
- element.addClass('hidden');
-},
+    if($.inArray(event.category_id, CategoryDrop.getSelected()) == -1)
+     element.addClass('hidden');
+ },
 
-eventSources: [
-{
+ eventSources: [
+ {
   url: 'calendar',
   startParam: 'start',
   endParam: 'end',
@@ -566,9 +563,9 @@ eventSources: [
 				}
 
 			},
-          windowResize: function(view) {
-            resizeCalendar();
-        }
+      windowResize: function(view) {
+        resizeCalendar();
+      }
 
     });
 
@@ -592,12 +589,12 @@ $('#calendar .fc-header .fc-header-center').before($('#rooms-dropdown').remove()
 
       $(this).siblings('.active').each(function(key, val){
         $(val).removeClass('active');
-    });
+      });
 
       $(this).addClass('active');
       $('#calendar').fullCalendar( 'refetchEvents' );
 
-  });
+    });
 
 
   /**
@@ -608,7 +605,7 @@ $('#calendar .fc-header .fc-header-center').before($('#rooms-dropdown').remove()
    	eventid = "";
      eventMembers.html('');
      activeEvent = null;
- }
+   }
 
     /**
    * Cleanup the modal attributes
@@ -616,7 +613,7 @@ $('#calendar .fc-header .fc-header-center').before($('#rooms-dropdown').remove()
    function teardown_add_guest_modal() {
     addGuestModal.find('#addGuestForm')[0].reset();
 
-}
+  }
 
 
 /* 
@@ -628,13 +625,13 @@ $('#calendar .fc-header .fc-header-center').before($('#rooms-dropdown').remove()
  	var mid = memberinputbox.attr('data-member-id');
   if(mid == ''){
     return;
-}
-if($('input[value='+ mid +']').exists()){
+  }
+  if($('input[value='+ mid +']').exists()){
     alert('Member already exists in class');
     return;
-}
+  }
 
-$.ajax({
+  $.ajax({
     url: "calendar/addMember",
     type: "POST",
     data: { 'member_id': mid, 'class_booking_id':eventid  },
@@ -643,22 +640,22 @@ $.ajax({
       memberinputbox.attr('data-member-id', '').val('');
       load_event_attendants();
 
-  },
-  error: function(data){
+    },
+    error: function(data){
       if(data.status == 305){
         bootbox.confirm("Class is full would you like to add user to waiting list?", function(result) {
           if(result){
             $.post( siteUrl + 'waiting_list/addWaiting', {  member_id: mid, class_id:eventid })
             .done(function( result ) {
               alert(result);
-          });
-        }
-    }); 
-    }
+            });
+          }
+        }); 
+      }
 
-    memberinputbox.attr('data-member-id', '').val('');
-},
-});
+      memberinputbox.attr('data-member-id', '').val('');
+    },
+  });
 
 
 });
@@ -708,17 +705,17 @@ $.ajax({
 
   search: function( event, ui ) {
     $('.tooltip').remove();//remove any stuck tooltips
-},
+  },
 
-close: function( event, ui ) {
+  close: function( event, ui ) {
     $('.tooltip').remove();//remove any stuck tooltips
-},
+  },
 
-response: function(event, ui) {
+  response: function(event, ui) {
    if (!ui.content.length) {
     var noResult = { value:"",label:noResultsLabel };
     ui.content.push(noResult);
-}
+  }
 }
 });
 
@@ -755,7 +752,7 @@ response: function(event, ui) {
   .tooltip({
     'placement': 'left',
     'container': eventModal
-})
+  })
 };
 
 
@@ -780,14 +777,14 @@ $('#btn-view-waiting-list').click(function(){
             label: "Close",
             className: "btn-default",
             callback: function() {  }
+          }
         }
-    }
-});
-  },
-  error: function(){
+      });
+    },
+    error: function(){
      alert('Error occurred');
- },
-});
+   },
+ });
 
 
 
@@ -805,11 +802,11 @@ $('form#addGuestForm').submit(function(e){
      addGuestModal.modal('hide');
      teardown_add_guest_modal();
      alert(result);
- },
- error: function(){
+   },
+   error: function(){
      alert('Error occurred');
- },
-});
+   },
+ });
 
 
 });
