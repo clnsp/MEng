@@ -29,7 +29,7 @@ $config['phpass_hash_strength'] = 8;
 |--------------------------------------------------------------------------
 */
 $config['allow_registration'] = TRUE;
-$config['captcha_registration'] = FALSE;
+$config['captcha_registration'] = false;
 $config['email_activation'] = TRUE;
 $config['email_activation_expire'] = 60*60*24*2;
 $config['email_account_details'] = TRUE;
@@ -62,7 +62,7 @@ $config['login_by_email'] = TRUE;
 $config['login_record_ip'] = TRUE;
 $config['login_record_time'] = TRUE;
 $config['login_count_attempts'] = TRUE;
-$config['login_max_attempts'] = 1;
+$config['login_max_attempts'] = 3;
 $config['login_attempt_expire'] = 60*60*24;
 
 /*

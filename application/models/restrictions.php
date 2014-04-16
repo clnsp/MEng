@@ -55,9 +55,8 @@ Class Restrictions extends CI_Model{
 			'sport_to_block_id' => $sport_to_block_id,
 			'occurring_sport_id' => $occurring_sport_id,
 			);
-		echo($data);
+
 		$this->db->insert($this -> block_tbl, $data);
-		echo($this->db->last_query());
 		
 	} 
 

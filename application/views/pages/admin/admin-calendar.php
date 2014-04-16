@@ -81,10 +81,11 @@
 							
 							<button type="button" id="edit-block-classes" class="btn btn-warning pull-right btn-sm ">Edit class blocks</button>
 						</div>
-						<?php }?>
-						
-						
 					</div>
+					<?php }?>
+					
+					
+					
 				</div>
 				<div class="modal-body">
 

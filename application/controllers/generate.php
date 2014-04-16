@@ -137,6 +137,79 @@ class Generate extends CI_Controller{
 
 	}
 
+	/**
+	* Create some classes with attendants now
+	* @param int - number of classes to generate now
+	* @return	void
+	* 
+	*/
+	function attendance($numberClasses = 0){
+		$this->load->model('classes');
+		$this->load->model('rooms');
+		$this->load->model('bookings');
+
+		$now = new DateTime();
+		$then = clone($now);
+		$then->modify('+2 hour');
+
+		$class_start_date = $now->format("Y-m-d H:i:s");
+		$class_end_date = $then->format("Y-m-d H:i:s");
+
+		// Get all the class types
+		$classTypes = $this->classes->getClassTypeIDs();
+		$maxCTindex = count($classTypes)-1;
+
+		//get all the room ids
+		$roomIds = $this->rooms->getRoomIDs();
+		$maxRindex = count($roomIds)-1;
+
+
+
+		for ($i = 1; $i <= $numberClasses; $i++) {
+
+			//select random class type
+			$class_type_id = $classTypes[rand(0, $maxCTindex)];
+
+			$max_attendance = rand(5, 50);
+			$max_attendance = $max_attendance - ($max_attendance%10);
+
+
+			//select random room
+			$room_id = $roomIds[rand(0, $maxRindex)]['room_id'];
+
+			echo $i . 'Inserting: class_type_id: ' . $class_type_id . ' start: '. $class_start_date . ' end: ' .  $class_end_date  . ' room_id: ' . $room_id . ' max_attendance: '. $max_attendance .  ' cancelled: 0' . "<br/>";
+
+			$data = array(
+				'class_type_id' => $class_type_id ,
+				'class_start_date' => $class_start_date ,
+				'class_end_date' => $class_end_date ,
+				'room_id' => $room_id,
+				'max_attendance' => $max_attendance,
+				'cancelled' => 0,
+				);
+
+			$cid = $this->classes->insertClass($data);
+
+			echo $this->db->_error_message();
+
+			echo "$<br> The class cis is $cid";
+
+			$nomembers = rand(5, $max_attendance);
+
+			for ($j = 1; $j <= $numberClasses; $j++) {
+
+				if($this->bookings->addMember($cid, rand(1, 1000))){
+					echo "   added member<br>";
+				}else{
+					echo "   error<br>";
+				}
+			}
+
+
+
+		}
+	}
+
 
 }/* End of file generate.php */
 /* Location: ./application/controllers/generate.php */

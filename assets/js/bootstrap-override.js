@@ -446,6 +446,7 @@
  	});
  }
 
+
  if(Modernizr.Detectizr.device.type == 'mobile' || Modernizr.Detectizr.device.type == 'tablet' && Modernizr.inputtypes.date){
  	$('.timepicker').attr('type', 'time');
  }else{
@@ -454,7 +455,9 @@
 
  	//	$(this).timepicker('setTime', '');
  	$(this).datetimepicker({
- 		pickDate: false
+ 		pickDate: false,
+ 		minuteStepping:15,               //set the minute stepping
+ 		
  	});
  })
 

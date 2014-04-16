@@ -47,7 +47,7 @@ class Calendar extends CI_Controller{
 
           $matched = $this->members->getUserLike($this-> term)->result_array();
           
-          usort($matched,array($this,"_my_sort")); 
+        //  usort($matched,array($this,"_my_sort")); 
 
           foreach ($matched as $match){
             $new_row['label']=htmlentities(stripslashes($match['name']));
@@ -147,8 +147,8 @@ class Calendar extends CI_Controller{
             
           }
         }
-	$this->load->helper('temp');
-	notifyWaiting(strtolower($this->input->post('class_booking_id')));
+        $this->load->helper('temp');
+        notifyWaiting(strtolower($this->input->post('class_booking_id')));
       }
     }
 

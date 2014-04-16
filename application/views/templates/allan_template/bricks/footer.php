@@ -74,6 +74,8 @@ if(!$this->tank_auth->is_admin()){ ?>
 
     <?php if($page_title=="manage-sports-hall"){ ?>
      <script type="text/javascript" src="<?php echo base_url();?>assets/js/manage-sports-hall.js"></script>
+          <script type="text/javascript" src="<?php echo base_url();?>assets/js/global-manage.js"></script>
+     
      <?php } ?>
 
      <script type="text/javascript" src="<?php echo base_url();?>assets/js/theme.js"></script>
